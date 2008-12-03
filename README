@@ -1,0 +1,4 @@
+include postfix-ng
+
+postfix-ng::config { "relay_domains": value  => "localhost host.foo.com" }
+
