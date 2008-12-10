@@ -27,6 +27,7 @@ class postfix-ng {
   file { "/etc/mailname":
     ensure  => present,
     content => "${fqdn}\n",
+    seltype => "postfix_etc_t",
   }
 
   # Aliases
@@ -35,6 +36,7 @@ class postfix-ng {
     ensure => present,
     content => "# file managed by puppet\n",
     replace => false,
+    seltype => "postfix_etc_t",
     notify => Exec["newaliases"],
   }
 

@@ -2,12 +2,14 @@ define postfix-ng::hash ($ensure) {
   file {"${name}":
     ensure => $ensure,
     mode   => 600,
+    seltype => "postfix_etc_t",
   }
 
   file {"${name}.db":
     ensure  => $ensure,
     mode    => 600,
     require => [File["${name}"], Exec["generate ${name}.db"]],
+    seltype => "postfix_etc_t",
   }
 
   exec {"generate ${name}.db":
