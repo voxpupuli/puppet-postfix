@@ -51,10 +51,9 @@ class postfix {
 
   file { "/etc/postfix/master.cf":
     ensure  => present,
-    content => $lsbdistcodename ? {
-      Tikanga => template("postfix/master.cf.redhat5.erb"),
-      etch => template("postfix/master.cf.debian-etch.erb"),
-      default => "No puppet template defined for $lsbdistcodename\n",
+    content => $operatingsystem ? {
+      Redhat => template("postfix/master.cf.redhat5.erb"),
+      Debian => template("postfix/master.cf.debian-etch.erb"),
     },
     notify  => Service["postfix"],
     require => Package["postfix"],
