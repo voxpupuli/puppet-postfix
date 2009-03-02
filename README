@@ -1,4 +1,4 @@
-include postfix-ng
+include postfix
 
-postfix-ng::config { "relay_domains": value  => "localhost host.foo.com" }
+postfix::config { "relay_domains": value  => "localhost host.foo.com" }
 

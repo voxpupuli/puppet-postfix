@@ -1,4 +1,4 @@
-define postfix-ng::config ($ensure = present, $value, $nonstandard = false) {
+define postfix::config ($ensure = present, $value, $nonstandard = false) {
   case $ensure {
     present: {
       exec {"postconf -e ${name}='${value}'":
@@ -12,7 +12,7 @@ define postfix-ng::config ($ensure = present, $value, $nonstandard = false) {
     }
 
     absent: {
-      fail "postfix-ng::config ensure => absent: Not implemented"
+      fail "postfix::config ensure => absent: Not implemented"
     }
   }
 }

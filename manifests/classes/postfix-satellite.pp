@@ -6,7 +6,7 @@
 # $valid_fqdn can be set to override $fqdn in the case where the FQDN is
 # not recognized as valid by the destination server.
 #
-# All other parameters for postfix-ng::mta are valid.
+# All other parameters for postfix::mta are valid.
 #
 # Example:
 #
@@ -15,10 +15,10 @@
 #   $valid_fqdn = "toto.example.com"
 #   $root_mail_recipient = "the.sysadmin@example.com"
 #
-#   include postfix-ng::satellite
+#   include postfix::satellite
 # }
  
-class postfix-ng::satellite {
+class postfix::satellite {
 
   # If $fake_fqdn exists, use it to override $fqdn
   case $valid_fqdn {
@@ -26,9 +26,9 @@ class postfix-ng::satellite {
     default: { $fqdn = "${valid_fqdn}" }
   }
 
-  include postfix-ng::mta
+  include postfix::mta
 
-  postfix-ng::virtual {"@${valid_fqdn}":
+  postfix::virtual {"@${valid_fqdn}":
     ensure      => present,
     destination => "root",
   }

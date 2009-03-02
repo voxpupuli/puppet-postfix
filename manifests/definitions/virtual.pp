@@ -1,4 +1,4 @@
-define postfix-ng::virtual ($ensure, $destination) {
+define postfix::virtual ($ensure, $destination) {
   line {"${name} ${destination}":
     ensure => present,
     file   => "/etc/postfix/virtual",

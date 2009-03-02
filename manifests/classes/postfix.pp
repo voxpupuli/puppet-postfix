@@ -4,7 +4,7 @@
 # delivery and an SMTP server listening on the loopback interface.
 #
 
-class postfix-ng {
+class postfix {
 
   # Default value for various options
   case $postfix_ng_smtp_listen {
@@ -52,8 +52,8 @@ class postfix-ng {
   file { "/etc/postfix/master.cf":
     ensure  => present,
     content => $lsbdistcodename ? {
-      Tikanga => template("postfix-ng/master.cf.redhat5.erb"),
-      etch => template("postfix-ng/master.cf.debian-etch.erb"),
+      Tikanga => template("postfix/master.cf.redhat5.erb"),
+      etch => template("postfix/master.cf.debian-etch.erb"),
       default => "No puppet template defined for $lsbdistcodename\n",
     },
     notify  => Service["postfix"],
@@ -62,7 +62,7 @@ class postfix-ng {
 
   file { "/etc/postfix/main.cf":
     ensure  => present,
-    source  => "puppet:///postfix-ng/main.cf",
+    source  => "puppet:///postfix/main.cf",
     replace => false,
     notify  => Service["postfix"],
     require => Package["postfix"],
@@ -70,7 +70,7 @@ class postfix-ng {
 
   # Default configuration parameters
 
-  postfix-ng::config {
+  postfix::config {
     "myorigin":   value => "${fqdn}";
     "alias_maps": value => "hash:/etc/aliases";
     "inet_interfaces": value => "all";
@@ -78,7 +78,7 @@ class postfix-ng {
 
   case $operatingsystem {
     RedHat: {
-      postfix-ng::config {
+      postfix::config {
         "sendmail_path": value => "/usr/sbin/sendmail.postfix";
         "newaliases_path": value => "/usr/bin/newaliases.postfix";
         "mailq_path": value => "/usr/bin/mailq.postfix";

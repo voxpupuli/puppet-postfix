@@ -7,7 +7,7 @@
 # A valid relay host is required ($postfix_relayhost) for outbound email.
 #
 # transport & virtual maps get configured and can be populated with
-# postfix-ng::transport and postfix-ng::virtual
+# postfix::transport and postfix::virtual
 #
 # Example:
 #
@@ -16,16 +16,16 @@
 #   $postfix_ng_smtp_listen = "0.0.0.0"
 #   $postfix_mydestination = "\$myorigin, myapp.example.com"
 #
-#   include postfix-ng::mta
+#   include postfix::mta
 #
-#   postfix-ng::transport { "myapp.example.com":
+#   postfix::transport { "myapp.example.com":
 #     ensure => present,
 #     destination => "local:",
 #   }
 # }
 #
 
-class postfix-ng::mta {
+class postfix::mta {
 
   case $postfix_relayhost {
     "":   { fail("Required \$postfix_relayhost variable is not defined.") }
@@ -35,9 +35,9 @@ class postfix-ng::mta {
     "": { $postfix_mydestination = "\$myorigin" }
   }
 
-  include postfix-ng
+  include postfix
 
-  postfix-ng::config {
+  postfix::config {
     "mydestination":                        value => $postfix_mydestination;
     "mynetworks":                           value => "127.0.0.0/8";
     "relayhost":                            value => $postfix_relayhost;
@@ -45,11 +45,11 @@ class postfix-ng::mta {
     "transport_maps":                       value => "hash:/etc/postfix/transport";
   }
 
-  postfix-ng::hash { "/etc/postfix/virtual":
+  postfix::hash { "/etc/postfix/virtual":
     ensure => present,
   }
 
-  postfix-ng::hash { "/etc/postfix/transport":
+  postfix::hash { "/etc/postfix/transport":
     ensure => present,
   }
 

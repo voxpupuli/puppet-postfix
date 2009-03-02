@@ -1,4 +1,4 @@
-define postfix-ng::hash ($ensure) {
+define postfix::hash ($ensure) {
   file {"${name}":
     ensure => $ensure,
     mode   => 600,

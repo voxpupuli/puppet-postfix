@@ -1,4 +1,4 @@
-define postfix-ng::transport ($ensure, $destination) {
+define postfix::transport ($ensure, $destination) {
   line {"${name} ${destination}":
     ensure => present,
     file   => "/etc/postfix/transport",
