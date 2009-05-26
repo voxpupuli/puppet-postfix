@@ -51,6 +51,8 @@ class postfix {
 
   file { "/etc/postfix/master.cf":
     ensure  => present,
+    owner => "root",
+    mode => "0644",
     content => $operatingsystem ? {
       Redhat => template("postfix/master.cf.redhat5.erb"),
       Debian => template("postfix/master.cf.debian-etch.erb"),
@@ -61,6 +63,8 @@ class postfix {
 
   file { "/etc/postfix/main.cf":
     ensure  => present,
+    owner => "root",
+    mode => "0644",
     source  => "puppet:///postfix/main.cf",
     replace => false,
     notify  => Service["postfix"],
