@@ -3,6 +3,7 @@ define postfix::hash ($ensure) {
     ensure => $ensure,
     mode   => 600,
     seltype => "postfix_etc_t",
+    require => Package["postfix"],
   }
 
   file {"${name}.db":
@@ -16,6 +17,7 @@ define postfix::hash ($ensure) {
     command => "postmap ${name}",
     #creates => "${name}.db", # this prevents postmap from being run !
     subscribe => File["${name}"],
-    refreshonly => true
+    refreshonly => true,
+    require => Package["postfix"],
   }
 }
