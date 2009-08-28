@@ -1,4 +1,5 @@
-#########################################################################
+#
+# == Class: postfix::mta
 #
 # This class configures a minimal MTA, listening on
 # $postfix_ng_smtp_listen (default to localhost) and delivering mail to
@@ -9,22 +10,26 @@
 # transport & virtual maps get configured and can be populated with
 # postfix::transport and postfix::virtual
 #
-# Example:
+# Parameters:
+# - *$postfix_relayhost*
+# - *$postfix_mydestination*
+# - every global variable which works for class "postfix" will work here.
 #
-# node "toto.example.com" {
-#   $postfix_relayhost = "mail.example.com"
-#   $postfix_ng_smtp_listen = "0.0.0.0"
-#   $postfix_mydestination = "\$myorigin, myapp.example.com"
+# Example usage:
 #
-#   include postfix::mta
+#   node "toto.example.com" {
+#     $postfix_relayhost = "mail.example.com"
+#     $postfix_ng_smtp_listen = "0.0.0.0"
+#     $postfix_mydestination = "\$myorigin, myapp.example.com"
 #
-#   postfix::transport { "myapp.example.com":
-#     ensure => present,
-#     destination => "local:",
+#     include postfix::mta
+#
+#     postfix::transport { "myapp.example.com":
+#       ensure => present,
+#       destination => "local:",
+#     }
 #   }
-# }
 #
-
 class postfix::mta {
 
   case $postfix_relayhost {

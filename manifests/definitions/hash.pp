@@ -1,5 +1,37 @@
+/*
+== Definition: postfix::hash
+
+Creates postfix hashed "map" files. It will create "${name}", and then build
+"${name}.db" using the "postmap" command. The map file can then be referred to
+using postfix::config.
+
+Note: the content of the file is not managed by this definition.
+
+Parameters:
+- *name*: the name of the map file.
+- *ensure*: present/absent
+
+Requires:
+- Class["postfix"]
+
+Example usage:
+
+  node "toto.example.com" {
+
+    include postfix
+
+    postfix::hash { "/etc/postfix/virtual":
+      ensure => present,
+    }
+    postfix::config { "virtual_alias_maps":
+      value => "hash:/etc/postfix/virtual"
+    }
+  }
+
+*/
 define postfix::hash ($ensure) {
 
+  # selinux labels differ from one distribution to another
   case $operatingsystem {
 
     RedHat: {

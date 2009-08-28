@@ -1,3 +1,19 @@
+#
+# == Class: postfix::mailman
+#
+# Configures a basic smtp server, able to work for the mailman mailing-list
+# manager.
+#
+# Parameters:
+# - every global variable which works for class "postfix" will work here.
+#
+# Example usage:
+#
+#   node "toto.example.com" {
+#     include mailman
+#     include postfix::mailman
+#   }
+#
 class postfix::mailman {
   $postfix_ng_smtp_listen = "0.0.0.0"
   include postfix

@@ -1,11 +1,23 @@
-#########################################################################
+#
+# == Class: postfix
 #
 # This class provides a basic setup of postfix with local and remote
 # delivery and an SMTP server listening on the loopback interface.
 #
-
+# Parameters:
+# - *$postfix_ng_smtp_listen*: address on which the smtp service will listen to. defaults to 127.0.0.1
+# - *$root_mail_recipient*: who will recieve root's emails. defaults to "nobody"
+#
+# Example usage:
+#
+#   node "toto.example.com" {
+#     $postfix_ng_smtp_listen = "192.168.1.10"
+#     include postfix
+#   }
+#
 class postfix {
 
+  # selinux labels differ from one distribution to another
   case $operatingsystem {
 
     RedHat: {
@@ -46,7 +58,6 @@ class postfix {
   }
 
   # Aliases
-
   file { "/etc/aliases":
     ensure => present,
     content => "# file managed by puppet\n",
@@ -55,6 +66,7 @@ class postfix {
     notify => Exec["newaliases"],
   }
 
+  # Aliases
   exec { "newaliases":
     command     => "/usr/bin/newaliases",
     refreshonly => true,
@@ -63,7 +75,6 @@ class postfix {
   }
 
   # Config files
-
   file { "/etc/postfix/master.cf":
     ensure  => present,
     owner => "root",
@@ -77,6 +88,7 @@ class postfix {
     require => Package["postfix"],
   }
 
+  # Config files
   file { "/etc/postfix/main.cf":
     ensure  => present,
     owner => "root",
@@ -89,7 +101,6 @@ class postfix {
   }
 
   # Default configuration parameters
-
   postfix::config {
     "myorigin":   value => "${fqdn}";
     "alias_maps": value => "hash:/etc/aliases";
