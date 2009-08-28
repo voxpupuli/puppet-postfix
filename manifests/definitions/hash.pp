@@ -9,7 +9,7 @@ Note: the content of the file is not managed by this definition.
 
 Parameters:
 - *name*: the name of the map file.
-- *ensure*: present/absent
+- *ensure*: present/absent, defaults to present
 
 Requires:
 - Class["postfix"]
@@ -29,7 +29,7 @@ Example usage:
   }
 
 */
-define postfix::hash ($ensure) {
+define postfix::hash ($ensure="present") {
 
   # selinux labels differ from one distribution to another
   case $operatingsystem {

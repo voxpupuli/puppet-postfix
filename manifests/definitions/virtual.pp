@@ -6,7 +6,7 @@ Manages content of the /etc/postfix/virtual map.
 Parameters:
 - *name*: name of address postfix will lookup. See virtual(8).
 - *destination*: where the emails will be delivered to. See virtual(8).
-- *ensure*: present/absent
+- *ensure*: present/absent, defaults to present.
 
 Requires:
 - Class["postfix"]
@@ -33,9 +33,9 @@ Example usage:
   }
 
 */
-define postfix::virtual ($ensure, $destination) {
+define postfix::virtual ($ensure="present", $destination) {
   line {"${name} ${destination}":
-    ensure => present,
+    ensure => $ensure,
     file   => "/etc/postfix/virtual",
     line   => "${name} ${destination}",
     notify => Exec["generate /etc/postfix/virtual.db"],

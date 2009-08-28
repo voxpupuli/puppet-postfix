@@ -6,7 +6,7 @@ Manages content of the /etc/postfix/transport map.
 Parameters:
 - *name*: name of address postfix will lookup. See transport(5).
 - *destination*: where the emails will be delivered to. See transport(5).
-- *ensure*: present/absent
+- *ensure*: present/absent, defaults to present.
 
 Requires:
 - Class["postfix"]
@@ -33,9 +33,9 @@ Example usage:
   }
 
 */
-define postfix::transport ($ensure, $destination) {
+define postfix::transport ($ensure="present", $destination) {
   line {"${name} ${destination}":
-    ensure => present,
+    ensure => $ensure,
     file   => "/etc/postfix/transport",
     line   => "${name} ${destination}",
     notify => Exec["generate /etc/postfix/transport.db"],
