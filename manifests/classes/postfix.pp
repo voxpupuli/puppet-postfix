@@ -6,6 +6,21 @@
 
 class postfix {
 
+  case $operatingsystem {
+
+    RedHat: {
+      case $lsbmajdistrelease {
+        "4":     { $postfix_seltype = "etc_t" }
+        "5":     { $postfix_seltype = "postfix_etc_t" }
+        default: { $postfix_seltype = undef }
+      }
+    }
+
+    default: {
+      $postfix_seltype = undef
+    }
+  }
+
   # Default value for various options
   case $postfix_ng_smtp_listen {
     "": { $postfix_ng_smtp_listen = "127.0.0.1" }
@@ -27,7 +42,7 @@ class postfix {
   file { "/etc/mailname":
     ensure  => present,
     content => "${fqdn}\n",
-    seltype => "postfix_etc_t",
+    seltype => $postfix_seltype,
   }
 
   # Aliases
@@ -36,7 +51,7 @@ class postfix {
     ensure => present,
     content => "# file managed by puppet\n",
     replace => false,
-    seltype => "postfix_etc_t",
+    seltype => $postfix_seltype,
     notify => Exec["newaliases"],
   }
 
@@ -57,6 +72,7 @@ class postfix {
       Redhat => template("postfix/master.cf.redhat5.erb"),
       Debian => template("postfix/master.cf.debian-etch.erb"),
     },
+    seltype => $postfix_seltype,
     notify  => Service["postfix"],
     require => Package["postfix"],
   }
@@ -67,6 +83,7 @@ class postfix {
     mode => "0644",
     source  => "puppet:///postfix/main.cf",
     replace => false,
+    seltype => $postfix_seltype,
     notify  => Service["postfix"],
     require => Package["postfix"],
   }

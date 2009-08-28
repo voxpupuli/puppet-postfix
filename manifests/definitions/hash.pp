@@ -1,8 +1,24 @@
 define postfix::hash ($ensure) {
+
+  case $operatingsystem {
+
+    RedHat: {
+      case $lsbmajdistrelease {
+        "4":     { $postfix_seltype = "etc_t" }
+        "5":     { $postfix_seltype = "postfix_etc_t" }
+        default: { $postfix_seltype = undef }
+      }
+    }
+
+    default: {
+      $postfix_seltype = undef
+    }
+  }
+
   file {"${name}":
     ensure => $ensure,
     mode   => 600,
-    seltype => "postfix_etc_t",
+    seltype => $postfix_seltype,
     require => Package["postfix"],
   }
 
@@ -10,7 +26,7 @@ define postfix::hash ($ensure) {
     ensure  => $ensure,
     mode    => 600,
     require => [File["${name}"], Exec["generate ${name}.db"]],
-    seltype => "postfix_etc_t",
+    seltype => $postfix_seltype,
   }
 
   exec {"generate ${name}.db":
