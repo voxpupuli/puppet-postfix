@@ -34,8 +34,8 @@ class postfix {
   }
 
   # Default value for various options
-  case $postfix_ng_smtp_listen {
-    "": { $postfix_ng_smtp_listen = "127.0.0.1" }
+  case $postfix_smtp_listen {
+    "": { $postfix_smtp_listen = "127.0.0.1" }
   }
   case $root_mail_recipient {
     "":   { $root_mail_recipient = "nobody" }

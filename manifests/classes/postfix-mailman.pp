@@ -15,7 +15,7 @@
 #   }
 #
 class postfix::mailman {
-  $postfix_ng_smtp_listen = "0.0.0.0"
+  $postfix_smtp_listen = "0.0.0.0"
   include postfix
 
   postfix::config {

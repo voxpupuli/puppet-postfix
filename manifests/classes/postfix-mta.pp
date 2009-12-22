@@ -2,7 +2,7 @@
 # == Class: postfix::mta
 #
 # This class configures a minimal MTA, listening on
-# $postfix_ng_smtp_listen (default to localhost) and delivering mail to
+# $postfix_smtp_listen (default to localhost) and delivering mail to
 # $postfix_mydestination (default to $fqdn).
 #
 # A valid relay host is required ($postfix_relayhost) for outbound email.
@@ -19,7 +19,7 @@
 #
 #   node "toto.example.com" {
 #     $postfix_relayhost = "mail.example.com"
-#     $postfix_ng_smtp_listen = "0.0.0.0"
+#     $postfix_smtp_listen = "0.0.0.0"
 #     $postfix_mydestination = "\$myorigin, myapp.example.com"
 #
 #     include postfix::mta
