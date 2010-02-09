@@ -20,7 +20,7 @@ class postfix {
   # selinux labels differ from one distribution to another
   case $operatingsystem {
 
-    RedHat: {
+    RedHat, CentOS: {
       case $lsbmajdistrelease {
         "4":     { $postfix_seltype = "etc_t" }
         "5":     { $postfix_seltype = "postfix_etc_t" }
@@ -81,7 +81,9 @@ class postfix {
     mode => "0644",
     content => $operatingsystem ? {
       Redhat => template("postfix/master.cf.redhat5.erb"),
+      CentOS => template("postfix/master.cf.redhat5.erb"),
       Debian => template("postfix/master.cf.debian-etch.erb"),
+      Ubuntu => template("postfix/master.cf.debian-etch.erb"),
     },
     seltype => $postfix_seltype,
     notify  => Service["postfix"],
@@ -108,7 +110,7 @@ class postfix {
   }
 
   case $operatingsystem {
-    RedHat: {
+    RedHat, CentOS: {
       postfix::config {
         "sendmail_path": value => "/usr/sbin/sendmail.postfix";
         "newaliases_path": value => "/usr/bin/newaliases.postfix";

@@ -34,7 +34,7 @@ define postfix::hash ($ensure="present") {
   # selinux labels differ from one distribution to another
   case $operatingsystem {
 
-    RedHat: {
+    RedHat, CentOS: {
       case $lsbmajdistrelease {
         "4":     { $postfix_seltype = "etc_t" }
         "5":     { $postfix_seltype = "postfix_etc_t" }
