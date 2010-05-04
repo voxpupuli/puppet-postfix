@@ -5,13 +5,13 @@
 # delivery and an SMTP server listening on the loopback interface.
 #
 # Parameters:
-# - *$postfix_ng_smtp_listen*: address on which the smtp service will listen to. defaults to 127.0.0.1
+# - *$postfix_smtp_listen*: address on which the smtp service will listen to. defaults to 127.0.0.1
 # - *$root_mail_recipient*: who will recieve root's emails. defaults to "nobody"
 #
 # Example usage:
 #
 #   node "toto.example.com" {
-#     $postfix_ng_smtp_listen = "192.168.1.10"
+#     $postfix_smtp_listen = "192.168.1.10"
 #     include postfix
 #   }
 #
