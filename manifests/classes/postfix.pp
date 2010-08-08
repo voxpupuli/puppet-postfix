@@ -78,6 +78,7 @@ class postfix {
   file { "/etc/postfix/master.cf":
     ensure  => present,
     owner => "root",
+    group => "root",
     mode => "0644",
     content => $operatingsystem ? {
       Redhat => template("postfix/master.cf.redhat5.erb"),
@@ -94,6 +95,7 @@ class postfix {
   file { "/etc/postfix/main.cf":
     ensure  => present,
     owner => "root",
+    group => "root",
     mode => "0644",
     source  => "puppet:///postfix/main.cf",
     replace => false,
