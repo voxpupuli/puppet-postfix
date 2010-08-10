@@ -22,7 +22,7 @@ class postfix::mailman {
     "mydestination":                        value => "";
     "virtual_alias_maps":                   value => "hash:/etc/postfix/virtual";
     "transport_maps":                       value => "hash:/etc/postfix/transport";
-    "mailman_destination_recipient_limit":  value => "1", nonstandard => true;
+    "mailman_destination_recipient_limit":  value => "1";
   }
 
   postfix::hash { "/etc/postfix/virtual":
