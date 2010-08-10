@@ -42,8 +42,16 @@ class postfix {
   }
 
 
-  package { ["postfix", "mailx"]:
+  package { "postfix":
     ensure => installed
+  }
+
+  package { "mailx":
+    ensure => installed,
+    name   => $lsbdistcodename ? {
+      "squeeze" => "bsd-mailx",
+      default   => "mailx",
+    },
   }
 
   service { "postfix":
