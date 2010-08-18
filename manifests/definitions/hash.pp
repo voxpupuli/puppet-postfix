@@ -51,6 +51,8 @@ define postfix::hash ($ensure="present", $source = false) {
       file {"${name}":
         ensure  => $ensure,
         mode    => 600,
+        owner   => root,
+        group   => root,
         seltype => $postfix_seltype,
         require => Package["postfix"],
       }
@@ -59,6 +61,8 @@ define postfix::hash ($ensure="present", $source = false) {
       file {"${name}":
         ensure  => $ensure,
         mode    => 600,
+        owner   => root,
+        group   => root,
         source  => $source,
         seltype => $postfix_seltype,
         require => Package["postfix"],
