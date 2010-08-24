@@ -102,3 +102,9 @@ dovecot   unix  -       n       n       -       -       pipe
 schleuder  unix  -       n       n       -       -       pipe
   flags=DRhu user=schleuder argv=/usr/bin/schleuder ${user}
 <% end %>
+<% if postfix_use_sympa == 'yes' %>
+sympa        unix  -       n       n       -       -       pipe
+  flags=R user=sympa argv=/usr/lib/sympa/bin/queue ${recipient}
+sympabounce  unix  -       n       n       -       -       pipe
+  flags=R user=sympa argv=/usr/lib/sympa/bin/bouncequeue ${user}
+<% end %>
