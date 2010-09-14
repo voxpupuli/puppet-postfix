@@ -97,7 +97,7 @@ class postfix {
     owner => "root",
     group => "root",
     mode => "0644",
-    source  => "puppet:///postfix/main.cf",
+    source  => "puppet:///modules/postfix/main.cf",
     replace => false,
     seltype => $postfix_seltype,
     notify  => Service["postfix"],
