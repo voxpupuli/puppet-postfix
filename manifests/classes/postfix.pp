@@ -40,6 +40,18 @@ class postfix {
   case $root_mail_recipient {
     "":   { $root_mail_recipient = "nobody" }
   }
+  case $postfix_use_amavisd {
+    "": { $postfix_use_amavisd = "no" }
+  }
+  case $postfix_use_dovecot_lda {
+    "": { $postfix_use_dovecot_lda = "no" }
+  }
+  case $postfix_use_schleuder {
+    "": { $postfix_use_schleuder = "no" }
+  }
+  case $postfix_use_sympa {
+    "": { $postfix_use_sympa = "no" }
+  }
 
 
   package { "postfix":
