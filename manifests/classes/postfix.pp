@@ -89,7 +89,7 @@ class postfix {
     group => "root",
     mode => "0644",
     content => $operatingsystem ? {
-      /Redhat|CentOS/ => template("postfix/master.cf.redhat.erb", "postfix/master.cf.common.erb"),
+      /RedHat|CentOS/ => template("postfix/master.cf.redhat.erb", "postfix/master.cf.common.erb"),
       /Debian|Ubuntu|kFreeBSD/ => template("postfix/master.cf.debian.erb", "postfix/master.cf.common.erb"),
     },
     seltype => $postfix_seltype,
