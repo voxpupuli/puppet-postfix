@@ -101,11 +101,8 @@ class postfix {
     group => "root",
     mode => "0644",
     content => $operatingsystem ? {
-      Redhat => template("postfix/master.cf.redhat.erb"),
-      CentOS => template("postfix/master.cf.redhat.erb"),
-      Debian => template("postfix/master.cf.debian.erb"),
-      Ubuntu => template("postfix/master.cf.debian.erb"),
-      "GNU/kFreeBSD" => template("postfix/master.cf.debian.erb"),
+      /RedHat|CentOS/ => template("postfix/master.cf.redhat.erb", "postfix/master.cf.common.erb"),
+      /Debian|Ubuntu|kFreeBSD/ => template("postfix/master.cf.debian.erb", "postfix/master.cf.common.erb"),
     },
     seltype => $postfix_seltype,
     notify  => Service["postfix"],
