@@ -36,7 +36,7 @@ define postfix::hash ($ensure="present", $source = false) {
     RedHat, CentOS: {
       case $lsbmajdistrelease {
         "4":     { $postfix_seltype = "etc_t" }
-        "5":     { $postfix_seltype = "postfix_etc_t" }
+        "5","6": { $postfix_seltype = "postfix_etc_t" }
         default: { $postfix_seltype = undef }
       }
     }
