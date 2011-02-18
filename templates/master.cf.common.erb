@@ -19,7 +19,7 @@ amavis unix - - - - 2 smtp
 <% end -%>
 <% if has_variable?("postfix_use_dovecot_lda") and postfix_use_dovecot_lda == 'yes' %>
 dovecot   unix  -       n       n       -       -       pipe
-  flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/deliver -d ${recipient}
+  flags=DRhu user=<%= postfix_mail_user %>:<%= postfix_mail_user %> argv=/usr/lib/dovecot/deliver -d ${recipient}
 <% end -%>
 <% if has_variable?("postfix_use_schleuder") and postfix_use_schleuder == 'yes' %>
 schleuder  unix  -       n       n       -       -       pipe

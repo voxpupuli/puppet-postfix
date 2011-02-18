@@ -52,6 +52,9 @@ class postfix {
   case $postfix_use_sympa {
     "": { $postfix_use_sympa = "no" }
   }
+  case $postfix_mail_user {
+    "": { $postfix_mail_user = "vmail" }
+  }
 
 
   package { "postfix":
