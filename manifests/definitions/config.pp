@@ -37,13 +37,13 @@ define postfix::config ($ensure = present, $value) {
 
   case $ensure {
     present: {
-      augeas { "set postfix $name to $value":
+      augeas { "set postfix '${name}' to '${value}'":
         changes => "set $name $value",
       }
     }
 
     absent: {
-      augeas { "set postfix $name to $value":
+      augeas { "rm postfix '${name}'":
         changes => "rm $name",
       }
     }
