@@ -71,11 +71,11 @@ class postfix {
   }
 
   service { "postfix":
-    ensure  => running,
+    ensure    => running,
     enable    => true,
     hasstatus => true,
     restart   => "/etc/init.d/postfix reload",
-    require => Package["postfix"],
+    require   => Package["postfix"],
   }
 
   file { "/etc/mailname":
