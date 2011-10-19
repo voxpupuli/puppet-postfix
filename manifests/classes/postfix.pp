@@ -71,6 +71,9 @@ class postfix {
 
   service { "postfix":
     ensure  => running,
+    enable    => true,
+    hasstatus => true,
+    restart   => "/etc/init.d/postfix reload",
     require => Package["postfix"],
   }
 
