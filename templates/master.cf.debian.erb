@@ -7,10 +7,18 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
-<% if postfix_smtp_listen == 'all' -%>
+<% if has_variable?('postfix_master_smtp') -%>
+<%= postfix_master_smtp %>
+<% elsif postfix_smtp_listen == 'all' -%>
 smtp      inet  n       -       -       -       -       smtpd
 <% else -%>
 <%= postfix_smtp_listen %>:smtp      inet  n       -       -       -       -       smtpd
+<% end -%>
+<% if has_variable?('postfix_master_submission') -%>
+<%= postfix_master_submission %>
+<% end -%>
+<% if has_variable?('postfix_master_smtps') -%>
+<%= postfix_master_smtps %>
 <% end -%>
 #submission inet n       -       -       -       -       smtpd
 #  -o smtpd_enforce_tls=yes
@@ -60,7 +68,7 @@ scache	  unix	-	-	-	-	1	scache
 # Also specify in main.cf: maildrop_destination_recipient_limit=1
 #
 maildrop  unix  -       n       n       -       -       pipe
-  flags=DRhu user=vmail argv=/usr/bin/maildrop -d ${recipient}
+  flags=DRhu user=<%= postfix_mail_user %> argv=/usr/bin/maildrop -d ${recipient}
 #
 # See the Postfix UUCP_README file for configuration details.
 #
