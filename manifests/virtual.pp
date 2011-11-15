@@ -34,7 +34,7 @@ Example usage:
 
 */
 define postfix::virtual ($ensure="present", $destination) {
-  line {"${name} ${destination}":
+  common::line {"${name} ${destination}":
     ensure => $ensure,
     file   => "/etc/postfix/virtual",
     line   => "${name} ${destination}",

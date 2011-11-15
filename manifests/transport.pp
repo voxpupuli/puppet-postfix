@@ -34,7 +34,7 @@ Example usage:
 
 */
 define postfix::transport ($ensure="present", $destination) {
-  line {"${name} ${destination}":
+  common::line {"${name} ${destination}":
     ensure => $ensure,
     file   => "/etc/postfix/transport",
     line   => "${name} ${destination}",
