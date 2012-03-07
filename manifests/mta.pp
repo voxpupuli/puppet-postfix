@@ -42,11 +42,15 @@ class postfix::mta {
     default: {}
   }
 
+  case $::postfix_mynetworks {
+    "": { $postfix_mynetworks = "127.0.0.0/8" }
+  }
+
   include postfix
 
   postfix::config {
     'mydestination':       value => $::postfix_mydestination;
-    'mynetworks':          value => '127.0.0.0/8';
+    'mynetworks':          value => $::postfix_mynetworks;
     'relayhost':           value => $::postfix_relayhost;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
     'transport_maps':      value => 'hash:/etc/postfix/transport';
