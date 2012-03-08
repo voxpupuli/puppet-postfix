@@ -31,10 +31,10 @@ Example usage:
 define postfix::hash ($ensure="present", $source = false) {
 
   # selinux labels differ from one distribution to another
-  case $operatingsystem {
+  case $::operatingsystem {
 
     RedHat, CentOS: {
-      case $lsbmajdistrelease {
+      case $::lsbmajdistrelease {
         "4":     { $postfix_seltype = "etc_t" }
         "5","6": { $postfix_seltype = "postfix_etc_t" }
         default: { $postfix_seltype = undef }
