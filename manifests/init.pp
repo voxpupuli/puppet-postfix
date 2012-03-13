@@ -18,10 +18,10 @@
 class postfix {
 
   # selinux labels differ from one distribution to another
-  case $operatingsystem {
+  case $::operatingsystem {
 
     RedHat, CentOS: {
-      case $lsbmajdistrelease {
+      case $::lsbmajdistrelease {
         "4":     { $postfix_seltype = "etc_t" }
         "5","6": { $postfix_seltype = "postfix_etc_t" }
         default: { $postfix_seltype = undef }
@@ -63,7 +63,7 @@ class postfix {
 
   package { "mailx":
     ensure => installed,
-    name   => $lsbdistcodename ? {
+    name   => $::lsbdistcodename ? {
       "squeeze" => "bsd-mailx",
       "lucid"   => "bsd-mailx",
       default   => "mailx",
@@ -80,7 +80,7 @@ class postfix {
 
   file { "/etc/mailname":
     ensure  => present,
-    content => "${fqdn}\n",
+    content => "${::fqdn}\n",
     seltype => $postfix_seltype,
   }
 
@@ -107,7 +107,7 @@ class postfix {
     owner => "root",
     group => "root",
     mode => "0644",
-    content => $operatingsystem ? {
+    content => $::operatingsystem ? {
       /RedHat|CentOS/ => template("postfix/master.cf.redhat.erb", "postfix/master.cf.common.erb"),
       /Debian|Ubuntu|kFreeBSD/ => template("postfix/master.cf.debian.erb", "postfix/master.cf.common.erb"),
     },
@@ -131,12 +131,12 @@ class postfix {
 
   # Default configuration parameters
   postfix::config {
-    "myorigin":   value => "${fqdn}";
+    "myorigin":   value => "${::fqdn}";
     "alias_maps": value => "hash:/etc/aliases";
     "inet_interfaces": value => "all";
   }
 
-  case $operatingsystem {
+  case $::operatingsystem {
     RedHat, CentOS: {
       postfix::config {
         "sendmail_path": value => "/usr/sbin/sendmail.postfix";
