@@ -57,7 +57,7 @@ class postfix {
     $postfix_mail_user = 'vmail'
   }
 
-  $mailx_package = $::lsbdistrelease ? {
+  $mailx_package = $::lsbdistcodename ? {
     'squeeze' => 'bsd-mailx',
     'lucid'   => 'bsd-mailx',
     default   => 'mailx',
