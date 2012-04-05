@@ -64,8 +64,8 @@ class postfix {
   }
 
   $master_os_template = $::operatingsystem ? {
-    /RedHat|CentOS/          => 'postfix/master.cf.redhat.erb',
-    /Debian|Ubuntu|kFreeBSD/ => 'postfix/master.cf.debian.erb',
+    /RedHat|CentOS/          => template('postfix/master.cf.redhat.erb', 'postfix/master.cf.common.erb'),
+    /Debian|Ubuntu|kFreeBSD/ => template('postfix/master.cf.debian.erb', 'postfix/master.cf.common.erb'),
   }
 
   package { 'postfix':
