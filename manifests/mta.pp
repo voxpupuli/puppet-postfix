@@ -20,7 +20,7 @@
 #   node 'toto.example.com' {
 #     $postfix_relayhost = 'mail.example.com'
 #     $postfix_smtp_listen = '0.0.0.0'
-#     $postfix_mydestination = '\$myorigin, myapp.example.com'
+#     $postfix_mydestination = '$myorigin, myapp.example.com'
 #
 #     include postfix::mta
 #
@@ -33,12 +33,12 @@
 class postfix::mta {
 
   case $postfix_relayhost {
-    '':      { fail('Required \$postfix_relayhost variable is not defined.') }
+    '':      { fail('Required $postfix_relayhost variable is not defined.') }
     default: {}
   }
 
   case $postfix_mydestination {
-    '':      { $postfix_mydestination = '\$myorigin' }
+    '':      { $postfix_mydestination = '$myorigin' }
     default: {}
   }
 
