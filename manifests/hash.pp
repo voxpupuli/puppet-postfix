@@ -28,21 +28,7 @@
 #
 define postfix::hash ($ensure='present', $source = false) {
 
-  # selinux labels differ from one distribution to another
-  case $::operatingsystem {
-
-    RedHat, CentOS: {
-      case $::lsbmajdistrelease {
-        '4':     { $postfix_seltype = 'etc_t' }
-        '5','6': { $postfix_seltype = 'postfix_etc_t' }
-        default: { $postfix_seltype = undef }
-      }
-    }
-
-    default: {
-      $postfix_seltype = undef
-    }
-  }
+  include postfix::params
 
   case $source {
     false: {
@@ -51,7 +37,7 @@ define postfix::hash ($ensure='present', $source = false) {
         mode    => '0600',
         owner   => root,
         group   => root,
-        seltype => $postfix_seltype,
+        seltype => $postfix::params::seltype,
         require => Package['postfix'],
       }
     }
@@ -62,7 +48,7 @@ define postfix::hash ($ensure='present', $source = false) {
         owner   => root,
         group   => root,
         source  => $source,
-        seltype => $postfix_seltype,
+        seltype => $postfix::params::seltype,
         require => Package['postfix'],
       }
     }
@@ -72,7 +58,7 @@ define postfix::hash ($ensure='present', $source = false) {
     ensure  => $ensure,
     mode    => '0600',
     require => [File[$name], Exec["generate ${name}.db"]],
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
   }
 
   exec {"generate ${name}.db":
