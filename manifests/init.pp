@@ -17,22 +17,7 @@
 #   }
 #
 class postfix {
-
-  # selinux labels differ from one distribution to another
-  case $::operatingsystem {
-
-    RedHat, CentOS: {
-      case $::lsbmajdistrelease {
-        '4':     { $postfix_seltype = 'etc_t' }
-        '5','6': { $postfix_seltype = 'postfix_etc_t' }
-        default: { $postfix_seltype = undef }
-      }
-    }
-
-    default: {
-      $postfix_seltype = undef
-    }
-  }
+  include postfix::params
 
   # Default value for various options
   if $postfix_smtp_listen == '' {
@@ -88,7 +73,7 @@ class postfix {
   file { '/etc/mailname':
     ensure  => present,
     content => "$::fqdn\n",
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
   }
 
   # Aliases
@@ -96,7 +81,7 @@ class postfix {
     ensure  => present,
     content => '# file managed by puppet\n',
     replace => false,
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
     notify  => Exec['newaliases'],
   }
 
@@ -115,7 +100,7 @@ class postfix {
     group   => 'root',
     mode    => '0644',
     content => $master_os_template,
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
     notify  => Service['postfix'],
     require => Package['postfix'],
   }
@@ -128,14 +113,14 @@ class postfix {
     mode    => '0644',
     source  => 'puppet:///modules/postfix/main.cf',
     replace => false,
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
     notify  => Service['postfix'],
     require => Package['postfix'],
   }
 
   # Default configuration parameters
   postfix::config {
-    'myorigin':         value => $::fqdn;
+    'myorigin':         value => $postfix::params::myorigin;
     'alias_maps':       value => 'hash:/etc/aliases';
     'inet_interfaces':  value => 'all';
   }
