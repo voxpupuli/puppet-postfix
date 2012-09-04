@@ -60,6 +60,10 @@ class postfix {
   $mailx_package = $::lsbdistcodename ? {
     'squeeze' => 'bsd-mailx',
     'lucid'   => 'bsd-mailx',
+    'maverick'=> 'bsd-mailx',
+    'natty'   => 'bsd-mailx',
+    'oneiric' => 'bsd-mailx',
+    'precise' => 'bsd-mailx',
     default   => 'mailx',
   }
 
