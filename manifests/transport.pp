@@ -11,7 +11,7 @@
 #- Class["postfix"]
 #- Postfix::Hash["/etc/postfix/transport"]
 #- Postfix::Config["transport_maps"]
-#- common::line (from module common)
+#- augeas
 #
 #Example usage:
 #
