@@ -31,12 +31,37 @@
 #    }
 #  }
 #
-define postfix::transport ($destination, $ensure='present') {
-  common::line {"${name} ${destination}":
-    ensure  => $ensure,
-    file    => '/etc/postfix/transport',
-    line    => "${name} ${destination}",
-    notify  => Exec['generate /etc/postfix/transport.db'],
-    require => Package['postfix'],
+define postfix::transport (
+  $destination,
+  $file='/etc/postfix/transport',
+  $ensure='present'
+) {
+  include postfix::augeas
+
+  case $ensure {
+    'present': {
+        $changes = [
+          "set pattern[. = '${name}'] '${name}'",
+          "set pattern[. = '${name}']/transport '${destination}'",
+          # TODO: support nexthop
+          "clear pattern[. = '${name}']/nexthop",
+        ]
+    }
+
+    'absent': {
+      $changes = "rm pattern[. = '${name}']"
+    }
+
+    default: {
+      fail("Wrong ensure value: ${ensure}")
+    }
+  }
+
+  augeas {"Postfix transport - ${name}":
+    load_path => '/usr/share/augeas/lenses/contrib/',
+    context   => "/files${file}",
+    changes   => $changes,
+    require   => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    notify    => Exec['generate /etc/postfix/transport.db'],
   }
 }
