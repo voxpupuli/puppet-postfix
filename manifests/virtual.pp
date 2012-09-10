@@ -11,7 +11,7 @@
 #- Class["postfix"]
 #- Postfix::Hash["/etc/postfix/virtual"]
 #- Postfix::Config["virtual_alias_maps"]
-#- common::line (from module common)
+#- augeas
 #
 #Example usage:
 #
@@ -31,12 +31,37 @@
 #    }
 #  }
 #
-define postfix::virtual ($destination, $ensure = 'present') {
-  common::line {"${name} ${destination}":
-    ensure  => $ensure,
-    file    => '/etc/postfix/virtual',
-    line    => "${name} ${destination}",
-    notify  => Exec['generate /etc/postfix/virtual.db'],
-    require => Package['postfix'],
+define postfix::virtual (
+  $destination,
+  $nexthop='',
+  $file='/etc/postfix/virtual',
+  $ensure='present'
+) {
+  include postfix::augeas
+
+  case $ensure {
+    'present': {
+      $changes = [
+        "set pattern[. = '${name}'] '${name}'",
+        # TODO: support more than one destination
+        "set pattern[. = '${name}']/destination '${destination}'",
+      ]
+    }
+
+    'absent': {
+      $changes = "rm pattern[. = '${name}']"
+    }
+
+    default: {
+      fail("Wrong ensure value: ${ensure}")
+    }
+  }
+
+  augeas {"Postfix virtual - ${name}":
+    load_path => '/usr/share/augeas/lenses/contrib/',
+    context   => "/files${file}",
+    changes   => $changes,
+    require   => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    notify    => Exec['generate /etc/postfix/virtual.db'],
   }
 }

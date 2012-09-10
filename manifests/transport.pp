@@ -11,7 +11,7 @@
 #- Class["postfix"]
 #- Postfix::Hash["/etc/postfix/transport"]
 #- Postfix::Config["transport_maps"]
-#- common::line (from module common)
+#- augeas
 #
 #Example usage:
 #
@@ -31,12 +31,47 @@
 #    }
 #  }
 #
-define postfix::transport ($destination, $ensure='present') {
-  common::line {"${name} ${destination}":
-    ensure  => $ensure,
-    file    => '/etc/postfix/transport',
-    line    => "${name} ${destination}",
-    notify  => Exec['generate /etc/postfix/transport.db'],
-    require => Package['postfix'],
+define postfix::transport (
+  $destination,
+  $nexthop='',
+  $file='/etc/postfix/transport',
+  $ensure='present'
+) {
+  include postfix::augeas
+
+  case $ensure {
+    'present': {
+      if ($nexthop) {
+        $changes = [
+          "set pattern[. = '${name}'] '${name}'",
+          "set pattern[. = '${name}']/transport '${destination}'",
+          # TODO: support nexthop
+          "set pattern[. = '${name}']/nexthop '${nexthop}'",
+        ]
+      } else {
+        $changes = [
+          "set pattern[. = '${name}'] '${name}'",
+          "set pattern[. = '${name}']/transport '${destination}'",
+          # TODO: support nexthop
+          "clear pattern[. = '${name}']/nexthop",
+        ]
+      }
+    }
+
+    'absent': {
+      $changes = "rm pattern[. = '${name}']"
+    }
+
+    default: {
+      fail("Wrong ensure value: ${ensure}")
+    }
+  }
+
+  augeas {"Postfix transport - ${name}":
+    load_path => '/usr/share/augeas/lenses/contrib/',
+    context   => "/files${file}",
+    changes   => $changes,
+    require   => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    notify    => Exec['generate /etc/postfix/transport.db'],
   }
 }
