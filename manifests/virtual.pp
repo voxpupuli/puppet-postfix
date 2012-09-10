@@ -19,15 +19,15 @@
 #
 #    include postfix
 #
-#    postfix::hash { "/etc/postfix/transport":
+#    postfix::hash { "/etc/postfix/virtual":
 #      ensure => present,
 #    }
-#    postfix::config { "transport_maps":
-#      value => "hash:/etc/postfix/transport"
+#    postfix::config { "virtual_alias_maps":
+#      value => "hash:/etc/postfix/virtual"
 #    }
-#    postfix::transport { "mailman.example.com":
+#    postfix::virtual { "user@example.com":
 #      ensure      => present,
-#      destination => "mailman",
+#      destination => "root",
 #    }
 #  }
 #
@@ -41,21 +41,11 @@ define postfix::virtual (
 
   case $ensure {
     'present': {
-      if ($nexthop) {
-        $changes = [
-          "set pattern[. = '${name}'] '${name}'",
-          "set pattern[. = '${name}']/transport '${destination}'",
-          # TODO: support nexthop
-          "set pattern[. = '${name}']/nexthop '${nexthop}'",
-        ]
-      } else {
-        $changes = [
-          "set pattern[. = '${name}'] '${name}'",
-          "set pattern[. = '${name}']/transport '${destination}'",
-          # TODO: support nexthop
-          "clear pattern[. = '${name}']/nexthop",
-        ]
-      }
+      $changes = [
+        "set pattern[. = '${name}'] '${name}'",
+        # TODO: support more than one destination
+        "set pattern[. = '${name}']/destination '${destination}'",
+      ]
     }
 
     'absent': {
