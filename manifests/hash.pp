@@ -26,7 +26,7 @@
 #    }
 #  }
 #
-define postfix::hash ($ensure='present', $source = false) {
+define postfix::hash ($ensure='present', $source=false, $content=false) {
 
   # selinux labels differ from one distribution to another
   case $::operatingsystem {
@@ -44,35 +44,35 @@ define postfix::hash ($ensure='present', $source = false) {
     }
   }
 
-  case $source {
-    false: {
-      file {$name:
-        ensure  => $ensure,
-        mode    => '0600',
-        owner   => root,
-        group   => root,
-        seltype => $postfix_seltype,
-        require => Package['postfix'],
-      }
+  File {
+    mode    => '0600',
+    owner   => root,
+    group   => root,
+    seltype => $postfix_seltype,
+  }
+
+  if $source != false {
+    file {$name:
+      ensure  => $ensure,
+      source  => $source,
+      require => Package['postfix'],
     }
-    default: {
-      file {$name:
-        ensure  => $ensure,
-        mode    => '0600',
-        owner   => root,
-        group   => root,
-        source  => $source,
-        seltype => $postfix_seltype,
-        require => Package['postfix'],
-      }
+  } elsif $content != false {
+    file {$name:
+      ensure  => $ensure,
+      content => $content,
+      require => Package['postfix'],
+    }
+  } else {
+    file {$name:
+      ensure  => $ensure,
+      require => Package['postfix'],
     }
   }
 
   file {"${name}.db":
     ensure  => $ensure,
-    mode    => '0600',
     require => [File[$name], Exec["generate ${name}.db"]],
-    seltype => $postfix_seltype,
   }
 
   exec {"generate ${name}.db":
