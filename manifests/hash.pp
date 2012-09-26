@@ -57,16 +57,18 @@ define postfix::hash ($ensure='present', $source=false, $content=false) {
       source  => $source,
       require => Package['postfix'],
     }
-  } elsif $content != false {
-    file {$name:
-      ensure  => $ensure,
-      content => $content,
-      require => Package['postfix'],
-    }
   } else {
-    file {$name:
-      ensure  => $ensure,
-      require => Package['postfix'],
+    if $content != false {
+      file {$name:
+        ensure  => $ensure,
+        content => $content,
+        require => Package['postfix'],
+      }
+    } else {
+      file {$name:
+        ensure  => $ensure,
+        require => Package['postfix'],
+      }
     }
   }
 
