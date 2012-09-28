@@ -57,10 +57,25 @@ class postfix {
     $postfix_mail_user = 'vmail'
   }
 
-  $mailx_package = $::lsbdistcodename ? {
-    'squeeze' => 'bsd-mailx',
-    'lucid'   => 'bsd-mailx',
-    default   => 'mailx',
+  case $::operatingsystem {
+    /RedHat|CentOS|Fedora/: {
+      $mailx_package = 'mailx'
+    }
+
+    /Debian|kFreeBSD/: {
+      $mailx_package = $::lsbdistcodename ? {
+        /lenny|etch|sarge/ => 'mailx',
+        default            => 'bsd-mailx',
+      }
+    }
+
+    'Ubuntu': {
+      if (versioncmp('10', $::lsbmajdistrelease) > 0) {
+        $mailx_package = 'mailx'
+      } else {
+        $mailx_package = 'bsd-mailx'
+      }
+    }
   }
 
   $master_os_template = $::operatingsystem ? {
