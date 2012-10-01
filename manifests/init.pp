@@ -149,8 +149,12 @@ class postfix {
   }
 
   # Default configuration parameters
+  $myorigin = $valid_fqdn ? {
+    ''      => $::fqdn,
+    default => $valid_fqdn,
+  }
   postfix::config {
-    'myorigin':         value => $::fqdn;
+    'myorigin':         value => $myorigin;
     'alias_maps':       value => 'hash:/etc/aliases';
     'inet_interfaces':  value => 'all';
   }
