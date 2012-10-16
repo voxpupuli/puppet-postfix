@@ -30,7 +30,8 @@
 define postfix::config ($value, $ensure = present) {
 
   Augeas {
-    context => '/files/etc/postfix/main.cf',
+    incl    => '/etc/postfix/main.cf',
+    lens    => 'Postfix_Main.lns',
     notify  => Service['postfix'],
     require => File['/etc/postfix/main.cf'],
   }
