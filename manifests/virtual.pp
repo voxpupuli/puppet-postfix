@@ -58,11 +58,10 @@ define postfix::virtual (
   }
 
   augeas {"Postfix virtual - ${name}":
-    load_path => '/usr/share/augeas/lenses/contrib/',
-    incl      => $file,
-    lens      => 'Postfix_Virtual.aug',
-    changes   => $changes,
-    require   => [Package['postfix'], Augeas::Lens['postfix_transport']],
-    notify    => Exec['generate /etc/postfix/virtual.db'],
+    incl    => $file,
+    lens    => 'Postfix_Virtual.lns',
+    changes => $changes,
+    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    notify  => Exec['generate /etc/postfix/virtual.db'],
   }
 }
