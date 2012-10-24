@@ -68,10 +68,10 @@ define postfix::transport (
   }
 
   augeas {"Postfix transport - ${name}":
-    load_path => '/usr/share/augeas/lenses/contrib/',
-    context   => "/files${file}",
-    changes   => $changes,
-    require   => [Package['postfix'], Augeas::Lens['postfix_transport']],
-    notify    => Exec['generate /etc/postfix/transport.db'],
+    lens    => 'Postfix_Transport.lns',
+    incl    => $file,
+    changes => $changes,
+    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    notify  => Exec['generate /etc/postfix/transport.db'],
   }
 }
