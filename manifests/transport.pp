@@ -32,7 +32,7 @@
 #  }
 #
 define postfix::transport (
-  $destination,
+  $destination='',
   $nexthop='',
   $file='/etc/postfix/transport',
   $ensure='present'
@@ -41,21 +41,23 @@ define postfix::transport (
 
   case $ensure {
     'present': {
-      if ($nexthop) {
-        $changes = [
-          "set pattern[. = '${name}'] '${name}'",
-          "set pattern[. = '${name}']/transport '${destination}'",
-          # TODO: support nexthop
-          "set pattern[. = '${name}']/nexthop '${nexthop}'",
-        ]
+      if ($destination) {
+        $change_destination = "set pattern[. = '${name}']/transport '${destination}'"
       } else {
-        $changes = [
-          "set pattern[. = '${name}'] '${name}'",
-          "set pattern[. = '${name}']/transport '${destination}'",
-          # TODO: support nexthop
-          "clear pattern[. = '${name}']/nexthop",
-        ]
+        $change_destination = "clear pattern[. = '${name}']/transport"
       }
+
+      if ($nexthop) {
+        $change_nexthop = "set pattern[. = '${name}']/nexthop '${nexthop}'"
+      } else {
+        $change_nexthop = "clear pattern[. = '${name}']/nexthop"
+      }
+
+      $changes = [
+        "set pattern[. = '${name}'] '${name}'",
+        $change_destination,
+        $change_nexthop,
+      ]
     }
 
     'absent': {
