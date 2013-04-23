@@ -30,8 +30,6 @@
 define postfix::config ($value, $ensure = present) {
 
   Augeas {
-    incl    => '/etc/postfix/main.cf',
-    lens    => 'Postfix_Main.lns',
     notify  => Service['postfix'],
     require => File['/etc/postfix/main.cf'],
   }
@@ -39,12 +37,14 @@ define postfix::config ($value, $ensure = present) {
   case $ensure {
     present: {
       augeas { "set postfix '${name}' to '${value}'":
-        changes => "set $name '$value'",
+        context =>  '/files/etc/postfix/main.cf',
+        changes =>  "set ${name} '${value}'"
       }
     }
     absent: {
       augeas { "rm postfix '${name}'":
-        changes => "rm $name",
+        context =>  '/files/etc/postfix/main.cf',
+        changes => "rm ${name}",
       }
     }
     default: {}

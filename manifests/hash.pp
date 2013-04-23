@@ -28,11 +28,13 @@
 #
 define postfix::hash ($ensure='present', $source=false, $content=false) {
 
+  $lsbarray = split($::operatingsystemrelease, '[.]')
+  $lsbmajdistrelease = $lsbarray[0]
   # selinux labels differ from one distribution to another
   case $::operatingsystem {
 
     RedHat, CentOS: {
-      case $::lsbmajdistrelease {
+      case $lsbmajdistrelease {
         '4':     { $postfix_seltype = 'etc_t' }
         '5','6': { $postfix_seltype = 'postfix_etc_t' }
         default: { $postfix_seltype = undef }

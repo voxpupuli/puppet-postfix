@@ -30,29 +30,23 @@
 #     }
 #   }
 #
-class postfix::mta {
+class postfix::mta (
+      $relayhost      = '',
+      $mydestination  = '$myorigin',
+      $mynetworks     = '127.0.0.0/8'
+    ) {
 
-  case $postfix_relayhost {
-    '':      { fail('Required $postfix_relayhost variable is not defined.') }
-    default: {}
-  }
-
-  case $postfix_mydestination {
-    '':      { $postfix_mydestination = '$myorigin' }
-    default: {}
-  }
-
-  case $postfix_mynetworks {
-    "":      { $postfix_mynetworks = "127.0.0.0/8" }
+  case "${relayhost}" {
+    '':      { fail('Required $relayhost variable is not defined.') }
     default: {}
   }
 
   include postfix
 
   postfix::config {
-    'mydestination':       value => $postfix_mydestination;
-    'mynetworks':          value => $postfix_mynetworks;
-    'relayhost':           value => $postfix_relayhost;
+    'mydestination':       value => $mydestination;
+    'mynetworks':          value => $mynetworks;
+    'relayhost':           value => $relayhost;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
     'transport_maps':      value => 'hash:/etc/postfix/transport';
   }
