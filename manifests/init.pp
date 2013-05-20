@@ -19,14 +19,19 @@
 class postfix (
   $smtp_listen = '127.0.0.1',         # postfix_smtp_listen
   $root_mail_recipient = 'nobody',    # root_mail_recipient
-  $use_amavisd = 'no',                # postfix_use_amavisd
-  $use_dovecot_lda = 'no',            # postfix_use_dovecot_lda
-  $use_schleuder = 'no',              # postfix_use_schleuder
-  $use_sympa = 'no',                  # postfix_use_sympa
+  $use_amavisd = false,               # postfix_use_amavisd
+  $use_dovecot_lda = false,           # postfix_use_dovecot_lda
+  $use_schleuder = false,             # postfix_use_schleuder
+  $use_sympa = false,                 # postfix_use_sympa
   $mail_user = 'vmail',               # postfix_mail_user
   $myorigin = $::fqdn,
   $inet_interfaces = 'localhost',
 ) inherits postfix::params {
+
+  validate_bool($use_amavisd)
+  validate_bool($use_dovecot_lda)
+  validate_bool($use_schleuder)
+  validate_bool($use_sympa)
 
   class { 'postfix::packages': } ->
   class { 'postfix::files': } ~>
