@@ -4,6 +4,8 @@
 
 This module is provided by [Camptocamp](http://www.camptocamp.com/)
 
+This module requires Augeas.
+
 ## Simple usage
 
     include postfix
