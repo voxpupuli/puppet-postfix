@@ -8,11 +8,11 @@
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
 <% if has_variable?('postfix_master_smtp') -%>
-<%= postfix_master_smtp %>
-<% elsif postfix_smtp_listen == 'all' -%>
+<%= @postfix_master_smtp %>
+<% elsif scope.lookupvar('postfix::smtp_listen') == 'all' -%>
 smtp      inet  n       -       -       -       -       smtpd
 <% else -%>
-<%= postfix_smtp_listen %>:smtp      inet  n       -       -       -       -       smtpd
+<%= scope.lookupvar('postfix::smtp_listen') %>:smtp      inet  n       -       -       -       -       smtpd
 <% end -%>
 <% if has_variable?('postfix_master_submission') -%>
 <%= postfix_master_submission %>
@@ -68,7 +68,7 @@ scache	  unix	-	-	-	-	1	scache
 # Also specify in main.cf: maildrop_destination_recipient_limit=1
 #
 maildrop  unix  -       n       n       -       -       pipe
-  flags=DRhu user=<%= postfix_mail_user %> argv=/usr/bin/maildrop -d ${recipient}
+  flags=DRhu user=<%= scope.lookupvar('postfix::mail_user') %> argv=/usr/bin/maildrop -d ${recipient}
 #
 # See the Postfix UUCP_README file for configuration details.
 #

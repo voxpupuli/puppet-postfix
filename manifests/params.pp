@@ -1,9 +1,9 @@
 class postfix::params {
   case $::osfamily {
     'RedHat': {
-      $seltype = $::lsbmajdistrelease {
-        '4'     => 'etc_t',
-        '5','6' => 'postfix_etc_t',
+      $seltype = $::lsbmajdistrelease ? {
+        '4'   => 'etc_t',
+        /5|6/ => 'postfix_etc_t',
         default => undef,
       }
 
@@ -13,7 +13,7 @@ class postfix::params {
     }
 
     'Debian': {
-      $seltype = undef,
+      $seltype = undef
 
       $mailx_package = $::lsbdistcodename ? {
         /sarge|etch|lenny|lucid/ => 'mailx',
