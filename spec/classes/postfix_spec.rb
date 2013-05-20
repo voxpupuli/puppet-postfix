@@ -22,7 +22,7 @@ describe 'postfix' do
       it { should contain_postfix__config('alias_maps') }
       it { should contain_postfix__config('inet_interfaces') }
 
-      it { should contain_mailalias('root') }
+      it { should contain_mailalias('root').with_recipient('nobody') }
 
       it {
         should contain_service('postfix').with(
@@ -56,7 +56,7 @@ describe 'postfix' do
       it { should contain_postfix__config('newaliases_path') }
       it { should contain_postfix__config('mailq_path') }
 
-      it { should contain_mailalias('root') }
+      it { should contain_mailalias('root').with_recipient('nobody') }
 
       it {
         should contain_service('postfix').with(
@@ -105,7 +105,7 @@ describe 'postfix' do
         it { should contain_postfix__config('alias_maps') }
         it { should contain_postfix__config('inet_interfaces') }
 
-        it { should contain_mailalias('root') }
+        it { should contain_mailalias('root').with_recipient('foo') }
 
         it {
           should contain_service('postfix').with(
