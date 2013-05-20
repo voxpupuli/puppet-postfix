@@ -1,0 +1,8 @@
+name         'camptocamp-postfix'
+version      '0.1.0'
+source       'https://github.com/camptocamp/puppet-postfix'
+author       'DevOps Team / Camptocamp'
+license      'GNU GPLv3'
+summary      'Camptocamp Postfix Module'
+description  'Postfix Module for Puppet'
+project_page 'https://github.com/camptocamp/puppet-postfix'
