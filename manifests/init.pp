@@ -5,24 +5,36 @@
 # delivery and an SMTP server listening on the loopback interface.
 #
 # Parameters:
-# - *$postfix_smtp_listen*: address on which the smtp service will listen to.
+# - *smtp_listen*: address on which the smtp service will listen to.
 #      defaults to 127.0.0.1
-# - *$root_mail_recipient*: who will recieve root's emails. defaults to 'nobody'
+# - *mail_recipient*: who will recieve root's emails. defaults to 'nobody'
 #
 # Example usage:
 #
-#   node 'toto.example.com' {
-#     $postfix_smtp_listen = '192.168.1.10'
-#     include postfix
-#   }
+#     class { 'postfix': }
 #
-class postfix {
+# -or-
+#
+#     class { 'postfix':
+#       smtp_listen = '192.168.0.1',
+#       inet_interfaces = 'localhost'}
+class postfix (
+      $smtp_listen            = '127.0.0.1',
+      $root_mail_recipient    = 'root',
+      $use_amavisd            = 'no',
+      $use_dovecot_lda        = 'no',
+      $use_schleuder          = 'no',
+      $mail_user              = 'vmail',
+      $myorigin               = $::fqdn,
+      $inet_interfaces        = 'localhost'
+    ) {
 
+  $lsbarray = split($::operatingsystemrelease, '[.]')
+  $lsbmajdistrelease = $lsbarray[0]
   # selinux labels differ from one distribution to another
   case $::operatingsystem {
-
-    RedHat, CentOS: {
-      case $::lsbmajdistrelease {
+    'RedHat', 'CentOS': {
+      case $lsbmajdistrelease {
         '4':     { $postfix_seltype = 'etc_t' }
         '5','6': { $postfix_seltype = 'postfix_etc_t' }
         default: { $postfix_seltype = undef }
@@ -31,50 +43,6 @@ class postfix {
 
     default: {
       $postfix_seltype = undef
-    }
-  }
-
-  # Default value for various options
-  if $postfix_smtp_listen == '' {
-    $postfix_smtp_listen = '127.0.0.1'
-  }
-  if $root_mail_recipient == '' {
-    $root_mail_recipient = 'nobody'
-  }
-  if $postfix_use_amavisd == '' {
-    $postfix_use_amavisd = 'no'
-  }
-  if $postfix_use_dovecot_lda == '' {
-    $postfix_use_dovecot_lda = 'no'
-  }
-  if $postfix_use_schleuder == '' {
-    $postfix_use_schleuder = 'no'
-  }
-  if $postfix_use_sympa == '' {
-    $postfix_use_sympa = 'no'
-  }
-  if $postfix_mail_user == '' {
-    $postfix_mail_user = 'vmail'
-  }
-
-  case $::operatingsystem {
-    /RedHat|CentOS|Fedora/: {
-      $mailx_package = 'mailx'
-    }
-
-    /Debian|kFreeBSD/: {
-      $mailx_package = $::lsbdistcodename ? {
-        /lenny|etch|sarge/ => 'mailx',
-        default            => 'bsd-mailx',
-      }
-    }
-
-    'Ubuntu': {
-      if (versioncmp('10', $::lsbmajdistrelease) > 0) {
-        $mailx_package = 'mailx'
-      } else {
-        $mailx_package = 'bsd-mailx'
-      }
     }
   }
 
@@ -87,11 +55,6 @@ class postfix {
     ensure => installed,
   }
 
-  package { 'mailx':
-    ensure => installed,
-    name   => $mailx_package,
-  }
-
   service { 'postfix':
     ensure    => running,
     enable    => true,
@@ -102,7 +65,7 @@ class postfix {
 
   file { '/etc/mailname':
     ensure  => present,
-    content => "$::fqdn\n",
+    content => "${::fqdn}\n",
     seltype => $postfix_seltype,
   }
 
@@ -149,14 +112,11 @@ class postfix {
   }
 
   # Default configuration parameters
-  $myorigin = $valid_fqdn ? {
-    ''      => $::fqdn,
-    default => $valid_fqdn,
-  }
+
   postfix::config {
     'myorigin':         value => $myorigin;
     'alias_maps':       value => 'hash:/etc/aliases';
-    'inet_interfaces':  value => 'all';
+    'inet_interfaces':  value => $inet_interfaces;
   }
 
   case $::operatingsystem {
