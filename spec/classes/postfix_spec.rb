@@ -15,6 +15,11 @@ describe 'postfix' do
     it { should contain_file('/etc/aliases').with_content("# file managed by puppet\n") }
     it { should contain_exec('newaliases').with_refreshonly('true') }
     it { should contain_file('/etc/postfix/master.cf') }
+    it { should contain_file('/etc/postfix/main.cf' ) }
+
+    it { should contain_postfix__config('myorigin') }
+    it { should contain_postfix__config('alias_maps') }
+    it { should contain_postfix__config('inet_interfaces') }
   end
 
   context 'when on RedHat' do
@@ -31,5 +36,13 @@ describe 'postfix' do
     it { should contain_file('/etc/aliases').with_content("# file managed by puppet\n") }
     it { should contain_exec('newaliases').with_refreshonly('true') }
     it { should contain_file('/etc/postfix/master.cf') }
+    it { should contain_file('/etc/postfix/main.cf' ) }
+
+    it { should contain_postfix__config('myorigin') }
+    it { should contain_postfix__config('alias_maps') }
+    it { should contain_postfix__config('inet_interfaces') }
+    it { should contain_postfix__config('sendmail_path') }
+    it { should contain_postfix__config('newaliases_path') }
+    it { should contain_postfix__config('mailq_path') }
   end
 end
