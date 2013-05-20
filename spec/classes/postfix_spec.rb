@@ -12,11 +12,11 @@ describe 'postfix' do
       it { should contain_package('postfix') }
       it { should contain_package('mailx') }
 
-      it { should contain_file('/etc/mailname').with_content("fqdn.example.com\n") }
-      it { should contain_file('/etc/aliases').with_content("# file managed by puppet\n") }
+      it { should contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
+      it { should contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
       it { should contain_exec('newaliases').with_refreshonly('true') }
-      it { should contain_file('/etc/postfix/master.cf') }
-      it { should contain_file('/etc/postfix/main.cf' ) }
+      it { should contain_file('/etc/postfix/master.cf').without('seltype') }
+      it { should contain_file('/etc/postfix/main.cf').without('seltype') }
 
       it { should contain_postfix__config('myorigin') }
       it { should contain_postfix__config('alias_maps') }
@@ -43,11 +43,11 @@ describe 'postfix' do
       it { should contain_package('postfix') }
       it { should contain_package('mailx') }
 
-      it { should contain_file('/etc/mailname').with_content("fqdn.example.com\n") }
-      it { should contain_file('/etc/aliases').with_content("# file managed by puppet\n") }
+      it { should contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
+      it { should contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
       it { should contain_exec('newaliases').with_refreshonly('true') }
-      it { should contain_file('/etc/postfix/master.cf') }
-      it { should contain_file('/etc/postfix/main.cf' ) }
+      it { should contain_file('/etc/postfix/master.cf').without('seltype') }
+      it { should contain_file('/etc/postfix/main.cf').without('seltype') }
 
       it { should contain_postfix__config('myorigin') }
       it { should contain_postfix__config('alias_maps') }
