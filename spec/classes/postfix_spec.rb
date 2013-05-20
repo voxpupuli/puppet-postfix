@@ -98,7 +98,16 @@ describe 'postfix' do
         it {
           should contain_file('/etc/postfix/master.cf').without('seltype').with_content(
             /smtp      inet  n       -       -       -       -       smtpd/
-        ) }
+          ).with_content(
+            /amavis unix/
+          ).with_content(
+            /dovecot.*\n.* user=bar:bar /
+          ).with_content(
+            /schleuder/
+          ).with_content(
+            /sympa/
+          )
+        }
         it { should contain_file('/etc/postfix/main.cf').without('seltype') }
 
         it { should contain_postfix__config('myorigin') }
