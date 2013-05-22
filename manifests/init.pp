@@ -31,6 +31,8 @@ class postfix (
   $master_submission = undef,         # postfix_master_submission
 ) inherits postfix::params {
 
+  validate_string($smtp_listen)
+  validate_string($root_mail_recipient)
   validate_bool($use_amavisd)
   validate_bool($use_dovecot_lda)
   validate_bool($use_schleuder)
