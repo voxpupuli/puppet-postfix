@@ -106,6 +106,8 @@ describe 'postfix' do
             /schleuder/
           ).with_content(
             /sympa/
+          ).with_content(
+            /user=bar/
           )
         }
         it { should contain_file('/etc/postfix/main.cf').without('seltype') }
