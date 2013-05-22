@@ -26,15 +26,33 @@ class postfix (
   $mail_user = 'vmail',               # postfix_mail_user
   $myorigin = $::fqdn,
   $inet_interfaces = 'localhost',
+  $master_smtp = undef,               # postfix_master_smtp
+  $master_smtps = undef,              # postfix_master_smtps
+  $master_submission = undef,         # postfix_master_submission
 ) inherits postfix::params {
 
   validate_bool($use_amavisd)
   validate_bool($use_dovecot_lda)
   validate_bool($use_schleuder)
   validate_bool($use_sympa)
+  validate_string($mail_user)
+  validate_string($myorigin)
+  validate_string($inet_interfaces)
+  validate_string($master_smtp)
+  validate_string($master_smtps)
 
   class { 'postfix::packages': } ->
-  class { 'postfix::files': } ~>
+  class { 'postfix::files':
+    use_amavisd       => $use_amavisd,
+    use_dovecot_lda   => $use_dovecot_lda,
+    use_schleuder     => $use_schleuder,
+    use_sympa         => $use_sympa,
+    smtp_listen       => $smtp_listen,
+    mail_user         => $mail_user,
+    master_smtp       => $master_smtp,
+    master_smtps      => $master_smtps,
+    master_submission => $master_submission,
+    } ~>
   class { 'postfix::service': } ->
   Class['postfix']
 }

@@ -7,18 +7,18 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
-<% if has_variable?('postfix_master_smtp') -%>
-<%= @postfix_master_smtp %>
-<% elsif scope.lookupvar('postfix::smtp_listen') == 'all' -%>
+<% if @master_smtp -%>
+<%= @master_smtp %>
+<% elsif @smtp_listen == 'all' -%>
 smtp      inet  n       -       -       -       -       smtpd
 <% else -%>
-<%= scope.lookupvar('postfix::smtp_listen') %>:smtp      inet  n       -       -       -       -       smtpd
+<%= @smtp_listen %>:smtp      inet  n       -       -       -       -       smtpd
 <% end -%>
-<% if has_variable?('postfix_master_submission') -%>
-<%= postfix_master_submission %>
+<% if @master_submission -%>
+<%= @master_submission %>
 <% end -%>
-<% if has_variable?('postfix_master_smtps') -%>
-<%= postfix_master_smtps %>
+<% if @master_smtps -%>
+<%= @master_smtps %>
 <% end -%>
 #submission inet n       -       -       -       -       smtpd
 #  -o smtpd_enforce_tls=yes
