@@ -18,9 +18,9 @@ describe 'postfix' do
       it { should contain_file('/etc/postfix/master.cf').without('seltype') }
       it { should contain_file('/etc/postfix/main.cf').without('seltype') }
 
-      it { should contain_postfix__config('myorigin') }
-      it { should contain_postfix__config('alias_maps') }
-      it { should contain_postfix__config('inet_interfaces') }
+      it { should contain_postfix__config('myorigin').with_value('fqdn.example.com') }
+      it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+      it { should contain_postfix__config('inet_interfaces').with_value('localhost') }
 
       it { should contain_mailalias('root').with_recipient('nobody') }
 
@@ -49,9 +49,9 @@ describe 'postfix' do
       it { should contain_file('/etc/postfix/master.cf').without('seltype') }
       it { should contain_file('/etc/postfix/main.cf').without('seltype') }
 
-      it { should contain_postfix__config('myorigin') }
-      it { should contain_postfix__config('alias_maps') }
-      it { should contain_postfix__config('inet_interfaces') }
+      it { should contain_postfix__config('myorigin').with_value('fqdn.example.com') }
+      it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+      it { should contain_postfix__config('inet_interfaces').with_value('localhost') }
       it { should contain_postfix__config('sendmail_path') }
       it { should contain_postfix__config('newaliases_path') }
       it { should contain_postfix__config('mailq_path') }
@@ -122,9 +122,9 @@ describe 'postfix' do
         }
         it { should contain_file('/etc/postfix/main.cf').without('seltype') }
 
-        it { should contain_postfix__config('myorigin') }
-        it { should contain_postfix__config('alias_maps') }
-        it { should contain_postfix__config('inet_interfaces') }
+        it { should contain_postfix__config('myorigin').with_value('localhost') }
+        it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+        it { should contain_postfix__config('inet_interfaces').with_value('localhost2') }
 
         it { should contain_mailalias('root').with_recipient('foo') }
 
