@@ -6,6 +6,8 @@ class postfix::files (
   $use_schleuder,
   $use_sympa,
   $mail_user,
+  $myorigin,
+  $inet_interfaces,
   $master_smtp,
   $master_smtps,
   $master_submission,
@@ -59,9 +61,9 @@ class postfix::files (
   }
 
   ::postfix::config {
-    'myorigin':         value => $postfix::myorigin;
+    'myorigin':         value => $myorigin;
     'alias_maps':       value => 'hash:/etc/aliases';
-    'inet_interfaces':  value => $postfix::inet_interfaces;
+    'inet_interfaces':  value => $inet_interfaces;
   }
 
   case $::osfamily {

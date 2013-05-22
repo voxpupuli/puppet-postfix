@@ -52,6 +52,8 @@ class postfix (
     use_schleuder       => $use_schleuder,
     use_sympa           => $use_sympa,
     mail_user           => $mail_user,
+    myorigin            => $myorigin,
+    inet_interfaces     => $inet_interfaces,
     master_smtp         => $master_smtp,
     master_smtps        => $master_smtps,
     master_submission   => $master_submission,
