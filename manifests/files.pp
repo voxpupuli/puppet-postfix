@@ -1,9 +1,10 @@
 class postfix::files (
+  $smtp_listen,
+  $root_mail_recipient,
   $use_amavisd,
   $use_dovecot_lda,
   $use_schleuder,
   $use_sympa,
-  $smtp_listen,
   $mail_user,
   $master_smtp,
   $master_smtps,
@@ -75,7 +76,7 @@ class postfix::files (
   }
 
   mailalias {'root':
-    recipient => $postfix::root_mail_recipient,
+    recipient => $root_mail_recipient,
     notify    => Exec['newaliases'],
   }
 }
