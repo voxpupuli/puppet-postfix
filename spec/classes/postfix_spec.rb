@@ -87,6 +87,10 @@ describe 'postfix' do
           :mail_user           => 'bar',
           :myorigin            => 'localhost',
           :inet_interfaces     => 'localhost2',
+          :master_smtp         => "smtp      inet  n       -       -       -       -       smtpd
+    -o smtpd_client_restrictions=check_client_access,hash:/etc/postfix/access,reject",
+          :master_smtps        => 'smtps     inet  n       -       -       -       -       smtpd',
+          :master_submission   => 'submission inet n       -       -       -       -       smtpd',
         } }
 
         it { should contain_package('postfix') }
@@ -108,6 +112,12 @@ describe 'postfix' do
             /sympa/
           ).with_content(
             /user=bar/
+          ).with_content(
+            /^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:/
+          ).with_content(
+            /^smtps     inet  n/
+          ).with_content(
+            /^submission inet n/
           )
         }
         it { should contain_file('/etc/postfix/main.cf').without('seltype') }
