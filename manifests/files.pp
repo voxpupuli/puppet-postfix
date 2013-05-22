@@ -1,4 +1,14 @@
-class postfix::files {
+class postfix::files (
+  $use_amavisd,
+  $use_dovecot_lda,
+  $use_schleuder,
+  $use_sympa,
+  $smtp_listen,
+  $mail_user,
+  $master_smtp,
+  $master_smtps,
+  $master_submission,
+) {
   include postfix::params
 
   file { '/etc/mailname':
