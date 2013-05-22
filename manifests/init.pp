@@ -43,15 +43,16 @@ class postfix (
 
   class { 'postfix::packages': } ->
   class { 'postfix::files':
-    use_amavisd       => $use_amavisd,
-    use_dovecot_lda   => $use_dovecot_lda,
-    use_schleuder     => $use_schleuder,
-    use_sympa         => $use_sympa,
-    smtp_listen       => $smtp_listen,
-    mail_user         => $mail_user,
-    master_smtp       => $master_smtp,
-    master_smtps      => $master_smtps,
-    master_submission => $master_submission,
+    smtp_listen         => $smtp_listen,
+    root_mail_recipient => $root_mail_recipient,
+    use_amavisd         => $use_amavisd,
+    use_dovecot_lda     => $use_dovecot_lda,
+    use_schleuder       => $use_schleuder,
+    use_sympa           => $use_sympa,
+    mail_user           => $mail_user,
+    master_smtp         => $master_smtp,
+    master_smtps        => $master_smtps,
+    master_submission   => $master_submission,
     } ~>
   class { 'postfix::service': } ->
   Class['postfix']
