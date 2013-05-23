@@ -29,6 +29,11 @@
 #
 define postfix::config ($value, $ensure = present) {
 
+  validate_string($value)
+  validate_string($ensure)
+  validate_re($ensure, ['present', 'absent'],
+    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
+
   Augeas {
     incl    => '/etc/postfix/main.cf',
     lens    => 'Postfix_Main.lns',
