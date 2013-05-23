@@ -26,50 +26,36 @@
 #    }
 #  }
 #
-define postfix::hash ($ensure='present', $source=false, $content=false) {
+define postfix::hash (
+  $ensure='present',
+  $source=undef,
+  $content=undef,
+) {
+  include ::postfix::params
 
-  # selinux labels differ from one distribution to another
-  case $::operatingsystem {
+  validate_absolute_path($name)
+  validate_string($source)
+  validate_string($content)
+  validate_string($ensure)
+  validate_re($ensure, ['present', 'absent'],
+    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
-    RedHat, CentOS: {
-      case $::lsbmajdistrelease {
-        '4':     { $postfix_seltype = 'etc_t' }
-        '5','6': { $postfix_seltype = 'postfix_etc_t' }
-        default: { $postfix_seltype = undef }
-      }
-    }
-
-    default: {
-      $postfix_seltype = undef
-    }
+  if $source and $content {
+    fail "You must provide either 'source' or 'content', not both"
   }
 
   File {
     mode    => '0600',
     owner   => root,
     group   => root,
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
   }
 
-  if $source != false {
-    file {$name:
-      ensure  => $ensure,
-      source  => $source,
-      require => Package['postfix'],
-    }
-  } else {
-    if $content != false {
-      file {$name:
-        ensure  => $ensure,
-        content => $content,
-        require => Package['postfix'],
-      }
-    } else {
-      file {$name:
-        ensure  => $ensure,
-        require => Package['postfix'],
-      }
-    }
+  file { $name:
+    ensure  => $ensure,
+    source  => $source,
+    content => $content,
+    require => Package['postfix'],
   }
 
   file {"${name}.db":
