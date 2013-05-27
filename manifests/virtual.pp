@@ -39,6 +39,14 @@ define postfix::virtual (
 ) {
   include postfix::augeas
 
+  validate_string($destination)
+  validate_string($nexthop)
+  validate_string($file)
+  validate_absolute_path($file)
+  validate_string($ensure)
+  validate_re($ensure, ['present', 'absent'],
+    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
+
   case $ensure {
     'present': {
       $changes = [
