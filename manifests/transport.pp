@@ -39,6 +39,12 @@ define postfix::transport (
 ) {
   include postfix::augeas
 
+  validate_string($destination)
+  validate_string($nexthop)
+  validate_string($file)
+  validate_absolute_path($file)
+  validate_string($ensure)
+
   case $ensure {
     'present': {
       if ($destination) {
@@ -65,7 +71,7 @@ define postfix::transport (
     }
 
     default: {
-      fail("Wrong ensure value: ${ensure}")
+      fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
     }
   }
 
