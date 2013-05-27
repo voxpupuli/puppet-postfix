@@ -33,14 +33,12 @@
 #
 define postfix::virtual (
   $destination,
-  $nexthop='',
   $file='/etc/postfix/virtual',
   $ensure='present'
 ) {
   include postfix::augeas
 
   validate_string($destination)
-  validate_string($nexthop)
   validate_string($file)
   validate_absolute_path($file)
   validate_string($ensure)
