@@ -23,15 +23,11 @@
 #
 class postfix::satellite {
 
-  # If $valid_fqdn exists, use it to override $fqdn
-  case $valid_fqdn {
-    '':      { $valid_fqdn = $::fqdn }
-    default: { $fqdn = $valid_fqdn }
-  }
+  validate_re($postfix::myorigin, '^\S+$')
 
-  include postfix::mta
+  include ::postfix::mta
 
-  postfix::virtual { "@${valid_fqdn}":
+  postfix::virtual { "@${postfix::myorigin}":
     ensure      => present,
     destination => 'root',
   }
