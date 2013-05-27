@@ -29,6 +29,11 @@ class postfix (
   $master_smtp = undef,               # postfix_master_smtp
   $master_smtps = undef,              # postfix_master_smtps
   $master_submission = undef,         # postfix_master_submission
+  $relayhost = undef,                 # postfix_relayhost
+  $mydestination = undef,             # postfix_mydestination
+  $mynetworks = undef,                # postfix_mynetworks
+  $mta = false,
+  $satellite = false,
 ) inherits postfix::params {
 
   validate_string($smtp_listen)
@@ -42,6 +47,12 @@ class postfix (
   validate_string($inet_interfaces)
   validate_string($master_smtp)
   validate_string($master_smtps)
+  validate_string($relayhost)
+  validate_string($mydestination)
+  validate_string($mynetworks)
+
+  validate_bool($mta)
+  validate_bool($satellite)
 
   class { 'postfix::packages': } ->
   class { 'postfix::files':
@@ -60,4 +71,12 @@ class postfix (
     } ~>
   class { 'postfix::service': } ->
   Class['postfix']
+
+  if $mta {
+    include ::postfix::mta
+  }
+
+  if $satellite {
+    include ::postfix::satellite
+  }
 }
