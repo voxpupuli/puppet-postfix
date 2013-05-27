@@ -87,7 +87,7 @@ class postfix (
     include ::postfix::satellite
   }
 
-  it $mailman {
+  if $mailman {
     include ::postfix::mailman
   }
 }
