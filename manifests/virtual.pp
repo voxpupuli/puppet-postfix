@@ -42,8 +42,6 @@ define postfix::virtual (
   validate_string($file)
   validate_absolute_path($file)
   validate_string($ensure)
-  validate_re($ensure, ['present', 'absent'],
-    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
   case $ensure {
     'present': {
@@ -59,7 +57,7 @@ define postfix::virtual (
     }
 
     default: {
-      fail("Wrong ensure value: ${ensure}")
+      fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
     }
   }
 
