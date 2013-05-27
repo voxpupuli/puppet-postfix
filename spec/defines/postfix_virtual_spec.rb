@@ -26,19 +26,6 @@ describe 'postfix::virtual' do
     end
   end
 
-  context 'when sending wrong type for nexthop' do
-    let (:params) { {
-      :destination => 'bar',
-      :nexthop     => ['baz'],
-    } }
-
-    it 'should fail' do
-      expect {
-        should contain_augeas('Postfix virtual - foo')
-      }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
-    end
-  end
-
   context 'when sending wrong type for file' do
     let (:params) { {
       :destination => 'bar',
