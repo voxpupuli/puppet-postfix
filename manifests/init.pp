@@ -34,6 +34,7 @@ class postfix (
   $mynetworks = undef,                # postfix_mynetworks
   $mta = false,
   $satellite = false,
+  $mailman = false,
 ) inherits postfix::params {
 
   validate_string($smtp_listen)
@@ -53,10 +54,16 @@ class postfix (
 
   validate_bool($mta)
   validate_bool($satellite)
+  validate_bool($mailman)
+
+  $_smtp_listen = $mailman ? {
+    true    => '0.0.0.0',
+    default => $smtp_listen,
+  }
 
   class { 'postfix::packages': } ->
   class { 'postfix::files':
-    smtp_listen         => $smtp_listen,
+    smtp_listen         => $_smtp_listen,
     root_mail_recipient => $root_mail_recipient,
     use_amavisd         => $use_amavisd,
     use_dovecot_lda     => $use_dovecot_lda,
@@ -78,5 +85,9 @@ class postfix (
 
   if $satellite {
     include ::postfix::satellite
+  }
+
+  it $mailman {
+    include ::postfix::mailman
   }
 }
