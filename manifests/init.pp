@@ -16,7 +16,7 @@
 #     include postfix
 #   }
 #
-class postfix {
+class postfix($postfix_smtp_listen='', $root_mail_recipient='', $valid_fqdn='') {
 
   # selinux labels differ from one distribution to another
   case $::operatingsystem {
@@ -102,7 +102,7 @@ class postfix {
 
   file { '/etc/mailname':
     ensure  => present,
-    content => "$::fqdn\n",
+    content => "${::fqdn}\n",
     seltype => $postfix_seltype,
   }
 
