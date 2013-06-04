@@ -67,7 +67,7 @@ define postfix::virtual (
     incl    => $file,
     lens    => 'Postfix_Virtual.lns',
     changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    require => [Package['postfix'], Augeas::Lens['postfix_virtual']],
     notify  => Exec['generate /etc/postfix/virtual.db'],
   }
 }
