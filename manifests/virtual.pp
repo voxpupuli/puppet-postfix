@@ -37,7 +37,6 @@ define postfix::virtual (
   $file='/etc/postfix/virtual',
   $ensure='present'
 ) {
-  include postfix::augeas
 
   case $ensure {
     'present': {
@@ -58,10 +57,11 @@ define postfix::virtual (
   }
 
   augeas {"Postfix virtual - ${name}":
+    lens    => 'postfix_virtual.aug',
     incl    => $file,
-    lens    => 'Postfix_Virtual.lns',
+    context => "/files${file}",
     changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    require => Package['postfix'],
     notify  => Exec['generate /etc/postfix/virtual.db'],
   }
 }
