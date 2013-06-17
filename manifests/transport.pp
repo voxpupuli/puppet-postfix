@@ -37,7 +37,6 @@ define postfix::transport (
   $file='/etc/postfix/transport',
   $ensure='present'
 ) {
-  include postfix::augeas
 
   case $ensure {
     'present': {
@@ -70,10 +69,11 @@ define postfix::transport (
   }
 
   augeas {"Postfix transport - ${name}":
-    lens    => 'Postfix_Transport.lns',
+    lens    => 'postfix_transport.aug',
     incl    => $file,
+    context => "/files${file}",
     changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    require => Package['postfix'],
     notify  => Exec['generate /etc/postfix/transport.db'],
   }
 }
