@@ -107,12 +107,16 @@ class postfix {
   }
 
   # Aliases
-  file { '/etc/aliases':
-    ensure  => present,
-    content => '# file managed by puppet\n',
-    replace => false,
-    seltype => $postfix_seltype,
-    notify  => Exec['newaliases'],
+  # Example: in module for RT4
+  #    postfix::aliases { 'rt4_aliases': arg => "puppet:///modules/rt4/etc/aliases" }
+  define aliases($arg) {
+    file { '/etc/aliases':
+      ensure  => present,
+      source  => $arg,
+      replace => false,
+      seltype => $postfix_seltype,
+      notify  => Exec['newaliases'],
+    }
   }
 
   # Aliases
