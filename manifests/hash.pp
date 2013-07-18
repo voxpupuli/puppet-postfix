@@ -41,7 +41,7 @@ define postfix::hash (
     "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
   if $source and $content {
-    fail "You must provide either 'source' or 'content', not both"
+    fail 'You must provide either \'source\' or \'content\', not both'
   }
 
   File {
