@@ -113,7 +113,7 @@ class postfix {
     file { '/etc/aliases':
       ensure  => present,
       source  => $arg,
-      replace => false,
+      replace => true,
       seltype => $postfix_seltype,
       notify  => Exec['newaliases'],
     }
