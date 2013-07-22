@@ -11,6 +11,10 @@
 #
 # [*ldap_base*]           - (string)
 #
+# [*ldap_host*]           - (string)
+#
+# [*ldap_options*]        - (string)
+#
 # [*mail_user*]           - (string) The mail user
 #
 # [*mailman*]             - (boolean)
@@ -60,6 +64,8 @@ class postfix (
   $inet_interfaces     = 'all',
   $ldap                = false,
   $ldap_base           = undef,
+  $ldap_host           = undef,
+  $ldap_options        = undef,
   $mail_user           = 'vmail',     # postfix_mail_user
   $mailman             = false,
   $maincf_source       = "puppet:///modules/${module_name}/main.cf",
@@ -93,6 +99,8 @@ class postfix (
 
   validate_string($inet_interfaces)
   validate_string($ldap_base)
+  validate_string($ldap_host)
+  validate_string($ldap_options)
   validate_string($mail_user)
   validate_string($maincf_source)
   validate_string($mastercf_source)
