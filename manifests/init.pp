@@ -124,7 +124,7 @@ class postfix (
     default => $smtp_listen,
   }
 
-  $alias_maps = $ldap ? {
+  $all_alias_maps = $ldap ? {
     false => $alias_maps,
     true  => "\"${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf\"",
   }

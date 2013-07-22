@@ -1,6 +1,7 @@
 class postfix::files {
   include postfix::params
 
+  $alias_maps = $postfix::all_alias_maps
   $inet_interfaces = $postfix::inet_interfaces
   $mail_user = $postfix::mail_user
   $master_smtp = $postfix::master_smtp
@@ -69,7 +70,7 @@ class postfix::files {
 
   ::postfix::config {
     'myorigin':         value => $myorigin;
-    'alias_maps':       value => $postfix::alias_maps;
+    'alias_maps':       value => $alias_maps;
     'inet_interfaces':  value => $inet_interfaces;
   }
 
