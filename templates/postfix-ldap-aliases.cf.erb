@@ -1,12 +1,6 @@
 # File managed by puppet
-<% if has_variable?("postfix_ldap_host") -%>
-server_host = <%= postfix_ldap_host %>
-<% else -%>
-server_host = localhost
+server_host = <%= @ldap_host %>
+<% if @ldap_base -%>
+search_base = <%= @ldap_base %>
 <% end -%>
-<% if has_variable?("postfix_ldap_base") -%>
-search_base = <%= postfix_ldap_base %>
-<% end -%>
-<% if has_variable?('postfix_ldap_options') -%>
-<%= postfix_ldap_options %>
-<% end -%>
+<%= @ldap_options %>
