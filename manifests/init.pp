@@ -5,6 +5,8 @@
 # delivery and an SMTP server listening on the loopback interface.
 #
 # Parameters:
+# [*alias_maps*]          - (string)
+#
 # [*inet_interfaces*]     - (string)
 #
 # [*ldap*]                - (boolean)
@@ -61,6 +63,7 @@
 #   }
 #
 class postfix (
+  $alias_maps          = 'hash:/etc/aliases',
   $inet_interfaces     = 'all',
   $ldap                = false,
   $ldap_base           = undef,
@@ -97,6 +100,7 @@ class postfix (
   validate_bool($use_schleuder)
   validate_bool($use_sympa)
 
+  validate_string($alias_maps)
   validate_string($inet_interfaces)
   validate_string($ldap_base)
   validate_string($ldap_host)
@@ -121,8 +125,8 @@ class postfix (
   }
 
   $alias_maps = $ldap ? {
-    false => 'hash:/etc/aliases',
-    true  => '"hash:/etc/aliases, ldap:/etc/postfix/ldap-aliases.cf"',
+    false => $alias_maps,
+    true  => "\"${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf\"",
   }
 
   class { 'postfix::packages': } ->
