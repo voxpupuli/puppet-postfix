@@ -52,6 +52,8 @@ class postfix (
   $inet_interfaces     = 'all',
   $mail_user           = 'vmail',     # postfix_mail_user
   $mailman             = false,
+  $maincf_source       = "puppet:///modules/${module_name}/main.cf",
+  $mastercf_source     = undef,
   $master_smtp         = undef,       # postfix_master_smtp
   $master_smtps        = undef,       # postfix_master_smtps
   $master_submission   = undef,       # postfix_master_submission
