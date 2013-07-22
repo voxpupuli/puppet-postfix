@@ -49,7 +49,7 @@
 #   }
 #
 class postfix (
-  $inet_interfaces     = 'localhost',
+  $inet_interfaces     = 'all',
   $mail_user           = 'vmail',     # postfix_mail_user
   $mailman             = false,
   $master_smtp         = undef,       # postfix_master_smtp

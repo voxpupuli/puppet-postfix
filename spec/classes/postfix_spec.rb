@@ -20,7 +20,7 @@ describe 'postfix' do
 
       it { should contain_postfix__config('myorigin').with_value('fqdn.example.com') }
       it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
-      it { should contain_postfix__config('inet_interfaces').with_value('localhost') }
+      it { should contain_postfix__config('inet_interfaces').with_value('all') }
 
       it { should contain_mailalias('root').with_recipient('nobody') }
 
@@ -51,7 +51,7 @@ describe 'postfix' do
 
       it { should contain_postfix__config('myorigin').with_value('fqdn.example.com') }
       it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
-      it { should contain_postfix__config('inet_interfaces').with_value('localhost') }
+      it { should contain_postfix__config('inet_interfaces').with_value('all') }
       it { should contain_postfix__config('sendmail_path') }
       it { should contain_postfix__config('newaliases_path') }
       it { should contain_postfix__config('mailq_path') }
