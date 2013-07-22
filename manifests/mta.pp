@@ -32,15 +32,20 @@
 #
 class postfix::mta {
 
+  $mydestination = $postfix::mydestination ? {
+    undef   => $postfix::myorigin,
+    default => $postfix::mydestination,
+  }
+
   validate_re($postfix::relayhost, '^\S+$',
               'You must pass $relayhost to the postfix class')
-  validate_re($postfix::mydestination, '^\S+$',
+  validate_re($mydestination, '^\S+$',
               'You must pass $mydestination to the postfix class')
   validate_re($postfix::mynetworks, '^\S+$',
               'You must pass $mynetworks to the postfix class')
 
   postfix::config {
-    'mydestination':       value => $postfix::mydestination;
+    'mydestination':       value => $mydestination;
     'mynetworks':          value => $postfix::mynetworks;
     'relayhost':           value => $postfix::relayhost;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
