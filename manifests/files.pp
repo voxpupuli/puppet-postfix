@@ -69,7 +69,7 @@ class postfix::files {
 
   ::postfix::config {
     'myorigin':         value => $myorigin;
-    'alias_maps':       value => 'hash:/etc/aliases';
+    'alias_maps':       value => $postfix::alias_maps;
     'inet_interfaces':  value => $inet_interfaces;
   }
 

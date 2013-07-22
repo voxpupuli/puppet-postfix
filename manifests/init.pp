@@ -7,9 +7,17 @@
 # Parameters:
 # [*inet_interfaces*]     - (string)
 #
+# [*ldap*]                - (boolean)
+#
+# [*ldap_base*]           - (string)
+#
 # [*mail_user*]           - (string) The mail user
 #
 # [*mailman*]             - (boolean)
+#
+# [*maincf_source*]       - (string)
+#
+# [*mastercf_source*]     - (string)
 #
 # [*master_smtp*]         - (string)
 #
@@ -50,6 +58,8 @@
 #
 class postfix (
   $inet_interfaces     = 'all',
+  $ldap                = false,
+  $ldap_base           = undef,
   $mail_user           = 'vmail',     # postfix_mail_user
   $mailman             = false,
   $maincf_source       = "puppet:///modules/${module_name}/main.cf",
@@ -72,6 +82,7 @@ class postfix (
 ) inherits postfix::params {
 
 
+  validate_bool($ldap)
   validate_bool($mailman)
   validate_bool($mta)
   validate_bool($satellite)
@@ -81,7 +92,10 @@ class postfix (
   validate_bool($use_sympa)
 
   validate_string($inet_interfaces)
+  validate_string($ldap_base)
   validate_string($mail_user)
+  validate_string($maincf_source)
+  validate_string($mastercf_source)
   validate_string($master_smtp)
   validate_string($master_smtps)
   validate_string($mydestination)
@@ -98,10 +112,19 @@ class postfix (
     default => $smtp_listen,
   }
 
+  $alias_maps = $ldap ? {
+    false => 'hash:/etc/aliases',
+    true  => '"hash:/etc/aliases, ldap:/etc/postfix/ldap-aliases.cf"',
+  }
+
   class { 'postfix::packages': } ->
   class { 'postfix::files': } ~>
   class { 'postfix::service': } ->
   Class['postfix']
+
+  if $ldap {
+    include ::postfix::ldap
+  }
 
   if $mta {
     include ::postfix::mta

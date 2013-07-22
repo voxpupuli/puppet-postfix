@@ -1,11 +1,8 @@
-class postfix::ldap inherits postfix {
-  Postfix::Config['alias_maps'] {
-    value => '"hash:/etc/aliases, ldap:/etc/postfix/ldap-aliases.cf"',
-  }
+class postfix::ldap {
 
   package {'postfix-ldap': }
 
-  if ! $::postfix_ldap_base {
+  if ! $::postfix::ldap_base {
     fail 'Missing $postfix_ldap_base !'
   }
 
