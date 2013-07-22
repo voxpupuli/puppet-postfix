@@ -97,20 +97,7 @@ class postfix (
   }
 
   class { 'postfix::packages': } ->
-  class { 'postfix::files':
-    inet_interfaces     => $inet_interfaces,
-    mail_user           => $mail_user,
-    master_smtp         => $master_smtp,
-    master_smtps        => $master_smtps,
-    master_submission   => $master_submission,
-    myorigin            => $myorigin,
-    root_mail_recipient => $root_mail_recipient,
-    smtp_listen         => $_smtp_listen,
-    use_amavisd         => $use_amavisd,
-    use_dovecot_lda     => $use_dovecot_lda,
-    use_schleuder       => $use_schleuder,
-    use_sympa           => $use_sympa,
-    } ~>
+  class { 'postfix::files': } ~>
   class { 'postfix::service': } ->
   Class['postfix']
 

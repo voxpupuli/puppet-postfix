@@ -1,18 +1,18 @@
-class postfix::files (
-  $smtp_listen,
-  $root_mail_recipient,
-  $use_amavisd,
-  $use_dovecot_lda,
-  $use_schleuder,
-  $use_sympa,
-  $mail_user,
-  $myorigin,
-  $inet_interfaces,
-  $master_smtp,
-  $master_smtps,
-  $master_submission,
-) {
+class postfix::files {
   include postfix::params
+
+  $inet_interfaces = $postfix::inet_interfaces
+  $mail_user = $postfix::mail_user
+  $master_smtp = $postfix::master_smtp
+  $master_smtps = $postfix::master_smtps
+  $master_submission = $postfix::master_submission
+  $myorigin = $postfix::myorigin
+  $root_mail_recipient = $postfix::root_mail_recipient
+  $smtp_listen = $postfix::smtp_listen
+  $use_amavisd = $postfix::use_amavisd
+  $use_dovecot_lda = $postfix::use_dovecot_lda
+  $use_schleuder = $postfix::use_schleuder
+  $use_sympa = $postfix::use_sympa
 
   file { '/etc/mailname':
     ensure  => present,
