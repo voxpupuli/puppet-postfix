@@ -37,15 +37,22 @@ class postfix::files {
   }
 
   # Config files
+  if $postfix::mastercf_source {
+    $mastercf_content = undef
+  } else {
+    $mastercf_content = template(
+        $postfix::params::master_os_template,
+        "${module_name}/master.cf.common.erb"
+      )
+  }
+
   file { '/etc/postfix/master.cf':
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template(
-      $postfix::params::master_os_template,
-      "${module_name}/master.cf.common.erb"
-    ),
+    source  => $postfix::mastercf_source,
+    content => $mastercf_content,
     seltype => $postfix::params::seltype,
   }
 
@@ -55,7 +62,7 @@ class postfix::files {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => "puppet:///modules/${module_name}/main.cf",
+    source  => $postfix::maincf_source,
     replace => false,
     seltype => $postfix::params::seltype,
   }
