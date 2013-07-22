@@ -38,7 +38,7 @@ class postfix::mta {
   }
 
   $mynetworks = $postfix::mynetworks ? {
-    undef   => '127.0.0.1/8',
+    undef   => '127.0.0.0/8',
     default => $postfix::mynetworks,
   }
 
