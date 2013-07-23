@@ -69,25 +69,25 @@ class postfix (
   $ldap_base           = undef,
   $ldap_host           = undef,
   $ldap_options        = undef,
-  $mail_user           = 'vmail',     # postfix_mail_user
+  $mail_user           = 'vmail',       # postfix_mail_user
   $mailman             = false,
   $maincf_source       = "puppet:///modules/${module_name}/main.cf",
   $mastercf_source     = undef,
-  $master_smtp         = undef,       # postfix_master_smtp
-  $master_smtps        = undef,       # postfix_master_smtps
-  $master_submission   = undef,       # postfix_master_submission
+  $master_smtp         = undef,         # postfix_master_smtp
+  $master_smtps        = undef,         # postfix_master_smtps
+  $master_submission   = undef,         # postfix_master_submission
   $mta                 = false,
-  $mydestination       = undef,       # postfix_mydestination
-  $mynetworks          = undef,       # postfix_mynetworks
+  $mydestination       = '$myorigin',   # postfix_mydestination
+  $mynetworks          = '127.0.0.0/8', # postfix_mynetworks
   $myorigin            = $::fqdn,
-  $relayhost           = undef,       # postfix_relayhost
-  $root_mail_recipient = 'nobody',    # root_mail_recipient
+  $relayhost           = undef,         # postfix_relayhost
+  $root_mail_recipient = 'nobody',      # root_mail_recipient
   $satellite           = false,
-  $smtp_listen         = '127.0.0.1', # postfix_smtp_listen
-  $use_amavisd         = false,       # postfix_use_amavisd
-  $use_dovecot_lda     = false,       # postfix_use_dovecot_lda
-  $use_schleuder       = false,       # postfix_use_schleuder
-  $use_sympa           = false,       # postfix_use_sympa
+  $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
+  $use_amavisd         = false,         # postfix_use_amavisd
+  $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
+  $use_schleuder       = false,         # postfix_use_schleuder
+  $use_sympa           = false,         # postfix_use_sympa
 ) inherits postfix::params {
 
 
