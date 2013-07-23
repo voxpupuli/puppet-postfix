@@ -24,6 +24,7 @@
 class postfix::satellite (
   $mydestination = $postfix::mydestination,
   $mynetworks    = $postfix::mynetworks,
+  $relayhost = $postfix::relayhost,
 ) {
 
   validate_re($postfix::myorigin, '^\S+$')
@@ -31,6 +32,7 @@ class postfix::satellite (
   class { '::postfix::mta':
     mydestination => $mydestination,
     mynetworks    => $mynetworks,
+    relayhost     => $relayhost,
   }
 
   postfix::virtual { "@${postfix::myorigin}":
