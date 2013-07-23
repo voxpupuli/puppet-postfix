@@ -21,11 +21,17 @@
 #     include postfix::satellite
 #   }
 #
-class postfix::satellite {
+class postfix::satellite (
+  $mydestination = $postfix::mydestination,
+  $mynetworks    = $postfix::mynetworks,
+) {
 
   validate_re($postfix::myorigin, '^\S+$')
 
-  include ::postfix::mta
+  class { '::postfix::mta':
+    mydestination => $mydestination,
+    mynetworks    => $mynetworks,
+  }
 
   postfix::virtual { "@${postfix::myorigin}":
     ensure      => present,

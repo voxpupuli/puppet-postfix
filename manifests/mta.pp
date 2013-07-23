@@ -30,17 +30,10 @@
 #     }
 #   }
 #
-class postfix::mta {
-
-  $mydestination = $postfix::mydestination ? {
-    undef   => '$myorigin',
-    default => $postfix::mydestination,
-  }
-
-  $mynetworks = $postfix::mynetworks ? {
-    undef   => '127.0.0.0/8',
-    default => $postfix::mynetworks,
-  }
+class postfix::mta (
+  $mydestination = $postfix::mydestination,
+  $mynetworks = $postfix::mynetworks,
+) {
 
   validate_re($postfix::relayhost, '^\S+$',
               'You must pass $relayhost to the postfix class')
