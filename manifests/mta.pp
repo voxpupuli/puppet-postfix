@@ -33,10 +33,11 @@
 class postfix::mta (
   $mydestination = $postfix::mydestination,
   $mynetworks = $postfix::mynetworks,
+  $relayhost = $postfix::relayhost,
 ) {
 
-  validate_re($postfix::relayhost, '^\S+$',
-              'You must pass $relayhost to the postfix class')
+  validate_re($relayhost, '^\S+$',
+              'Wrong value for $relayhost')
   validate_re($mydestination, '^\S+$',
               'Wrong value for $mydestination')
   validate_re($mynetworks, '^\S+$',
@@ -45,7 +46,7 @@ class postfix::mta (
   postfix::config {
     'mydestination':       value => $mydestination;
     'mynetworks':          value => $mynetworks;
-    'relayhost':           value => $postfix::relayhost;
+    'relayhost':           value => $relayhost;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
     'transport_maps':      value => 'hash:/etc/postfix/transport';
   }
