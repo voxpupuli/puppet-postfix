@@ -4,12 +4,13 @@
 # This class provides a basic setup of postfix with local and remote
 # delivery and an SMTP server listening on the loopback interface.
 #
-# Parameters:
+# === Parameters
+#
 # [*alias_maps*]          - (string)
 #
 # [*inet_interfaces*]     - (string)
 #
-# [*ldap*]                - (boolean)
+# [*ldap*]                - (boolean) Whether to use LDAP
 #
 # [*ldap_base*]           - (string)
 #
@@ -31,7 +32,7 @@
 #
 # [*master_submission*]   - (string)
 #
-# [*mta*]                 - (boolean)
+# [*mta*]                 - (boolean) Whether to use as MTA
 #
 # [*mydestination*]       - (string)
 #
@@ -43,23 +44,23 @@
 #
 # [*root_mail_recipient*] - (string)
 #
-# [*satellite*]           - (boolean)
+# [*satellite*]           - (boolean) Whether to use as a satellite
+#                           (implies MTA)
 #
-# [*smtp_listen*]         - (string)
+# [*smtp_listen*]         - (string) The SMTP listen interface
 #
-# [*use_amavisd*]         - (boolean)
+# [*use_amavisd*]         - (boolean) Whether to setup for Amavis
 #
-# [*use_dovecot_lda*]     - (boolean)
+# [*use_dovecot_lda*]     - (boolean) Whether to setup for Dovecot LDA
 #
-# [*use_schleuder*]       - (boolean)
+# [*use_schleuder*]       - (boolean) Whether to setup for Schleuder
 #
-# [*use_sympa*]           - (boolean)
+# [*use_sympa*]           - (boolean) Whether to setup for Sympa
 #
-# Example usage:
+# === Examples
 #
-#   node 'toto.example.com' {
-#     $postfix_smtp_listen = '192.168.1.10'
-#     include postfix
+#   class { 'postfix':
+#     smtp_listen => '192.168.1.10',
 #   }
 #
 class postfix (
