@@ -3,16 +3,14 @@
 # Configures a basic smtp server, able to work for the mailman mailing-list
 # manager.
 #
-# Example usage:
+# === Examples
 #
-#   node 'toto.example.com' {
-#     class { '::postfix':
-#       mailman => true,
-#     }
-#   }
-#
-# /!\ Do not include this class directly anymore,
+# /!\ Do not include this class directly,
 # use mailman => true in the postfix top class!
+#
+#   class { 'postfix':
+#     mailman => true,
+#   }
 class postfix::mailman {
 
   postfix::config {

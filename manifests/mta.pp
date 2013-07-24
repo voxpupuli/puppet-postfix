@@ -1,33 +1,26 @@
-#
 # == Class: postfix::mta
 #
-# This class configures a minimal MTA, listening on
-# $postfix_smtp_listen (default to localhost) and delivering mail to
-# $postfix_mydestination (default to $fqdn).
+# This class configures a minimal MTA, delivering mail to
+# $mydestination.
 #
-# A valid relay host is required ($postfix_relayhost) for outbound email.
+# A valid relay host is required ($relayhost) for outbound email.
 #
 # transport & virtual maps get configured and can be populated with
 # postfix::transport and postfix::virtual
 #
-# Parameters:
-# - *$postfix_relayhost*
-# - *$postfix_mydestination*
-# - every global variable which works for class 'postfix' will work here.
+# === Parameters
 #
-# Example usage:
+# [*relayhost*]     - (string) the relayhost to use
+# [*mydestination*] - (string)
+# [*mynetworks*]    - (string)
 #
-#   node 'toto.example.com' {
-#     $postfix_relayhost = 'mail.example.com'
-#     $postfix_smtp_listen = '0.0.0.0'
-#     $postfix_mydestination = '$myorigin, myapp.example.com'
+# === Examples
 #
-#     include postfix::mta
-#
-#     postfix::transport { 'myapp.example.com':
-#       ensure => present,
-#       destination => 'local:',
-#     }
+#   class { 'postfix':
+#     relayhost     => 'mail.example.com',
+#     smtp_listen   => '0.0.0.0',
+#     mydestination => '$myorigin, myapp.example.com',
+#     mta           => true,
 #   }
 #
 class postfix::mta (

@@ -1,3 +1,18 @@
+# == Class: postfix::ldap
+#
+# Configures postfix for use with LDAP.
+#
+# === Parameters
+#
+# === Requires
+#
+# - Class["postfix"]
+#
+# === Examples
+#
+# include postfix
+# include postfix::ldap
+#
 class postfix::ldap {
 
   package {'postfix-ldap': }

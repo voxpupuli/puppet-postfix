@@ -1,30 +1,27 @@
-#== Definition: postfix::hash
+# == Definition: postfix::hash
 #
-#Creates postfix hashed "map" files. It will create "${name}", and then build
-#"${name}.db" using the "postmap" command. The map file can then be referred to
-#using postfix::config.
+# Creates postfix hashed "map" files. It will create "${name}", and then build
+# "${name}.db" using the "postmap" command. The map file can then be referred to
+# using postfix::config.
 #
-#Parameters:
-#- *name*: the name of the map file.
-#- *ensure*: present/absent, defaults to present.
-#- *source*: file source.
+# === Parameters
 #
-#Requires:
-#- Class["postfix"]
+# [*name*]   - the name of the map file.
+# [*ensure*] - present/absent, defaults to present.
+# [*source*] - file source.
 #
-#Example usage:
+# === Requires
 #
-#  node "toto.example.com" {
+# - Class["postfix"]
 #
-#    include postfix
+# === Examples
 #
-#    postfix::hash { "/etc/postfix/virtual":
-#      ensure => present,
-#    }
-#    postfix::config { "virtual_alias_maps":
-#      value => "hash:/etc/postfix/virtual"
-#    }
-#  }
+#   postfix::hash { '/etc/postfix/virtual':
+#     ensure => present,
+#   }
+#   postfix::config { 'virtual_alias_maps':
+#     value => 'hash:/etc/postfix/virtual',
+#   }
 #
 define postfix::hash (
   $ensure='present',
