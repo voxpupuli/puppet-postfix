@@ -17,8 +17,8 @@ class postfix::ldap {
 
   package {'postfix-ldap': }
 
-  if ! $::postfix::ldap_base {
-    fail 'Missing $postfix_ldap_base !'
+  if ! $postfix::ldap_base {
+    fail 'Missing $postfix::ldap_base !'
   }
 
   $ldap_host = $postfix::ldap_host ? {
