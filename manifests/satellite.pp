@@ -37,7 +37,7 @@ class postfix::satellite (
   }
 
   postfix::virtual { "@${postfix::myorigin}":
-    ensure      => present,
+    ensure      => 'present',
     destination => 'root',
   }
 }

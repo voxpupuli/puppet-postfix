@@ -32,9 +32,9 @@ class postfix::ldap {
   }
 
   file {'/etc/postfix/ldap-aliases.cf':
-    ensure  => present,
-    owner   => root,
-    group   => postfix,
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'postfix',
     content => template('postfix/postfix-ldap-aliases.cf.erb'),
     require => Package['postfix-ldap'],
   }

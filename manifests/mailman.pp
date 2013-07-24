@@ -23,11 +23,11 @@ class postfix::mailman {
   }
 
   postfix::hash { '/etc/postfix/virtual':
-    ensure => present,
+    ensure => 'present',
   }
 
   postfix::hash { '/etc/postfix/transport':
-    ensure => present,
+    ensure => 'present',
   }
 
 }
