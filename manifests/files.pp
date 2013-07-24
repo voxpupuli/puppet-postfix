@@ -16,14 +16,14 @@ class postfix::files {
   $use_sympa           = $postfix::use_sympa
 
   file { '/etc/mailname':
-    ensure  => present,
+    ensure  => 'file',
     content => "${::fqdn}\n",
     seltype => $postfix::params::seltype,
   }
 
   # Aliases
   file { '/etc/aliases':
-    ensure  => present,
+    ensure  => 'file',
     content => "# file managed by puppet\n",
     notify  => Exec['newaliases'],
     replace => false,
@@ -48,7 +48,7 @@ class postfix::files {
   }
 
   file { '/etc/postfix/master.cf':
-    ensure  => present,
+    ensure  => 'file',
     content => $mastercf_content,
     group   => 'root',
     mode    => '0644',
@@ -59,7 +59,7 @@ class postfix::files {
 
   # Config files
   file { '/etc/postfix/main.cf':
-    ensure  => present,
+    ensure  => 'file',
     group   => 'root',
     mode    => '0644',
     owner   => 'root',
