@@ -1,35 +1,37 @@
-#== Definition: postfix::virtual
+# == Definition: postfix::virtual
 #
-#Manages content of the /etc/postfix/virtual map.
+# Manages content of the /etc/postfix/virtual map.
 #
-#Parameters:
-#- *name*: name of address postfix will lookup. See virtual(8).
-#- *destination*: where the emails will be delivered to. See virtual(8).
-#- *ensure*: present/absent, defaults to present.
+# === Parameters
 #
-#Requires:
-#- Class["postfix"]
-#- Postfix::Hash["/etc/postfix/virtual"]
-#- Postfix::Config["virtual_alias_maps"]
-#- augeas
+# [*name*]        - name of address postfix will lookup. See virtual(8).
+# [*destination*] - where the emails will be delivered to. See virtual(8).
+# [*ensure*]      - present/absent, defaults to present.
 #
-#Example usage:
+# === Requires
 #
-#  node "toto.example.com" {
+# - Class["postfix"]
+# - Postfix::Hash["/etc/postfix/virtual"]
+# - Postfix::Config["virtual_alias_maps"]
+# - augeas
 #
-#    include postfix
+# === Examples
 #
-#    postfix::hash { "/etc/postfix/virtual":
-#      ensure => present,
-#    }
-#    postfix::config { "virtual_alias_maps":
-#      value => "hash:/etc/postfix/virtual"
-#    }
-#    postfix::virtual { "user@example.com":
-#      ensure      => present,
-#      destination => "root",
-#    }
-#  }
+#   node "toto.example.com" {
+#
+#     include postfix
+#
+#     postfix::hash { "/etc/postfix/virtual":
+#       ensure => present,
+#     }
+#     postfix::config { "virtual_alias_maps":
+#       value => "hash:/etc/postfix/virtual"
+#     }
+#     postfix::virtual { "user@example.com":
+#       ensure      => present,
+#       destination => "root",
+#     }
+#   }
 #
 define postfix::virtual (
   $destination,
