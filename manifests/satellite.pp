@@ -25,7 +25,7 @@
 class postfix::satellite (
   $mydestination = $postfix::mydestination,
   $mynetworks    = $postfix::mynetworks,
-  $relayhost = $postfix::relayhost,
+  $relayhost     = $postfix::relayhost,
 ) {
 
   validate_re($postfix::myorigin, '^\S+$')
