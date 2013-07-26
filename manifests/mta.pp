@@ -25,8 +25,8 @@
 #
 class postfix::mta (
   $mydestination = $postfix::mydestination,
-  $mynetworks = $postfix::mynetworks,
-  $relayhost = $postfix::relayhost,
+  $mynetworks    = $postfix::mynetworks,
+  $relayhost     = $postfix::relayhost,
 ) {
 
   validate_re($relayhost, '^\S+$',
