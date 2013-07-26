@@ -32,7 +32,7 @@
 #
 # [*master_submission*]   - (string)
 #
-# [*mta*]                 - (boolean) Whether to use as MTA
+# [*mta*]                 - (boolean) Configure postfix minimally, as a simple MTA
 #
 # [*mydestination*]       - (string)
 #
@@ -140,10 +140,16 @@ class postfix (
   }
 
   if $mta {
+    if $satellite {
+      fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
+    }
     include ::postfix::mta
   }
 
   if $satellite {
+    if $mta {
+      fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
+    }
     include ::postfix::satellite
   }
 
