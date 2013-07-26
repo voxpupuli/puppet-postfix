@@ -1,43 +1,49 @@
-#== Definition: postfix::virtual
+# == Definition: postfix::virtual
 #
-#Manages content of the /etc/postfix/virtual map.
+# Manages content of the /etc/postfix/virtual map.
 #
-#Parameters:
-#- *name*: name of address postfix will lookup. See virtual(8).
-#- *destination*: where the emails will be delivered to. See virtual(8).
-#- *ensure*: present/absent, defaults to present.
+# === Parameters
 #
-#Requires:
-#- Class["postfix"]
-#- Postfix::Hash["/etc/postfix/virtual"]
-#- Postfix::Config["virtual_alias_maps"]
-#- augeas
+# [*name*]        - name of address postfix will lookup. See virtual(8).
+# [*destination*] - where the emails will be delivered to. See virtual(8).
+# [*ensure*]      - present/absent, defaults to present.
 #
-#Example usage:
+# === Requires
 #
-#  node "toto.example.com" {
+# - Class["postfix"]
+# - Postfix::Hash["/etc/postfix/virtual"]
+# - Postfix::Config["virtual_alias_maps"]
+# - augeas
 #
-#    include postfix
+# === Examples
 #
-#    postfix::hash { "/etc/postfix/virtual":
-#      ensure => present,
-#    }
-#    postfix::config { "virtual_alias_maps":
-#      value => "hash:/etc/postfix/virtual"
-#    }
-#    postfix::virtual { "user@example.com":
-#      ensure      => present,
-#      destination => "root",
-#    }
-#  }
+#   node "toto.example.com" {
+#
+#     include postfix
+#
+#     postfix::hash { "/etc/postfix/virtual":
+#       ensure => present,
+#     }
+#     postfix::config { "virtual_alias_maps":
+#       value => "hash:/etc/postfix/virtual"
+#     }
+#     postfix::virtual { "user@example.com":
+#       ensure      => present,
+#       destination => "root",
+#     }
+#   }
 #
 define postfix::virtual (
   $destination,
-  $nexthop='',
   $file='/etc/postfix/virtual',
   $ensure='present'
 ) {
   include postfix::augeas
+
+  validate_string($destination)
+  validate_string($file)
+  validate_absolute_path($file)
+  validate_string($ensure)
 
   case $ensure {
     'present': {
@@ -53,7 +59,7 @@ define postfix::virtual (
     }
 
     default: {
-      fail("Wrong ensure value: ${ensure}")
+      fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
     }
   }
 
@@ -61,7 +67,7 @@ define postfix::virtual (
     incl    => $file,
     lens    => 'Postfix_Virtual.lns',
     changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    require => [Package['postfix'], Augeas::Lens['postfix_virtual']],
     notify  => Exec['generate /etc/postfix/virtual.db'],
   }
 }

@@ -1,35 +1,37 @@
-#== Definition: postfix::transport
+# == Definition: postfix::transport
 #
-#Manages content of the /etc/postfix/transport map.
+# Manages content of the /etc/postfix/transport map.
 #
-#Parameters:
-#- *name*: name of address postfix will lookup. See transport(5).
-#- *destination*: where the emails will be delivered to. See transport(5).
-#- *ensure*: present/absent, defaults to present.
+# === Parameters
 #
-#Requires:
-#- Class["postfix"]
-#- Postfix::Hash["/etc/postfix/transport"]
-#- Postfix::Config["transport_maps"]
-#- augeas
+# [*name*]        - name of address postfix will lookup. See transport(5).
+# [*destination*] - where the emails will be delivered to. See transport(5).
+# [*ensure*]      - present/absent, defaults to present.
 #
-#Example usage:
+# === Requires
 #
-#  node "toto.example.com" {
+# - Class["postfix"]
+# - Postfix::Hash["/etc/postfix/transport"]
+# - Postfix::Config["transport_maps"]
+# - augeas
 #
-#    include postfix
+# === Examples
 #
-#    postfix::hash { "/etc/postfix/transport":
-#      ensure => present,
-#    }
-#    postfix::config { "transport_maps":
-#      value => "hash:/etc/postfix/transport"
-#    }
-#    postfix::transport { "mailman.example.com":
-#      ensure      => present,
-#      destination => "mailman",
-#    }
-#  }
+#   node "toto.example.com" {
+#
+#     include postfix
+#
+#     postfix::hash { "/etc/postfix/transport":
+#       ensure => present,
+#     }
+#     postfix::config { "transport_maps":
+#       value => "hash:/etc/postfix/transport"
+#     }
+#     postfix::transport { "mailman.example.com":
+#       ensure      => present,
+#       destination => "mailman",
+#     }
+#   }
 #
 define postfix::transport (
   $destination='',
@@ -38,6 +40,12 @@ define postfix::transport (
   $ensure='present'
 ) {
   include postfix::augeas
+
+  validate_string($destination)
+  validate_string($nexthop)
+  validate_string($file)
+  validate_absolute_path($file)
+  validate_string($ensure)
 
   case $ensure {
     'present': {
@@ -65,7 +73,7 @@ define postfix::transport (
     }
 
     default: {
-      fail("Wrong ensure value: ${ensure}")
+      fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
     }
   }
 

@@ -1,22 +1,17 @@
-#
 # == Class: postfix::mailman
 #
 # Configures a basic smtp server, able to work for the mailman mailing-list
 # manager.
 #
-# Parameters:
-# - every global variable which works for class 'postfix' will work here.
+# === Examples
 #
-# Example usage:
+# /!\ Do not include this class directly,
+# use mailman => true in the postfix top class!
 #
-#   node 'toto.example.com' {
-#     include mailman
-#     include postfix::mailman
+#   class { 'postfix':
+#     mailman => true,
 #   }
-#
 class postfix::mailman {
-  $postfix_smtp_listen = '0.0.0.0'
-  include postfix
 
   postfix::config {
     'virtual_alias_maps':
@@ -28,11 +23,11 @@ class postfix::mailman {
   }
 
   postfix::hash { '/etc/postfix/virtual':
-    ensure => present,
+    ensure => 'present',
   }
 
   postfix::hash { '/etc/postfix/transport':
-    ensure => present,
+    ensure => 'present',
   }
 
 }
