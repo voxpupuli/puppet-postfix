@@ -4,174 +4,156 @@
 # This class provides a basic setup of postfix with local and remote
 # delivery and an SMTP server listening on the loopback interface.
 #
-# Parameters:
-# - *$postfix_smtp_listen*: address on which the smtp service will listen to.
-#      defaults to 127.0.0.1
-# - *$root_mail_recipient*: who will recieve root's emails. defaults to 'nobody'
+# === Parameters
 #
-# Example usage:
+# [*alias_maps*]          - (string)
 #
-#   node 'toto.example.com' {
-#     $postfix_smtp_listen = '192.168.1.10'
-#     include postfix
+# [*inet_interfaces*]     - (string)
+#
+# [*ldap*]                - (boolean) Whether to use LDAP
+#
+# [*ldap_base*]           - (string)
+#
+# [*ldap_host*]           - (string)
+#
+# [*ldap_options*]        - (string)
+#
+# [*mail_user*]           - (string) The mail user
+#
+# [*mailman*]             - (boolean)
+#
+# [*maincf_source*]       - (string)
+#
+# [*mastercf_source*]     - (string)
+#
+# [*master_smtp*]         - (string)
+#
+# [*master_smtps*]        - (string)
+#
+# [*master_submission*]   - (string)
+#
+# [*mta*]                 - (boolean) Configure postfix minimally, as a simple MTA
+#
+# [*mydestination*]       - (string)
+#
+# [*mynetworks*]          - (string)
+#
+# [*myorigin*]            - (string)
+#
+# [*relayhost*]           - (string)
+#
+# [*root_mail_recipient*] - (string)
+#
+# [*satellite*]           - (boolean) Whether to use as a satellite
+#                           (implies MTA)
+#
+# [*smtp_listen*]         - (string) The SMTP listen interface
+#
+# [*use_amavisd*]         - (boolean) Whether to setup for Amavis
+#
+# [*use_dovecot_lda*]     - (boolean) Whether to setup for Dovecot LDA
+#
+# [*use_schleuder*]       - (boolean) Whether to setup for Schleuder
+#
+# [*use_sympa*]           - (boolean) Whether to setup for Sympa
+#
+# === Examples
+#
+#   class { 'postfix':
+#     smtp_listen => '192.168.1.10',
 #   }
 #
-class postfix {
+class postfix (
+  $alias_maps          = 'hash:/etc/aliases',
+  $inet_interfaces     = 'all',
+  $ldap                = false,
+  $ldap_base           = undef,
+  $ldap_host           = undef,
+  $ldap_options        = undef,
+  $mail_user           = 'vmail',       # postfix_mail_user
+  $mailman             = false,
+  $maincf_source       = "puppet:///modules/${module_name}/main.cf",
+  $mastercf_source     = undef,
+  $master_smtp         = undef,         # postfix_master_smtp
+  $master_smtps        = undef,         # postfix_master_smtps
+  $master_submission   = undef,         # postfix_master_submission
+  $mta                 = false,
+  $mydestination       = '$myorigin',   # postfix_mydestination
+  $mynetworks          = '127.0.0.0/8', # postfix_mynetworks
+  $myorigin            = $::fqdn,
+  $relayhost           = undef,         # postfix_relayhost
+  $root_mail_recipient = 'nobody',      # root_mail_recipient
+  $satellite           = false,
+  $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
+  $use_amavisd         = false,         # postfix_use_amavisd
+  $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
+  $use_schleuder       = false,         # postfix_use_schleuder
+  $use_sympa           = false,         # postfix_use_sympa
+) inherits postfix::params {
 
-  # selinux labels differ from one distribution to another
-  case $::operatingsystem {
 
-    RedHat, CentOS: {
-      case $::lsbmajdistrelease {
-        '4':     { $postfix_seltype = 'etc_t' }
-        '5','6': { $postfix_seltype = 'postfix_etc_t' }
-        default: { $postfix_seltype = undef }
-      }
+  validate_bool($ldap)
+  validate_bool($mailman)
+  validate_bool($mta)
+  validate_bool($satellite)
+  validate_bool($use_amavisd)
+  validate_bool($use_dovecot_lda)
+  validate_bool($use_schleuder)
+  validate_bool($use_sympa)
+
+  validate_string($alias_maps)
+  validate_string($inet_interfaces)
+  validate_string($ldap_base)
+  validate_string($ldap_host)
+  validate_string($ldap_options)
+  validate_string($mail_user)
+  validate_string($maincf_source)
+  validate_string($mastercf_source)
+  validate_string($master_smtp)
+  validate_string($master_smtps)
+  validate_string($mydestination)
+  validate_string($mynetworks)
+  validate_string($myorigin)
+  validate_string($relayhost)
+  validate_string($root_mail_recipient)
+  validate_string($smtp_listen)
+
+
+
+  $_smtp_listen = $mailman ? {
+    true    => '0.0.0.0',
+    default => $smtp_listen,
+  }
+
+  $all_alias_maps = $ldap ? {
+    false => $alias_maps,
+    true  => "\"${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf\"",
+  }
+
+  class { 'postfix::packages': } ->
+  class { 'postfix::files': } ~>
+  class { 'postfix::service': } ->
+  Class['postfix']
+
+  if $ldap {
+    include ::postfix::ldap
+  }
+
+  if $mta {
+    if $satellite {
+      fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
     }
+    include ::postfix::mta
+  }
 
-    default: {
-      $postfix_seltype = undef
+  if $satellite {
+    if $mta {
+      fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
     }
+    include ::postfix::satellite
   }
 
-  # Default value for various options
-  if $postfix_smtp_listen == '' {
-    $postfix_smtp_listen = '127.0.0.1'
-  }
-  if $root_mail_recipient == '' {
-    $root_mail_recipient = 'nobody'
-  }
-  if $postfix_use_amavisd == '' {
-    $postfix_use_amavisd = 'no'
-  }
-  if $postfix_use_dovecot_lda == '' {
-    $postfix_use_dovecot_lda = 'no'
-  }
-  if $postfix_use_schleuder == '' {
-    $postfix_use_schleuder = 'no'
-  }
-  if $postfix_use_sympa == '' {
-    $postfix_use_sympa = 'no'
-  }
-  if $postfix_mail_user == '' {
-    $postfix_mail_user = 'vmail'
-  }
-
-  case $::operatingsystem {
-    /RedHat|CentOS|Fedora/: {
-      $mailx_package = 'mailx'
-    }
-
-    /Debian|kFreeBSD/: {
-      $mailx_package = $::lsbdistcodename ? {
-        /lenny|etch|sarge/ => 'mailx',
-        default            => 'bsd-mailx',
-      }
-    }
-
-    'Ubuntu': {
-      if (versioncmp('10', $::lsbmajdistrelease) > 0) {
-        $mailx_package = 'mailx'
-      } else {
-        $mailx_package = 'bsd-mailx'
-      }
-    }
-  }
-
-  $master_os_template = $::operatingsystem ? {
-    /RedHat|CentOS/          => template('postfix/master.cf.redhat.erb', 'postfix/master.cf.common.erb'),
-    /Debian|Ubuntu|kFreeBSD/ => template('postfix/master.cf.debian.erb', 'postfix/master.cf.common.erb'),
-  }
-
-  package { 'postfix':
-    ensure => installed,
-  }
-
-  package { 'mailx':
-    ensure => installed,
-    name   => $mailx_package,
-  }
-
-  service { 'postfix':
-    ensure    => running,
-    enable    => true,
-    hasstatus => true,
-    restart   => '/etc/init.d/postfix reload',
-    require   => Package['postfix'],
-  }
-
-  file { '/etc/mailname':
-    ensure  => present,
-    content => "$::fqdn\n",
-    seltype => $postfix_seltype,
-  }
-
-  # Aliases
-  file { '/etc/aliases':
-    ensure  => present,
-    content => '# file managed by puppet\n',
-    replace => false,
-    seltype => $postfix_seltype,
-    notify  => Exec['newaliases'],
-  }
-
-  # Aliases
-  exec { 'newaliases':
-    command     => '/usr/bin/newaliases',
-    refreshonly => true,
-    require     => Package['postfix'],
-    subscribe   => File['/etc/aliases'],
-  }
-
-  # Config files
-  file { '/etc/postfix/master.cf':
-    ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => $master_os_template,
-    seltype => $postfix_seltype,
-    notify  => Service['postfix'],
-    require => Package['postfix'],
-  }
-
-  # Config files
-  file { '/etc/postfix/main.cf':
-    ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/postfix/main.cf',
-    replace => false,
-    seltype => $postfix_seltype,
-    notify  => Service['postfix'],
-    require => Package['postfix'],
-  }
-
-  # Default configuration parameters
-  $myorigin = $valid_fqdn ? {
-    ''      => $::fqdn,
-    default => $valid_fqdn,
-  }
-  postfix::config {
-    'myorigin':         value => $myorigin;
-    'alias_maps':       value => 'hash:/etc/aliases';
-    'inet_interfaces':  value => 'all';
-  }
-
-  case $::operatingsystem {
-    RedHat, CentOS: {
-      postfix::config {
-        'sendmail_path':    value => '/usr/sbin/sendmail.postfix';
-        'newaliases_path':  value => '/usr/bin/newaliases.postfix';
-        'mailq_path':       value => '/usr/bin/mailq.postfix';
-      }
-    }
-    default: {}
-  }
-
-  mailalias {'root':
-    recipient => $root_mail_recipient,
-    notify    => Exec['newaliases'],
+  if $mailman {
+    include ::postfix::mailman
   }
 }

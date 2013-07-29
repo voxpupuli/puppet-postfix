@@ -1,33 +1,32 @@
 #
-#== Definition: postfix::config
+# == Definition: postfix::config
 #
-#Uses the "postconf" command to add/alter/remove options in postfix main
-#configuation file (/etc/postfix/main.cf).
+# Uses the "postconf" command to add/alter/remove options in postfix main
+# configuation file (/etc/postfix/main.cf).
 #
-#Parameters:
-#- *name*: name of the parameter.
-#- *ensure*: present/absent. defaults to present.
-#- *value*: value of the parameter.
+# === Parameters
 #
-#Requires:
-#- Class["postfix"]
+# [*name*]   - name of the parameter.
+# [*ensure*] - present/absent. defaults to present.
+# [*value*]  - value of the parameter.
 #
-#Example usage:
+# === Requires
 #
-#  node "toto.example.com" {
+# - Class["postfix"]
 #
-#    include postfix
+# === Examples
 #
-#    postfix::config {
-#      "smtp_use_tls"            => "yes";
-#      "smtp_sasl_auth_enable"   => "yes";
-#      "smtp_sasl_password_maps" => "hash:/etc/postfix/my_sasl_passwords";
-#      "relayhost"               => "[mail.example.com]:587";
-#    }
-#  }
-#
+#   postfix::config { 'smtp_use_tls':
+#     ensure => 'present',
+#     value  => 'yes',
+#   }
 #
 define postfix::config ($value, $ensure = present) {
+
+  validate_string($value)
+  validate_string($ensure)
+  validate_re($ensure, ['present', 'absent'],
+    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
   Augeas {
     incl    => '/etc/postfix/main.cf',
@@ -39,12 +38,12 @@ define postfix::config ($value, $ensure = present) {
   case $ensure {
     present: {
       augeas { "set postfix '${name}' to '${value}'":
-        changes => "set $name '$value'",
+        changes => "set ${name} '${value}'",
       }
     }
     absent: {
       augeas { "rm postfix '${name}'":
-        changes => "rm $name",
+        changes => "rm ${name}",
       }
     }
     default: {}
