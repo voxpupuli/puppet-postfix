@@ -1,8 +1,10 @@
 #
 # == Definition: postfix::config
 #
-# Uses the "postconf" command to add/alter/remove options in postfix main
+# Uses Augeas to add/alter/remove options in postfix main
 # configuation file (/etc/postfix/main.cf).
+#
+# TODO: make this a type with an Augeas and a postconf providers.
 #
 # === Parameters
 #
