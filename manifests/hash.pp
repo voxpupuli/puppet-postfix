@@ -1,75 +1,58 @@
-#== Definition: postfix::hash
+# == Definition: postfix::hash
 #
-#Creates postfix hashed "map" files. It will create "${name}", and then build
-#"${name}.db" using the "postmap" command. The map file can then be referred to
-#using postfix::config.
+# Creates postfix hashed "map" files. It will create "${name}", and then build
+# "${name}.db" using the "postmap" command. The map file can then be referred to
+# using postfix::config.
 #
-#Parameters:
-#- *name*: the name of the map file.
-#- *ensure*: present/absent, defaults to present.
-#- *source*: file source.
+# === Parameters
 #
-#Requires:
-#- Class["postfix"]
+# [*name*]   - the name of the map file.
+# [*ensure*] - present/absent, defaults to present.
+# [*source*] - file source.
 #
-#Example usage:
+# === Requires
 #
-#  node "toto.example.com" {
+# - Class["postfix"]
 #
-#    include postfix
+# === Examples
 #
-#    postfix::hash { "/etc/postfix/virtual":
-#      ensure => present,
-#    }
-#    postfix::config { "virtual_alias_maps":
-#      value => "hash:/etc/postfix/virtual"
-#    }
-#  }
+#   postfix::hash { '/etc/postfix/virtual':
+#     ensure => present,
+#   }
+#   postfix::config { 'virtual_alias_maps':
+#     value => 'hash:/etc/postfix/virtual',
+#   }
 #
-define postfix::hash ($ensure='present', $source=false, $content=false) {
+define postfix::hash (
+  $ensure='present',
+  $source=undef,
+  $content=undef,
+) {
+  include ::postfix::params
 
-  # selinux labels differ from one distribution to another
-  case $::operatingsystem {
+  validate_absolute_path($name)
+  validate_string($source)
+  validate_string($content)
+  validate_string($ensure)
+  validate_re($ensure, ['present', 'absent'],
+    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
-    RedHat, CentOS: {
-      case $::lsbmajdistrelease {
-        '4':     { $postfix_seltype = 'etc_t' }
-        '5','6': { $postfix_seltype = 'postfix_etc_t' }
-        default: { $postfix_seltype = undef }
-      }
-    }
-
-    default: {
-      $postfix_seltype = undef
-    }
+  if $source and $content {
+    fail 'You must provide either \'source\' or \'content\', not both'
   }
 
   File {
     mode    => '0600',
     owner   => root,
     group   => root,
-    seltype => $postfix_seltype,
+    seltype => $postfix::params::seltype,
   }
 
-  if $source != false {
-    file {$name:
-      ensure  => $ensure,
-      source  => $source,
-      require => Package['postfix'],
-    }
-  } else {
-    if $content != false {
-      file {$name:
-        ensure  => $ensure,
-        content => $content,
-        require => Package['postfix'],
-      }
-    } else {
-      file {$name:
-        ensure  => $ensure,
-        require => Package['postfix'],
-      }
-    }
+  file { $name:
+    ensure  => $ensure,
+    source  => $source,
+    content => $content,
+    require => Package['postfix'],
   }
 
   file {"${name}.db":

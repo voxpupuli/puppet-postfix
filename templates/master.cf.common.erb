@@ -1,4 +1,4 @@
-<% if has_variable?("postfix_use_amavisd") and postfix_use_amavisd == 'yes' %>
+<% if @use_amavisd %>
 amavis unix - - - - 2 smtp
         -o smtp_data_done_timeout=1200
         -o smtp_send_xforward_command=yes
@@ -17,15 +17,15 @@ amavis unix - - - - 2 smtp
         -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks
         -o smtpd_bind_address=127.0.0.1
 <% end -%>
-<% if has_variable?("postfix_use_dovecot_lda") and postfix_use_dovecot_lda == 'yes' %>
+<% if @use_dovecot_lda %>
 dovecot   unix  -       n       n       -       -       pipe
-  flags=DRhu user=<%= postfix_mail_user %>:<%= postfix_mail_user %> argv=/usr/lib/dovecot/deliver -d ${recipient}
+  flags=DRhu user=<%= @mail_user %>:<%= @mail_user %> argv=/usr/lib/dovecot/deliver -d ${recipient}
 <% end -%>
-<% if has_variable?("postfix_use_schleuder") and postfix_use_schleuder == 'yes' %>
+<% if @use_schleuder %>
 schleuder  unix  -       n       n       -       -       pipe
   flags=DRhu user=schleuder argv=/usr/bin/schleuder ${user}
 <% end -%>
-<% if has_variable?("postfix_use_sympa") and postfix_use_sympa == 'yes' %>
+<% if @use_sympa %>
 sympa        unix  -       n       n       -       -       pipe
   flags=R user=sympa argv=/usr/lib/sympa/bin/queue ${recipient}
 sympabounce  unix  -       n       n       -       -       pipe
