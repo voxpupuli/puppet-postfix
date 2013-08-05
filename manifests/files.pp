@@ -4,6 +4,7 @@ class postfix::files {
   $alias_maps          = $postfix::all_alias_maps
   $inet_interfaces     = $postfix::inet_interfaces
   $mail_user           = $postfix::mail_user
+  $manage_conffiles    = $postfix::manage_conffiles
   $master_smtp         = $postfix::master_smtp
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
@@ -14,6 +15,10 @@ class postfix::files {
   $use_dovecot_lda     = $postfix::use_dovecot_lda
   $use_schleuder       = $postfix::use_schleuder
   $use_sympa           = $postfix::use_sympa
+
+  File {
+    replace => $manage_conffiles,
+  }
 
   file { '/etc/mailname':
     ensure  => 'file',
