@@ -30,6 +30,10 @@ define postfix::config ($value, $ensure = present) {
   validate_re($ensure, ['present', 'absent'],
     "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
+  if (!defined(Class['postfix'])) {
+    fail 'You must define class postfix before using postfix::config!'
+  }
+
   Augeas {
     incl    => '/etc/postfix/main.cf',
     lens    => 'Postfix_Main.lns',
