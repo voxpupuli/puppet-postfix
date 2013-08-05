@@ -37,6 +37,10 @@ define postfix::hash (
   validate_re($ensure, ['present', 'absent'],
     "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
+  if (!defined(Class['postfix'])) {
+    fail 'You must define class postfix before using postfix::config!'
+  }
+
   if $source and $content {
     fail 'You must provide either \'source\' or \'content\', not both'
   }
@@ -65,6 +69,5 @@ define postfix::hash (
     #creates    => "${name}.db", # this prevents postmap from being run !
     subscribe   => File[$name],
     refreshonly => true,
-    require     => Package['postfix'],
   }
 }
