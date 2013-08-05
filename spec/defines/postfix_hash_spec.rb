@@ -4,6 +4,7 @@ describe 'postfix::hash' do
   let (:title) { '/tmp/foo' }
   let (:facts) { {
     :osfamily => 'Debian',
+    :needs_postfix_class => true,
   } }
 
   context 'when passing wrong type for ensure' do
