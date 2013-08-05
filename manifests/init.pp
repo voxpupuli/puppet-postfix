@@ -24,6 +24,8 @@
 #
 # [*maincf_source*]       - (string)
 #
+# [*manage_conffiles*]    - (boolean) Whether config files are to be replaced
+#
 # [*mastercf_source*]     - (string)
 #
 # [*master_smtp*]         - (string)
@@ -73,6 +75,7 @@ class postfix (
   $mail_user           = 'vmail',       # postfix_mail_user
   $mailman             = false,
   $maincf_source       = "puppet:///modules/${module_name}/main.cf",
+  $manage_conffiles    = true,
   $mastercf_source     = undef,
   $master_smtp         = undef,         # postfix_master_smtp
   $master_smtps        = undef,         # postfix_master_smtps
