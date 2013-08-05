@@ -156,4 +156,8 @@ class postfix (
   if $mailman {
     include ::postfix::mailman
   }
+
+  # Relationships
+  Class['postfix'] -> Postfix::Transport <| |>
+  Class['postfix'] -> Postfix::Virtual <| |>
 }
