@@ -4,6 +4,7 @@ describe 'postfix::config' do
   let (:title) { 'foo' }
   let (:facts) { {
     :osfamily => 'Debian',
+    :needs_postfix_class => true,
   } }
 
   context 'when not passing value' do
