@@ -37,6 +37,7 @@ define postfix::config ($value, $ensure = present) {
   Augeas {
     incl    => '/etc/postfix/main.cf',
     lens    => 'Postfix_Main.lns',
+    require => File['/etc/postfix/main.cf'],
   }
 
   case $ensure {

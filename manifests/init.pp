@@ -158,6 +158,6 @@ class postfix (
   }
 
   # Relationships
-  Class['postfix::files'] -> Postfix::Config <| |> ~> Class['postfix::service']
+  Postfix::Config <| |> ~> Class['postfix::service']
   Class['postfix'] -> Postfix::Hash <| |>
 }
