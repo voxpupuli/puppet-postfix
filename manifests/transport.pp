@@ -81,7 +81,11 @@ define postfix::transport (
     lens    => 'Postfix_Transport.lns',
     incl    => $file,
     changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_transport']],
+    require => [
+      Package['postfix'],
+      Augeas::Lens['postfix_transport'],
+      Postfix::Hash['/etc/postfix/transport'],
+      ],
     notify  => Exec['generate /etc/postfix/transport.db'],
   }
 }
