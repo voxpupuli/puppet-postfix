@@ -3,14 +3,16 @@
 # This class configures a minimal MTA, delivering mail to
 # $mydestination.
 #
-# A valid relay host is required ($relayhost) for outbound email.
+# Either a valid relay host or the special word 'direct' is required 
+# ($relayhost) for outbound email.
 #
 # transport & virtual maps get configured and can be populated with
 # postfix::transport and postfix::virtual
 #
 # === Parameters
 #
-# [*relayhost*]     - (string) the relayhost to use
+# [*relayhost*]     - (string) the relayhost to use or 'direct' to send mail
+#                     directly without a relay.
 # [*mydestination*] - (string)
 # [*mynetworks*]    - (string)
 #
@@ -36,10 +38,17 @@ class postfix::mta (
   validate_re($mynetworks, '^\S+$',
               'Wrong value for $mynetworks')
 
+  # If direct is specified then relayhost should be blank
+  if ($relayhost == 'direct') {
+    postfix::config { 'relayhost': ensure => 'blank' }
+  }
+  else {
+    postfix::config { 'relayhost': value => $relayhost }
+  }
+
   postfix::config {
     'mydestination':       value => $mydestination;
     'mynetworks':          value => $mynetworks;
-    'relayhost':           value => $relayhost;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
     'transport_maps':      value => 'hash:/etc/postfix/transport';
   }
