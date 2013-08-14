@@ -34,6 +34,8 @@ define postfix::config ($value = undef, $ensure = 'present') {
     "\$ensure must be either 'present', 'absent' or 'blank', got '${ensure}'")
   if ($ensure == 'present') {
     validate_string($value)
+    validate_re($value, '^.+$',
+      '$value can not be empty if ensure = present')
   }
 
   if (!defined(Class['postfix'])) {
