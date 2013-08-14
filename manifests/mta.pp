@@ -3,7 +3,7 @@
 # This class configures a minimal MTA, delivering mail to
 # $mydestination.
 #
-# Either a valid relay host or the special word 'direct' is required 
+# Either a valid relay host or the special word 'direct' is required
 # ($relayhost) for outbound email.
 #
 # transport & virtual maps get configured and can be populated with
