@@ -2,6 +2,8 @@
 #  This class provides the augeas lenses used by the postfix class
 #
 class postfix::augeas {
+  include ::augeas
+
   augeas::lens {'postfix_transport':
     ensure      => present,
     lens_source => 'puppet:///modules/postfix/lenses/postfix_transport.aug',
