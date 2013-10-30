@@ -11,7 +11,7 @@ describe 'postfix::config' do
     it 'should fail' do
       expect {
         should contain_augeas("set postfix 'foo'")
-      }.to raise_error(Puppet::Error, /Must pass value to Postfix::Config/)
+      }.to raise_error(Puppet::Error, /value can not be empty/)
     end
   end
 
@@ -46,7 +46,7 @@ describe 'postfix::config' do
     it 'should fail' do
       expect {
         should contain_augeas("set postfix 'foo'")
-      }.to raise_error(Puppet::Error, /must be either 'present' or 'absent'/)
+      }.to raise_error(Puppet::Error, /must be either 'present', 'absent' or 'blank'/)
     end
   end
 

@@ -9,7 +9,7 @@
 # === Parameters
 #
 # [*name*]   - name of the parameter.
-# [*ensure*] - present/absent. defaults to present.
+# [*ensure*] - present/absent/blank. defaults to present.
 # [*value*]  - value of the parameter.
 #
 # === Requires
@@ -23,12 +23,20 @@
 #     value  => 'yes',
 #   }
 #
-define postfix::config ($value, $ensure = present) {
+#   postfix::config { 'relayhost':
+#     ensure => 'blank',
+#   }
+#
+define postfix::config ($value = undef, $ensure = 'present') {
 
-  validate_string($value)
   validate_string($ensure)
-  validate_re($ensure, ['present', 'absent'],
-    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
+  validate_re($ensure, ['present', 'absent', 'blank'],
+    "\$ensure must be either 'present', 'absent' or 'blank', got '${ensure}'")
+  if ($ensure == 'present') {
+    validate_string($value)
+    validate_re($value, '^.+$',
+      '$value can not be empty if ensure = present')
+  }
 
   if (!defined(Class['postfix'])) {
     fail 'You must define class postfix before using postfix::config!'
@@ -49,6 +57,11 @@ define postfix::config ($value, $ensure = present) {
     absent: {
       augeas { "rm postfix '${name}'":
         changes => "rm ${name}",
+      }
+    }
+    blank: {
+      augeas { "blank postfix '${name}'":
+        changes => "clear ${name}",
       }
     }
     default: {}
