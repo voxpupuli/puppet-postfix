@@ -118,7 +118,9 @@ class postfix (
   validate_string($mynetworks)
   validate_string($myorigin)
   validate_string($relayhost)
-  validate_string($root_mail_recipient)
+  if ! is_array($root_mail_recipient) {
+    validate_string($root_mail_recipient)
+  }
   validate_string($smtp_listen)
 
 
