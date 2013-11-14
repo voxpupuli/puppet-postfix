@@ -69,7 +69,7 @@ scache	  unix	-	-	n	-	1	scache
 # Also specify in main.cf: maildrop_destination_recipient_limit=1
 #
 maildrop  unix  -       n       n       -       -       pipe
-  flags=DRhu user=vmail argv=/usr/local/bin/maildrop -d ${recipient}
+  flags=DRhu user=<%= @mail_user %> argv=/usr/local/bin/maildrop -d ${recipient}
 #
 # The Cyrus deliver program has changed incompatibly, multiple times.
 #
