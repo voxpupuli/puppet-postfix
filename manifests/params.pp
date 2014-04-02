@@ -23,6 +23,19 @@ class postfix::params {
       $master_os_template = "${module_name}/master.cf.debian.erb"
     }
 
+    'Suse': {
+      $seltype = undef
+
+      $mailx_package = 'mailx'
+
+      if $::operatingsystem != 'SLES' {
+        fail "Unsupported OS '${::operatingsystem}'"
+      }
+
+      $master_os_template = "${module_name}/master.cf.${::operatingsystem}
+                             ${::operatingsystemrelease}.erb"
+    }
+
     default: {
       fail "Unsupported OS family '${::osfamily}'"
     }
