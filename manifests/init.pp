@@ -59,6 +59,14 @@
 #
 # [*use_sympa*]           - (boolean) Whether to setup for Sympa
 #
+# [*configs*]             - (hash) postfix::config definitions (for Hiera usage)
+#
+# [*hashs*]               - (hash) postfix::hash definitions (for Hiera usage)
+#
+# [*transports*]          - (hash) postfix::transport definitions (for Hiera usage)
+#
+# [*virtuals*]            - (hash) postfix::virtual definitions (for Hiera usage)
+#
 # === Examples
 #
 #   class { 'postfix':
@@ -92,6 +100,10 @@ class postfix (
   $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
   $use_schleuder       = false,         # postfix_use_schleuder
   $use_sympa           = false,         # postfix_use_sympa
+  $configs             = {},
+  $hashs               = {},
+  $transports          = {},
+  $virtuals            = {},
 ) inherits postfix::params {
 
 
@@ -123,7 +135,15 @@ class postfix (
   }
   validate_string($smtp_listen)
 
+  validate_hash($configs)
+  validate_hash($hashs)
+  validate_hash($transports)
+  validate_hash($virtuals)
 
+  create_resources('postfix::config', $configs)
+  create_resources('postfix::hash', $hashs)
+  create_resources('postfix::transport', $transports)
+  create_resources('postfix::virtual', $virtuals)
 
   $_smtp_listen = $mailman ? {
     true    => '0.0.0.0',
@@ -137,8 +157,7 @@ class postfix (
 
   class { 'postfix::packages': } ->
   class { 'postfix::files': } ~>
-  class { 'postfix::service': } ->
-  Class['postfix']
+  class { 'postfix::service': }
 
   if $ldap {
     include ::postfix::ldap
@@ -164,5 +183,4 @@ class postfix (
 
   # Relationships
   Postfix::Config <| |> ~> Class['postfix::service']
-  Class['postfix'] -> Postfix::Hash <| |>
 }
