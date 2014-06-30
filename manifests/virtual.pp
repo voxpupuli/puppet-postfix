@@ -71,6 +71,6 @@ define postfix::virtual (
       Package['postfix'],
       Augeas::Lens['postfix_virtual'],
       ],
-    notify  => Postfix::Hash['/etc/postfix/virtual'],
+    notify  => Postfix::Hash[$file],
   }
 }
