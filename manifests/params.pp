@@ -32,8 +32,7 @@ class postfix::params {
         fail "Unsupported OS '${::operatingsystem}'"
       }
 
-      $master_os_template = "${module_name}/master.cf.${::operatingsystem}
-                             ${::operatingsystemrelease}.erb"
+      $master_os_template = "${module_name}/master.cf.${::operatingsystem}${::operatingsystemrelease}.erb"
     }
 
     default: {
