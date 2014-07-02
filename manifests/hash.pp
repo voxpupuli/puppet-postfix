@@ -65,6 +65,7 @@ define postfix::hash (
   }
 
   exec {"generate ${name}.db":
+    path        => '/usr/sbin',
     command     => "postmap ${name}",
     #creates    => "${name}.db", # this prevents postmap from being run !
     subscribe   => File[$name],
