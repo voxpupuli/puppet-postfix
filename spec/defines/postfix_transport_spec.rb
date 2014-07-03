@@ -84,7 +84,7 @@ describe 'postfix::transport' do
   end
 
   context 'when using default values' do
-    it { should include_class('postfix::augeas') }
+    it { should contain_class('postfix::augeas') }
     it { should contain_augeas('Postfix transport - foo').with(
       :incl    => '/etc/postfix/transport',
       :lens    => 'Postfix_Transport.lns',
@@ -104,7 +104,7 @@ describe 'postfix::transport' do
       :ensure      => 'present',
     } }
 
-    it { should include_class('postfix::augeas') }
+    it { should contain_class('postfix::augeas') }
     it { should contain_augeas('Postfix transport - foo').with(
       :incl    => '/tmp/transport',
       :lens    => 'Postfix_Transport.lns',
@@ -122,7 +122,7 @@ describe 'postfix::transport' do
       :ensure      => 'absent',
     } }
 
-    it { should include_class('postfix::augeas') }
+    it { should contain_class('postfix::augeas') }
     it { should contain_augeas('Postfix transport - foo').with(
       :incl    => '/etc/postfix/transport',
       :lens    => 'Postfix_Transport.lns',

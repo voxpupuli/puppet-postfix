@@ -153,7 +153,7 @@ describe 'postfix' do
       end
       context 'when enabling ldap' do
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when a custom mail_user is specified' do
@@ -169,7 +169,7 @@ describe 'postfix' do
           :mailman => true
         } }
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when specifying a custom mastercf_source' do
@@ -177,7 +177,7 @@ describe 'postfix' do
           :mastercf_source => 'testy'
         } }
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when specifying a custom master_smtp' do
@@ -209,7 +209,7 @@ describe 'postfix' do
           should contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
           should contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
         end
-        it { should include_class('postfix::mta') }
+        it { should contain_class('postfix::mta') }
         context 'and satellite is also enabled' do
           let (:params) { { :mta => true, :satellite => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
           it 'should fail' do
@@ -219,12 +219,12 @@ describe 'postfix' do
       end
       context 'when specifying mydesitination' do
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when specifying mynetworks' do
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when specifying myorigin' do
@@ -235,7 +235,7 @@ describe 'postfix' do
       end
       context 'when specifying relayhost' do
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when specifying a root_mail_recipient' do
@@ -263,7 +263,7 @@ describe 'postfix' do
       context 'when specifying smtp_listen' do
         let (:params) { { :smtp_listen => 'all' } }
         it 'should do stuff' do
-          pending 'need to write this still'
+          skip 'need to write this still'
         end
       end
       context 'when use_amavisd is true' do

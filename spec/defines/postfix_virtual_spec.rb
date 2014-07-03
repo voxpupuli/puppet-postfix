@@ -83,7 +83,7 @@ describe 'postfix::virtual' do
       :destination => 'bar',
     } }
 
-    it { should include_class('postfix::augeas') }
+    it { should contain_class('postfix::augeas') }
     it { should contain_augeas('Postfix virtual - foo').with(
       :incl    => '/etc/postfix/virtual',
       :lens    => 'Postfix_Virtual.lns',
@@ -101,7 +101,7 @@ describe 'postfix::virtual' do
       :ensure      => 'present',
     } }
 
-    it { should include_class('postfix::augeas') }
+    it { should contain_class('postfix::augeas') }
     it { should contain_augeas('Postfix virtual - foo').with(
       :incl    => '/tmp/virtual',
       :lens    => 'Postfix_Virtual.lns',
@@ -118,7 +118,7 @@ describe 'postfix::virtual' do
       :ensure      => 'absent',
     } }
 
-    it { should include_class('postfix::augeas') }
+    it { should contain_class('postfix::augeas') }
     it { should contain_augeas('Postfix virtual - foo').with(
       :incl    => '/etc/postfix/virtual',
       :lens    => 'Postfix_Virtual.lns',

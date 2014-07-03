@@ -6,7 +6,7 @@ describe 'postfix::satellite' do
     :osfamily                        => 'Debian',
     :needs_postfix_class_with_params => true,
   } }
-  it { should include_class('postfix::mta') }
+  it { should contain_class('postfix::mta') }
   it { should contain_postfix__virtual('@foo.example.com').with(
     :ensure      => 'present',
     :destination => 'root'
