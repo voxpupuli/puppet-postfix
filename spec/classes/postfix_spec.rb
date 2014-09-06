@@ -177,7 +177,7 @@ describe 'postfix' do
 
         context 'when on RedHat' do
           let (:params) { {
-            :ldap => true
+            :ldap => true,
 	    :ldap_base => 'dc=example,dc=com',
 	    :ldap_host => 'host.example.com',
           } }
