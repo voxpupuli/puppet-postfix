@@ -152,8 +152,50 @@ describe 'postfix' do
         end
       end
       context 'when enabling ldap' do
-        it 'should do stuff' do
-          skip 'need to write this still'
+        context 'when on Debian' do
+          let (:params) { {
+            :ldap => 'true'
+          } }
+
+	  let (:facts) { {
+            :operatingsystem => 'Debian',
+            :osfamily        => 'Debian',
+            :fqdn            => 'fqdn.example.com',
+          } }
+
+	  it { should contain_package('postfix-ldap') }
+
+	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with_content("") }
+	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
+            owner => 'root',
+	    group => 'postfix',
+	    content => 'ldap_base ='
+          ) }
+        end
+
+        context 'when on RedHat' do
+          let (:params) { {
+            :ldap => 'true'
+          } }
+
+	  let (:facts) { {
+            :operatingsystem => 'RedHat',
+            :osfamily        => 'RedHat',
+            :fqdn            => 'fqdn.example.com',
+          } }
+
+	  it do
+            expect {
+              should ! contain_package('postfix-ldap')
+            }.to raise_error(Puppet::Error, /postfix-ldap package does not exist on RedHat/)
+          end
+
+	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with_content("") }
+	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
+            owner => 'root',
+	    group => 'postfix',
+	    content => 'ldap_base ='
+          ) }
         end
       end
       context 'when a custom mail_user is specified' do

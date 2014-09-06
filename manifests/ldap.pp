@@ -14,8 +14,10 @@
 # include postfix::ldap
 #
 class postfix::ldap {
-
-  package {'postfix-ldap': }
+  case $::osfamily {
+    'debian': { package {'postfix-ldap': } }
+    default: {}
+  }
 
   if ! $postfix::ldap_base {
     fail 'Missing $postfix::ldap_base !'
