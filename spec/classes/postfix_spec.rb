@@ -154,7 +154,7 @@ describe 'postfix' do
       context 'when enabling ldap' do
         context 'when on Debian' do
           let (:params) { {
-            :ldap => 'true'
+            :ldap => true
           } }
 
 	  let (:facts) { {
@@ -169,13 +169,13 @@ describe 'postfix' do
 	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
             owner => 'root',
 	    group => 'postfix',
-	    content => 'ldap_base ='
+	    content => 'search_base = '
           ) }
         end
 
         context 'when on RedHat' do
           let (:params) { {
-            :ldap => 'true'
+            :ldap => true
           } }
 
 	  let (:facts) { {
@@ -194,7 +194,7 @@ describe 'postfix' do
 	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
             owner => 'root',
 	    group => 'postfix',
-	    content => 'ldap_base ='
+	    content => 'search_base = '
           ) }
         end
       end
