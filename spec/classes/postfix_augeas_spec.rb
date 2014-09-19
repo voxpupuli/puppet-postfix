@@ -2,9 +2,15 @@ require 'spec_helper'
 
 describe 'postfix::augeas' do
   let (:facts) { {
+    :augeasversion   => '1.2.0',
+    :lsbdistcodename => 'wheezy',
     :operatingsystem => 'Debian',
     :osfamily        => 'Debian',
+    :rubyversion     => '1.9.3',
   } }
+  let :pre_condition do
+    "include ::augeas"
+  end
 
   it { should contain_augeas__lens('postfix_transport').with(
     :ensure      => 'present',

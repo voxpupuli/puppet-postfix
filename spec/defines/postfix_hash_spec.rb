@@ -3,9 +3,12 @@ require 'spec_helper'
 describe 'postfix::hash' do
   let (:title) { '/tmp/foo' }
   let (:facts) { {
-    :osfamily => 'Debian',
-    :needs_postfix_class => true,
+    :lsbdistcodename => 'wheezy',
+    :osfamily        => 'Debian',
   } }
+  let :pre_condition do
+    "class { '::postfix': }"
+  end
 
   context 'when passing wrong type for ensure' do
     let (:params) { {

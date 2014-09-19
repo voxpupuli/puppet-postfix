@@ -3,8 +3,13 @@ require 'spec_helper'
 describe 'postfix::virtual' do
   let (:title) { 'foo' }
   let (:facts) { {
-    :osfamily => 'Debian',
+    :augeasversion => '1.2.0',
+    :osfamily      => 'Debian',
+    :rubyversion   => '1.9.3',
   } }
+  let :pre_condition do
+    "class { 'augeas': }"
+  end
 
   context 'when not sending destination' do
     it 'should fail' do

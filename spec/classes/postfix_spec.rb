@@ -4,6 +4,7 @@ describe 'postfix' do
   context 'when using defaults' do
     context 'when on Debian' do
       let (:facts) { {
+        :lsbdistcodename => 'wheezy',
         :operatingsystem => 'Debian',
         :osfamily        => 'Debian',
         :fqdn            => 'fqdn.example.com',
@@ -35,9 +36,10 @@ describe 'postfix' do
 
     context 'when on RedHat' do
       let (:facts) { {
-        :operatingsystem => 'RedHat',
-        :osfamily        => 'RedHat',
-        :fqdn            => 'fqdn.example.com',
+        :lsbmajdistrelease => '7',
+        :operatingsystem   => 'RedHat',
+        :osfamily          => 'RedHat',
+        :fqdn              => 'fqdn.example.com',
       } }
 
       it { should contain_package('postfix') }
@@ -72,6 +74,7 @@ describe 'postfix' do
     context 'when on Debian' do
       context "when setting smtp_listen to 'all'" do
         let (:facts) { {
+          :lsbdistcodename => 'wheezy',
           :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :fqdn            => 'fqdn.example.com',
@@ -139,8 +142,11 @@ describe 'postfix' do
     end
     context 'when on RedHat' do
       let (:facts) { {
+        :augeasversion   => '1.2.0',
+        :lsbdistcodename => 'wheezy',
         :operatingsystem => 'Debian',
         :osfamily        => 'Debian',
+        :rubyversion     => '1.9.7',
         :fqdn            => 'fqdn.example.com',
       } }
       context 'when specifying inet_interfaces' do
@@ -246,6 +252,9 @@ describe 'postfix' do
       end
       context 'when specifying satellite' do
         let (:params) { { :satellite => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
+        let :pre_condition do
+          "class { 'augeas': }"
+        end
         it 'should configure all local email to be forwarded to $root_mail_recipient delivered through $relayhost' do
           should contain_postfix__config('mydestination').with_value('1.2.3.4')
           should contain_postfix__config('mynetworks').with_value('127.0.0.0/8')

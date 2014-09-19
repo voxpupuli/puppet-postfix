@@ -3,9 +3,12 @@ require 'spec_helper'
 describe 'postfix::config' do
   let (:title) { 'foo' }
   let (:facts) { {
-    :osfamily => 'Debian',
-    :needs_postfix_class => true,
+    :lsbdistcodename => 'wheezy',
+    :osfamily        => 'Debian',
   } }
+  let :pre_condition do
+    "class { 'postfix': }"
+  end
 
   context 'when not passing value' do
     it 'should fail' do

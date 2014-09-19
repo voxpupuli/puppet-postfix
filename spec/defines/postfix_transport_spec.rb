@@ -3,8 +3,13 @@ require 'spec_helper'
 describe 'postfix::transport' do
   let (:title) { 'foo' }
   let (:facts) { {
-    :osfamily => 'Debian',
+    :augeasversion => '1.2.0',
+    :osfamily      => 'Debian',
+    :rubyversion   => '1.9.3',
   } }
+  let :pre_condition do
+    "class { 'augeas': }"
+  end
 
   context 'when sending wrong type for destination' do
     let (:params) { {
