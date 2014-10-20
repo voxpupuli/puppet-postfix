@@ -159,7 +159,7 @@ describe 'postfix' do
       end
       context 'when enabling ldap' do
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when a custom mail_user is specified' do
@@ -175,7 +175,7 @@ describe 'postfix' do
           :mailman => true
         } }
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when specifying a custom mastercf_source' do
@@ -183,7 +183,7 @@ describe 'postfix' do
           :mastercf_source => 'testy'
         } }
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when specifying a custom master_smtp' do
@@ -225,12 +225,12 @@ describe 'postfix' do
       end
       context 'when specifying mydesitination' do
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when specifying mynetworks' do
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when specifying myorigin' do
@@ -241,7 +241,7 @@ describe 'postfix' do
       end
       context 'when specifying relayhost' do
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when specifying a root_mail_recipient' do
@@ -272,7 +272,7 @@ describe 'postfix' do
       context 'when specifying smtp_listen' do
         let (:params) { { :smtp_listen => 'all' } }
         it 'should do stuff' do
-          skip 'need to write this still'
+          pending 'need to write this still'
         end
       end
       context 'when use_amavisd is true' do
