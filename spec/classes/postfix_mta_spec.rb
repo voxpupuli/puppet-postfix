@@ -8,12 +8,12 @@ describe 'postfix::mta' do
   let :pre_condition do
     "class { 'postfix':
       mydestination => 'bar',
-      mynetworks    => 'baz',
+      mynetworks    => '127.0.0.1/8, [::1]\128 ![::2]\128',
       relayhost     => 'foo',
     }"
   end
 
   it { should contain_postfix__config('mydestination').with_value('bar') }
-  it { should contain_postfix__config('mynetworks').with_value('baz') }
+  it { should contain_postfix__config('mynetworks').with_value('127.0.0.1/8, [::1]\128 ![::2]\128') }
   it { should contain_postfix__config('relayhost').with_value('foo') }
 end
