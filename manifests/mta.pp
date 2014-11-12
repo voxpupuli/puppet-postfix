@@ -35,7 +35,7 @@ class postfix::mta (
               'Wrong value for $relayhost')
   validate_re($mydestination, '^\S+(?:,\s*\S+)*$',
               'Wrong value for $mydestination')
-  validate_re($mynetworks, '^\S+$',
+  validate_re($mynetworks, '^(?:\S+?(?:(?:,\s)|(?:\s))?)*$',
               'Wrong value for $mynetworks')
 
   # If direct is specified then relayhost should be blank
