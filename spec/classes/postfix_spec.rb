@@ -8,6 +8,7 @@ describe 'postfix' do
         :operatingsystem => 'Debian',
         :osfamily        => 'Debian',
         :fqdn            => 'fqdn.example.com',
+        :path            => '/foo/bar',
       } }
 
       it { should contain_package('postfix') }
@@ -40,6 +41,7 @@ describe 'postfix' do
         :operatingsystem   => 'RedHat',
         :osfamily          => 'RedHat',
         :fqdn              => 'fqdn.example.com',
+        :path            => '/foo/bar',
       } }
 
       it { should contain_package('postfix') }
@@ -78,6 +80,7 @@ describe 'postfix' do
           :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :fqdn            => 'fqdn.example.com',
+          :path            => '/foo/bar',
         } }
 
         let (:params) { {
@@ -148,6 +151,7 @@ describe 'postfix' do
         :osfamily        => 'Debian',
         :rubyversion     => '1.9.7',
         :fqdn            => 'fqdn.example.com',
+        :path            => '/foo/bar',
       } }
       context 'when specifying inet_interfaces' do
         let (:params) { {

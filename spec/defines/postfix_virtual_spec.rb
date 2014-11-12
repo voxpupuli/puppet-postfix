@@ -6,6 +6,7 @@ describe 'postfix::virtual' do
     :augeasversion => '1.2.0',
     :osfamily      => 'Debian',
     :rubyversion   => '1.9.3',
+    :path            => '/foo/bar',
   } }
   let :pre_condition do
     "class { 'augeas': }"
