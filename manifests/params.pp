@@ -3,7 +3,7 @@ class postfix::params {
     'RedHat': {
       $seltype = $::lsbmajdistrelease ? {
         '4'   => 'etc_t',
-        /5|6/ => 'postfix_etc_t',
+        /5|6|7/ => 'postfix_etc_t',
         default => undef,
       }
 
