@@ -14,4 +14,9 @@ class postfix::augeas {
     test_source => 'puppet:///modules/postfix/lenses/test_postfix_virtual.aug',
     stock_since => '1.0.0',
   }
+  augeas::lens {'postfix_canonical':
+    ensure      => present,
+    lens_source => 'puppet:///modules/postfix/lenses/postfix_canonical.aug',
+    test_source => 'puppet:///modules/postfix/lenses/test_postfix_canonical.aug',
+  }
 }
