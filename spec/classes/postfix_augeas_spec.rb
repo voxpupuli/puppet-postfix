@@ -7,6 +7,7 @@ describe 'postfix::augeas' do
     :operatingsystem => 'Debian',
     :osfamily        => 'Debian',
     :rubyversion     => '1.9.3',
+    :path            => '/foo/bar',
   } }
   let :pre_condition do
     "include ::augeas"
