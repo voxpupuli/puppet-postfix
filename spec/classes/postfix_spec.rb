@@ -37,11 +37,11 @@ describe 'postfix' do
 
     context 'when on RedHat' do
       let (:facts) { {
-        :lsbmajdistrelease => '7',
-        :operatingsystem   => 'RedHat',
-        :osfamily          => 'RedHat',
-        :fqdn              => 'fqdn.example.com',
-        :path            => '/foo/bar',
+        :fqdn                      => 'fqdn.example.com',
+        :operatingsystem           => 'RedHat',
+        :operatingsystemmajrelease => '7',
+        :osfamily                  => 'RedHat',
+        :path                      => '/foo/bar',
       } }
 
       it { should contain_package('postfix') }
