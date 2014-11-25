@@ -34,8 +34,8 @@
 #   }
 #
 define postfix::transport (
-  $destination='',
-  $nexthop='',
+  $destination=undef,
+  $nexthop=undef,
   $file='/etc/postfix/transport',
   $ensure='present'
 ) {
