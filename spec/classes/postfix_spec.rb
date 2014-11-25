@@ -223,7 +223,7 @@ describe 'postfix' do
         context 'and satellite is also enabled' do
           let (:params) { { :mta => true, :satellite => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
           it 'should fail' do
-            expect {subject}.to raise_error(Puppet::Error, /Please disable one/)
+            expect { should compile }.to raise_error(/Please disable one/)
           end
         end
       end
@@ -269,7 +269,7 @@ describe 'postfix' do
         context 'and mta is also enabled' do
           let (:params) { { :mta => true, :satellite => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
           it 'should fail' do
-            expect {subject}.to raise_error(Puppet::Error, /Please disable one/)
+            expect { should compile }.to raise_error(/Please disable one/)
           end
         end
       end
