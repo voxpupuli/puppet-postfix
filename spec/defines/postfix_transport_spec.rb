@@ -19,7 +19,7 @@ describe 'postfix::transport' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix transport - foo')
+        is_expected.to contain_augeas('Postfix transport - foo')
       }.to raise_error(Puppet::Error, /\["bar"\] is not a string/)
     end
   end
@@ -32,7 +32,7 @@ describe 'postfix::transport' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix transport - foo')
+        is_expected.to contain_augeas('Postfix transport - foo')
       }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
     end
   end
@@ -45,7 +45,7 @@ describe 'postfix::transport' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix transport - foo')
+        is_expected.to contain_augeas('Postfix transport - foo')
       }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
     end
   end
@@ -58,7 +58,7 @@ describe 'postfix::transport' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix transport - foo')
+        is_expected.to contain_augeas('Postfix transport - foo')
       }.to raise_error(Puppet::Error, /"baz" is not an absolute path/)
     end
   end
@@ -71,7 +71,7 @@ describe 'postfix::transport' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix transport - foo')
+        is_expected.to contain_augeas('Postfix transport - foo')
       }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
     end
   end
@@ -84,14 +84,14 @@ describe 'postfix::transport' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix transport - foo')
+        is_expected.to contain_augeas('Postfix transport - foo')
       }.to raise_error(Puppet::Error, /\$ensure must be either/)
     end
   end
 
   context 'when using default values' do
-    it { should contain_class('postfix::augeas') }
-    it { should contain_augeas('Postfix transport - foo').with(
+    it { is_expected.to contain_class('postfix::augeas') }
+    it { is_expected.to contain_augeas('Postfix transport - foo').with(
       :incl    => '/etc/postfix/transport',
       :lens    => 'Postfix_Transport.lns',
       :changes => [
@@ -110,8 +110,8 @@ describe 'postfix::transport' do
       :ensure      => 'present',
     } }
 
-    it { should contain_class('postfix::augeas') }
-    it { should contain_augeas('Postfix transport - foo').with(
+    it { is_expected.to contain_class('postfix::augeas') }
+    it { is_expected.to contain_augeas('Postfix transport - foo').with(
       :incl    => '/tmp/transport',
       :lens    => 'Postfix_Transport.lns',
       :changes => [
@@ -128,8 +128,8 @@ describe 'postfix::transport' do
       :ensure      => 'absent',
     } }
 
-    it { should contain_class('postfix::augeas') }
-    it { should contain_augeas('Postfix transport - foo').with(
+    it { is_expected.to contain_class('postfix::augeas') }
+    it { is_expected.to contain_augeas('Postfix transport - foo').with(
       :incl    => '/etc/postfix/transport',
       :lens    => 'Postfix_Transport.lns',
       :changes => [

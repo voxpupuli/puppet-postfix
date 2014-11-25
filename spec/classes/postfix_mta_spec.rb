@@ -13,7 +13,7 @@ describe 'postfix::mta' do
     }"
   end
 
-  it { should contain_postfix__config('mydestination').with_value('bar') }
-  it { should contain_postfix__config('mynetworks').with_value('baz') }
-  it { should contain_postfix__config('relayhost').with_value('foo') }
+  it { is_expected.to contain_postfix__config('mydestination').with_value('bar') }
+  it { is_expected.to contain_postfix__config('mynetworks').with_value('baz') }
+  it { is_expected.to contain_postfix__config('relayhost').with_value('foo') }
 end

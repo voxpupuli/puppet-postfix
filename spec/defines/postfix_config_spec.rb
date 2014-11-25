@@ -13,7 +13,7 @@ describe 'postfix::config' do
   context 'when not passing value' do
     it 'should fail' do
       expect {
-        should contain_augeas("set postfix 'foo'")
+        is_expected.to contain_augeas("set postfix 'foo'")
       }.to raise_error(Puppet::Error, /value can not be empty/)
     end
   end
@@ -24,7 +24,7 @@ describe 'postfix::config' do
     } }
     it 'should fail' do
       expect {
-        should contain_augeas("set postfix 'foo'")
+        is_expected.to contain_augeas("set postfix 'foo'")
       }.to raise_error(Puppet::Error, /\["bar"\] is not a string/)
     end
   end
@@ -36,7 +36,7 @@ describe 'postfix::config' do
     } }
     it 'should fail' do
       expect {
-        should contain_augeas("set postfix 'foo'")
+        is_expected.to contain_augeas("set postfix 'foo'")
       }.to raise_error(Puppet::Error, /\["present"\] is not a string/)
     end
   end
@@ -48,7 +48,7 @@ describe 'postfix::config' do
     } }
     it 'should fail' do
       expect {
-        should contain_augeas("set postfix 'foo'")
+        is_expected.to contain_augeas("set postfix 'foo'")
       }.to raise_error(Puppet::Error, /must be either 'present', 'absent' or 'blank'/)
     end
   end
@@ -59,7 +59,7 @@ describe 'postfix::config' do
       :ensure => 'present',
     } }
 
-    it { should contain_augeas("set postfix 'foo' to 'bar'").with(
+    it { is_expected.to contain_augeas("set postfix 'foo' to 'bar'").with(
       :incl    => '/etc/postfix/main.cf',
       :lens    => 'Postfix_Main.lns',
       :changes => "set foo 'bar'"
@@ -72,7 +72,7 @@ describe 'postfix::config' do
       :ensure => 'absent',
     } }
 
-    it { should contain_augeas("rm postfix 'foo'").with(
+    it { is_expected.to contain_augeas("rm postfix 'foo'").with(
       :incl    => '/etc/postfix/main.cf',
       :lens    => 'Postfix_Main.lns',
       :changes => "rm foo"
