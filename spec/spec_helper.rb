@@ -1,4 +1,7 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
+require 'rspec-puppet-facts'
+include RspecPuppetFacts
+
 
 RSpec.configure do |c|
   c.include PuppetlabsSpec::Files
@@ -16,6 +19,10 @@ RSpec.configure do |c|
 
     if Gem::Version.new(`puppet --version`) >= Gem::Version.new('3.5')
       Puppet.settings[:strict_variables]=true
+    end
+
+    if ENV['FUTURE_PARSER'] == 'yes'
+      c.parser='future'
     end
   end
 

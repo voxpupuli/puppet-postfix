@@ -11,23 +11,23 @@ describe 'postfix' do
         :path            => '/foo/bar',
       } }
 
-      it { should contain_package('postfix') }
-      it { should contain_package('mailx') }
+      it { is_expected.to contain_package('postfix') }
+      it { is_expected.to contain_package('mailx') }
 
-      it { should contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
-      it { should contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
-      it { should contain_exec('newaliases').with_refreshonly('true') }
-      it { should contain_file('/etc/postfix/master.cf').without('seltype') }
-      it { should contain_file('/etc/postfix/main.cf').without('seltype') }
+      it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
+      it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
+      it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
+      it { is_expected.to contain_file('/etc/postfix/master.cf').without('seltype') }
+      it { is_expected.to contain_file('/etc/postfix/main.cf').without('seltype') }
 
-      it { should contain_postfix__config('myorigin').with_value('fqdn.example.com') }
-      it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
-      it { should contain_postfix__config('inet_interfaces').with_value('all') }
+      it { is_expected.to contain_postfix__config('myorigin').with_value('fqdn.example.com') }
+      it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+      it { is_expected.to contain_postfix__config('inet_interfaces').with_value('all') }
 
-      it { should contain_mailalias('root').with_recipient('nobody') }
+      it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
 
       it {
-        should contain_service('postfix').with(
+        is_expected.to contain_service('postfix').with(
           :ensure    => 'running',
           :enable    => 'true',
           :hasstatus => 'true',
@@ -37,33 +37,33 @@ describe 'postfix' do
 
     context 'when on RedHat' do
       let (:facts) { {
-        :lsbmajdistrelease => '7',
-        :operatingsystem   => 'RedHat',
-        :osfamily          => 'RedHat',
-        :fqdn              => 'fqdn.example.com',
-        :path            => '/foo/bar',
+        :fqdn                      => 'fqdn.example.com',
+        :operatingsystem           => 'RedHat',
+        :operatingsystemmajrelease => '7',
+        :osfamily                  => 'RedHat',
+        :path                      => '/foo/bar',
       } }
 
-      it { should contain_package('postfix') }
-      it { should contain_package('mailx') }
+      it { is_expected.to contain_package('postfix') }
+      it { is_expected.to contain_package('mailx') }
 
-      it { should contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("fqdn.example.com\n") }
-      it { should contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
-      it { should contain_exec('newaliases').with_refreshonly('true') }
-      it { should contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t') }
-      it { should contain_file('/etc/postfix/main.cf').with_seltype('postfix_etc_t') }
+      it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("fqdn.example.com\n") }
+      it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
+      it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
+      it { is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t') }
+      it { is_expected.to contain_file('/etc/postfix/main.cf').with_seltype('postfix_etc_t') }
 
-      it { should contain_postfix__config('myorigin').with_value('fqdn.example.com') }
-      it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
-      it { should contain_postfix__config('inet_interfaces').with_value('all') }
-      it { should contain_postfix__config('sendmail_path') }
-      it { should contain_postfix__config('newaliases_path') }
-      it { should contain_postfix__config('mailq_path') }
+      it { is_expected.to contain_postfix__config('myorigin').with_value('fqdn.example.com') }
+      it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+      it { is_expected.to contain_postfix__config('inet_interfaces').with_value('all') }
+      it { is_expected.to contain_postfix__config('sendmail_path') }
+      it { is_expected.to contain_postfix__config('newaliases_path') }
+      it { is_expected.to contain_postfix__config('mailq_path') }
 
-      it { should contain_mailalias('root').with_recipient('nobody') }
+      it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
 
       it {
-        should contain_service('postfix').with(
+        is_expected.to contain_service('postfix').with(
           :ensure    => 'running',
           :enable    => 'true',
           :hasstatus => 'true',
@@ -99,14 +99,14 @@ describe 'postfix' do
           :master_submission   => 'submission inet n       -       -       -       -       smtpd',
         } }
 
-        it { should contain_package('postfix') }
-        it { should contain_package('mailx') }
+        it { is_expected.to contain_package('postfix') }
+        it { is_expected.to contain_package('mailx') }
 
-        it { should contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
-        it { should contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
-        it { should contain_exec('newaliases').with_refreshonly('true') }
+        it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
+        it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
+        it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
         it {
-          should contain_file('/etc/postfix/master.cf').without('seltype').with_content(
+          is_expected.to contain_file('/etc/postfix/master.cf').without('seltype').with_content(
             /smtp      inet  n       -       -       -       -       smtpd/
           ).with_content(
             /amavis unix/
@@ -126,16 +126,16 @@ describe 'postfix' do
             /^submission inet n/
           )
         }
-        it { should contain_file('/etc/postfix/main.cf').without('seltype') }
+        it { is_expected.to contain_file('/etc/postfix/main.cf').without('seltype') }
 
-        it { should contain_postfix__config('myorigin').with_value('localhost') }
-        it { should contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
-        it { should contain_postfix__config('inet_interfaces').with_value('localhost2') }
+        it { is_expected.to contain_postfix__config('myorigin').with_value('localhost') }
+        it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+        it { is_expected.to contain_postfix__config('inet_interfaces').with_value('localhost2') }
 
-        it { should contain_mailalias('root').with_recipient('foo') }
+        it { is_expected.to contain_mailalias('root').with_recipient('foo') }
 
         it {
-          should contain_service('postfix').with(
+          is_expected.to contain_service('postfix').with(
             :ensure    => 'running',
             :enable    => 'true',
             :hasstatus => 'true',
@@ -158,7 +158,7 @@ describe 'postfix' do
           :inet_interfaces => 'localhost2'
         } }
         it 'should create a postfix::config defined type with inet_interfaces specified properly' do
-          should contain_postfix__config('inet_interfaces').with_value('localhost2')
+          is_expected.to contain_postfix__config('inet_interfaces').with_value('localhost2')
         end
       end
       context 'when enabling ldap' do
@@ -171,7 +171,7 @@ describe 'postfix' do
           :mail_user => 'bar'
         } }
         it 'should adjust the content of /etc/postfix/master.cf specifying the user' do
-          should contain_file('/etc/postfix/master.cf').without('seltype').with_content(/user=bar/)
+          is_expected.to contain_file('/etc/postfix/master.cf').without('seltype').with_content(/user=bar/)
         end
       end
       context 'when mailman is true' do
@@ -196,7 +196,7 @@ describe 'postfix' do
     -o smtpd_client_restrictions=check_client_access,hash:/etc/postfix/access,reject",
         } }
         it 'should update master.cf with the specified flags to smtp' do 
-          should contain_file('/etc/postfix/master.cf').without('seltype').with_content(
+          is_expected.to contain_file('/etc/postfix/master.cf').without('seltype').with_content(
             /smtp      inet  n       -       -       -       -       smtpd/).with_content(
             /^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:/
           )
@@ -207,23 +207,23 @@ describe 'postfix' do
           :master_smtps        => 'smtps     inet  n       -       -       -       -       smtpd'
         } }
         it 'should update master.cf with the specified flags to smtps' do
-          should contain_file('/etc/postfix/master.cf').with_content(/^smtps     inet  n/)
+          is_expected.to contain_file('/etc/postfix/master.cf').with_content(/^smtps     inet  n/)
         end
       end
       context 'when mta is enabled' do
         let (:params) { { :mta => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
         it 'should configure postfix as a minimal MTA, delivering mail to the mydestination param' do
-          should contain_postfix__config('mydestination').with_value('1.2.3.4')
-          should contain_postfix__config('mynetworks').with_value('127.0.0.0/8')
-          should contain_postfix__config('relayhost').with_value('2.3.4.5')
-          should contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
-          should contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
+          is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
+          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8')
+          is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
+          is_expected.to contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
+          is_expected.to contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
         end
-        it { should contain_class('postfix::mta') }
+        it { is_expected.to contain_class('postfix::mta') }
         context 'and satellite is also enabled' do
           let (:params) { { :mta => true, :satellite => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
           it 'should fail' do
-            expect {subject}.to raise_error(Puppet::Error, /Please disable one/)
+            expect { should compile }.to raise_error(/Please disable one/)
           end
         end
       end
@@ -240,7 +240,7 @@ describe 'postfix' do
       context 'when specifying myorigin' do
         let (:params) { { :myorigin => 'localhost'} }
         it 'should create a postfix::config defined type with myorigin specified properly' do
-          should contain_postfix__config('myorigin').with_value('localhost')
+          is_expected.to contain_postfix__config('myorigin').with_value('localhost')
         end
       end
       context 'when specifying relayhost' do
@@ -251,7 +251,7 @@ describe 'postfix' do
       context 'when specifying a root_mail_recipient' do
         let (:params) { { :root_mail_recipient => 'foo'} }
         it 'should contain a Mailalias resource directing roots mail to the required user' do
-          should contain_mailalias('root').with_recipient('foo')
+          is_expected.to contain_mailalias('root').with_recipient('foo')
         end
       end
       context 'when specifying satellite' do
@@ -260,16 +260,16 @@ describe 'postfix' do
           "class { 'augeas': }"
         end
         it 'should configure all local email to be forwarded to $root_mail_recipient delivered through $relayhost' do
-          should contain_postfix__config('mydestination').with_value('1.2.3.4')
-          should contain_postfix__config('mynetworks').with_value('127.0.0.0/8')
-          should contain_postfix__config('relayhost').with_value('2.3.4.5')
-          should contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
-          should contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
+          is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
+          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8')
+          is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
+          is_expected.to contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
+          is_expected.to contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
         end
         context 'and mta is also enabled' do
           let (:params) { { :mta => true, :satellite => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
           it 'should fail' do
-            expect {subject}.to raise_error(Puppet::Error, /Please disable one/)
+            expect { should compile }.to raise_error(/Please disable one/)
           end
         end
       end
@@ -282,25 +282,25 @@ describe 'postfix' do
       context 'when use_amavisd is true' do
         let (:params) { { :use_amavisd => true } }
         it 'should update master.cf with the specified flags to amavis' do
-          should contain_file('/etc/postfix/master.cf').with_content(/amavis unix/)
+          is_expected.to contain_file('/etc/postfix/master.cf').with_content(/amavis unix/)
         end
       end
       context 'when use_dovecot_lda is true' do
         let (:params) { { :use_dovecot_lda => true } }
         it 'should update master.cf with the specified flags to dovecot' do
-          should contain_file('/etc/postfix/master.cf').with_content(/dovecot.*\n.* user=vmail:vmail /)
+          is_expected.to contain_file('/etc/postfix/master.cf').with_content(/dovecot.*\n.* user=vmail:vmail /)
         end
       end
       context 'when use_schleuder is true' do
         let (:params) { { :use_schleuder => true } }
         it 'should update master.cf with the specified flags to schleuder' do
-          should contain_file('/etc/postfix/master.cf').with_content(/schleuder/)
+          is_expected.to contain_file('/etc/postfix/master.cf').with_content(/schleuder/)
         end
       end
       context 'when use_sympa is true' do
         let (:params) { { :use_sympa => true } }
         it 'should update master.cf to include sympa' do
-          should contain_file('/etc/postfix/master.cf').with_content(/sympa/)
+          is_expected.to contain_file('/etc/postfix/master.cf').with_content(/sympa/)
         end
       end
     end

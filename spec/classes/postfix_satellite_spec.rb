@@ -17,8 +17,8 @@ describe 'postfix::satellite' do
       mynetworks    => 'baz',
     }"
   end
-  it { should contain_class('postfix::mta') }
-  it { should contain_postfix__virtual('@foo.example.com').with(
+  it { is_expected.to contain_class('postfix::mta') }
+  it { is_expected.to contain_postfix__virtual('@foo.example.com').with(
     :ensure      => 'present',
     :destination => 'root'
   ) }

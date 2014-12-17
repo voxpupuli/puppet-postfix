@@ -15,7 +15,7 @@ describe 'postfix::virtual' do
   context 'when not sending destination' do
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix virtual - foo')
+        is_expected.to contain_augeas('Postfix virtual - foo')
       }.to raise_error(Puppet::Error, /Must pass destination/)
     end
   end
@@ -27,7 +27,7 @@ describe 'postfix::virtual' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix virtual - foo')
+        is_expected.to contain_augeas('Postfix virtual - foo')
       }.to raise_error(Puppet::Error, /\["bar"\] is not a string/)
     end
   end
@@ -40,7 +40,7 @@ describe 'postfix::virtual' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix virtual - foo')
+        is_expected.to contain_augeas('Postfix virtual - foo')
       }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
     end
   end
@@ -53,7 +53,7 @@ describe 'postfix::virtual' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix virtual - foo')
+        is_expected.to contain_augeas('Postfix virtual - foo')
       }.to raise_error(Puppet::Error, /"baz" is not an absolute path/)
     end
   end
@@ -66,7 +66,7 @@ describe 'postfix::virtual' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix virtual - foo')
+        is_expected.to contain_augeas('Postfix virtual - foo')
       }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
     end
   end
@@ -79,7 +79,7 @@ describe 'postfix::virtual' do
 
     it 'should fail' do
       expect {
-        should contain_augeas('Postfix virtual - foo')
+        is_expected.to contain_augeas('Postfix virtual - foo')
       }.to raise_error(Puppet::Error, /\$ensure must be either/)
     end
   end
@@ -89,8 +89,8 @@ describe 'postfix::virtual' do
       :destination => 'bar',
     } }
 
-    it { should contain_class('postfix::augeas') }
-    it { should contain_augeas('Postfix virtual - foo').with(
+    it { is_expected.to contain_class('postfix::augeas') }
+    it { is_expected.to contain_augeas('Postfix virtual - foo').with(
       :incl    => '/etc/postfix/virtual',
       :lens    => 'Postfix_Virtual.lns',
       :changes => [
@@ -107,8 +107,8 @@ describe 'postfix::virtual' do
       :ensure      => 'present',
     } }
 
-    it { should contain_class('postfix::augeas') }
-    it { should contain_augeas('Postfix virtual - foo').with(
+    it { is_expected.to contain_class('postfix::augeas') }
+    it { is_expected.to contain_augeas('Postfix virtual - foo').with(
       :incl    => '/tmp/virtual',
       :lens    => 'Postfix_Virtual.lns',
       :changes => [
@@ -124,8 +124,8 @@ describe 'postfix::virtual' do
       :ensure      => 'absent',
     } }
 
-    it { should contain_class('postfix::augeas') }
-    it { should contain_augeas('Postfix virtual - foo').with(
+    it { is_expected.to contain_class('postfix::augeas') }
+    it { is_expected.to contain_augeas('Postfix virtual - foo').with(
       :incl    => '/etc/postfix/virtual',
       :lens    => 'Postfix_Virtual.lns',
       :changes => [
