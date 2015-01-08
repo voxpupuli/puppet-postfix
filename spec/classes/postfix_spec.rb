@@ -31,7 +31,6 @@ describe 'postfix' do
           :ensure    => 'running',
           :enable    => 'true',
           :hasstatus => 'true',
-          :restart   => '/etc/init.d/postfix reload'
       ) }
     end
 
@@ -67,7 +66,6 @@ describe 'postfix' do
           :ensure    => 'running',
           :enable    => 'true',
           :hasstatus => 'true',
-          :restart   => '/etc/init.d/postfix reload'
       ) }
     end
   end
@@ -139,7 +137,6 @@ describe 'postfix' do
             :ensure    => 'running',
             :enable    => 'true',
             :hasstatus => 'true',
-            :restart   => '/etc/init.d/postfix reload'
         ) }
       end
     end
