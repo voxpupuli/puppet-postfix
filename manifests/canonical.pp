@@ -35,7 +35,6 @@
 #
 define postfix::canonical (
   $destination,
-  $nexthop='',
   $file='/etc/postfix/canonical',
   $ensure='present'
 ) {
