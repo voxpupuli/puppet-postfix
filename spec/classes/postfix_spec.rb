@@ -30,7 +30,7 @@ describe 'postfix' do
         is_expected.to contain_service('postfix').with(
           :ensure    => 'running',
           :enable    => 'true',
-          :hasstatus => 'true',
+          :hasstatus => 'true'
       ) }
     end
 
@@ -65,7 +65,7 @@ describe 'postfix' do
         is_expected.to contain_service('postfix').with(
           :ensure    => 'running',
           :enable    => 'true',
-          :hasstatus => 'true',
+          :hasstatus => 'true'
       ) }
     end
   end
@@ -136,7 +136,7 @@ describe 'postfix' do
           is_expected.to contain_service('postfix').with(
             :ensure    => 'running',
             :enable    => 'true',
-            :hasstatus => 'true',
+            :hasstatus => 'true'
         ) }
       end
     end
