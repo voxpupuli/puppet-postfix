@@ -162,8 +162,4 @@ class postfix (
   if $mailman {
     include ::postfix::mailman
   }
-
-  # Relationships
-  Postfix::Config <| |> ~> Class['postfix::service']
-  Class['postfix'] -> Postfix::Hash <| |>
 }
