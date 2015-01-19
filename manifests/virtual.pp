@@ -38,7 +38,7 @@ define postfix::virtual (
   $file='/etc/postfix/virtual',
   $ensure='present'
 ) {
-  include postfix::augeas
+  include ::postfix::augeas
 
   validate_string($destination)
   validate_string($file)

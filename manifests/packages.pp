@@ -1,5 +1,5 @@
 class postfix::packages {
-  include postfix::params
+  include ::postfix::params
 
   package { 'postfix':
     ensure => installed,
