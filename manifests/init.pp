@@ -135,10 +135,11 @@ class postfix (
     true  => "\"${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf\"",
   }
 
+  anchor { 'postfix::begin': } ->
   class { '::postfix::packages': } ->
   class { '::postfix::files': } ~>
   class { '::postfix::service': } ->
-  Class['postfix']
+  anchor { 'posfix::end': }
 
   if $ldap {
     include ::postfix::ldap
