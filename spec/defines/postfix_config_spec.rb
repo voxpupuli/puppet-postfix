@@ -59,7 +59,7 @@ describe 'postfix::config' do
       :ensure => 'present',
     } }
 
-    it { is_expected.to contain_augeas("set postfix 'foo' to 'bar'").with(
+    it { is_expected.to contain_augeas("manage postfix 'foo'").with(
       :incl    => '/etc/postfix/main.cf',
       :lens    => 'Postfix_Main.lns',
       :changes => "set foo 'bar'"
@@ -72,10 +72,23 @@ describe 'postfix::config' do
       :ensure => 'absent',
     } }
 
-    it { is_expected.to contain_augeas("rm postfix 'foo'").with(
+    it { is_expected.to contain_augeas("manage postfix 'foo'").with(
       :incl    => '/etc/postfix/main.cf',
       :lens    => 'Postfix_Main.lns',
       :changes => "rm foo"
+    ) }
+  end
+
+  context 'when ensuring blank' do
+    let (:params) { {
+      :value  => 'bar',
+      :ensure => 'blank',
+    } }
+
+    it { is_expected.to contain_augeas("manage postfix 'foo'").with(
+      :incl    => '/etc/postfix/main.cf',
+      :lens    => 'Postfix_Main.lns',
+      :changes => "clear foo"
     ) }
   end
 end
