@@ -36,6 +36,72 @@ For example:
 
 The top-level class, to install and configure Postfix.
 
+#### Parameters
+
+##### `alias_maps`
+
+A string defining the location of that alias map file.
+Default: 'hash:/etc/aliases'
+
+##### `inet_interfaces`
+
+A string defining the network interfaces that Postfix will listen on.
+Default: 'all'
+Example: '127.0.0.1, [::1]'
+
+##### `ldap`
+
+A boolean defining whether to configure Postfix for LDAP use.
+Default: false
+
+##### `ldap_base`
+
+A string defining the LDAP search base to use. This maps to the search_base parameter (ldap_table(5)). 
+Default: Undefined. 
+Example 'cn=Users,dc=example,dc=com'
+
+##### `ldap_host`
+
+A string defining the LDAP host. This maps to the server_host parameter (ldap_table(5)).
+Default: Undefined.
+Example: 'ldaps://ldap.example.com:636 ldap://ldap2.example.com'
+
+##### `ldap_options`
+
+A 
+Default: Undefined.
+Example: 
+
+##### `mail_user`
+
+A string defining the mail user, and optionally group, to execute external commands as. This maps to the user parameter (pipe(8)).
+Default: 'vmail'.
+Example: 'vmail:vmail'
+
+##### `mailman`
+
+A boolean defining whether to configure a basic smtp server that is able to work for the mailman mailing list manager.
+Default: false.
+
+##### `maincf_source`
+
+A string defining the location of a skeleton main.cf file to be used. The default file supplied is blank. However, if the main.cf file already exists on the system the contents will NOT be replaced by the contents from maincf_source.
+Default: "puppet:///modules/${module_name}/main.cf"
+Example: "puppet:///modules/some/other/location/main.cf"
+
+##### `manage_conffiles`
+
+A boolean defining whether the puppet module should replace the configuration files for postfix. 
+This setting currently effects the following files:
+* /etc/mailname
+* /etc/postfix/master.cf
+This setting does NOT effect the following files:
+* /etc/aliases
+* /etc/postfix/main.cf
+
+Default: true.
+
+
 ## Definitions
 
 ### postfix::config
