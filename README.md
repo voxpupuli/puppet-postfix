@@ -100,6 +100,68 @@ This setting does NOT effect the following files:
 
 Default: true.
 
+##### `mastercf_source`
+A string defining the location of a skeleton master.cf file to be used.
+Default: Undefined.
+Example: "puppet:///modules/some/other/location/master.cf"
+
+##### `master_smtp`
+A string to define the smtp line in the /etc/postfix/master.cf file.
+Default: Undefined.
+Example: 'smtp      inet  n       -       n       -       -       smtpd'
+
+##### `master smtps`
+A string to define the smtps line in the /etc/postfix/master.cf file.
+Default: Undefined.
+Example: 'smtps     inet  n       -       n       -       -       smtpd'
+
+##### `master_submission`
+A string to define the submission line in the /etc/postfix/master.cf file.
+Default: Undefined.
+Example: 'submission inet n       -       n       -       -       smtpd'
+
+##### `mta`
+A boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite boolean.
+Default: False.
+
+##### `mydestination`
+A string to define the mydestination parameter in main.cf (postconf(5)).
+Default: The systems FQDN.
+Example: 'example.com, foo.example.com'
+
+##### `mynetworks`
+A string to define the mynetworks parameter that holds trusted remote smtp clients (postconf(5)).
+Default: '127.0.0.0/8'
+Example: '127.0.0.0/8, [::1]/128'
+
+##### `myorigin`
+A string to define the myorigin parameter that holds the domain name that mail appears to come from (postconf(5)).
+Default: The systems FQDN.
+Example: 'example.com'
+
+##### `relayhost`
+A string to define the relayhost parameter (postconf(5)).
+Default: Undefined.
+Example: 'smtp.example.com'
+
+##### `root_mail_recipient`
+A string to define the e-mail address to which all mail directed to root should go (aliases(5)).
+Default: 'nobody'
+Example: 'root_catch@example.com'
+
+##### `satellite`
+A boolean to define whether to configure postfix as a sattellite relay host. This setting is mutually exclusive with the mta boolean.
+Default: False.
+
+##### `smtp_listen`
+A string to define the IP on which to listen in the master.cf. This can also be set to 'all' to listen on all interfaces.
+Default: '127.0.0.1'
+Example: '::1'
+
+##### `use_amavisd`
+A boolean to define whether to configure postfix to use the amavisd scanner.
+Default: False.
+
 
 ## Definitions
 
