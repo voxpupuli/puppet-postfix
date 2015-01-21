@@ -135,10 +135,11 @@ class postfix (
     true  => "\"${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf\"",
   }
 
-  class { 'postfix::packages': } ->
-  class { 'postfix::files': } ~>
-  class { 'postfix::service': } ->
-  Class['postfix']
+  anchor { 'postfix::begin': } ->
+  class { '::postfix::packages': } ->
+  class { '::postfix::files': } ~>
+  class { '::postfix::service': } ->
+  anchor { 'posfix::end': }
 
   if $ldap {
     include ::postfix::ldap
@@ -161,8 +162,4 @@ class postfix (
   if $mailman {
     include ::postfix::mailman
   }
-
-  # Relationships
-  Postfix::Config <| |> ~> Class['postfix::service']
-  Class['postfix'] -> Postfix::Hash <| |>
 }

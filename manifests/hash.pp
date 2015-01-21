@@ -70,4 +70,6 @@ define postfix::hash (
     subscribe   => File[$name],
     refreshonly => true,
   }
+
+  Class['postfix'] -> Postfix::Hash[$title]
 }

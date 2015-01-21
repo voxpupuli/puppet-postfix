@@ -42,28 +42,27 @@ define postfix::config ($value = undef, $ensure = 'present') {
     fail 'You must define class postfix before using postfix::config!'
   }
 
-  Augeas {
+  case $ensure {
+    'present': {
+      $changes = "set ${name} '${value}'"
+    }
+    'absent': {
+      $changes = "rm ${name}"
+    }
+    'blank': {
+      $changes = "clear ${name}"
+    }
+    default: {
+      fail "Unknown value for ensure '${ensure}'"
+    }
+  }
+
+  augeas { "manage postfix '${title}'":
     incl    => '/etc/postfix/main.cf',
     lens    => 'Postfix_Main.lns',
+    changes => $changes,
     require => File['/etc/postfix/main.cf'],
   }
 
-  case $ensure {
-    'present': {
-      augeas { "set postfix '${name}' to '${value}'":
-        changes => "set ${name} '${value}'",
-      }
-    }
-    'absent': {
-      augeas { "rm postfix '${name}'":
-        changes => "rm ${name}",
-      }
-    }
-    'blank': {
-      augeas { "blank postfix '${name}'":
-        changes => "clear ${name}",
-      }
-    }
-    default: {}
-  }
+  Postfix::Config[$title] ~> Class['postfix::service']
 }

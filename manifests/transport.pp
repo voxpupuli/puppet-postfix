@@ -39,7 +39,7 @@ define postfix::transport (
   $file='/etc/postfix/transport',
   $ensure='present'
 ) {
-  include postfix::augeas
+  include ::postfix::augeas
 
   validate_string($destination)
   validate_string($nexthop)
