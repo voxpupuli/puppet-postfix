@@ -14,7 +14,7 @@ This module requires Augeas.
     include postfix
 
     postfix::config { 'relay_domains':
-        esnure  => present,
+        ensure  => present,
         value   => 'localhost host.foo.com',
     }
 ```
