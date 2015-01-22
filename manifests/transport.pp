@@ -7,6 +7,7 @@
 # [*name*]        - name of address postfix will lookup. See transport(5).
 # [*destination*] - where the emails will be delivered to. See transport(5).
 # [*ensure*]      - present/absent, defaults to present.
+# [*nexthop*]     - A string to define where and how to deliver the mail. See transport(5).
 #
 # === Requires
 #
