@@ -7,6 +7,7 @@
 # [*name*]        - name of address postfix will lookup. See virtual(8).
 # [*destination*] - where the emails will be delivered to. See virtual(8).
 # [*ensure*]      - present/absent, defaults to present.
+# [*file*]        - A string defining the location of the pre-hash map.
 #
 # === Requires
 #
