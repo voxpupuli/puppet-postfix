@@ -107,7 +107,7 @@ Default: Undefined.
 Example: "puppet:///modules/some/other/location/master.cf"
 
 ##### `master_smtp`
-A string to define the smtp line in the /etc/postfix/master.cf file.
+A string to define the smtp line in the /etc/postfix/master.cf file. If this is defined the smtp_listen parameter will be ignored.
 Default: Undefined.
 Example: 'smtp      inet  n       -       n       -       -       smtpd'
 
@@ -155,28 +155,116 @@ A boolean to define whether to configure postfix as a sattellite relay host. Thi
 Default: False.
 
 ##### `smtp_listen`
-A string to define the IP on which to listen in the master.cf. This can also be set to 'all' to listen on all interfaces.
+A string to define the IP on which to listen in the master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.
 Default: '127.0.0.1'
 Example: '::1'
 
 ##### `use_amavisd`
-A boolean to define whether to configure postfix to use the amavisd scanner.
+A boolean to define whether to configure master.cf to allow the use of the amavisd scanner.
 Default: False.
 
+##### `use_dovecot_lda`
+A boolean to define whether to configure master.cf to use dovecot as the local delivery agent.
+Default: False.
 
-## Definitions
+##### `use_schleuder`
+A boolean to define whether to configure master.cf to use the Schleuder gpg-enabled mailinglist.
+Default: False.
+
+##### `use_sympa`
+A boolean to define whether to configure master.cf to use the Sympa mailing list management software.
+Default: False.
+
+#### Examples
 
 ### postfix::config
 
-Add/alter/remove options in Postfix main configuration file (main.cf)
+Add/alter/remove options in Postfix main configuration file (main.cf). This uses augeas to do the editing of the confiugration file, as such any configuration value can be used.
+
+#### Parameters
+
+##### `ensure`
+A string whose value can be any of 'present', 'absent', 'blank'.
+Default: 'present'
+Example: 'blank'
+
+##### `value`
+A string that can contain any text to be used as the configuration value.
+Default: Undefined.
+Example: 'btree:${data_directory}/smtp_tls_session_cache'
+
+#### Examples
+##### Configure Postfix to use TLS as a client
+```
+postfix::config {
+    'smtp_tls_mandatory_ciphers':       value   => 'high';
+    'smtp_tls_security_level':          value   => 'secure';
+    'smtp_tls_CAfile':                  value   => '/etc/pki/tls/certs/ca-bundle.crt';
+    'smtp_tls_session_cache_database':  value   => 'btree:${data_directory}/smtp_tls_session_cache';
+}
+```
+
+##### Configure Postfix to disable the vrfy command
+```
+postfix::config { 'disable_vrfy_command':
+    ensure  => present,
+    value   => 'yes',
+}
+```
 
 ### postfix::hash
+Creates Postfix hashed "map" files, and builds the corresponding db file.
 
-Creates Postfix hashed "map" files, and build the corresponding db file.
+#### Parameters
 
+##### `ensure`
+Defines whether the hash map file is present or not. Value can either be present or absent.
+Default: present.
+Example: absent.
+
+##### `content`
+A free form string that defines the contents of the file. This parameter is mutually exclusive to the source parameter.
+Default: Undefined.
+Example: '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword'
+
+##### `source`
+A string whose value is a location for the source file to be used. This parameter is mutually exclusive with the content parameter, one or the other must be present, but both cannot be present.
+Default: Undefined
+Example: 'puppet:///modules/some/location/sasl_passwd'
+
+#### Examples
+##### Create a sasl_passwd hash from a source file
+```
+postfix::hash { '/etc/postfix/sasl_passwd':
+    ensure  => 'present',
+    source  => 'puppet:///modules/profile/postfix/client/sasl_passwd',
+}
+```
+##### Create a sasl_passwd hash with contents defined in the manifest
+```
+postfix::hash { '/etc/postfix/sasl_passwd':
+    ensure  => 'present',
+    content => '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword',
+}
+```
 ### postfix::transport
 
-Manages content in the transport map.
+Manages content of the /etc/postfix/transport map.
+
+#### Parameters
+
+##### `ensure`
+Defines whether the transport entry is presnet or not. Value can either be present or absent.
+Default: present.
+Example: absent.
+
+##### `destination`
+The destinationa to be delivered to (transport(5)).
+Default: Undefined.
+Example: 'mailman'
+
+##### `nexthop`
+
 
 ### postfix::virtual
 
