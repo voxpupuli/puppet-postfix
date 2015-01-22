@@ -9,26 +9,28 @@
 This module requires Augeas.
 
 ## Simple usage
-
+```
     include postfix
 
-    postfix::config { "relay_domains": value  => "localhost host.foo.com" }
-
+    postfix::config { 'relay_domains':
+        esnure  => present,
+        value   => 'localhost host.foo.com',
+    }
+```
 ## Exec paths
 
-In order to not have any path problem, you should add the following line in
-some globally included .pp file:
-
+In order to not have any path problem, you should add the following line in some globally included .pp file:
+```
     Exec {
       path => '/some/relevant/path:/some/other:...',
     }
-
+```
 For example:
-
+```
     Exec {
       path => '/bin:/sbin:/usr/sbin:/usr/bin',
     }
-
+```
 ## Classes
 
 ### postfix
@@ -39,7 +41,7 @@ The top-level class, to install and configure Postfix.
 
 ##### `alias_maps`
 
-A string defining the location of that alias map file.  
+A string defining the location of the alias map file.  
 Default: 'hash:/etc/aliases'.  
 Example: 'hash:/etc/other_aliases'.
 
@@ -51,48 +53,48 @@ Example: '127.0.0.1, [::1]'.
 
 ##### `ldap`
 
-A boolean defining whether to configure Postfix for LDAP use.  
+A Boolean defining whether to configure Postfix for LDAP use.  
 Default: false.
 
 ##### `ldap_base`
 
-A string defining the LDAP search base to use. This maps to the search_base parameter (ldap_table(5)).  
+A string defining the LDAP search base to use. This parameter maps to the search_base parameter (ldap_table(5)).  
 Default: Undefined.  
 Example 'cn=Users,dc=example,dc=com'.
 
 ##### `ldap_host`
 
-A string defining the LDAP host. This maps to the server_host parameter (ldap_table(5)).  
+A string defining the LDAP host. This parameter maps to the server_host parameter (ldap_table(5)).  
 Default: Undefined.  
 Example: 'ldaps://ldap.example.com:636 ldap://ldap2.example.com'.
 
 ##### `ldap_options`
 
-A free form string that can defin any ldap options to be passed through.  
+A free form string that can define any ldap options to be passed through (ldap_table(5)).  
 Default: Undefined.  
 Example: 'start_tls = yes'.
 
 ##### `mail_user`
 
-A string defining the mail user, and optionally group, to execute external commands as. This maps to the user parameter (pipe(8)).  
+A string defining the mail user, and optionally group, to execute external commands as. This parameter maps to the user parameter (pipe(8)).  
 Default: 'vmail'.  
 Example: 'vmail:vmail'.
 
 ##### `mailman`
 
-A boolean defining whether to configure a basic smtp server that is able to work for the mailman mailing list manager.  
+A Boolean defining whether to configure a basic smtp server that is able to work for the mailman mailing list manager.  
 Default: false.
 
 ##### `maincf_source`
 
-A string defining the location of a skeleton main.cf file to be used. The default file supplied is blank. However, if the main.cf file already exists on the system the contents will NOT be replaced by the contents from maincf_source.  
+A string defining the location of a skeleton main.cf file to be used. The default file supplied is blank. However, if the main.cf file already exists on the system the contents will **NOT** be replaced by the contents from maincf_source.  
 Default: "puppet:///modules/${module_name}/main.cf".  
 Example: 'puppet:///modules/some/other/location/main.cf'.
 
 ##### `manage_conffiles`
 
-A boolean defining whether the puppet module should replace the configuration files for postfix.  
-**This setting currently effects the following files:**
+A Boolean defining whether the puppet module should replace the configuration files for postfix.  
+**This setting currently effects only the following files:**
 * /etc/mailname
 * /etc/postfix/master.cf  
 
@@ -124,7 +126,7 @@ Default: Undefined.
 Example: 'submission inet n       -       n       -       -       smtpd'.
 
 ##### `mta`
-A boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite boolean.  
+A Boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite Boolean.  
 Default: False.
 
 ##### `mydestination`
@@ -139,7 +141,7 @@ Example: '127.0.0.0/8, [::1]/128'.
 
 ##### `myorigin`
 A string to define the myorigin parameter that holds the domain name that mail appears to come from (postconf(5)).  
-Default: The systems FQDN.  
+Default: The FQDN of the host.  
 Example: 'example.com'
 
 ##### `relayhost`
@@ -153,35 +155,35 @@ Default: 'nobody'.
 Example: 'root_catch@example.com'.
 
 ##### `satellite`
-A boolean to define whether to configure postfix as a sattellite relay host. This setting is mutually exclusive with the mta boolean.  
+A Boolean to define whether to configure postfix as a satellite relay host.  This setting is mutually exclusive with the mta Boolean.  
 Default: False.
 
 ##### `smtp_listen`
-A string to define the IP on which to listen in the master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.  
+A string to define the IP on which to listen in master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.  
 Default: '127.0.0.1'.  
 Example: '::1'.
 
 ##### `use_amavisd`
-A boolean to define whether to configure master.cf to allow the use of the amavisd scanner.  
+A Boolean to define whether to configure master.cf to allow the use of the amavisd scanner.  
 Default: False.
 
 ##### `use_dovecot_lda`
-A boolean to define whether to configure master.cf to use dovecot as the local delivery agent.  
+A Boolean to define whether to configure master.cf to use dovecot as the local delivery agent.  
 Default: False.
 
 ##### `use_schleuder`
-A boolean to define whether to configure master.cf to use the Schleuder gpg-enabled mailinglist.  
+A Boolean to define whether to configure master.cf to use the Schleuder GPG-enabled mailing list.  
 Default: False.
 
 ##### `use_sympa`
-A boolean to define whether to configure master.cf to use the Sympa mailing list management software.  
+A Boolean to define whether to configure master.cf to use the Sympa mailing list management software.  
 Default: False.
 
 #### Examples
 
 ### postfix::config
 
-Add/alter/remove options in Postfix main configuration file (main.cf). This uses augeas to do the editing of the confiugration file, as such any configuration value can be used.
+Add/alter/remove options in Postfix main configuration file (main.cf). This uses Augeas to do the editing of the configuration file, as such any configuration value can be used.
 
 #### Parameters
 
@@ -225,7 +227,7 @@ Default: present.
 Example: absent.
 
 ##### `content`
-A free form string that defines the contents of the file. This parameter is mutually exclusive to the source parameter.  
+A free form string that defines the contents of the file. This parameter is mutually exclusive with the source parameter.  
 Default: Undefined.  
 Example: '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword'. 
 
@@ -255,7 +257,7 @@ Manages content of the /etc/postfix/transport map.
 
 #### Requirements
 
-Augeas is of course required.
+Augeas is, of course, required.
 
 The following code is required to use transport maps.
 ```
@@ -273,12 +275,12 @@ postfix::config{'transport_maps'
 #### Parameters
 
 ##### `ensure`
-Defines whether the transport entry is presnet or not. Value can either be present or absent.  
+Defines whether the transport entry is present or not. Value can either be present or absent.  
 Default: present.  
 Example: absent.
 
 ##### `destination`
-The destinationa to be delivered to (transport(5)).  
+The destination to be delivered to (transport(5)).  
 Default: Undefined.  
 Example: 'mailman'.
 
@@ -294,7 +296,7 @@ Example: '[smtp.google.com]:25'.
 Manages the contents of the virtual map.
 
 #### Requirements
-Augeas is of course required.
+Augeas is, of course, required.
 
 The following code is necessary to make virtual maps work:
 ```
