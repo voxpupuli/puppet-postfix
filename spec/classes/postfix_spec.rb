@@ -207,8 +207,7 @@ describe 'postfix' do
 
 	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
             :owner => 'root',
-	    :group => 'postfix',
-          ).with_content(/search_base = /) }
+            :group => 'postfix').with_content(/search_base = /) }
         end
       end
       context 'when a custom mail_user is specified' do
