@@ -3,9 +3,12 @@ require 'spec_helper'
 describe 'postfix::hash' do
   let (:title) { '/tmp/foo' }
   let (:facts) { {
-    :osfamily => 'Debian',
-    :needs_postfix_class => true,
+    :lsbdistcodename => 'wheezy',
+    :osfamily        => 'Debian',
   } }
+  let :pre_condition do
+    "class { '::postfix': }"
+  end
 
   context 'when passing wrong type for ensure' do
     let (:params) { {
@@ -13,7 +16,7 @@ describe 'postfix::hash' do
     } }
     it 'should fail' do
       expect {
-        should contain_file('/tmp/foo')
+        is_expected.to contain_file('/tmp/foo')
       }.to raise_error(Puppet::Error, /\["present"\] is not a string/)
     end
   end
@@ -24,7 +27,7 @@ describe 'postfix::hash' do
     } }
     it 'should fail' do
       expect {
-        should contain_file('/tmp/foo')
+        is_expected.to contain_file('/tmp/foo')
       }.to raise_error(Puppet::Error, /must be either 'present' or 'absent'/)
     end
   end
@@ -33,7 +36,7 @@ describe 'postfix::hash' do
     let (:title) { 'foo' }
     it 'should fail' do
       expect {
-        should contain_file('/tmp/foo')
+        is_expected.to contain_file('/tmp/foo')
       }.to raise_error(Puppet::Error, /"foo" is not an absolute path/)
     end
   end
@@ -46,7 +49,7 @@ describe 'postfix::hash' do
 
     it 'should fail' do
       expect {
-        should contain_file('/tmp/foo')
+        is_expected.to contain_file('/tmp/foo')
       }.to raise_error(Puppet::Error, /You must provide either 'source' or 'content'/)
     end
   end
@@ -56,13 +59,13 @@ describe 'postfix::hash' do
       :source  => '/tmp/bar',
     } }
 
-    it { should contain_file('/tmp/foo').with(
+    it { is_expected.to contain_file('/tmp/foo').with(
         :ensure => 'present',
         :source => '/tmp/bar'
       ).without(:content)
     }
-    it { should contain_file('/tmp/foo.db').with_ensure('present') }
-    it { should contain_exec('generate /tmp/foo.db') }
+    it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
+    it { is_expected.to contain_exec('generate /tmp/foo.db') }
   end
 
   context 'when passing content' do
@@ -70,22 +73,22 @@ describe 'postfix::hash' do
       :content => 'bar',
     } }
 
-    it { should contain_file('/tmp/foo').with(
+    it { is_expected.to contain_file('/tmp/foo').with(
         :ensure  => 'present',
         :content => 'bar'
       ).without(:source)
     }
-    it { should contain_file('/tmp/foo.db').with_ensure('present') }
-    it { should contain_exec('generate /tmp/foo.db') }
+    it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
+    it { is_expected.to contain_exec('generate /tmp/foo.db') }
   end
 
   context 'when not passing source or content' do
-    it { should contain_file('/tmp/foo').with(
+    it { is_expected.to contain_file('/tmp/foo').with(
         :ensure  => 'present'
       ).without(:source).without(:content)
     }
-    it { should contain_file('/tmp/foo.db').with_ensure('present') }
-    it { should contain_exec('generate /tmp/foo.db') }
+    it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
+    it { is_expected.to contain_exec('generate /tmp/foo.db') }
   end
 
   context 'when ensuring absence' do
@@ -93,8 +96,8 @@ describe 'postfix::hash' do
       :ensure => 'absent',
     } }
 
-    it { should contain_file('/tmp/foo').with_ensure('absent') }
-    it { should contain_file('/tmp/foo.db').with_ensure('absent') }
-    it { should contain_exec('generate /tmp/foo.db') }
+    it { is_expected.to contain_file('/tmp/foo').with_ensure('absent') }
+    it { is_expected.to contain_file('/tmp/foo.db').with_ensure('absent') }
+    it { is_expected.to contain_exec('generate /tmp/foo.db') }
   end
 end

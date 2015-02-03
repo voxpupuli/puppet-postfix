@@ -35,11 +35,10 @@
 #
 define postfix::canonical (
   $destination,
-  $nexthop='',
   $file='/etc/postfix/canonical',
   $ensure='present'
 ) {
-  include postfix::augeas
+  include ::postfix::augeas
 
   case $ensure {
     'present': {

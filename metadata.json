@@ -1,9 +1,9 @@
 {
   "name": "camptocamp-postfix",
-  "version": "0.2.1",
+  "version": "1.0.5",
   "author": "Camptocamp",
   "summary": "Camptocamp Postfix Module",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/camptocamp/puppet-postfix",
   "project_page": "https://github.com/camptocamp/puppet-postfix",
   "issues_url": "https://github.com/camptocamp/puppet-postfix/issues",
@@ -12,6 +12,10 @@
     {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">=3.2.0 <5.0.0"
+    },
+    {
+      "name": "camptocamp/augeas",
+      "version_requirement": ">=1.0.0 <2.0.0"
     }
   ],
   "requirements": [
@@ -37,7 +41,7 @@
       "operatingsystemrelease": [
         "10.04",
         "12.04",
-	"14.04"
+        "14.04"
       ]
     },
     {

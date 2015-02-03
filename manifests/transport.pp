@@ -34,12 +34,12 @@
 #   }
 #
 define postfix::transport (
-  $destination='',
-  $nexthop='',
+  $destination=undef,
+  $nexthop=undef,
   $file='/etc/postfix/transport',
   $ensure='present'
 ) {
-  include postfix::augeas
+  include ::postfix::augeas
 
   validate_string($destination)
   validate_string($nexthop)
