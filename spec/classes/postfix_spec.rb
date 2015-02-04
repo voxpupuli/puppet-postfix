@@ -35,9 +35,12 @@ describe 'postfix' do
 
     context 'when on RedHat' do
       let (:facts) { {
-        :operatingsystem => 'RedHat',
-        :osfamily        => 'RedHat',
-        :fqdn            => 'fqdn.example.com',
+        :lsbdistcodename           => 'Maipo',
+        :operatingsystem           => 'RedHat',
+        :operatingsystemmajrelease => '7',
+        :osfamily                  => 'RedHat',
+        :fqdn                      => 'fqdn.example.com',
+        :path                      => '/foo/bar',
       } }
 
       it { should contain_package('postfix') }
@@ -154,25 +157,23 @@ describe 'postfix' do
       context 'when enabling ldap' do
         context 'when on Debian' do
           let (:params) { {
-            :ldap => true,
-	    :ldap_base => 'dc=example,dc=com',
-	    :ldap_host => 'host.example.com',
+            :ldap            => true,
+	    :ldap_base       => 'dc=example,dc=com',
+	    :ldap_host       => 'host.example.com',
           } }
 
 	  let (:facts) { {
             :operatingsystem => 'Debian',
             :osfamily        => 'Debian',
             :fqdn            => 'fqdn.example.com',
+            :lsbdistcodename => 'wheezy',
           } }
 
 	  it { should contain_package('postfix-ldap') }
 
-	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with_content("") }
 	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
-            owner => 'root',
-	    group => 'postfix',
-	    content => 'search_base = '
-          ) }
+            :owner => 'root',
+            :group => 'postfix' ).with_content(/search_base = /) }
         end
 
         context 'when on RedHat' do
@@ -183,23 +184,22 @@ describe 'postfix' do
           } }
 
 	  let (:facts) { {
-            :operatingsystem => 'RedHat',
-            :osfamily        => 'RedHat',
-            :fqdn            => 'fqdn.example.com',
+            :operatingsystem           => 'RedHat',
+            :osfamily                  => 'RedHat',
+            :operatingsystemmajrelease => '7',
+            :lsbdistcodename           => 'Maipo',
+            :fqdn                      => 'fqdn.example.com',
           } }
 
 	  it do
             expect {
-              should ! contain_package('postfix-ldap')
-            }.to raise_error(Puppet::Error, /postfix-ldap package does not exist on RedHat/)
+              should_not contain_package('postfix-ldap')
+            }
           end
 
-	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with_content("") }
 	  it { should contain_file('/etc/postfix/ldap-aliases.cf').with(
-            owner => 'root',
-	    group => 'postfix',
-	    content => 'search_base = '
-          ) }
+            :owner => 'root',
+            :group => 'postfix').with_content(/search_base = /) }
         end
       end
       context 'when a custom mail_user is specified' do
@@ -231,8 +231,8 @@ describe 'postfix' do
           :master_smtp         => "smtp      inet  n       -       -       -       -       smtpd
     -o smtpd_client_restrictions=check_client_access,hash:/etc/postfix/access,reject",
         } }
-        it 'should update master.cf with the specified flags to smtp' do 
-          should contain_file('/etc/postfix/master.cf').without('seltype').with_content(
+        it 'should update master.cf with the specified flags to smtp' do
+          is_expected.to contain_file('/etc/postfix/master.cf').without('seltype').with_content(
             /smtp      inet  n       -       -       -       -       smtpd/).with_content(
             /^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:/
           )
