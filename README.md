@@ -1,5 +1,8 @@
 # Postfix module for Puppet
 
+[![Puppet Forge](http://img.shields.io/puppetforge/v/camptocamp/postfix.svg)](https://forge.puppetlabs.com/camptocamp/postfix)
+[![Build Status](https://travis-ci.org/camptocamp/puppet-postfix.png?branch=master)](https://travis-ci.org/camptocamp/puppet-postfix)
+
 **Manages Postfix configuration.**
 
 This module is provided by [Camptocamp](http://www.camptocamp.com/)

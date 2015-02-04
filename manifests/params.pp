@@ -1,9 +1,9 @@
 class postfix::params {
   case $::osfamily {
     'RedHat': {
-      $seltype = $::lsbmajdistrelease ? {
+      $seltype = $::operatingsystemmajrelease ? {
         '4'   => 'etc_t',
-        /5|6/ => 'postfix_etc_t',
+        /5|6|7/ => 'postfix_etc_t',
         default => undef,
       }
 
