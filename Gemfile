@@ -2,7 +2,7 @@ source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 group :development, :unit_tests do
   gem 'rake',                                              :require => false
-  gem 'rspec-puppet', '~> 2.0',                            :require => false
+  gem 'rspec-puppet',                                      :require => false, :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem 'puppetlabs_spec_helper',                            :require => false
   gem 'puppet-lint',                                       :require => false
   gem 'puppet-lint-unquoted_string-check',                 :require => false
@@ -19,7 +19,7 @@ group :development, :unit_tests do
 end
 
 group :system_tests do
-  gem 'beaker',        :require => false, :git => 'https://github.com/mcanevet/beaker', :branch => 'openstack'
+  gem 'beaker',        :require => false
   gem 'beaker-rspec',  :require => false
   gem 'serverspec',    :require => false
 end
