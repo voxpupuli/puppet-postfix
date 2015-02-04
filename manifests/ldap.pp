@@ -38,6 +38,6 @@ class postfix::ldap {
     owner   => 'root',
     group   => 'postfix',
     content => template('postfix/postfix-ldap-aliases.cf.erb'),
-    require => Package['postfix-ldap'],
+    #TODO: Figure out if should have require package here
   }
 }
