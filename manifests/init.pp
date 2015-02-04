@@ -132,7 +132,7 @@ class postfix (
 
   $all_alias_maps = $ldap ? {
     false => $alias_maps,
-    true  => "\"${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf\"",
+    true  => "${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf",
   }
 
   anchor { 'postfix::begin': } ->
