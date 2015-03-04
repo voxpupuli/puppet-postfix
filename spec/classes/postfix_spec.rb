@@ -67,7 +67,7 @@ describe 'postfix' do
           :ensure    => 'running',
           :enable    => 'true',
           :hasstatus => 'true',
-          :restart   => '/etc/init.d/postfix reload'
+          :restart   => '/bin/systemctl reload postfix'
       ) }
     end
   end
