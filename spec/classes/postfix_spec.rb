@@ -214,7 +214,7 @@ describe 'postfix' do
         let (:params) { { :mta => true, :mydestination => '1.2.3.4', :relayhost => '2.3.4.5' } }
         it 'should configure postfix as a minimal MTA, delivering mail to the mydestination param' do
           is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
-          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8')
+          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
           is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
           is_expected.to contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
           is_expected.to contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
@@ -261,7 +261,7 @@ describe 'postfix' do
         end
         it 'should configure all local email to be forwarded to $root_mail_recipient delivered through $relayhost' do
           is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
-          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8')
+          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
           is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
           is_expected.to contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
           is_expected.to contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')

@@ -82,7 +82,7 @@ class postfix (
   $master_submission   = undef,         # postfix_master_submission
   $mta                 = false,
   $mydestination       = '$myorigin',   # postfix_mydestination
-  $mynetworks          = '127.0.0.0/8', # postfix_mynetworks
+  $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   $myorigin            = $::fqdn,
   $relayhost           = undef,         # postfix_relayhost
   $root_mail_recipient = 'nobody',      # root_mail_recipient
