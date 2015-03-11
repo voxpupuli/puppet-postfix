@@ -1,12 +1,15 @@
 class postfix::packages {
   include ::postfix::params
 
-  package { 'postfix':
-    ensure => installed,
+  if ! defined(Package['postfix']) {
+    package { 'postfix':
+      ensure => installed,
+    }
   }
 
-  package { 'mailx':
-    ensure => installed,
-    name   => $postfix::params::mailx_package,
+  if ! defined(Package[$postfix::params::mailx_package]) {
+    package { $postfix::params::mailx_package:
+      ensure => installed,
+    }
   }
 }
