@@ -12,7 +12,7 @@ describe 'postfix' do
       } }
 
       it { is_expected.to contain_package('postfix') }
-      it { is_expected.to contain_package('mailx') }
+      it { is_expected.to contain_package('bsd-mailx') }
 
       it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
       it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
@@ -100,7 +100,7 @@ describe 'postfix' do
         } }
 
         it { is_expected.to contain_package('postfix') }
-        it { is_expected.to contain_package('mailx') }
+        it { is_expected.to contain_package('bsd-mailx') }
 
         it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("fqdn.example.com\n") }
         it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
