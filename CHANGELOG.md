@@ -1,3 +1,7 @@
+## 2015-03-24 - Release 1.1.1
+
+- Various spec improvements
+
 ## 2015-02-19 - Release 1.1.0
 
 - Various specs improvements
