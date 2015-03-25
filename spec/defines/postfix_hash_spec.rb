@@ -5,6 +5,7 @@ describe 'postfix::hash' do
   let (:facts) { {
     :lsbdistcodename => 'wheezy',
     :osfamily        => 'Debian',
+    :path            => '/foo/bar',
   } }
   let :pre_condition do
     "class { '::postfix': }"
