@@ -1,3 +1,14 @@
+## 2015-03-24 - Release 1.1.1
+
+- Various spec improvements
+
+## 2015-02-19 - Release 1.1.0
+
+- Various specs improvements
+- Fix specs for postfix::config with ensure => blank 
+- Simplify relationships and avoid spaceship operators
+- nexthop parameter is not necessary for postfix::canonical
+
 ## 2015-01-07 - Release 1.0.5
 
 - Fix unquoted strings in cases

@@ -1,6 +1,6 @@
 {
   "name": "camptocamp-postfix",
-  "version": "1.0.5",
+  "version": "1.1.1",
   "author": "Camptocamp",
   "summary": "Camptocamp Postfix Module",
   "license": "Apache-2.0",
@@ -48,7 +48,8 @@
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "5",
-        "6"
+        "6",
+        "7"
       ]
     }
   ],

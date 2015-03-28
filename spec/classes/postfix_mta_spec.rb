@@ -1,19 +1,24 @@
 require 'spec_helper'
 
 describe 'postfix::mta' do
-  let (:facts) { {
-    :lsbdistcodename => 'wheezy',
-    :osfamily        => 'Debian',
-  } }
   let :pre_condition do
     "class { 'postfix':
       mydestination => 'bar',
-      mynetworks    => 'baz',
+      mynetworks    => '127.0.0.1/8, [::1]/128 ![::2]/128',
       relayhost     => 'foo',
     }"
   end
 
-  it { is_expected.to contain_postfix__config('mydestination').with_value('bar') }
-  it { is_expected.to contain_postfix__config('mynetworks').with_value('baz') }
-  it { is_expected.to contain_postfix__config('relayhost').with_value('foo') }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_postfix__config('mydestination').with_value('bar') }
+      it { is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.1/8, [::1]/128 ![::2]/128') }
+      it { is_expected.to contain_postfix__config('relayhost').with_value('foo') }
+    end
+  end
 end
