@@ -14,9 +14,8 @@
 # include postfix::ldap
 #
 class postfix::ldap {
-  case $::osfamily {
-    'debian': { package {'postfix-ldap': } }
-    default: {}
+  if $::osfamily == 'Debian' {
+    package {'postfix-ldap': }
   }
 
   if ! $postfix::ldap_base {
@@ -38,6 +37,6 @@ class postfix::ldap {
     owner   => 'root',
     group   => 'postfix',
     content => template('postfix/postfix-ldap-aliases.cf.erb'),
-    #TODO: Figure out if should have require package here
+    before  => Package['postfix-ldap'],
   }
 }
