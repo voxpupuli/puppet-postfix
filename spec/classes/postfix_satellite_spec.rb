@@ -1,14 +1,6 @@
 require 'spec_helper'
 
 describe 'postfix::satellite' do
-  let (:node) { 'foo.example.com' }
-  let (:facts) { {
-    :augeasversion   => '1.2.0',
-    :lsbdistcodename => 'wheezy',
-    :osfamily        => 'Debian',
-    :rubyversion     => '1.9.3',
-    :path            => '/foo/bar',
-  } }
   let :pre_condition do
     " class { 'augeas': }
     class { 'postfix':
@@ -17,9 +9,21 @@ describe 'postfix::satellite' do
       mynetworks    => 'baz',
     }"
   end
-  it { is_expected.to contain_class('postfix::mta') }
-  it { is_expected.to contain_postfix__virtual('@foo.example.com').with(
-    :ensure      => 'present',
-    :destination => 'root'
-  ) }
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge({
+          :augeasversion => '1.2.0',
+        })
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_class('postfix::mta') }
+      it { is_expected.to contain_postfix__virtual('@foo.example.com').with(
+        :ensure      => 'present',
+        :destination => 'root'
+      ) }
+    end
+  end
 end

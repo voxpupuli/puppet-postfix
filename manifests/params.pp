@@ -7,6 +7,11 @@ class postfix::params {
         default => undef,
       }
 
+      $restart_cmd = $::operatingsystemmajrelease ? {
+        '7'     => '/bin/systemctl reload postfix',
+        default => '/etc/init.d/postfix reload',
+      }
+
       $mailx_package = 'mailx'
 
       $master_os_template = "${module_name}/master.cf.redhat.erb"
@@ -15,9 +20,11 @@ class postfix::params {
     'Debian': {
       $seltype = undef
 
+      $restart_cmd = '/etc/init.d/postfix reload'
+
       $mailx_package = $::lsbdistcodename ? {
-        /sarge|etch|lenny|lucid/ => 'mailx',
-        default                  => 'bsd-mailx',
+        /sarge|etch|lenny/ => 'mailx',
+        default            => 'bsd-mailx',
       }
 
       $master_os_template = "${module_name}/master.cf.debian.erb"
@@ -25,6 +32,8 @@ class postfix::params {
 
     'Suse': {
       $seltype = undef
+
+      $restart_cmd = '/etc/init.d/postfix reload'
 
       $mailx_package = 'mailx'
 

@@ -3,6 +3,6 @@ class postfix::service {
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    restart   => '/etc/init.d/postfix reload',
+    restart   => $::postfix::params::restart_cmd,
   }
 }

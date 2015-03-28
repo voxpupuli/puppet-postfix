@@ -1,3 +1,5 @@
 ---
 .travis.yml:
   forge_password: "XAv4O363tng0KuRnu1ZhhwORy+2CF9UQwdwlFmS+NG9jOaTZZN+PMK8iC7OSIvZN6cfKlYjHRHNuxFBnYlnMrLsM9fVxt4NjjznOgIKQpQDleWk4UitZj5ntyHmUtYtofUd5Bhi/sdYXwGN9pVRCrcfFBmsIRq/dOhXD7Wy5KcQ="
+#README.md:
+#  include: ['.sync/simple_usage.md', '.sync/classes.md']
