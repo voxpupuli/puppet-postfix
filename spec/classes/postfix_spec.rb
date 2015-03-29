@@ -170,7 +170,7 @@ describe 'postfix' do
               :master_smtp         => "smtp      inet  n       -       -       -       -       smtpd
     -o smtpd_client_restrictions=check_client_access,hash:/etc/postfix/access,reject",
             } }
-            it 'should update master.cf with the specified flags to smtp' do 
+            it 'should update master.cf with the specified flags to smtp' do
               is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t').with_content(
                 /smtp      inet  n       -       -       -       -       smtpd/).with_content(
                   /^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:/
