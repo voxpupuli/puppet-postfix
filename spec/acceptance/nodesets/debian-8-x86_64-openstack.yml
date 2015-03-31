@@ -4,8 +4,8 @@ HOSTS:
       strict_variables:
     platform: debian-8-amd64
     hypervisor : openstack
-    flavor: m1.medium
-    image: debian-8-amd64-20141121
+    flavor: m1.small
+    image: debian-8-latest
     user: debian
 CONFIG:
   type: foss
