@@ -1,3 +1,11 @@
+## 2015-04-03 - Release 1.2.0
+
+- Allow to pass arrays to postfix::hash::source and postfix::hash::content
+- IPv6 support
+- Fix for RedHat
+- Add RedHat 7 support
+- Use rspec-puppet-facts for unit tests
+
 ## 2015-03-24 - Release 1.1.1
 
 - Various spec improvements
