@@ -52,5 +52,3 @@ Manages content in the transport map.
 ### postfix::virtual
 
 Manages content in the virtual map.
-
-
