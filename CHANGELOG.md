@@ -1,3 +1,8 @@
+## 2015-04-15 - Release 1.2.1
+
+- Use file() function instead of fileserver (way faster)
+- Fix issue with ldap-alias map
+
 ## 2015-04-03 - Release 1.2.0
 
 - Allow to pass arrays to postfix::hash::source and postfix::hash::content
