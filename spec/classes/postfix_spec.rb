@@ -165,6 +165,23 @@ describe 'postfix' do
               skip 'need to write this still'
             end
           end
+          context 'when specifying a custom mastercf_template' do
+            let (:params) { {
+              :mastercf_template => 'testy'
+            } }
+            it 'should do stuff' do
+              skip 'need to write this still'
+            end
+          end
+          context 'when specifying a custom mastercf_source and mastercf_template' do
+            let (:params) { {
+              :mastercf_source => 'testy_1' ,
+              :mastercf_template => 'testy_2'
+            } }
+            it 'should fail' do
+              expect { should compile }.to raise_error(/mutually exclusive/)
+            end
+          end
           context 'when specifying a custom master_smtp' do
             let (:params) { {
               :master_smtp         => "smtp      inet  n       -       -       -       -       smtpd

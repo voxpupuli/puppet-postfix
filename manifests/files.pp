@@ -45,6 +45,8 @@ class postfix::files {
   # Config files
   if $postfix::mastercf_source {
     $mastercf_content = undef
+  } elsif $postfix::mastercf_template {
+    $mastercf_content = template($postfix::mastercf_template)
   } else {
     $mastercf_content = template(
         $postfix::params::master_os_template,

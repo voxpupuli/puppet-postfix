@@ -28,6 +28,8 @@
 #
 # [*mastercf_source*]     - (string)
 #
+# [*mastercf_template*]   - (string)
+#
 # [*master_smtp*]         - (string)
 #
 # [*master_smtps*]        - (string)
@@ -77,6 +79,7 @@ class postfix (
   $maincf_source       = "puppet:///modules/${module_name}/main.cf",
   $manage_conffiles    = true,
   $mastercf_source     = undef,
+  $mastercf_template   = undef,
   $master_smtp         = undef,         # postfix_master_smtp
   $master_smtps        = undef,         # postfix_master_smtps
   $master_submission   = undef,         # postfix_master_submission
@@ -112,6 +115,7 @@ class postfix (
   validate_string($mail_user)
   validate_string($maincf_source)
   validate_string($mastercf_source)
+  validate_string($mastercf_template)
   validate_string($master_smtp)
   validate_string($master_smtps)
   validate_string($mydestination)
@@ -123,7 +127,9 @@ class postfix (
   }
   validate_string($smtp_listen)
 
-
+  if ($mastercf_source and $mastercf_template) {
+    fail('mastercf_source and mastercf_template are mutually exclusive')
+  }
 
   $_smtp_listen = $mailman ? {
     true    => '0.0.0.0',
