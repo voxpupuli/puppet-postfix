@@ -16,7 +16,6 @@ example.com      :[gateway.example.com]
 user.foo@example.com  
     smtp:bar.example:2025
 .example.com     error:mail for *.example.com is not deliverable
-/blah.*\//  :
 "
 
 (* Test: Postfix_Transport.lns *)
@@ -46,6 +45,4 @@ test Postfix_Transport.lns get conf =
   { "pattern" = ".example.com"
     { "transport" = "error" }
     { "nexthop" = "mail for *.example.com is not deliverable" } }
-  { "pattern" = "/blah.*\//"
-    { "transport" }
-    { "nexthop" } }
+

@@ -34,9 +34,6 @@ let space_or_eol (sep:regexp) (default:string) =
 (* View: word *)
 let word = store /[A-Za-z0-9@\*.+-]+/
 
-(* View: reg_exp *)
-let reg_exp = store /^!?\/.*\/(i|m|x)?/
-
 (* View: comma *)
 let comma = space_or_eol "," ", "
 
@@ -50,15 +47,8 @@ let record =
      . space_or_eol Rx.space " " . destinations
      . Util.eol ]
 
-(* View: record_regexp *)
-let record_regexp =
-  let destinations = Build.opt_list destination comma
-  in [ label "pattern" . reg_exp
-     . space_or_eol Rx.space " " . destinations
-     . Util.eol ]
-
 (* View: lns *)
-let lns = (Util.empty | Util.comment | record | record_regexp)*
+let lns = (Util.empty | Util.comment | record)*
 
 (* Variable: filter *)
 let filter = incl "/etc/postfix/virtual"

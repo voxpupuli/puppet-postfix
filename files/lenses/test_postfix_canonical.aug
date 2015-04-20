@@ -10,7 +10,6 @@ let conf = "# a comment
 user@domain.com @domain
 @otherdomain  @otherotherdomain
 someuser  Full.Some.User
-/blah.*/ Full.Some.User
 "
 
 (* Test: Postfix_Canonical.lns *)
@@ -23,8 +22,5 @@ test Postfix_Canonical.lns get conf =
     { "destination" = "@otherotherdomain" }
   }
   { "pattern" = "someuser"
-    { "destination" = "Full.Some.User" }
-  }
-  { "pattern" = "/blah.*/"
     { "destination" = "Full.Some.User" }
   }
