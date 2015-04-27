@@ -1,3 +1,7 @@
+## 2015-04-27 - Release 1.2.2
+
+Add nodeset ubuntu-12.04-x86_64-openstack
+
 ## 2015-04-15 - Release 1.2.1
 
 - Use file() function instead of fileserver (way faster)
