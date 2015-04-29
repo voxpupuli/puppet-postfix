@@ -31,7 +31,7 @@ describe 'postfix' do
               :ensure    => 'running',
               :enable    => 'true',
               :hasstatus => 'true',
-              :restart   => '/etc/init.d/postfix reload'
+              :restart   => '/etc/init.d/postfix restart'
             ) }
         else
           it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("foo.example.com\n") }
@@ -50,7 +50,7 @@ describe 'postfix' do
                 :ensure    => 'running',
                 :enable    => 'true',
                 :hasstatus => 'true',
-                :restart   => '/bin/systemctl reload postfix'
+                :restart   => '/bin/systemctl restart postfix'
               ) }
           else
             it {
@@ -58,7 +58,7 @@ describe 'postfix' do
                 :ensure    => 'running',
                 :enable    => 'true',
                 :hasstatus => 'true',
-                :restart   => '/etc/init.d/postfix reload'
+                :restart   => '/etc/init.d/postfix restart'
               ) }
           end
         end
@@ -124,7 +124,7 @@ describe 'postfix' do
                 :ensure    => 'running',
                 :enable    => 'true',
                 :hasstatus => 'true',
-                :restart   => '/etc/init.d/postfix reload'
+                :restart   => '/etc/init.d/postfix restart'
               ) }
           end
         else
