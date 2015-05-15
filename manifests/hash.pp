@@ -58,6 +58,9 @@ define postfix::hash (
     ensure  => $ensure,
     source  => $source,
     content => $content,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     require => Package['postfix'],
   }
 
