@@ -3,6 +3,7 @@
 #
 class postfix::augeas {
 
+  require ::augeas
   $module_path = get_module_path($module_name)
   augeas::lens {'postfix_transport':
     ensure       => present,
