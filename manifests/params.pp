@@ -33,15 +33,15 @@ class postfix::params {
     'Suse': {
       $seltype = undef
 
-      $restart_cmd = '/etc/init.d/postfix reload'
-
       $mailx_package = 'mailx'
 
-      if $::operatingsystem != 'SLES' {
-        fail "Unsupported OS '${::operatingsystem}'"
+      if $::operatingsystemmajrelease == '11' {
+        $restart_cmd = '/etc/init.d/postfix reload'
+        $master_os_template = "${module_name}/master.cf.${::operatingsystem}${::operatingsystemrelease}.erb"
+      } else {
+        $restart_cmd = '/usr/bin/systemctl reload postfix'
+        $master_os_template = "${module_name}/master.cf.sles.erb"
       }
-
-      $master_os_template = "${module_name}/master.cf.${::operatingsystem}${::operatingsystemrelease}.erb"
     }
 
     default: {
