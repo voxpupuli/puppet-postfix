@@ -35,7 +35,6 @@ describe 'postfix' do
             ) }
         else
           it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("foo.example.com\n") }
-          it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
           it { is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t') }
           it { is_expected.to contain_file('/etc/postfix/main.cf').with_seltype('postfix_etc_t') }
 
@@ -45,6 +44,7 @@ describe 'postfix' do
 
           case facts[:operatingsystemmajrelease]
           when '7'
+            it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
             it {
               is_expected.to contain_service('postfix').with(
                 :ensure    => 'running',
@@ -52,7 +52,17 @@ describe 'postfix' do
                 :hasstatus => 'true',
                 :restart   => '/bin/systemctl reload postfix'
               ) }
+          when '6'
+            it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
+            it {
+              is_expected.to contain_service('postfix').with(
+                :ensure    => 'running',
+                :enable    => 'true',
+                :hasstatus => 'true',
+                :restart   => '/etc/init.d/postfix reload'
+              ) }
           else
+            it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
             it {
               is_expected.to contain_service('postfix').with(
                 :ensure    => 'running',
