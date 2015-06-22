@@ -32,7 +32,7 @@ class postfix::files {
     content => "# file managed by puppet\n",
     notify  => Exec['newaliases'],
     replace => false,
-    seltype => $postfix::params::seltype,
+    seltype => $postfix::params::aliasesseltype,
   }
 
   # Aliases
