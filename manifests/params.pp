@@ -25,6 +25,7 @@ class postfix::params {
     }
 
     'Debian': {
+      $aliasesseltype = undef
       $seltype = undef
 
       $restart_cmd = '/etc/init.d/postfix reload'
