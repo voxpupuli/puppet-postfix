@@ -1,3 +1,10 @@
+## 2015-06-24 - Release 1.2.11
+
+Add support for SLES 12 and newest openSUSE releases
+Add acceptance test
+Restart postfix instead of reload after package installation (Fixes #90)
+Use RHEL SELinux type for /etc/aliases
+
 ## 2015-06-19 - Release 1.2.10
 
 Update documentation
