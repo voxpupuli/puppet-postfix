@@ -1,3 +1,7 @@
+## 2015-06-26 - Release 1.2.12
+
+Fix strict_variables activation with rspec-puppet 2.2
+
 ## 2015-06-24 - Release 1.2.11
 
 Add support for SLES 12 and newest openSUSE releases
