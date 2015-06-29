@@ -18,19 +18,19 @@
 #
 # === Examples
 #
-#   node "toto.example.com" {
+#   node 'toto.example.com' {
 #
 #     include postfix
 #
-#     postfix::hash { "/etc/postfix/transport":
+#     postfix::hash { '/etc/postfix/transport':
 #       ensure => present,
 #     }
-#     postfix::config { "transport_maps":
-#       value => "hash:/etc/postfix/transport"
+#     postfix::config { 'transport_maps':
+#       value => 'hash:/etc/postfix/transport',
 #     }
-#     postfix::transport { "mailman.example.com":
+#     postfix::transport { 'mailman.example.com':
 #       ensure      => present,
-#       destination => "mailman",
+#       destination => 'mailman',
 #     }
 #   }
 #
