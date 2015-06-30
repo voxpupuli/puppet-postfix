@@ -1,3 +1,7 @@
+## 2015-06-30 - Release 1.2.13
+
+Fix documentation
+
 ## 2015-06-26 - Release 1.2.12
 
 Fix strict_variables activation with rspec-puppet 2.2
