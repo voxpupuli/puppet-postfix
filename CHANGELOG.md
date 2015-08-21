@@ -1,3 +1,7 @@
+## 2015-08-21 - Release 1.2.14
+
+Use docker for acceptance tests
+
 ## 2015-06-30 - Release 1.2.13
 
 Fix documentation
