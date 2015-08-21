@@ -12,6 +12,7 @@ describe 'postfix::transport' do
       let(:facts) do
         facts.merge({
           :augeasversion => '1.2.0',
+          :puppetversion => Puppet.version,
         })
       end
 
