@@ -59,6 +59,10 @@
 #
 # [*use_sympa*]           - (boolean) Whether to setup for Sympa
 #
+# [*postfix_ensure*]      - (string) The ensure value of the postfix package
+#
+# [*mailx_ensure*]        - (string) The ensure value of the mailx package
+#
 # === Examples
 #
 #   class { 'postfix':
@@ -92,6 +96,8 @@ class postfix (
   $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
   $use_schleuder       = false,         # postfix_use_schleuder
   $use_sympa           = false,         # postfix_use_sympa
+  $postfix_ensure      = 'present',
+  $mailx_ensure        = 'present',
 ) inherits postfix::params {
 
 
