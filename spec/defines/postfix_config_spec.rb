@@ -23,12 +23,12 @@ describe 'postfix::config' do
 
       context 'when passing wrong type for value' do
         let (:params) { {
-          :value => ['bar'],
+          :value => {'bar' => 'baz'},
         } }
         it 'should fail' do
           expect {
             is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error(Puppet::Error, /\["bar"\] is not a string/)
+          }.to raise_error(Puppet::Error, /\{"bar"=>"baz"\} is not a string/)
         end
       end
 
@@ -92,6 +92,19 @@ describe 'postfix::config' do
           :incl    => '/etc/postfix/main.cf',
           :lens    => 'Postfix_Main.lns',
           :changes => "clear foo"
+        ) }
+      end
+
+      context 'when assigning an array' do
+        let (:params) { {
+          :value  => ['bar', 'baz'],
+          :ensure => 'present',
+        } }
+
+        it { is_expected.to contain_augeas("manage postfix 'foo'").with(
+          :incl    => '/etc/postfix/main.cf',
+          :lens    => 'Postfix_Main.lns',
+          :changes => "set foo 'bar baz'"
         ) }
       end
     end

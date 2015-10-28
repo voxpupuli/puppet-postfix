@@ -33,8 +33,12 @@ define postfix::config ($value = undef, $ensure = 'present') {
   validate_re($ensure, ['present', 'absent', 'blank'],
     "\$ensure must be either 'present', 'absent' or 'blank', got '${ensure}'")
   if ($ensure == 'present') {
-    validate_string($value)
-    validate_re($value, '^.+$',
+    $real_value = is_array($value) ? {
+      true    => join($value, ' ') ,
+      default => $value ,
+    }
+    validate_string($real_value)
+    validate_re($real_value, '^.+$',
       '$value can not be empty if ensure = present')
   }
 
@@ -44,7 +48,7 @@ define postfix::config ($value = undef, $ensure = 'present') {
 
   case $ensure {
     'present': {
-      $changes = "set ${name} '${value}'"
+      $changes = "set ${name} '${real_value}'"
     }
     'absent': {
       $changes = "rm ${name}"
