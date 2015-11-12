@@ -21,6 +21,12 @@ amavis unix - - - - 2 smtp
 dovecot   unix  -       n       n       -       -       pipe
   flags=DRhu user=<%= @mail_user %>:<%= @mail_user %> argv=/usr/lib/dovecot/deliver -d ${recipient}
 <% end -%>
+<% if @use_firma %>
+firma  unix  -       n       n       -       -       pipe
+  flags=DRhu user=firma argv=/var/lib/firma/firma -p ${user}
+firmarequest  unix  -       n       n       -       -       pipe
+  flags=DRhu user=firma argv=/var/lib/firma/firma -e ${user}
+<% end -%>
 <% if @use_schleuder %>
 schleuder  unix  -       n       n       -       -       pipe
   flags=DRhu user=schleuder argv=/usr/bin/schleuder ${user}

@@ -171,6 +171,10 @@ Default: False.
 A Boolean to define whether to configure master.cf to use dovecot as the local delivery agent.  
 Default: False.
 
+##### `use_firma`
+A Boolean to define whether to configure master.cf to use the Firma GPG-encrypted mailing list.  
+Default: False.
+
 ##### `use_schleuder`
 A Boolean to define whether to configure master.cf to use the Schleuder GPG-enabled mailing list.  
 Default: False.
