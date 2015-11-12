@@ -289,8 +289,21 @@ describe 'postfix' do
               is_expected.to contain_file('/etc/postfix/master.cf').with_content(/sympa/)
             end
           end
+          context 'when specifying mastercf_tail' do
+            let (:params) { {
+              :mastercf_tail         => "slow      unix  -       -       n       -       1       smtp
+    -o smtp_destination_concurrency_limit=1",
+            } }
+            it 'should update master.cf with the specified content' do
+              is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t').with_content(
+                /slow      unix  -       -       n       -       1       smtp/).with_content(
+                  /^smtp.*\n.*smtp_destination_concurrency_limit=1/
+                )
+            end
+          end
         end
       end
     end
   end
 end
+

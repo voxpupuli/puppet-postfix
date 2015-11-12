@@ -63,6 +63,9 @@
 #
 # [*mailx_ensure*]        - (string) The ensure value of the mailx package
 #
+# [*mastercf_tail*]       - (string) Add any additional content to the end of
+#                           master.cf
+#
 # === Examples
 #
 #   class { 'postfix':
@@ -98,6 +101,7 @@ class postfix (
   $use_sympa           = false,         # postfix_use_sympa
   $postfix_ensure      = 'present',
   $mailx_ensure        = 'present',
+  $mastercf_tail       = undef,
 ) inherits postfix::params {
 
 
@@ -128,6 +132,7 @@ class postfix (
     validate_string($root_mail_recipient)
   }
   validate_string($smtp_listen)
+  validate_string($mastercf_tail)
 
 
 
