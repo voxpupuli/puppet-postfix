@@ -21,6 +21,10 @@ amavis unix - - - - 2 smtp
 dovecot   unix  -       n       n       -       -       pipe
   flags=DRhu user=<%= @mail_user %>:<%= @mail_user %> argv=/usr/lib/dovecot/deliver -d ${recipient}
 <% end -%>
+<% if @use_mlmmj  %>
+mlmmj   unix  -       n       n       -       -       pipe
+  flags=DORhu user=mlmmj argv=/usr/bin/mlmmj-recieve -F -L /var/spool/mlmmj/$nexthop/
+<% end -%>
 <% if @use_schleuder %>
 schleuder  unix  -       n       n       -       -       pipe
   flags=DRhu user=schleuder argv=/usr/bin/schleuder ${user}

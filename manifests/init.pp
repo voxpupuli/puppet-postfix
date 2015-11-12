@@ -55,6 +55,8 @@
 #
 # [*use_dovecot_lda*]     - (boolean) Whether to setup for Dovecot LDA
 #
+# [*use_mlmmj*]           - (boolean) Whether to setup for mlmmj
+#
 # [*use_schleuder*]       - (boolean) Whether to setup for Schleuder
 #
 # [*use_sympa*]           - (boolean) Whether to setup for Sympa
@@ -94,6 +96,7 @@ class postfix (
   $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
   $use_amavisd         = false,         # postfix_use_amavisd
   $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
+  $use_mlmmj           = false,         # postfix_use_mlmmj
   $use_schleuder       = false,         # postfix_use_schleuder
   $use_sympa           = false,         # postfix_use_sympa
   $postfix_ensure      = 'present',
@@ -107,6 +110,7 @@ class postfix (
   validate_bool($satellite)
   validate_bool($use_amavisd)
   validate_bool($use_dovecot_lda)
+  validate_bool($use_mlmmj)
   validate_bool($use_schleuder)
   validate_bool($use_sympa)
 

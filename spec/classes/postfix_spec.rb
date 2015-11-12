@@ -84,6 +84,7 @@ describe 'postfix' do
               :root_mail_recipient => 'foo',
               :use_amavisd         => true,
               :use_dovecot_lda     => true,
+              :use_mlmmj           => true,
               :use_schleuder       => true,
               :use_sympa           => true,
               :mail_user           => 'bar',
@@ -107,7 +108,9 @@ describe 'postfix' do
               ).with_content(
                 /amavis unix/
               ).with_content(
-                /dovecot.*\n.* user=bar:bar /
+              /dovecot.*\n.* user=bar:bar /
+              ).with_content(
+                /mlmmj/
               ).with_content(
                 /schleuder/
               ).with_content(
@@ -275,6 +278,12 @@ describe 'postfix' do
             let (:params) { { :use_dovecot_lda => true } }
             it 'should update master.cf with the specified flags to dovecot' do
               is_expected.to contain_file('/etc/postfix/master.cf').with_content(/dovecot.*\n.* user=vmail:vmail /)
+            end
+          end
+          context 'when use_mlmmj is true' do
+            let (:params) { { :use_mlmmj => true } }
+            it 'should update master.cf with the specified flags to mlmmj' do
+              is_expected.to contain_file('/etc/postfix/master.cf').with_content(/mlmmj/)
             end
           end
           context 'when use_schleuder is true' do
