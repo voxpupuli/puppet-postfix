@@ -9,6 +9,6 @@ HOSTS:
     image: centos-7-latest
     user: centos
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug
   openstack_network: default

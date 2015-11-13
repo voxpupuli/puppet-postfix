@@ -11,5 +11,5 @@ HOSTS:
     docker_image_commands:
       - 'apt-get install -y cron locales-all net-tools wget'
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

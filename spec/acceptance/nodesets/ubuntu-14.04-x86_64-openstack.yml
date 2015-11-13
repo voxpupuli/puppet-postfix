@@ -9,6 +9,6 @@ HOSTS:
     image: ubuntu-1404-latest
     user: ubuntu
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug
   openstack_network: default

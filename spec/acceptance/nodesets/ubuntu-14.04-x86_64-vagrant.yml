@@ -7,5 +7,5 @@ HOSTS:
     hypervisor : vagrant
     box : puppetlabs/ubuntu-14.04-64-nocm
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

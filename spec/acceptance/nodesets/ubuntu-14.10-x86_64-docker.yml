@@ -14,5 +14,5 @@ HOSTS:
       - 'apt-get install -y net-tools wget'
       - 'locale-gen en_US.UTF-8'
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

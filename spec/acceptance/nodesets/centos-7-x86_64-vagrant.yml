@@ -7,5 +7,5 @@ HOSTS:
     hypervisor : vagrant
     box : camptocamp/centos-7-x86_64
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

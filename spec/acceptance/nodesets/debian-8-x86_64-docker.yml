@@ -12,5 +12,5 @@ HOSTS:
       - 'apt-get install -y cron locales-all net-tools wget'
       - 'rm -f /usr/sbin/policy-rc.d'
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

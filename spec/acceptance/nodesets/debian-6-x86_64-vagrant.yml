@@ -7,5 +7,5 @@ HOSTS:
     hypervisor : vagrant
     box : puppetlabs/debian-6.0.10-64-nocm
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

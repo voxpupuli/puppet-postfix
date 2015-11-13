@@ -12,5 +12,5 @@ HOSTS:
       - 'rm -rf /var/run/network/*'
       - 'yum install -y crontabs tar wget'
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug

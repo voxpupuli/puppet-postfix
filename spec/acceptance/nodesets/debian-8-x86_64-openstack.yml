@@ -9,6 +9,6 @@ HOSTS:
     image: debian-8-latest
     user: debian
 CONFIG:
-  type: foss
+  type: aio
   log_level: debug
   openstack_network: default
