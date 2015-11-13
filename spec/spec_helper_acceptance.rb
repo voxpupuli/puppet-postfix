@@ -1,15 +1,6 @@
 require 'beaker-rspec'
-require 'beaker_spec_helper'
 
-include BeakerSpecHelper
-
-hosts.each do |host|
-  install_puppet_on host
-  install_package host, 'git'
-  install_package host, 'tar'
-  install_package host, 'sudo'
-  on host, 'rm /usr/sbin/policy-rc.d || true'
-end
+install_puppet_agent_on hosts, {}
 
 RSpec.configure do |c|
   module_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
@@ -23,7 +14,8 @@ RSpec.configure do |c|
     # Install module and dependencies
     puppet_module_install(:source => module_root, :module_name => module_name)
     hosts.each do |host|
-      BeakerSpecHelper::spec_prep(host)
+      on host, puppet('module','install','camptocamp-augeas'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
     end
   end
 end
