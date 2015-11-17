@@ -77,5 +77,18 @@ define postfix::hash (
     refreshonly => true,
   }
 
+  # If ${name} hasn't been modified, then the above exec might *never* be run.
+  # In this situation, we could end up with an empty (invalid) .db file when
+  # the 'file {"${name}.db":}' resource touches us an empty file...
+  # To fix this, we can use another postmap exec that only runs if we have a 0 byte .db file
+  # that needs fixing.
+  exec {"Force generate ${name}.db as current ${name}.db is 0 bytes":
+    command => "postmap ${name}",
+    path    => $::path,
+    # run this command unless .db file doesn't exist OR .db file exists but isn't empty
+    unless  => "test ! -f ${name}.db || test -s ${name}.db",
+    require => File["${name}.db"],
+  }
+
   Class['postfix'] -> Postfix::Hash[$title]
 }
