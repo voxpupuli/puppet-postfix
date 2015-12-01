@@ -11,7 +11,7 @@ end
 PuppetSyntax.exclude_paths = ["spec/fixtures/**/*.pp", "vendor/**/*"]
 
 # Publishing tasks
-unless RUBY_VERSION =~ /^1\.8/
+unless RUBY_VERSION =~ /^1\./
   require 'puppet_blacksmith'
   require 'puppet_blacksmith/rake_tasks'
   require 'github_changelog_generator/task'

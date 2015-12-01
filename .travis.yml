@@ -19,46 +19,53 @@ matrix:
     env: PUPPET_GEM_VERSION="~> 3.0"
   - rvm: 2.0.0
     env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
-  - rvm: 2.1.6
+  - rvm: 2.1.7
     env: PUPPET_GEM_VERSION="~> 4.0"
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="debian-6-x86_64-docker"
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="debian-7-x86_64-docker"
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="debian-8-x86_64-docker"
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="ubuntu-12.04-x86_64-docker"
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="ubuntu-14.04-x86_64-docker"
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="centos-6-x86_64-docker"
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
+    dist: trusty
     services: docker
     env: BEAKER_set="centos-7-x86_64-docker"
     bundler_args:
@@ -75,4 +82,4 @@ deploy:
     # all_branches is required to use tags
     all_branches: true
     # Only publish if our main Ruby target builds
-    rvm: 1.9.3
+    rvm: 2.1.7
