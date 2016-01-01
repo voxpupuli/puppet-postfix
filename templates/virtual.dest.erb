@@ -1,0 +1,10 @@
+<%# The dot [.] will blow away all destinations not listed in the loop-%>
+rm pattern[. = '<%= @name %>']/destination[.]
+set pattern[. = '<%= @name %>'] '<%= @name %>'
+<% if @destinations and not @destinations.empty? -%>
+    <% i = 0 -%>    
+    <% @destinations.each do |dest| -%>
+        <% i += 1 -%>    
+    set pattern[. = '<%= @name %>']/destination[<%= sprintf("%03d", i) -%>] '<%= dest %>'
+    <% end -%>
+<% end -%>
