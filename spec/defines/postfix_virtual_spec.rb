@@ -97,8 +97,14 @@ describe 'postfix::virtual' do
         it { is_expected.to contain_augeas('Postfix virtual - foo').with(
           :incl    => '/etc/postfix/virtual',
           :lens    => 'Postfix_Virtual.lns',
-          :changes => 'template(\'postfix/virtual.dest.erb\')',
-          )
+          :changes => [
+            "rm pattern[. = 'foo']/destination[.]
+set pattern[. = 'foo'] 'foo'
+        
+                
+    set pattern[. = 'foo']/destination[001] 'bar'
+    ",
+          ])
         }
       end
 
@@ -113,8 +119,14 @@ describe 'postfix::virtual' do
         it { is_expected.to contain_augeas('Postfix virtual - foo').with(
           :incl    => '/tmp/virtual',
           :lens    => 'Postfix_Virtual.lns',
-          :changes => 'template(\'postfix/virtual.dest.erb\')',
-        )
+          :changes => [
+            "rm pattern[. = 'foo']/destination[.]
+set pattern[. = 'foo'] 'foo'
+        
+                
+    set pattern[. = 'foo']/destination[001] 'bar'
+    ",
+          ])
         }
       end
 
