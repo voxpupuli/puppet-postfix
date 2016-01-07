@@ -27,7 +27,7 @@
 #     ensure => 'blank',
 #   }
 #
-define postfix::config ($value = undef, $ensure = 'present') {
+define postfix::config ($value = undef, $ensure = 'present', $comment = undef) {
 
   validate_string($ensure)
   validate_re($ensure, ['present', 'absent', 'blank'],
@@ -44,7 +44,15 @@ define postfix::config ($value = undef, $ensure = 'present') {
 
   case $ensure {
     'present': {
-      $changes = "set ${name} '${value}'"
+      if $comment {
+        $changes = [
+          "set ${name} '${value}'",
+          "insert #comment before $name",
+          "set #comment[last()] '${comment}'",
+        ]
+      } else {
+        $changes = "set ${name} '${value}'"
+      }
     }
     'absent': {
       $changes = "rm ${name}"
