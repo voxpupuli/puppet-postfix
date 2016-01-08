@@ -29,6 +29,11 @@ describe 'postfix::augeas' do
         :test_content => %r{Provides unit tests and examples for the <Postfix_Virtual> lens.},
         :stock_since  => '1.0.0',
       }) }
+      it { is_expected.to contain_augeas__lens('postfix_passwordmap').with({
+        :ensure       => 'present',
+        :lens_content => %r{Parses /etc/postfix/\*passwd},
+        :test_content => %r{Provides unit tests and examples for the <Postfix_Passwordmap> lens.},
+      }) }
     end
   end
 end

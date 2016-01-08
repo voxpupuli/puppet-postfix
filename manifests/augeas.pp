@@ -21,4 +21,11 @@ class postfix::augeas {
     lens_content => file("${module_path}/files/lenses/postfix_canonical.aug"),
     test_content => file("${module_path}/files/lenses/test_postfix_canonical.aug"),
   }
+  augeas::lens {'postfix_passwordmap':
+    ensure       => present,
+    lens_content => file("${module_path}/files/lenses/postfix_passwordmap.aug"),
+    #lint:ingnore80chars
+    test_content => file("${module_path}/files/lenses/test_postfix_passwordmap.aug"),
+    #lint:endignore
+  }
 }
