@@ -22,7 +22,7 @@ group :development, :unit_tests do
   gem 'puppet-lint-alias-check',                           :require => false
   gem 'rspec-puppet-facts',                                :require => false
   gem 'ruby-augeas',                                       :require => false
-  gem 'github_changelog_generator',                        :require => false if RUBY_VERSION !~ /^1\.8/
+  gem 'github_changelog_generator', '< 1.10.2',            :require => false if RUBY_VERSION !~ /^1\.8/
   gem 'puppet-blacksmith',                                 :require => false if RUBY_VERSION !~ /^1\./
 end
 
