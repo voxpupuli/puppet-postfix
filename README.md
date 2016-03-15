@@ -13,8 +13,8 @@ This module requires Augeas.
 include postfix
 
 postfix::config { 'relay_domains':
-    ensure  => present,
-    value   => 'localhost host.foo.com',
+  ensure  => present,
+  value   => 'localhost host.foo.com',
 }
 ```
 ## Exec paths
@@ -201,18 +201,18 @@ Example: 'btree:${data_directory}/smtp_tls_session_cache'.
 ##### Configure Postfix to use TLS as a client
 ```puppet
 postfix::config {
-    'smtp_tls_mandatory_ciphers':       value   => 'high';
-    'smtp_tls_security_level':          value   => 'secure';
-    'smtp_tls_CAfile':                  value   => '/etc/pki/tls/certs/ca-bundle.crt';
-    'smtp_tls_session_cache_database':  value   => 'btree:${data_directory}/smtp_tls_session_cache';
+  'smtp_tls_mandatory_ciphers':       value   => 'high';
+  'smtp_tls_security_level':          value   => 'secure';
+  'smtp_tls_CAfile':                  value   => '/etc/pki/tls/certs/ca-bundle.crt';
+  'smtp_tls_session_cache_database':  value   => 'btree:${data_directory}/smtp_tls_session_cache';
 }
 ```
 
 ##### Configure Postfix to disable the vrfy command
 ```puppet
 postfix::config { 'disable_vrfy_command':
-    ensure  => present,
-    value   => 'yes',
+  ensure  => present,
+  value   => 'yes',
 }
 ```
 
@@ -240,15 +240,15 @@ Example: 'puppet:///modules/some/location/sasl_passwd'.
 ##### Create a sasl_passwd hash from a source file
 ```puppet
 postfix::hash { '/etc/postfix/sasl_passwd':
-    ensure  => 'present',
-    source  => 'puppet:///modules/profile/postfix/client/sasl_passwd',
+  ensure  => 'present',
+  source  => 'puppet:///modules/profile/postfix/client/sasl_passwd',
 }
 ```
 ##### Create a sasl_passwd hash with contents defined in the manifest
 ```puppet
 postfix::hash { '/etc/postfix/sasl_passwd':
-    ensure  => 'present',
-    content => '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword',
+  ensure  => 'present',
+  content => '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword',
 }
 ```
 ### postfix::transport
@@ -263,13 +263,13 @@ The following code is required to use transport maps.
 ```puppet
 include postfix
 
-postfix::hash{'/etc/postfix/transport':
-    ensure  => present,
-    }
+postfix::hash { '/etc/postfix/transport':
+  ensure  => present,
+}
 
-postfix::config{'transport_maps'
-    ensure  => present,
-    value   => 'hash:/etc/postfix/transport',
+postfix::config { 'transport_maps'
+  ensure  => present,
+  value   => 'hash:/etc/postfix/transport',
 }
 ```
 #### Parameters
@@ -302,13 +302,13 @@ The following code is necessary to make virtual maps work:
 ```puppet
 include postfix
 
-postfix::hash {'/etc/postfix/virtual':
-    ensure  => present,
+postfix::hash { '/etc/postfix/virtual':
+  ensure => present,
 }
 
-postfix::config {'virtual_alias_maps':
-    ensure  => present,
-    value   => 'hash:/etc/postfix/virtual',
+postfix::config { 'virtual_alias_maps':
+  ensure  => present,
+  value   => 'hash:/etc/postfix/virtual',
 }
 ```
 #### Parameters
@@ -331,7 +331,7 @@ Example: 'root'
 
 ##### Route mail bound for 'user@example.com' to root.
 ```puppet
-postfix:: virtual {'user@example.com':
+postfix::virtual {'user@example.com':
     ensure      => present,
     destination => 'root',
 }
