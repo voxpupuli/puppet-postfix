@@ -1,3 +1,9 @@
+## 2016-03-15 - Release 1.3.0
+
+- Consistent formating of documentation (GH #125)
+- Add ensure class arguments for packages (GH #99)
+- Various testing changes/fixes
+
 ## 2015-08-21 - Release 1.2.14
 
 Use docker for acceptance tests
