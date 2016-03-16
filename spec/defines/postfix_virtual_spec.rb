@@ -20,7 +20,7 @@ describe 'postfix::virtual' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, /Must pass destination/)
+          }.to raise_error(Puppet::Error, /destination/)
         end
       end
 
