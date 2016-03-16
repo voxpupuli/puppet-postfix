@@ -1,3 +1,7 @@
+## 2016-03-16 - Release 1.3.1
+
+- Fix tests for Puppet 4
+
 ## 2016-03-15 - Release 1.3.0
 
 - Consistent formating of documentation (GH #125)
