@@ -5,7 +5,7 @@ HOSTS:
       strict_variables:
     platform: debian-6-amd64
     hypervisor : docker
-    image: debian:6
+    image: debian/eol:squeeze
     docker_preserve_image: true
     docker_cmd: '["/sbin/init"]'
     docker_image_commands:

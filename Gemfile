@@ -1,7 +1,7 @@
 source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 group :development, :unit_tests do
-  gem 'rake',                                              :require => false
+  gem 'rake', ' < 11.0',                                   :require => false if RUBY_VERSION =~ /^1\.8/
   gem 'rspec', '< 3.2',                                    :require => false if RUBY_VERSION =~ /^1\.8/
   gem 'rspec-puppet',                                      :require => false
   gem 'puppetlabs_spec_helper',                            :require => false
@@ -22,7 +22,6 @@ group :development, :unit_tests do
   gem 'puppet-lint-alias-check',                           :require => false
   gem 'rspec-puppet-facts',                                :require => false
   gem 'ruby-augeas',                                       :require => false
-  gem 'github_changelog_generator', '< 1.10.2',            :require => false if RUBY_VERSION !~ /^1\.8/
   gem 'puppet-blacksmith',                                 :require => false if RUBY_VERSION !~ /^1\./
 end
 
