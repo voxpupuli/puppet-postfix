@@ -289,6 +289,12 @@ describe 'postfix' do
               is_expected.to contain_file('/etc/postfix/master.cf').with_content(/sympa/)
             end
           end
+          context 'when manage_root_alias is false' do
+            let(:params) { { :manage_root_alias => false } }
+            it 'should not manage root mailalias' do
+              is_expected.not_to contain_mailalias('root')
+            end
+          end
         end
       end
     end

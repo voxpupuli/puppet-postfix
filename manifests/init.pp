@@ -89,6 +89,7 @@ class postfix (
   $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   $myorigin            = $::fqdn,
   $relayhost           = undef,         # postfix_relayhost
+  $manage_root_alias   = true,
   $root_mail_recipient = 'nobody',      # root_mail_recipient
   $satellite           = false,
   $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
@@ -104,6 +105,7 @@ class postfix (
   validate_bool($ldap)
   validate_bool($mailman)
   validate_bool($mta)
+  validate_bool($manage_root_alias)
   validate_bool($satellite)
   validate_bool($use_amavisd)
   validate_bool($use_dovecot_lda)

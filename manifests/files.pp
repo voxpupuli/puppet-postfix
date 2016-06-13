@@ -9,6 +9,7 @@ class postfix::files {
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
   $myorigin            = $postfix::myorigin
+  $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
   $smtp_listen         = $postfix::_smtp_listen
   $use_amavisd         = $postfix::use_amavisd
@@ -90,8 +91,11 @@ class postfix::files {
     default: {}
   }
 
-  mailalias {'root':
-    recipient => $root_mail_recipient,
-    notify    => Exec['newaliases'],
+  if $manage_root_alias {
+    mailalias {'root':
+      recipient => $root_mail_recipient,
+      notify    => Exec['newaliases'],
+    }
   }
+
 }
