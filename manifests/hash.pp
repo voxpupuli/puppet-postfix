@@ -47,40 +47,11 @@ define postfix::hash (
     fail 'You must provide either \'source\' or \'content\', not both'
   }
 
-  File {
-    mode    => '0600',
-    owner   => root,
-    group   => root,
-    seltype => $postfix::params::seltype,
-  }
-
-  file { $name:
+  postfix::map {$name:
     ensure  => $ensure,
     source  => $source,
     content => $content,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    require => Package['postfix'],
-  }
-
-  file {"${name}.db":
-    ensure  => $ensure,
-    require => [File[$name], Exec["generate ${name}.db"]],
-  }
-
-  exec {"generate ${name}.db":
-    command => "postmap ${name}",
-    path    => $::path,
-    creates => "${name}.db", # this prevents postmap from being run !
-    require => File[$name],
-  }
-  exec {"regenerate ${name}.db":
-    command     => "postmap ${name}",
-    path        => $::path,
-    #creates    => "${name}.db", # this prevents postmap from being run !
-    subscribe   => File[$name],
-    refreshonly => true,
+    type    => 'hash',
   }
 
   Class['postfix'] -> Postfix::Hash[$title]
