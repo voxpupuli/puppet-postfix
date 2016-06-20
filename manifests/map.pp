@@ -59,20 +59,13 @@ define postfix::map (
     $manage_notify = Exec["generate ${name}.db"]
   }
 
-  File {
-    mode    => '0600',
-    owner   => root,
-    group   => root,
-    seltype => $postfix::params::seltype,
-  }
-
   file { "postfix map ${name}":
     ensure  => $ensure,
     path    => $path,
     source  => $source,
     content => $content,
     owner   => 'root',
-    group   => 'root',
+    group   => 'postfix',
     mode    => '0644',
     require => Package['postfix'],
     notify  => $manage_notify,
@@ -82,6 +75,9 @@ define postfix::map (
     file {"postfix map ${name}.db":
       ensure  => $ensure,
       path    => "${path}.db",
+      owner   => 'root',
+      group   => 'postfix',
+      mode    => '0644',
       require => [File["postfix map ${name}"], Exec["generate ${name}.db"]],
     }
   }
