@@ -11,6 +11,7 @@ HOSTS:
     docker_image_commands:
       - 'rm -rf /var/run/network/*'
       - 'yum install -y crontabs tar wget'
+      - 'rm /etc/init/tty.conf'
 CONFIG:
   type: aio
   log_level: debug

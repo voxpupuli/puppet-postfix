@@ -10,6 +10,7 @@ HOSTS:
     docker_cmd: '["/sbin/init"]'
     docker_image_commands:
       - 'yum install -y crontabs tar wget which'
+      - 'sed -i -e "/mingetty/d" /etc/inittab'
 CONFIG:
   type: aio
   log_level: debug
