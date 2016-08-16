@@ -24,6 +24,7 @@ class postfix::files {
   file { '/etc/mailname':
     ensure  => 'file',
     content => "${::fqdn}\n",
+    mode    => '0644',
     seltype => $postfix::params::seltype,
   }
 
