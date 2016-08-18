@@ -5,7 +5,7 @@ class postfix::packages {
     ensure => $postfix::postfix_ensure,
   }
 
-  if ($manage_mailx) {
+  if ($postfix::manage_mailx) {
     package { 'mailx':
       ensure => $postfix::mailx_ensure,
       name   => $postfix::params::mailx_package,
