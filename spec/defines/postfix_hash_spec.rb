@@ -68,6 +68,7 @@ describe 'postfix::hash' do
         ).without(:content)
         }
         it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
+        it { is_expected.to contain_file('/tmp/foo.db').that_notifies('Exec[generate /tmp/foo.db]') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
         it { is_expected.to contain_exec('regenerate /tmp/foo.db') }
       end
@@ -83,6 +84,7 @@ describe 'postfix::hash' do
         ).without(:source)
         }
         it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
+        it { is_expected.to contain_file('/tmp/foo.db').that_notifies('Exec[generate /tmp/foo.db]') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
         it { is_expected.to contain_exec('regenerate /tmp/foo.db') }
       end
@@ -93,6 +95,7 @@ describe 'postfix::hash' do
         ).without(:source).without(:content)
         }
         it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
+        it { is_expected.to contain_file('/tmp/foo.db').that_notifies('Exec[generate /tmp/foo.db]') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
         it { is_expected.to contain_exec('regenerate /tmp/foo.db') }
       end

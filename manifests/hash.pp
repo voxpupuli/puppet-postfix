@@ -66,7 +66,8 @@ define postfix::hash (
 
   file {"${name}.db":
     ensure  => $ensure,
-    require => [File[$name], Exec["generate ${name}.db"]],
+    require => File[$name],
+    notify  => Exec["generate ${name}.db"],
   }
 
   exec {"generate ${name}.db":
