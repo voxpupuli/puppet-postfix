@@ -105,6 +105,12 @@ A Boolean defining whether the puppet module should replace the configuration fi
 
 Default: true.
 
+##### `manage_mailx`
+
+A Boolean defining whether the puppet module should manage the mailx package. See also $mailx_ensure.
+
+Default: true.
+
 ##### `mastercf_source`
 A string defining the location of a skeleton master.cf file to be used.  
 Default: Undefined.  

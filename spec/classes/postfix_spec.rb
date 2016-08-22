@@ -295,6 +295,12 @@ describe 'postfix' do
               is_expected.not_to contain_mailalias('root')
             end
           end
+          context 'when manage_mailx is false' do
+            let(:params) { { :manage_mailx => false } }
+            it 'should not have mailx package' do
+              is_expected.not_to contain_package('mailx')
+            end
+          end
         end
       end
     end

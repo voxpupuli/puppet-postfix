@@ -5,8 +5,10 @@ class postfix::packages {
     ensure => $postfix::postfix_ensure,
   }
 
-  package { 'mailx':
-    ensure => $postfix::mailx_ensure,
-    name   => $postfix::params::mailx_package,
+  if ($postfix::manage_mailx) {
+    package { 'mailx':
+      ensure => $postfix::mailx_ensure,
+      name   => $postfix::params::mailx_package,
+    }
   }
 }

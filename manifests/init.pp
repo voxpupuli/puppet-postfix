@@ -26,6 +26,8 @@
 #
 # [*manage_conffiles*]    - (boolean) Whether config files are to be replaced
 #
+# [*manage_mailx*]        - (boolean) Whether to manage mailx package.
+#
 # [*mastercf_source*]     - (string)
 #
 # [*master_smtp*]         - (string)
@@ -80,6 +82,7 @@ class postfix (
   $mailman             = false,
   $maincf_source       = "puppet:///modules/${module_name}/main.cf",
   $manage_conffiles    = true,
+  $manage_mailx        = true,
   $mastercf_source     = undef,
   $master_smtp         = undef,         # postfix_master_smtp
   $master_smtps        = undef,         # postfix_master_smtps
@@ -106,6 +109,7 @@ class postfix (
   validate_bool($mailman)
   validate_bool($mta)
   validate_bool($manage_root_alias)
+  validate_bool($manage_mailx)
   validate_bool($satellite)
   validate_bool($use_amavisd)
   validate_bool($use_dovecot_lda)
