@@ -342,6 +342,53 @@ postfix::virtual {'user@example.com':
     destination => 'root',
 }
 ```
+
+### postfix::conffile
+
+Manages postfix configuration files. With it, you could create configuration files (other than, main.cf, master.cf, etc.) restarting postfix when necessary.
+
+#### Parameters
+##### `ensure`
+A string whose valid values are present, absent or directory.  
+Default: present.  
+Example: absent.
+
+##### `source`
+A string with the source of the file. This is the `source` parameter of the underlying file resource.  
+Default: `undef`  
+Example: 'puppet:///modules/postfix/configfile.cf'  
+
+##### `content`
+The content of the postfix configuration file. This is an alternative to the `source` parameter. If you don't provide `source` neither `content` parameters a default template is used and the content is created with values in the `options` hash.  
+Default: `undef`  
+
+##### `path`
+Path where to create the configuration file.  
+Default: '/etc/postfix/${name}'
+
+##### `mode`
+Permissions of the configuration file. This option is useful if you want to create the file with specific permissions (for example, because you have passwords in it).  
+Default: '0644'  
+Example: '0640'
+
+##### `options`
+Hash with the options used in the default template that is used when neither `source` neither `content`parameters are provided.  
+Default: {}  
+Example:
+```
+ postfix::conffile { 'ldapoptions.cf':
+   options            => {
+     server_host      => ldap.mydomain.com,
+     bind             => 'yes',
+     bind_dn          => 'cn=admin,dc=mydomain,dc=com',
+     bind_pw          => 'password',
+     search_base      => 'dc=example, dc=com',
+     query_filter     => 'mail=%s',
+     result_attribute => 'uid',
+   }
+ }
+```
+
 ## Contributing
 
 Please report bugs and feature request using [GitHub issue
