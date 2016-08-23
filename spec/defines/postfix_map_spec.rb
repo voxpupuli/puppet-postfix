@@ -58,8 +58,8 @@ describe 'postfix::map' do
           :source => '/tmp/bar'
         ).without(:content)
         }
-        it { is_expected.to contain_file('/tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate postfix map foo.db') }
+        it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when passing content' do
@@ -73,7 +73,7 @@ describe 'postfix::map' do
         ).without(:source)
         }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate postfix map foo.db') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when not passing source or content' do
@@ -82,7 +82,7 @@ describe 'postfix::map' do
         ).without(:source).without(:content)
         }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate postfix map foo.db') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when ensuring absence' do
@@ -92,7 +92,7 @@ describe 'postfix::map' do
 
         it { is_expected.to contain_file('postfix map foo').with_ensure('absent') }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('absent') }
-        it { is_expected.to contain_exec('generate postfix map foo.db') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when using pcre type' do
@@ -100,8 +100,8 @@ describe 'postfix::map' do
           :type => 'pcre',
         } }
 
-        it { is_expected.to contail_file('postfix map foo').with_ensure('present') }
-        it { is_expected.should_not contain_file('postfix map foo.db') }
+        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.not_to contain_file('postfix map foo.db') }
       end
 
       context 'when using cidr type' do
@@ -109,8 +109,8 @@ describe 'postfix::map' do
           :type => 'cidr',
         } }
 
-        it { is_expected.to contail_file('postfix map foo').with_ensure('present') }
-        it { is_expected.should_not contain_file('postfix map foo.db') }
+        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.not_to contain_file('postfix map foo.db') }
       end
     end
   end
