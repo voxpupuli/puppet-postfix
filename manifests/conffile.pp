@@ -70,7 +70,7 @@ define postfix::conffile (
   }
 
   validate_hash($options)
-  if !$source and !$content and empty($options) {
+  if !$source and !$content and $ensure == 'present' and empty($options) {
     fail 'You must provide \'options\' hash parameter if you don\'t provide \'source\' neither \'content\''
   }
 
