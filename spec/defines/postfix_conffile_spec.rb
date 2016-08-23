@@ -31,7 +31,7 @@ describe 'postfix::conffile' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error(Puppet::Error, /must be either 'present' or 'absent'/)
+          }.to raise_error(Puppet::Error, /must be either 'present', 'absent' or 'directory'/)
         end
       end
 
@@ -55,8 +55,7 @@ describe 'postfix::conffile' do
 
         it { is_expected.to contain_file('postfix conffile foo').with(
           :ensure => 'present',
-          :source => 'puppet:///modules/postfix/bar',
-          :notify => Service['postfix']
+          :source => 'puppet:///modules/postfix/bar'
         ).without(:content)
         }
       end
@@ -68,8 +67,7 @@ describe 'postfix::conffile' do
 
         it { is_expected.to contain_file('postfix conffile foo').with(
           :ensure  => 'present',
-          :content => 'bar',
-          :notify => Service['postfix']
+          :content => 'bar'
         ).without(:source)
         }
       end
@@ -82,30 +80,28 @@ describe 'postfix::conffile' do
         end
       end
 
-      context 'when passing options parameter' do
-        let (:params) { {
-          :options => {
-            server_host => 'ldap.mydomain.com',
-            bind        => 'no',
-          },
-        } }
+      #context 'when passing options parameter' do
+        #let (:params) { {
+          #:options => {
+            #:server_host => 'ldap.mydomain.com',
+            #:bind        => 'no',
+          #},
+        #} }
 
-        it { is_expected.to contain_file('postfix conffile foo').with(
-          :ensure => 'present',
-          :content => '
-#
-#####################################################
-# File managed by puppet
-# DO NOT EDITY!!!
-#
+        #it { is_expected.to contain_file('postfix conffile foo').with(
+          #:ensure => 'present',
+          #:content => '#
+######################################################
+## File managed by puppet
+## DO NOT EDITY!!!
+##
 
-bind = no
-server_host = ldap.mydomain.com',
-          :notify => Service['postfix']
-        ).without(:source)
-        }
+#bind = no
+#server_host = ldap.mydomain.com'
+        #).without(:source)
+        #}
 
-      end
+      #end
 
       context 'when ensuring absence' do
         let (:params) { {
@@ -118,10 +114,12 @@ server_host = ldap.mydomain.com',
       context 'when using mode' do
         let (:params) { {
           :mode => '0644',
+          :content => 'bar',
         } }
 
         it { is_expected.to contain_file('postfix conffile foo').with(
-          :mode => '0644'
+          :mode => '0644',
+          :content => 'bar'
         )
         }
       end
@@ -129,10 +127,12 @@ server_host = ldap.mydomain.com',
       context 'when using path' do
         let (:params) { {
           :path => '/tmp/foo',
+          :content => 'bar',
         } }
 
         it { is_expected.to contain_file('postfix conffile foo').with(
           :path => '/tmp/foo',
+          :content => 'bar'
         )
         }
       end
