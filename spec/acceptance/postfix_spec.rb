@@ -5,9 +5,16 @@ describe 'postfix class' do
   context 'default parameters' do
     it 'should work idempotently with no errors' do
       pp = <<-EOS
-        # Make sure exim  is stopped in Debian docker containers
+        # Make sure exim is stopped in Debian docker containers
         # Installing postfix removes it but doesn't stop it
-        service { 'exim4': ensure => stopped, hasstatus => false } ->
+        # so the port is used and postfix fails to start
+        if $::operatingsystem == 'Debian' {
+          service { 'exim4':
+            ensure    => stopped,
+            hasstatus => false,
+            before    => Class['postfix'],
+          }
+        }
 
         class { 'postfix': }
       EOS
