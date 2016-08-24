@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'postfix::hash' do
-  let (:title) { '/tmp/foo' }
+describe 'postfix::map' do
+  let (:title) { 'foo' }
 
   let :pre_condition do
     "class { '::postfix': }"
@@ -19,7 +19,7 @@ describe 'postfix::hash' do
         } }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_file('postfix map foo')
           }.to raise_error(Puppet::Error, /\["present"\] is not a string/)
         end
       end
@@ -30,17 +30,8 @@ describe 'postfix::hash' do
         } }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_file('postfix map foo')
           }.to raise_error(Puppet::Error, /must be either 'present' or 'absent'/)
-        end
-      end
-
-      context 'when passing wrong value for title' do
-        let (:title) { 'foo' }
-        it 'should fail' do
-          expect {
-            is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, /"foo" is not an absolute path/)
         end
       end
 
@@ -52,7 +43,7 @@ describe 'postfix::hash' do
 
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_file('postfix map foo')
           }.to raise_error(Puppet::Error, /You must provide either 'source' or 'content'/)
         end
       end
@@ -62,14 +53,13 @@ describe 'postfix::hash' do
           :source  => '/tmp/bar',
         } }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo').with(
+        it { is_expected.to contain_file('postfix map foo').with(
           :ensure => 'present',
           :source => '/tmp/bar'
         ).without(:content)
         }
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
-
+        it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when passing content' do
@@ -77,22 +67,22 @@ describe 'postfix::hash' do
           :content => 'bar',
         } }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo').with(
+        it { is_expected.to contain_file('postfix map foo').with(
           :ensure  => 'present',
           :content => 'bar'
         ).without(:source)
         }
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when not passing source or content' do
-        it { is_expected.to contain_file('postfix map /tmp/foo').with(
+        it { is_expected.to contain_file('postfix map foo').with(
           :ensure  => 'present'
         ).without(:source).without(:content)
         }
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
+        it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when ensuring absence' do
@@ -100,9 +90,27 @@ describe 'postfix::hash' do
           :ensure => 'absent',
         } }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo').with_ensure('absent') }
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('absent') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        it { is_expected.to contain_file('postfix map foo').with_ensure('absent') }
+        it { is_expected.to contain_file('postfix map foo.db').with_ensure('absent') }
+        it { is_expected.to contain_exec('generate foo.db') }
+      end
+
+      context 'when using pcre type' do
+        let (:params) { {
+          :type => 'pcre',
+        } }
+
+        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.not_to contain_file('postfix map foo.db') }
+      end
+
+      context 'when using cidr type' do
+        let (:params) { {
+          :type => 'cidr',
+        } }
+
+        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.not_to contain_file('postfix map foo.db') }
       end
     end
   end
