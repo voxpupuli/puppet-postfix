@@ -82,8 +82,14 @@ define postfix::map (
     }
   }
 
+  $generate_cmd = $ensure ? {
+    'absent'  => "rm ${name}.db",
+    'present' => "postmap ${name}",
+    default   => "touch ${name}.db",
+  }
+
   exec {"generate ${name}.db":
-    command     => "postmap ${name}",
+    command     => $generate_cmd,
     path        => $::path,
     #creates    => "${name}.db", # this prevents postmap from being run !
     refreshonly => true,

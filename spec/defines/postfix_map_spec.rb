@@ -92,7 +92,10 @@ describe 'postfix::map' do
 
         it { is_expected.to contain_file('postfix map foo').with_ensure('absent') }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('absent') }
-        it { is_expected.to contain_exec('generate foo.db') }
+        it { is_expected.to contain_exec('generate foo.db').with(
+          :command => 'rm foo.db'
+        )
+        }
       end
 
       context 'when using pcre type' do
