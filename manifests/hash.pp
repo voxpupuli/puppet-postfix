@@ -52,6 +52,7 @@ define postfix::hash (
     source  => $source,
     content => $content,
     type    => 'hash',
+    path    => $name,
   }
 
   Class['postfix'] -> Postfix::Hash[$title]
