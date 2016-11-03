@@ -36,11 +36,8 @@ define postfix::map (
   include ::postfix::params
 
   validate_absolute_path($path)
-#  validate_string($source)
-#  validate_string($content)
   if !is_string($source) and !is_array($source) { fail("value for source should be either String type or Array type got ${source}") }
   if !is_string($content) and !is_array($content) { fail("value for source should be either String type or Array type got ${content}") }
-  validate_string($ensure)
   validate_re($ensure, ['present', 'absent'],
     "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 

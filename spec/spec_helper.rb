@@ -24,6 +24,8 @@ require 'pathname'
 dir = Pathname.new(__FILE__).parent
 Puppet[:modulepath] = File.join(dir, 'fixtures', 'modules')
 
+RSpec::Expectations.configuration.on_potential_false_positives = :nothing
+
 # There's no real need to make this version dependent, but it helps find
 # regressions in Puppet
 #

@@ -20,7 +20,7 @@ describe 'postfix::map' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('postfix map foo')
-          }.to raise_error(Puppet::Error, /\["present"\] is not a string/)
+          }.to raise_error
         end
       end
 

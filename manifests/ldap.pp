@@ -14,6 +14,11 @@
 # include postfix::ldap
 #
 class postfix::ldap {
+
+  validate_string($postfix::ldap_base)
+  validate_string($postfix::ldap_host)
+  validate_string($postfix::ldap_options)
+
   if $::osfamily == 'Debian' {
     package {'postfix-ldap':
       before  => File['/etc/postfix/ldap-aliases.cf'],
