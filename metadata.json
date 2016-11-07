@@ -8,6 +8,9 @@
   "project_page": "https://github.com/camptocamp/puppet-postfix",
   "issues_url": "https://github.com/camptocamp/puppet-postfix/issues",
   "description": "Postfix Module for Puppet",
+  "requirements": [
+    {"name":"puppet","version_requirement":">= 3.0.0 < 5.0.0" }
+  ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
