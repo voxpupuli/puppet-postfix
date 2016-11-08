@@ -20,7 +20,7 @@ describe 'postfix::conffile' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error(Puppet::Error, /\["present"\] is not a string/)
+          }.to raise_error
         end
       end
 

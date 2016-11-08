@@ -32,7 +32,7 @@ describe 'postfix::virtual' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, /\["bar"\] is not a string/)
+          }.to raise_error
         end
       end
 
@@ -45,7 +45,7 @@ describe 'postfix::virtual' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
+          }.to raise_error
         end
       end
 
@@ -71,7 +71,7 @@ describe 'postfix::virtual' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, /\["baz"\] is not a string/)
+          }.to raise_error
         end
       end
 

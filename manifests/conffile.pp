@@ -56,7 +56,6 @@ define postfix::conffile (
   validate_absolute_path($path)
   if !is_string($source) and !is_array($source) { fail("value for source should be either String type or Array type got ${source}") }
   if !is_string($content) { fail("value for content should be String type; got ${content}") }
-  validate_string($ensure)
   validate_re($ensure, ['present', 'absent', 'directory'],
     "\$ensure must be either 'present', 'absent' or 'directory', got '${ensure}'")
   validate_hash($options)

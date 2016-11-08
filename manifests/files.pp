@@ -5,6 +5,8 @@ class postfix::files {
   $inet_interfaces     = $postfix::inet_interfaces
   $mail_user           = $postfix::mail_user
   $manage_conffiles    = $postfix::manage_conffiles
+  $maincf_source       = $postfix::maincf_source
+  $mastercf_source     = $postfix::mastercf_source
   $master_smtp         = $postfix::master_smtp
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
@@ -16,6 +18,10 @@ class postfix::files {
   $use_dovecot_lda     = $postfix::use_dovecot_lda
   $use_schleuder       = $postfix::use_schleuder
   $use_sympa           = $postfix::use_sympa
+
+  validate_string($mastercf_source)
+  validate_string($master_smtp)
+  validate_string($master_smtps)
 
   File {
     replace => $manage_conffiles,
@@ -45,7 +51,7 @@ class postfix::files {
   }
 
   # Config files
-  if $postfix::mastercf_source {
+  if $mastercf_source {
     $mastercf_content = undef
   } else {
     $mastercf_content = template(
@@ -61,7 +67,7 @@ class postfix::files {
     mode    => '0644',
     owner   => 'root',
     seltype => $postfix::params::seltype,
-    source  => $postfix::mastercf_source,
+    source  => $mastercf_source,
   }
 
   # Config files
@@ -72,7 +78,7 @@ class postfix::files {
     owner   => 'root',
     replace => false,
     seltype => $postfix::params::seltype,
-    source  => $postfix::maincf_source,
+    source  => $maincf_source,
   }
 
   ::postfix::config {

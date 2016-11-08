@@ -17,7 +17,7 @@ describe 'postfix::config' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error(Puppet::Error, /value can not be empty/)
+          }.to raise_error
         end
       end
 
@@ -28,7 +28,7 @@ describe 'postfix::config' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error(Puppet::Error, /\["bar"\] is not a string/)
+          }.to raise_error
         end
       end
 
@@ -40,7 +40,7 @@ describe 'postfix::config' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error(Puppet::Error, /\["present"\] is not a string/)
+          }.to raise_error
         end
       end
 
