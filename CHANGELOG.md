@@ -1,3 +1,10 @@
+## 2016-11-17 - Release 1.5.0
+
+- Fix params validation + specs (GH #154)
+- Fix map calling in hash (GH #153)
+- Fix the path of the database (GH #149)
+- Add a map define to create postfix maps (#138)
+
 ## 2016-08-23 - Release 1.4.0
 
 - Add manage_root_alias parameter to disable
