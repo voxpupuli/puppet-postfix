@@ -6,9 +6,10 @@
 #
 # === Parameters
 #
-# [*name*]   - the name of the map file.
-# [*ensure*] - present/absent, defaults to present.
-# [*source*] - file source.
+# [*name*]    - the name of the map file.
+# [*ensure*]  - present/absent, defaults to present.
+# [*source*]  - file source. Mutially exclusive with "content".
+# [*content*] - content of the file. Mutially exclusive with "soruce".
 #
 # === Requires
 #
@@ -16,7 +17,7 @@
 #
 # === Examples
 #
-#   postfix::hash { '/etc/postfix/virtual':
+#   postfix::hash { 'virtual':
 #     ensure => present,
 #   }
 #   postfix::config { 'virtual_alias_maps':
