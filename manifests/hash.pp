@@ -9,7 +9,7 @@
 # [*name*]    - the name of the map file.
 # [*ensure*]  - present/absent, defaults to present.
 # [*source*]  - file source. Mutially exclusive with "content".
-# [*content*] - content of the file. Mutially exclusive with "soruce".
+# [*content*] - content of the file. Mutially exclusive with "source".
 #
 # === Requires
 #
