@@ -19,6 +19,18 @@ describe 'postfix::mta' do
       it { is_expected.to contain_postfix__config('mydestination').with_value('bar') }
       it { is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.1/8, [::1]/128 ![::2]/128') }
       it { is_expected.to contain_postfix__config('relayhost').with_value('foo') }
+
+      context "when mydestination => 'blank'" do
+        let :pre_condition do
+          "class { 'postfix':
+            mydestination => 'blank',
+            mynetworks    => '127.0.0.1/8, [::1]/128 ![::2]/128',
+            relayhost     => 'foo',
+          }"
+        end
+
+        it { is_expected.to contain_postfix__config('mydestination').with_ensure('blank').without_value }
+      end
     end
   end
 end

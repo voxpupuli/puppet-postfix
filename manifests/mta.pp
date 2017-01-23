@@ -46,8 +46,13 @@ class postfix::mta (
     postfix::config { 'relayhost': value => $relayhost }
   }
 
+  if ($mydestination == 'blank') {
+    postfix::config { 'mydestination': ensure => 'blank' }
+  } else {
+    postfix::config { 'mydestination': value => $mydestination }
+  }
+
   postfix::config {
-    'mydestination':       value => $mydestination;
     'mynetworks':          value => $mynetworks;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
     'transport_maps':      value => 'hash:/etc/postfix/transport';
