@@ -2,6 +2,7 @@ class postfix::files {
   include ::postfix::params
 
   $alias_maps          = $postfix::all_alias_maps
+  $chroot_daemons      = $postfix::chroot_daemons
   $inet_interfaces     = $postfix::inet_interfaces
   $mail_user           = $postfix::mail_user
   $manage_conffiles    = $postfix::manage_conffiles
