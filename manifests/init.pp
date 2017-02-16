@@ -107,7 +107,6 @@ class postfix (
   $mailx_ensure        = 'present',
 ) inherits postfix::params {
 
-  
   validate_bool($chroot_daemons)
   validate_bool($ldap)
   validate_bool($mailman)
