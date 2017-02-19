@@ -38,10 +38,9 @@ class postfix::params {
 
       if $::lsbdistcodename == 'xenial' and $chroot_daemons {
         $master_os_template = "${module_name}/master.cf.debian-chroot_daemons.erb"
-          }
-      else {
+      } else {
         $master_os_template = "${module_name}/master.cf.debian.erb"
-          }
+      }
     }
 
     'Suse': {
