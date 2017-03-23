@@ -95,6 +95,7 @@ class postfix (
   $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   $myorigin            = $::fqdn,
   $relayhost           = undef,         # postfix_relayhost
+  $smtp_use_tls        = undef,         # use tls on relay host
   $manage_root_alias   = true,
   $root_mail_recipient = 'nobody',      # root_mail_recipient
   $satellite           = false,
@@ -126,6 +127,8 @@ class postfix (
   validate_string($mynetworks)
   validate_string($myorigin)
   validate_string($relayhost)
+  validate_string($smtp_use_tls)
+
   if ! is_array($root_mail_recipient) {
     validate_string($root_mail_recipient)
   }

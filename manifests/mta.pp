@@ -29,10 +29,13 @@ class postfix::mta (
   $mydestination = $postfix::mydestination,
   $mynetworks    = $postfix::mynetworks,
   $relayhost     = $postfix::relayhost,
+  $smtp_use_tls  = $postfix::smtp_use_tls
 ) {
 
   validate_re($relayhost, '^\S+$',
               'Wrong value for $relayhost')
+  validate_re($smtp_use_tls, '^\S+$',
+              'Wrong value for $smtp_use_tls')
   validate_re($mydestination, '^\S+(?:,\s*\S+)*$',
               'Wrong value for $mydestination')
   validate_re($mynetworks, '^(?:\S+?(?:(?:,\s)|(?:\s))?)*$',
@@ -44,6 +47,10 @@ class postfix::mta (
   }
   else {
     postfix::config { 'relayhost': value => $relayhost }
+  }
+
+  if ($smtp_use_tls != undef) {
+    postfix::config { 'smtp_use_tls': value => $smtp_use_tls }
   }
 
   postfix::config {
