@@ -26,14 +26,18 @@ class postfix::satellite (
   $mydestination = $postfix::mydestination,
   $mynetworks    = $postfix::mynetworks,
   $relayhost     = $postfix::relayhost,
+  $smtp_use_tls  = $postfix::smtp_use_tls
 ) {
 
   validate_re($postfix::myorigin, '^\S+$')
+  validate_re($smtp_use_tls, '^\S+$',
+              'Wrong value for $smtp_use_tls')
 
   class { '::postfix::mta':
     mydestination => $mydestination,
     mynetworks    => $mynetworks,
     relayhost     => $relayhost,
+    smtp_use_tls  => $smtp_use_tls
   }
 
   postfix::virtual { "@${postfix::myorigin}":

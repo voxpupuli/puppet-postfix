@@ -8,6 +8,8 @@
 #
 # [*alias_maps*]          - (string)
 #
+# [*chroot_daemons*]      - (boolean) Whether to chroot daemons in as reccomended in postfix3 and above
+#
 # [*inet_interfaces*]     - (string)
 #
 # [*ldap*]                - (boolean) Whether to use LDAP
@@ -73,6 +75,7 @@
 #
 class postfix (
   $alias_maps          = 'hash:/etc/aliases',
+  $chroot_daemons      = false,
   $inet_interfaces     = 'all',
   $ldap                = false,
   $ldap_base           = undef,
@@ -92,6 +95,7 @@ class postfix (
   $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   $myorigin            = $::fqdn,
   $relayhost           = undef,         # postfix_relayhost
+  $smtp_use_tls        = undef,         # use tls on relay host
   $manage_root_alias   = true,
   $root_mail_recipient = 'nobody',      # root_mail_recipient
   $satellite           = false,
@@ -102,9 +106,9 @@ class postfix (
   $use_sympa           = false,         # postfix_use_sympa
   $postfix_ensure      = 'present',
   $mailx_ensure        = 'present',
-) inherits postfix::params {
+) { include ::postfix::params
 
-
+  validate_bool($chroot_daemons)
   validate_bool($ldap)
   validate_bool($mailman)
   validate_bool($mta)
@@ -123,6 +127,8 @@ class postfix (
   validate_string($mynetworks)
   validate_string($myorigin)
   validate_string($relayhost)
+  validate_string($smtp_use_tls)
+
   if ! is_array($root_mail_recipient) {
     validate_string($root_mail_recipient)
   }
