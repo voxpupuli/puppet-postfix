@@ -26,17 +26,10 @@
 #   }
 #
 class postfix::mta (
-  $mydestination = $postfix::mydestination,
-  $mynetworks    = $postfix::mynetworks,
-  $relayhost     = $postfix::relayhost,
+  Pattern[/^\S+(?:,\s*\S+)*$/]               $mydestination = $postfix::mydestination,
+  Pattern[/^(?:\S+?(?:(?:,\s)|(?:\s))?)*$/]  $mynetworks    = $postfix::mynetworks,
+  Pattern[/^\S+$/]                           $relayhost     = $postfix::relayhost,
 ) {
-
-  validate_re($relayhost, '^\S+$',
-              'Wrong value for $relayhost')
-  validate_re($mydestination, '^\S+(?:,\s*\S+)*$',
-              'Wrong value for $mydestination')
-  validate_re($mynetworks, '^(?:\S+?(?:(?:,\s)|(?:\s))?)*$',
-              'Wrong value for $mynetworks')
 
   # If direct is specified then relayhost should be blank
   if ($relayhost == 'direct') {

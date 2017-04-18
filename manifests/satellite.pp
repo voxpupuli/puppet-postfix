@@ -28,7 +28,7 @@ class postfix::satellite (
   $relayhost     = $postfix::relayhost,
 ) {
 
-  validate_re($postfix::myorigin, '^\S+$')
+  assert_type(Pattern[/^\S+$/], $postfix::myorigin)
 
   class { '::postfix::mta':
     mydestination => $mydestination,
