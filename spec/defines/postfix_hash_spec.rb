@@ -31,7 +31,7 @@ describe 'postfix::hash' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, /must be either 'present' or 'absent'/)
+          }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
 
@@ -40,7 +40,7 @@ describe 'postfix::hash' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, /"foo" is not an absolute path/)
+          }.to raise_error(Puppet::Error, /got 'foo'/)
         end
       end
 
