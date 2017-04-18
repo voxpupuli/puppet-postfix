@@ -27,10 +27,11 @@
 #     ensure => 'blank',
 #   }
 #
-define postfix::config ($value = undef, $ensure = 'present') {
+define postfix::config (
+  Optional[String]                   $value  = undef,
+  Enum['present', 'absent', 'blank'] $ensure = 'present',
+) {
 
-  validate_re($ensure, ['present', 'absent', 'blank'],
-    "\$ensure must be either 'present', 'absent' or 'blank', got '${ensure}'")
   if ($ensure == 'present') {
     validate_re($value, '^.+$',
       '$value can not be empty if ensure = present')
