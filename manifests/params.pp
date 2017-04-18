@@ -27,6 +27,7 @@ class postfix::params {
     'Debian': {
       $aliasesseltype = undef
       $seltype = undef
+      $chroot_daemons = $postfix::chroot_daemons
 
       $restart_cmd = '/etc/init.d/postfix reload'
 
@@ -35,7 +36,11 @@ class postfix::params {
         default            => 'bsd-mailx',
       }
 
-      $master_os_template = "${module_name}/master.cf.debian.erb"
+      if $::lsbdistcodename == 'xenial' and $chroot_daemons {
+        $master_os_template = "${module_name}/master.cf.debian-chroot_daemons.erb"
+      } else {
+        $master_os_template = "${module_name}/master.cf.debian.erb"
+      }
     }
 
     'Suse': {
