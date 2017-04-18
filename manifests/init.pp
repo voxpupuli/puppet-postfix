@@ -102,7 +102,7 @@ class postfix (
   $use_sympa           = false,         # postfix_use_sympa
   $postfix_ensure      = 'present',
   $mailx_ensure        = 'present',
-) inherits postfix::params {
+) { include ::postfix::params
 
 
   validate_bool($ldap)
