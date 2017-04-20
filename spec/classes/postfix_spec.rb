@@ -91,12 +91,14 @@ describe 'postfix' do
               :inet_interfaces     => 'localhost2',
               :master_smtp         => "smtp      inet  n       -       -       -       -       smtpd
     -o smtpd_client_restrictions=check_client_access,hash:/etc/postfix/access,reject",
-    :master_smtps        => 'smtps     inet  n       -       -       -       -       smtpd',
-    :master_submission   => 'submission inet n       -       -       -       -       smtpd',
+              :master_smtps        => 'smtps     inet  n       -       -       -       -       smtpd',
+              :master_submission   => 'submission inet n       -       -       -       -       smtpd',
+              :config_hash         => {'smtp_tls_mandatory_ciphers' => {'value' => 'high'}},
             } }
 
             it { is_expected.to contain_package('postfix') }
             it { is_expected.to contain_package('mailx') }
+            it { is_expected.to contain_postfix__config('smtp_tls_mandatory_ciphers').with_value('high') }
 
             it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("foo.example.com\n") }
             it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }

@@ -102,6 +102,7 @@ class postfix (
   $use_sympa           = false,         # postfix_use_sympa
   $postfix_ensure      = 'present',
   $mailx_ensure        = 'present',
+  $config_hash         = {},
 ) inherits postfix::params {
 
 
@@ -128,6 +129,7 @@ class postfix (
   }
   validate_string($smtp_listen)
 
+  validate_hash($config_hash)
 
 
   $_smtp_listen = $mailman ? {
@@ -166,5 +168,9 @@ class postfix (
 
   if $mailman {
     include ::postfix::mailman
+  }
+
+  if $config_hash {
+    ensure_resources('postfix::config', $config_hash)
   }
 }
