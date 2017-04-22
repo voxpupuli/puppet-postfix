@@ -45,6 +45,11 @@ A string defining the location of the alias map file.
 Default: 'hash:/etc/aliases'.  
 Example: 'hash:/etc/other_aliases'.
 
+##### `chroot_daemons`
+
+A Boolean defining whether to chroot Postfix daemon processes as reccomended in Postfix3.
+Currently only applicable to the Postfix3 distributed by Ubuntu 16.04.
+
 ##### `inet_interfaces`
 
 A string defining the network interfaces that Postfix will listen on.  
