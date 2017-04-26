@@ -10,9 +10,9 @@
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
 <% if @smtp_listen == 'all' -%>
-smtp      inet  n       -       n       -       -       smtpd
+smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 <% else -%>
-<%= @smtp_listen %>:smtp      inet  n       -       n       -       -       smtpd
+<%= @smtp_listen %>:smtp      inet  <%= @jail %>       -       n       -       -       smtpd
 <% end -%>
 #smtp      inet  n       -       n       -       -       smtpd
 #submission inet n      -       n       -       -       smtpd
@@ -24,32 +24,32 @@ smtp      inet  n       -       n       -       -       smtpd
 #  -o smtpd_etrn_restrictions=reject
 #  -o smtpd_enforce_tls=yes -o smtpd_sasl_auth_enable=yes
 #628      inet  n       -       n       -       -       qmqpd
-pickup    fifo  n       -       n       60      1       pickup
-cleanup   unix  n       -       n       -       0       cleanup
+pickup    fifo  n       -       <%= @jail %>       60      1       pickup
+cleanup   unix  n       -       <%= @jail %>       -       0       cleanup
 qmgr      fifo  n       -       n       300     1       qmgr
 #qmgr     fifo  n       -       n       300     1       oqmgr
 #tlsmgr    unix  -       -       n       1000?   1       tlsmgr
-rewrite   unix  -       -       n       -       -       trivial-rewrite
-bounce    unix  -       -       n       -       0       bounce
-defer     unix  -       -       n       -       0       bounce
-trace     unix  -       -       n       -       0       bounce
-verify    unix  -       -       n       -       1       verify
-flush     unix  n       -       n       1000?   0       flush
+rewrite   unix  -       -       <%= @jail %>       -       -       trivial-rewrite
+bounce    unix  -       -       <%= @jail %>       -       0       bounce
+defer     unix  -       -       <%= @jail %>       -       0       bounce
+trace     unix  -       -       <%= @jail %>       -       0       bounce
+verify    unix  -       -       <%= @jail %>       -       1       verify
+flush     unix  n       -       <%= @jail %>       1000?   0       flush
 proxymap  unix  -       -       n       -       -       proxymap
-smtp      unix  -       -       n       -       -       smtp
+smtp      unix  -       -       <%= @jail %>       -       -       smtp
 # When relaying mail as backup MX, disable fallback_relay to avoid MX loops
-relay     unix  -       -       n       -       -       smtp
+relay     unix  -       -       <%= @jail %>       -       -       smtp
         -o smtp_fallback_relay=
 #       -o smtp_helo_timeout=5 -o smtp_connect_timeout=5
-showq     unix  n       -       n       -       -       showq
-error     unix  -       -       n       -       -       error
-discard   unix  -       -       n       -       -       discard
+showq     unix  n       -       <%= @jail %>       -       -       showq
+error     unix  -       -       <%= @jail %>       -       -       error
+discard   unix  -       -       <%= @jail %>       -       -       discard
 local     unix  -       n       n       -       -       local
 virtual   unix  -       n       n       -       -       virtual
-lmtp      unix  -       -       n       -       -       lmtp
-anvil     unix  -       -       n       -       1       anvil
+lmtp      unix  -       -       <%= @jail %>       -       -       lmtp
+anvil     unix  -       -       <%= @jail %>       -       1       anvil
 #localhost:10025 inet   n       -       n       -       -       smtpd -o content_filter=
-scache    unix  -       -       n       -       1       scache
+scache    unix  -       -       <%= @jail %>       -       1       scache
 #
 # ====================================================================
 # Interfaces to non-Postfix software. Be sure to examine the manual

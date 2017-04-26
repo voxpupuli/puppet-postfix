@@ -13,6 +13,7 @@ class postfix::files {
   $myorigin            = $postfix::myorigin
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
+  $chroot              = $postfix::chroot
   $smtp_listen         = $postfix::_smtp_listen
   $use_amavisd         = $postfix::use_amavisd
   $use_dovecot_lda     = $postfix::use_dovecot_lda
@@ -23,6 +24,12 @@ class postfix::files {
   assert_type(Optional[String], $master_smtp)
   assert_type(Optional[String], $master_smtps)
 
+  $jail = $chroot ? {
+    undef   => '-',
+    true    => 'y',
+    default => 'n',
+  }
+  
   File {
     replace => $manage_conffiles,
   }

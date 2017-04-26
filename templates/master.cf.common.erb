@@ -1,9 +1,9 @@
 <% if @use_amavisd %>
-amavis unix - - - - 2 smtp
+amavis unix - - <%= @jail %> - 2 smtp
         -o smtp_data_done_timeout=1200
         -o smtp_send_xforward_command=yes
 
-127.0.0.1:10025 inet n - - - - smtpd
+127.0.0.1:10025 inet n - <%= @jail %> - - smtpd
         -o content_filter=
         -o local_recipient_maps=
         -o relay_recipient_maps=
