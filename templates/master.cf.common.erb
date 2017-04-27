@@ -31,3 +31,6 @@ sympa        unix  -       n       n       -       -       pipe
 sympabounce  unix  -       n       n       -       -       pipe
   flags=R user=sympa argv=/usr/lib/sympa/bin/bouncequeue ${user}
 <% end -%>
+<% if @master_entries %>
+<%= @master_entries.join("\n") %>
+<% end -%>

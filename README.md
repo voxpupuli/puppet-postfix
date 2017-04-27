@@ -131,6 +131,11 @@ A string to define the submission line in the /etc/postfix/master.cf file.
 Default: Undefined.  
 Example: 'submission inet n       -       n       -       -       smtpd'.
 
+##### `master_entries`
+Array of strings containing additional entries for the /etc/postfix/master.cf file.
+Default: Undefined.
+Example: 'submission inet n       -       n       -       -       smtpd'.
+
 ##### `mta`
 A Boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite Boolean.  
 Default: False.

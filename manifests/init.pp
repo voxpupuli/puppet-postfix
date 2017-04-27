@@ -38,6 +38,8 @@
 #
 # [*master_submission*]   - (string)
 #
+# [*master_entries*]      - (array of strings)
+#
 # [*mta*]                 - (boolean) Configure postfix minimally, as a simple MTA
 #
 # [*mydestination*]       - (string)
@@ -92,6 +94,7 @@ class postfix (
   Optional[String]                $master_smtp         = undef,         # postfix_master_smtp
   Optional[String]                $master_smtps        = undef,         # postfix_master_smtps
   Optional[String]                $master_submission   = undef,         # postfix_master_submission
+  Optional[Array[String]]         $master_entries      = undef,         # postfix_master_entries
   Boolean                         $mta                 = false,
   String                          $mydestination       = '$myorigin',   # postfix_mydestination
   String                          $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
