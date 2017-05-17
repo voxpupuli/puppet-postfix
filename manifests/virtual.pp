@@ -35,16 +35,11 @@
 #   }
 #
 define postfix::virtual (
-  $destination,
-  $file='/etc/postfix/virtual',
-  $ensure='present'
+  String                    $destination,
+  Stdlib::Absolutepath      $file='/etc/postfix/virtual',
+  Enum['present', 'absent'] $ensure='present'
 ) {
   include ::postfix::augeas
-
-  validate_string($destination)
-  validate_string($file)
-  validate_absolute_path($file)
-  validate_string($ensure)
 
   case $ensure {
     'present': {

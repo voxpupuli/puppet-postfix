@@ -19,9 +19,9 @@ class postfix::files {
   $use_schleuder       = $postfix::use_schleuder
   $use_sympa           = $postfix::use_sympa
 
-  validate_string($mastercf_source)
-  validate_string($master_smtp)
-  validate_string($master_smtps)
+  assert_type(Optional[String], $mastercf_source)
+  assert_type(Optional[String], $master_smtp)
+  assert_type(Optional[String], $master_smtps)
 
   File {
     replace => $manage_conffiles,

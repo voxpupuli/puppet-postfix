@@ -15,9 +15,9 @@
 #
 class postfix::ldap {
 
-  validate_string($postfix::ldap_base)
-  validate_string($postfix::ldap_host)
-  validate_string($postfix::ldap_options)
+  assert_type(String, $postfix::ldap_base)
+  assert_type(String, $postfix::ldap_host)
+  assert_type(String, $postfix::ldap_options)
 
   if $::osfamily == 'Debian' {
     package {'postfix-ldap':

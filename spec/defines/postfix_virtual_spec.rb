@@ -58,7 +58,7 @@ describe 'postfix::virtual' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, /"baz" is not an absolute path/)
+          }.to raise_error(Puppet::Error, /got 'baz'/)
         end
       end
 
@@ -84,7 +84,7 @@ describe 'postfix::virtual' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, /\$ensure must be either/)
+          }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
 

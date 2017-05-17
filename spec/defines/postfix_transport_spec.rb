@@ -63,7 +63,7 @@ describe 'postfix::transport' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix transport - foo')
-          }.to raise_error(Puppet::Error, /"baz" is not an absolute path/)
+          }.to raise_error(Puppet::Error, /got 'baz'/)
         end
       end
 
@@ -89,7 +89,7 @@ describe 'postfix::transport' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas('Postfix transport - foo')
-          }.to raise_error(Puppet::Error, /\$ensure must be either/)
+          }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
 

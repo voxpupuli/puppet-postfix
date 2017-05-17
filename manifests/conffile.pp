@@ -44,21 +44,14 @@
 # }
 #
 define postfix::conffile (
-  $ensure   = 'present',
-  $source   = undef,
-  $content  = undef,
-  $path     = "/etc/postfix/${name}",
-  $mode     = '0644',
-  $options  = {},
+  Enum['present', 'absent', 'directory'] $ensure   = 'present',
+  Variant[Array[String], String, Undef]  $source   = undef,
+  Optional[String]                       $content  = undef,
+  Stdlib::Absolutepath                   $path     = "/etc/postfix/${name}",
+  String                                 $mode     = '0644',
+  Hash                                   $options  = {},
 ) {
   include ::postfix::params
-
-  validate_absolute_path($path)
-  if !is_string($source) and !is_array($source) { fail("value for source should be either String type or Array type got ${source}") }
-  if !is_string($content) { fail("value for content should be String type; got ${content}") }
-  validate_re($ensure, ['present', 'absent', 'directory'],
-    "\$ensure must be either 'present', 'absent' or 'directory', got '${ensure}'")
-  validate_hash($options)
 
   if (!defined(Class['postfix'])) {
     fail 'You must define class postfix before using postfix::config!'
@@ -68,7 +61,6 @@ define postfix::conffile (
     fail 'You must provide either \'source\' or \'content\', not both'
   }
 
-  validate_hash($options)
   if !$source and !$content and $ensure == 'present' and empty($options) {
     fail 'You must provide \'options\' hash parameter if you don\'t provide \'source\' neither \'content\''
   }

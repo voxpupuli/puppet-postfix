@@ -31,7 +31,7 @@ describe 'postfix::conffile' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error(Puppet::Error, /must be either 'present', 'absent' or 'directory'/)
+          }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
 

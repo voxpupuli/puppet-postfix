@@ -31,7 +31,7 @@ describe 'postfix::map' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('postfix map foo')
-          }.to raise_error(Puppet::Error, /must be either 'present' or 'absent'/)
+          }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
 

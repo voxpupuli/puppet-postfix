@@ -27,19 +27,13 @@
 #   }
 #
 define postfix::map (
-  $ensure = 'present',
-  $source = undef,
-  $content = undef,
-  $type = 'hash',
-  $path = "/etc/postfix/${name}",
+  Enum['present', 'absent']             $ensure = 'present',
+  Variant[Array[String], String, Undef] $source = undef,
+  Variant[Array[String], String, Undef] $content = undef,
+  String                                $type = 'hash',
+  Stdlib::Absolutepath                  $path = "/etc/postfix/${name}",
 ) {
   include ::postfix::params
-
-  validate_absolute_path($path)
-  if !is_string($source) and !is_array($source) { fail("value for source should be either String type or Array type got ${source}") }
-  if !is_string($content) and !is_array($content) { fail("value for source should be either String type or Array type got ${content}") }
-  validate_re($ensure, ['present', 'absent'],
-    "\$ensure must be either 'present' or 'absent', got '${ensure}'")
 
   if (!defined(Class['postfix'])) {
     fail 'You must define class postfix before using postfix::config!'

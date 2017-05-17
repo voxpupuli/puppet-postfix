@@ -35,18 +35,12 @@
 #   }
 #
 define postfix::transport (
-  $destination=undef,
-  $nexthop=undef,
-  $file='/etc/postfix/transport',
-  $ensure='present'
+  Optional[String]          $destination = undef,
+  Optional[String]          $nexthop=undef,
+  Stdlib::Absolutepath      $file='/etc/postfix/transport',
+  Enum['present', 'absent'] $ensure='present'
 ) {
   include ::postfix::augeas
-
-  validate_string($destination)
-  validate_string($nexthop)
-  validate_string($file)
-  validate_absolute_path($file)
-  validate_string($ensure)
 
   case $ensure {
     'present': {

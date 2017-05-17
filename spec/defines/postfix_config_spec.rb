@@ -52,7 +52,7 @@ describe 'postfix::config' do
         it 'should fail' do
           expect {
             is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error(Puppet::Error, /must be either 'present', 'absent' or 'blank'/)
+          }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
 
