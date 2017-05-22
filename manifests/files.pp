@@ -29,7 +29,7 @@ class postfix::files {
     true    => 'y',
     default => 'n',
   }
-  
+
   File {
     replace => $manage_conffiles,
   }
@@ -62,9 +62,9 @@ class postfix::files {
     $mastercf_content = undef
   } else {
     $mastercf_content = template(
-        $postfix::params::master_os_template,
-        'postfix/master.cf.common.erb'
-      )
+      $postfix::params::master_os_template,
+      'postfix/master.cf.common.erb'
+    )
   }
 
   file { '/etc/postfix/master.cf':
@@ -94,7 +94,7 @@ class postfix::files {
     'myorigin':         value => $myorigin;
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       ::postfix::config {
         'mailq_path':       value => '/usr/bin/mailq.postfix';
