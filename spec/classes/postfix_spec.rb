@@ -18,6 +18,7 @@ describe 'postfix' do
         it { is_expected.to contain_postfix__config('myorigin').with_value('foo.example.com') }
         it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
         it { is_expected.to contain_postfix__config('inet_interfaces').with_value('all') }
+        it { is_expected.to contain_postfix__config('inet_protocols').with_value('all') }
         it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
 
         case facts[:osfamily]
