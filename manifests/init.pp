@@ -10,7 +10,7 @@
 #
 # [*configs*]             - (hash)
 #
-# [*amavis_procs*]        - (string) Number of amavis scanners to spawn
+# [*amavis_procs*]        - (integer) Number of amavis scanners to spawn
 #
 # [*inet_interfaces*]     - (string)
 #
