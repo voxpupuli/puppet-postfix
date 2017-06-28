@@ -48,6 +48,32 @@ describe 'postfix::map' do
         end
       end
 
+      context 'when passing both use_concat and content' do
+        let (:params) { {
+          :content    => 'bar',
+          :use_concat => true
+        } }
+
+        it 'should fail' do
+          expect {
+            is_expected.to contain_file('postfix map foo')
+          }.to raise_error(Puppet::Error, /You cannot use concat as well as 'source' or 'content'/)
+        end
+      end
+
+      context 'when passing both use_concat and source' do
+        let (:params) { {
+          :source     => '/tmp/bar',
+          :use_concat => true
+        } }
+
+        it 'should fail' do
+          expect {
+            is_expected.to contain_file('postfix map foo')
+          }.to raise_error(Puppet::Error, /You cannot use concat as well as 'source' or 'content'/)
+        end
+      end
+
       context 'when passing source' do
         let (:params) { {
           :source  => '/tmp/bar',
@@ -71,6 +97,18 @@ describe 'postfix::map' do
           :ensure  => 'present',
           :content => 'bar'
         ).without(:source)
+        }
+        it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
+        it { is_expected.to contain_exec('generate foo.db') }
+      end
+
+      context 'when passing use_concat' do
+        let (:params) { {
+          :use_concat => true
+        } }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with(
+          :ensure  => 'present'
+        )
         }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }

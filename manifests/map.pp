@@ -31,6 +31,7 @@ define postfix::map (
   Enum['present', 'absent']             $ensure = 'present',
   Variant[Array[String], String, Undef] $source = undef,
   Variant[Array[String], String, Undef] $content = undef,
+  Boolean                               $use_concat = false,
   String                                $type = 'hash',
   Stdlib::Absolutepath                  $path = "/etc/postfix/${name}",
   String[4,4]                           $mode = '0640'
@@ -44,6 +45,9 @@ define postfix::map (
   if $source and $content {
     fail 'You must provide either \'source\' or \'content\', not both'
   }
+  if $use_concat and ($source or $content) {
+    fail 'You cannot use concat as well as \'source\' or \'content\''
+  }
 
   # CIDR and PCRE maps need a postfix reload, but not a postmap
   if $type =~ /^(cidr|pcre)$/ {
@@ -56,16 +60,30 @@ define postfix::map (
     }
   }
 
-  file { "postfix map ${name}":
-    ensure  => $ensure,
-    path    => $path,
-    source  => $source,
-    content => $content,
-    owner   => 'root',
-    group   => 'postfix',
-    mode    => $mode,
-    require => Package['postfix'],
-    notify  => $manage_notify,
+  if $use_concat {
+    concat { $path:
+      ensure  => $ensure,
+      warn    => true,
+      owner   => 'root',
+      group   => 'postfix',
+      mode    => $mode,
+      require => Package['postfix'],
+      notify  => $manage_notify,
+    }
+    $db_require = Concat[$path]
+  } else {
+    file { "postfix map ${name}":
+      ensure  => $ensure,
+      path    => $path,
+      source  => $source,
+      content => $content,
+      owner   => 'root',
+      group   => 'postfix',
+      mode    => $mode,
+      require => Package['postfix'],
+      notify  => $manage_notify,
+    }
+    $db_require = File["postfix map ${name}"]
   }
 
   if $type !~ /^(cidr|pcre)$/ {
@@ -75,7 +93,7 @@ define postfix::map (
       owner   => 'root',
       group   => 'postfix',
       mode    => $mode,
-      require => File["postfix map ${name}"],
+      require => $db_require,
       notify  => $manage_notify,
     }
   }

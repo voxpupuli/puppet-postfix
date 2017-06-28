@@ -2,6 +2,7 @@ fixtures:
   repositories:
     "augeas": "https://github.com/camptocamp/puppet-augeas.git"
     "stdlib": "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+    "concat": "https://github.com/puppetlabs/puppetlabs-concat.git"
     "alternatives": "https://github.com/voxpupuli/puppet-alternatives.git"
   symlinks:
     "postfix": "#{source_dir}"
