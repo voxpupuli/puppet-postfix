@@ -91,7 +91,7 @@
 class postfix (
   String                          $alias_maps          = 'hash:/etc/aliases',
   Optional[Hash]                  $configs             = {},
-  String                          $amavis_procs        = '2',
+  Integer                         $amavis_procs        = '2',
   String                          $inet_interfaces     = 'all',
   String                          $inet_protocols      = 'all',
   Boolean                         $ldap                = false,
