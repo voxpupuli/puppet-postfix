@@ -10,6 +10,8 @@
 #
 # [*configs*]             - (hash)
 #
+# [*amavis_procs*]        - (string) Number of amavis scanners to spawn
+#
 # [*inet_interfaces*]     - (string)
 #
 # [*inet_protocols*]      - (string)
@@ -89,6 +91,7 @@
 class postfix (
   String                          $alias_maps          = 'hash:/etc/aliases',
   Optional[Hash]                  $configs             = {},
+  String                          $amavis_procs        = '2',
   String                          $inet_interfaces     = 'all',
   String                          $inet_protocols      = 'all',
   Boolean                         $ldap                = false,
