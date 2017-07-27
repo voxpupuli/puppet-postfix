@@ -12,6 +12,7 @@ class postfix::files {
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
   $myorigin            = $postfix::myorigin
+  $mynetworks          = $postfix::mynetworks
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
   $smtp_listen         = $postfix::_smtp_listen
@@ -87,6 +88,7 @@ class postfix::files {
     'inet_interfaces':  value => $inet_interfaces;
     'inet_protocols':   value => $inet_protocols;
     'myorigin':         value => $myorigin;
+    'mynetworks':       value => $mynetworks;
   }
 
   case $::osfamily {
