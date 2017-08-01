@@ -23,7 +23,7 @@ class postfix::params {
       $restart_cmd = '/etc/init.d/postfix reload'
 
       $mailx_package = $::lsbdistcodename ? {
-        /sarge|etch|lenny/ => 'mailx',
+        /^(sarge|etch|lenny)$/ => 'mailx',
         default            => 'bsd-mailx',
       }
 
