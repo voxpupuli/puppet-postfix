@@ -1,16 +1,15 @@
 HOSTS:
-  ubuntu-1604-x64:
+  debian-9-x64:
     default_apply_opts:
       order: random
       strict_variables:
-    platform: ubuntu-16.04-amd64
+    platform: debian-9-amd64
     hypervisor : docker
-    image: ubuntu:16.04
+    image: debian:9
     docker_preserve_image: true
     docker_cmd: '["/sbin/init"]'
     docker_image_commands:
-      - 'apt-get install -y net-tools wget locales'
-      - 'locale-gen en_US.UTF-8'
+      - 'apt-get install -y cron locales-all net-tools systemd-sysv wget'
 CONFIG:
   type: aio
   log_level: debug
