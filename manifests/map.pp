@@ -47,7 +47,11 @@ define postfix::map (
   if $type =~ /^(cidr|pcre)$/ {
     $manage_notify = Service['postfix']
   } else {
-    $manage_notify = Exec["generate ${name}.db"]
+    if $ensure == 'present' {
+      $manage_notify = Exec["generate ${name}.db"]
+    } else {
+      $manage_notify = undef
+    }
   }
 
   file { "postfix map ${name}":
