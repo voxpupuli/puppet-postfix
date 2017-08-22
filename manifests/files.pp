@@ -8,6 +8,7 @@ class postfix::files {
   $manage_conffiles    = $postfix::manage_conffiles
   $maincf_source       = $postfix::maincf_source
   $mastercf_source     = $postfix::mastercf_source
+  $mastercf_content    = $postfix::mastercf_content
   $master_smtp         = $postfix::master_smtp
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
@@ -51,14 +52,15 @@ class postfix::files {
     subscribe   => File['/etc/aliases'],
   }
 
-  # Config files
+  # Config files - mastercf_source wins over mastercf_content
   if $mastercf_source {
     $mastercf_content = undef
-  } else {
-    $mastercf_content = template(
-        $postfix::params::master_os_template,
-        'postfix/master.cf.common.erb'
-      )
+  }
+  unless $mastercf_content {                      # if mastercf_content is not provided from outside of the modulle we use our templates
+      $mastercf_content = template(
+          $postfix::params::master_os_template,
+          'postfix/master.cf.common.erb'
+        )
   }
 
   file { '/etc/postfix/master.cf':
