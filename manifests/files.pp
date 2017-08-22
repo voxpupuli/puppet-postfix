@@ -55,13 +55,12 @@ class postfix::files {
   # Config files - mastercf_source wins over mastercf_content
   if $mastercf_source {
     $mastercf_content = undef
-  } else {
-    if not $mastercf_content {                      # if mastercf_content is not provided from outside of the modulle we use our templates
+  }
+  unless $mastercf_content {                      # if mastercf_content is not provided from outside of the modulle we use our templates
       $mastercf_content = template(
           $postfix::params::master_os_template,
           'postfix/master.cf.common.erb'
         )
-     }
   }
 
   file { '/etc/postfix/master.cf':
