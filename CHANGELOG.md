@@ -1,3 +1,12 @@
+## 2017-08-25 - Release 1.6.0
+
+- Fix package name resolution for Debian stretch (GH #179)
+- Do not generate postmap when postfix::map ensure is absent (GH #178)
+- Add inet_protocol param. (GH #172)
+- Create master.cf.SLES11.4.erb (GH #156)
+- Allow mydestination to be blank (GH #162)
+- Fix hash.pp doc (GH #159)
+
 ## 2016-11-17 - Release 1.5.0
 
 - Fix params validation + specs (GH #154)
