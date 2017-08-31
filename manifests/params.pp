@@ -31,8 +31,8 @@ class postfix::params {
       $restart_cmd = '/etc/init.d/postfix reload'
 
       $mailx_package = $::lsbdistcodename ? {
-        /sarge|etch|lenny/ => 'mailx',
-        default            => 'bsd-mailx',
+        /^(sarge|etch|lenny)$/ => 'mailx',
+        default                => 'bsd-mailx',
       }
 
       $master_os_template = "${module_name}/master.cf.debian.erb"

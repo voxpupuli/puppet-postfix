@@ -3,6 +3,7 @@ class postfix::files {
 
   $alias_maps          = $postfix::all_alias_maps
   $inet_interfaces     = $postfix::inet_interfaces
+  $inet_protocols      = $postfix::inet_protocols
   $mail_user           = $postfix::mail_user
   $manage_conffiles    = $postfix::manage_conffiles
   $maincf_source       = $postfix::maincf_source
@@ -91,6 +92,7 @@ class postfix::files {
   ::postfix::config {
     'alias_maps':       value => $alias_maps;
     'inet_interfaces':  value => $inet_interfaces;
+    'inet_protocols':   value => $inet_protocols;
     'myorigin':         value => $myorigin;
   }
 
