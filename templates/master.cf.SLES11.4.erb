@@ -12,7 +12,7 @@
 <% if @smtp_listen == 'all' -%>
 smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 <% else -%>
-<%= @smtp_listen %>:smtp      inet  <%= @jail %>       -       n       -       -       smtpd
+<%= @smtp_listen %>:smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 <% end -%>
 #submission inet n      -       n       -       -       smtpd
 #       -o smtpd_etrn_restrictions=reject
