@@ -108,6 +108,8 @@ class postfix (
   Boolean                         $use_sympa           = false,         # postfix_use_sympa
   String                          $postfix_ensure      = 'present',
   String                          $mailx_ensure        = 'present',
+  String                          $service_ensure      = 'running',
+  Boolean                         $service_enabled     =  true,
 ) inherits postfix::params {
 
   $_smtp_listen = $mailman ? {
