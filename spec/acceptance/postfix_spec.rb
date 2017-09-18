@@ -21,7 +21,9 @@ describe 'postfix class' do
           }
         }
 
-        class { 'postfix': }
+        class { 'postfix':
+          smtp_listen => 'all',
+        }
       EOS
 
       # Run it twice and test for idempotency

@@ -14,6 +14,7 @@ class postfix::files {
   $myorigin            = $postfix::myorigin
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
+  $chroot              = $postfix::chroot
   $smtp_listen         = $postfix::_smtp_listen
   $use_amavisd         = $postfix::use_amavisd
   $use_dovecot_lda     = $postfix::use_dovecot_lda
@@ -23,6 +24,12 @@ class postfix::files {
   assert_type(Optional[String], $mastercf_source)
   assert_type(Optional[String], $master_smtp)
   assert_type(Optional[String], $master_smtps)
+
+  $jail = $chroot ? {
+    undef   => '-',
+    true    => 'y',
+    default => 'n',
+  }
 
   File {
     replace => $manage_conffiles,
@@ -56,9 +63,9 @@ class postfix::files {
     $mastercf_content = undef
   } else {
     $mastercf_content = template(
-        $postfix::params::master_os_template,
-        'postfix/master.cf.common.erb'
-      )
+      $postfix::params::master_os_template,
+      'postfix/master.cf.common.erb'
+    )
   }
 
   file { '/etc/postfix/master.cf':
@@ -89,7 +96,7 @@ class postfix::files {
     'myorigin':         value => $myorigin;
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       ::postfix::config {
         'mailq_path':       value => '/usr/bin/mailq.postfix';

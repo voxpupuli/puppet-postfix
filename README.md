@@ -160,6 +160,11 @@ A string to define the e-mail address to which all mail directed to root should 
 Default: 'nobody'.  
 Example: 'root_catch@example.com'.
 
+##### `chroot`
+A boolean to define if postfix should be run in a chroot jail or not. If not defined, '-' is used (OS dependant)
+Default: Undefined.
+Example: true
+
 ##### `satellite`
 A Boolean to define whether to configure postfix as a satellite relay host.  This setting is mutually exclusive with the mta Boolean.  
 Default: False.
