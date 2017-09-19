@@ -63,10 +63,14 @@ define postfix::virtual (
     incl    => $file,
     lens    => 'Postfix_Virtual.lns',
     changes => $changes,
-    require => [
-      Package['postfix'],
-      Augeas::Lens['postfix_virtual'],
-      ],
-    notify  => Postfix::Hash[$file],
+    require => Augeas::Lens['postfix_virtual'],
+  }
+
+  if defined(Package['postfix']) {
+    Package['postfix'] -> Postfix::Virtual[$title]
+  }
+
+  if defined(Postfix::Hash[$file]) {
+    Postfix::Virtual[$title] ~> Postfix::Hash[$file]
   }
 }
