@@ -76,10 +76,14 @@ define postfix::transport (
     lens    => 'Postfix_Transport.lns',
     incl    => $file,
     changes => $changes,
-    require => [
-      Package['postfix'],
-      Augeas::Lens['postfix_transport'],
-      ],
-    notify  => Postfix::Hash['/etc/postfix/transport'],
+    require => Augeas::Lens['postfix_transport'],
+  }
+
+  if defined(Package['postfix']) {
+    Package['postfix'] -> Postfix::Transport[$title]
+  }
+
+  if defined(Postfix::Hash['/etc/postfix/transport']) {
+    Postfix::Transport[$title] ~> Postfix::Hash['/etc/postfix/transport']
   }
 }

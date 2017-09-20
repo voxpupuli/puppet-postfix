@@ -40,7 +40,7 @@ describe 'postfix::hash' do
         it 'should fail' do
           expect {
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, /got 'foo'/)
+          }.to raise_error(Puppet::Error, /, got /)
         end
       end
 

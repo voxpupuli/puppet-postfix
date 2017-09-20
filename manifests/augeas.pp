@@ -14,7 +14,7 @@ class postfix::augeas {
     ensure       => present,
     lens_content => file("${module_path}/files/lenses/postfix_virtual.aug"),
     test_content => file("${module_path}/files/lenses/test_postfix_virtual.aug"),
-    stock_since  => '1.0.0',
+    stock_since  => '1.7.0',
   }
   augeas::lens {'postfix_canonical':
     ensure       => present,
