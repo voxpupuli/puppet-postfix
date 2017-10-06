@@ -94,7 +94,7 @@ class postfix (
   Optional[String]                $master_submission   = undef,         # postfix_master_submission
   Boolean                         $mta                 = false,
   String                          $mydestination       = '$myorigin',   # postfix_mydestination
-  String                          $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
+  Variant[Array[String], String]  $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String                          $myorigin            = $::fqdn,
   Optional[String]                $relayhost           = undef,         # postfix_relayhost
   Boolean                         $manage_root_alias   = true,

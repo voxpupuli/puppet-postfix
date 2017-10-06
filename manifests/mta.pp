@@ -27,9 +27,19 @@
 #
 class postfix::mta (
   Pattern[/^\S+(?:,\s*\S+)*$/]               $mydestination = $postfix::mydestination,
-  Pattern[/^(?:\S+?(?:(?:,\s)|(?:\s))?)*$/]  $mynetworks    = $postfix::mynetworks,
+  Variant[Array[String], String]             $mynetworks    = $postfix::mynetworks,
   Pattern[/^\S+$/]                           $relayhost     = $postfix::relayhost,
 ) {
+
+  if (type($mynetworks) =~ Type[Array[String]]) {
+    $_mynetworks = join($mynetworks,',')
+  } else {
+    $_mynetworks = $mynetworks
+  }
+
+  if $_mynetworks !~ /^(?:\S+?(?:(?:,\s)|(?:\s))?)*$/ {
+    fail '$mynetworks don\'t match the pattern /^(?:\S+?(?:(?:,\s)|(?:\s))?)*$/'
+  }
 
   # If direct is specified then relayhost should be blank
   if ($relayhost == 'direct') {
@@ -46,7 +56,7 @@ class postfix::mta (
   }
 
   postfix::config {
-    'mynetworks':          value => $mynetworks;
+    'mynetworks':          value => $_mynetworks;
     'virtual_alias_maps':  value => 'hash:/etc/postfix/virtual';
     'transport_maps':      value => 'hash:/etc/postfix/transport';
   }

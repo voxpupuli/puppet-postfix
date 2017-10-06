@@ -141,7 +141,7 @@ Default: The systems FQDN.
 Example: 'example.com, foo.example.com'.
 
 ##### `mynetworks`
-A string to define the mynetworks parameter that holds trusted remote smtp clients (postconf(5)).  
+A string or array of strings to define the mynetworks parameter that holds trusted remote smtp clients (postconf(5)).  
 Default: '127.0.0.0/8'.  
 Example: '127.0.0.0/8, [::1]/128'.  
 
