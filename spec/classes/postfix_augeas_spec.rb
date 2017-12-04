@@ -27,7 +27,7 @@ describe 'postfix::augeas' do
         :ensure       => 'present',
         :lens_content => %r{Parses /etc/postfix/virtual},
         :test_content => %r{Provides unit tests and examples for the <Postfix_Virtual> lens.},
-        :stock_since  => '1.0.0',
+        :stock_since  => '1.7.0',
       }) }
     end
   end
