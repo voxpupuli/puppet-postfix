@@ -6,6 +6,7 @@
 - Create master.cf.SLES11.4.erb (GH #156)
 - Allow mydestination to be blank (GH #162)
 - Fix hash.pp doc (GH #159)
+- Testing only; please ignore.
 
 ## 2016-11-17 - Release 1.5.0
 
