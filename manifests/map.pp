@@ -9,6 +9,7 @@
 # [*name*]   - the name of the map file.
 # [*ensure*] - present/absent, defaults to present.
 # [*source*] - file source.
+# [*mode*]   - the file permissions of the file. Defaults to 0640
 # [*type*]   - type of the postfix map (valid values are cidr, pcre, hash...)
 # [*path*]   - path of the created file. By default it is placed in the
 #              postfix directory
@@ -31,6 +32,7 @@ define postfix::map (
   Variant[Array[String], String, Undef] $source = undef,
   Variant[Array[String], String, Undef] $content = undef,
   String                                $type = 'hash',
+  String                                $mode = '0640',
   Stdlib::Absolutepath                  $path = "/etc/postfix/${name}",
 ) {
   include ::postfix::params
@@ -61,7 +63,7 @@ define postfix::map (
     content => $content,
     owner   => 'root',
     group   => 'postfix',
-    mode    => '0644',
+    mode    => $mode,
     require => Package['postfix'],
     notify  => $manage_notify,
   }
@@ -72,7 +74,7 @@ define postfix::map (
       path    => "${path}.db",
       owner   => 'root',
       group   => 'postfix',
-      mode    => '0644',
+      mode    => $mode,
       require => [File["postfix map ${name}"], Exec["generate ${name}.db"]],
     }
   }
