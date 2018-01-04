@@ -214,7 +214,7 @@ describe 'postfix' do
               end
             end
           end
-          context 'when specifying mydesitination' do
+          context 'when specifying mydestination' do
             it 'should do stuff' do
               skip 'need to write this still'
             end
