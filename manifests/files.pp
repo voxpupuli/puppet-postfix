@@ -39,7 +39,7 @@ class postfix::files {
   file { '/etc/mailname':
     ensure  => 'file',
     content => "${::fqdn}\n",
-    mode    => '0644',
+    mode    => '0640',
     seltype => $postfix::params::seltype,
   }
 
@@ -73,7 +73,7 @@ class postfix::files {
     ensure  => 'file',
     content => $mastercf_content,
     group   => 'root',
-    mode    => '0644',
+    mode    => '0640',
     owner   => 'root',
     seltype => $postfix::params::seltype,
     source  => $mastercf_source,
@@ -83,7 +83,7 @@ class postfix::files {
   file { '/etc/postfix/main.cf':
     ensure  => 'file',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0640',
     owner   => 'root',
     replace => false,
     seltype => $postfix::params::seltype,

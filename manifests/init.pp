@@ -129,7 +129,7 @@ class postfix (
   -> class { '::postfix::packages': }
   -> class { '::postfix::files': }
   ~> class { '::postfix::service': }
-  -> anchor { 'posfix::end': }
+  -> anchor { 'postfix::end': }
 
   if $ldap {
     include ::postfix::ldap

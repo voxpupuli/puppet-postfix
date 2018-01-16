@@ -21,7 +21,7 @@
 #
 # [*mode*]
 #   The file permissions of the file.
-#   Defaults to 0644
+#   Defaults to 0640
 #
 # [*options*]
 #   Hash with options to use in the template
@@ -48,7 +48,7 @@ define postfix::conffile (
   Variant[Array[String], String, Undef]  $source   = undef,
   Optional[String]                       $content  = undef,
   Stdlib::Absolutepath                   $path     = "/etc/postfix/${name}",
-  String                                 $mode     = '0644',
+  String                                 $mode     = '0640',
   Hash                                   $options  = {},
 ) {
   include ::postfix::params
