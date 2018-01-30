@@ -83,7 +83,7 @@ class postfix::files {
   file { '/etc/postfix/main.cf':
     ensure  => 'file',
     group   => 'root',
-    mode    => '0640',
+    mode    => '0644',
     owner   => 'root',
     replace => false,
     seltype => $postfix::params::seltype,
