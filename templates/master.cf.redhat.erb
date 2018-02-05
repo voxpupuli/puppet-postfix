@@ -49,6 +49,7 @@ relay     unix  -       -       <%= @jail %>       -       -       smtp
 #       -o smtp_helo_timeout=5 -o smtp_connect_timeout=5
 showq     unix  n       -       <%= @jail %>       -       -       showq
 error     unix  -       -       <%= @jail %>       -       -       error
+retry     unix  -       -       <%= @jail %>       -       -       error
 discard   unix  -       -       <%= @jail %>       -       -       discard
 local     unix  -       n       n       -       -       local
 virtual   unix  -       n       n       -       -       virtual
