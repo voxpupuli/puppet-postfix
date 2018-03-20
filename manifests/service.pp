@@ -11,6 +11,13 @@ class postfix::service {
     hasstatus => true,
     restart   => $::postfix::params::restart_cmd,
   }
+  # Aliases
+  exec { 'newaliases':
+    command     => '/usr/bin/newaliases',
+    refreshonly => true,
+    subscribe   => File['/etc/aliases'],
+    require     => Service['postfix'],
+  }
   if $::osfamily == 'RedHat' {
     alternatives { 'mta':
       path    => '/usr/sbin/sendmail.postfix',

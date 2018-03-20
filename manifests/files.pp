@@ -52,13 +52,6 @@ class postfix::files {
     seltype => $postfix::params::aliasesseltype,
   }
 
-  # Aliases
-  exec { 'newaliases':
-    command     => '/usr/bin/newaliases',
-    refreshonly => true,
-    subscribe   => File['/etc/aliases'],
-  }
-
   # Config files
   if $mastercf_source {
     $mastercf_content = undef
