@@ -40,6 +40,7 @@ class postfix::params {
 
     'Suse': {
       $seltype = undef
+      $aliasesseltype = undef
 
       $mailx_package = 'mailx'
 
