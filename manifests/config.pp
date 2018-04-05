@@ -34,7 +34,7 @@ define postfix::config (
 
   if ($ensure == 'present') {
     assert_type(Pattern[/^.+$/], $value) |$e, $a| {
-      fail '$value can not be empty if ensure = present'
+      fail "value for parameter: ${title} can not be empty if ensure = present"
     }
   }
 
