@@ -91,8 +91,6 @@ class postfix::files {
   }
 
   ::postfix::config {
-    'alias_maps':       value => $alias_maps;
-    'inet_interfaces':  value => $inet_interfaces;
     'inet_protocols':   value => $inet_protocols;
     'myorigin':         value => $myorigin;
   }
