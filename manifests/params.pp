@@ -53,7 +53,21 @@ class postfix::params {
     }
 
     default: {
-      fail "Unsupported OS family '${::osfamily}'"
+      case $::operatingsystem {
+        'Alpine': {
+            $aliasesseltype = undef
+            $seltype = undef
+
+            $restart_cmd = '/etc/init.d/postfix reload'
+
+            $mailx_package = 'mailx'
+
+            $master_os_template = "${module_name}/master.cf.debian.erb"
+        }
+        default: {
+          fail "Unsupported OS family '${::osfamily}' and OS '${::operatingsystem}'"
+        }
+      }
     }
   }
 }
