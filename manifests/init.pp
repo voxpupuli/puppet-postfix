@@ -32,6 +32,8 @@
 #
 # [*mastercf_source*]     - (string)
 #
+# [*mastercf_content*]    - (string)
+#
 # [*master_smtp*]         - (string)
 #
 # [*master_smtps*]        - (string)
@@ -91,6 +93,7 @@ class postfix (
   Boolean                         $manage_conffiles    = true,
   Boolean                         $manage_mailx        = true,
   Optional[String]                $mastercf_source     = undef,
+  Optional[String]                $mastercf_content    = undef,
   Optional[String]                $master_smtp         = undef,         # postfix_master_smtp
   Optional[String]                $master_smtps        = undef,         # postfix_master_smtps
   Optional[String]                $master_submission   = undef,         # postfix_master_submission
@@ -114,6 +117,10 @@ class postfix (
   String                          $service_ensure      = 'running',
   Boolean                         $service_enabled     =  true,
 ) inherits postfix::params {
+
+  if ($mastercf_source and $mastercf_content) {
+    fail('mastercf_source and mastercf_content are mutually exclusive')
+  }
 
   $_smtp_listen = $mailman ? {
     true    => '0.0.0.0',
