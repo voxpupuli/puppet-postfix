@@ -121,14 +121,11 @@ class postfix (
   Boolean                         $service_enabled     =  true,
 ) inherits postfix::params {
 
-  if (
-    ($mastercf_source and $mastercf_content) or
+  if (($mastercf_source and $mastercf_content) or
     ($mastercf_source and $mastercf_template) or
     ($mastercf_content and $mastercf_template) or
-    ($mastercf_source and $mastercf_content and $mastercf_template)
-  ) {
-      fail('mastercf_source, mastercf_content and mastercf_template are mutually exclusive')
-    }
+    ($mastercf_source and $mastercf_content and $mastercf_template)){
+    fail('mastercf_source, mastercf_content and mastercf_template are mutually exclusive')
   }
 
   $_smtp_listen = $mailman ? {
