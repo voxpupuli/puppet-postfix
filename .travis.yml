@@ -21,14 +21,18 @@ matrix:
     sudo: required
     dist: trusty
     services: docker
-    env: BEAKER_set="debian-6"
+    env:
+      - BEAKER_set="debian-6"
+      - DEBIAN_FRONTEND=noninteractive
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
     dist: trusty
     services: docker
-    env: BEAKER_set="debian-7"
+    env:
+      - BEAKER_set="debian-7"
+      - DEBIAN_FRONTEND=noninteractive
     bundler_args:
     script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
