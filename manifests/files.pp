@@ -9,6 +9,7 @@ class postfix::files {
   $maincf_source       = $postfix::maincf_source
   $mastercf_source     = $postfix::mastercf_source
   $mastercf_content    = $postfix::mastercf_content
+  $mastercf_template   = $postfix::mastercf_template
   $master_smtp         = $postfix::master_smtp
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
@@ -58,6 +59,8 @@ class postfix::files {
     $_mastercf_content = undef
   } elsif $mastercf_content {
     $_mastercf_content = $mastercf_content
+  } elsif $mastercf_template {
+    $_mastercf_content = epp($mastercf_template)
   } else {
     $_mastercf_content = template(
       $postfix::params::master_os_template,

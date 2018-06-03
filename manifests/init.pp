@@ -34,6 +34,8 @@
 #
 # [*mastercf_content*]    - (string)
 #
+# [*mastercf_template*]   - (string)
+#
 # [*master_smtp*]         - (string)
 #
 # [*master_smtps*]        - (string)
@@ -94,6 +96,7 @@ class postfix (
   Boolean                         $manage_mailx        = true,
   Optional[String]                $mastercf_source     = undef,
   Optional[String]                $mastercf_content    = undef,
+  Optional[String]                $mastercf_template   = undef,
   Optional[String]                $master_smtp         = undef,         # postfix_master_smtp
   Optional[String]                $master_smtps        = undef,         # postfix_master_smtps
   Optional[String]                $master_submission   = undef,         # postfix_master_submission
@@ -118,8 +121,14 @@ class postfix (
   Boolean                         $service_enabled     =  true,
 ) inherits postfix::params {
 
-  if ($mastercf_source and $mastercf_content) {
-    fail('mastercf_source and mastercf_content are mutually exclusive')
+  if (
+    ($mastercf_source and $mastercf_content) or
+    ($mastercf_source and $mastercf_template) or
+    ($mastercf_content and $mastercf_template) or
+    ($mastercf_source and $mastercf_content and $mastercf_template)
+  ) {
+      fail('mastercf_source, mastercf_content and mastercf_template are mutually exclusive')
+    }
   }
 
   $_smtp_listen = $mailman ? {

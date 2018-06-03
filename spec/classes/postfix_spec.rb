@@ -185,10 +185,46 @@ describe 'postfix' do
               skip 'need to write this still'
             end
           end
+          context 'when specifying a custom mastercf_template' do
+            let (:params) { {
+              :mastercf_template => 'testy'
+            } }
+            it 'should do stuff' do
+              skip 'need to write this still'
+            end
+          end
           context 'when specifying a custom mastercf_source and mastercf_content' do
             let (:params) { {
               :mastercf_source => 'testy_1' ,
               :mastercf_content => 'testy_2'
+            } }
+            it 'should fail' do
+              expect { should compile }.to raise_error(/mutually exclusive/)
+            end
+          end
+          context 'when specifying a custom mastercf_source and mastercf_template' do
+            let (:params) { {
+              :mastercf_source => 'testy_1' ,
+              :mastercf_template => 'testy_2'
+            } }
+            it 'should fail' do
+              expect { should compile }.to raise_error(/mutually exclusive/)
+            end
+          end
+          context 'when specifying a custom mastercf_content and mastercf_template' do
+            let (:params) { {
+              :mastercf_content => 'testy_1' ,
+              :mastercf_template => 'testy_2'
+            } }
+            it 'should fail' do
+              expect { should compile }.to raise_error(/mutually exclusive/)
+            end
+          end
+          context 'when specifying a mastercf_source and custom mastercf_content and mastercf_template' do
+            let (:params) { {
+              :mastercf_source => 'testy_1' ,
+              :mastercf_content => 'testy_2' ,
+              :mastercf_template => 'testy_3'
             } }
             it 'should fail' do
               expect { should compile }.to raise_error(/mutually exclusive/)
