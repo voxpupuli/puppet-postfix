@@ -51,6 +51,18 @@ class postfix::params {
         $master_os_template = "${module_name}/master.cf.sles.erb"
       }
     }
+    'Solaris': {
+      $seltype = undef
+      $mailx_package = 'mailx'
+      
+      if $::operatingsystemmajrelease == '11' {
+        $restart_cmd = 'svcadm refresh network/smtp:postfix'
+        $master_os_template = "${module_name}/master.cf.${::operatingsystem}${::operatingsystemrelease}.erb"
+      } else {
+        fail("Operating System: ${::osfamily}/${::operatingsystemmajrelease} not supported")
+      }
+    }
+
 
     default: {
       fail "Unsupported OS family '${::osfamily}'"
