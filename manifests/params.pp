@@ -56,7 +56,7 @@ class postfix::params {
       $mailx_package = 'mailx'
       
       if $::operatingsystemmajrelease == '11' {
-        $restart_cmd = 'svcadm refresh network/smtp:postfix'
+        $restart_cmd = '/usr/sbin/svcadm refresh network/smtp:postfix'
         $master_os_template = "${module_name}/master.cf.${::operatingsystem}.erb"
       } else {
         fail("Operating System: ${::osfamily}/${::operatingsystemmajrelease} not supported")
