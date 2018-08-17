@@ -3,7 +3,7 @@
   acceptance:
     - '*'
   forge_password: "XAv4O363tng0KuRnu1ZhhwORy+2CF9UQwdwlFmS+NG9jOaTZZN+PMK8iC7OSIvZN6cfKlYjHRHNuxFBnYlnMrLsM9fVxt4NjjznOgIKQpQDleWk4UitZj5ntyHmUtYtofUd5Bhi/sdYXwGN9pVRCrcfFBmsIRq/dOhXD7Wy5KcQ="
-  allowed_failures:
+  allow_failures:
   # Exim is not properly stopped on these OSes, which makes the run non
   # idempotent
   - rvm: default
