@@ -47,6 +47,9 @@
         "6",
         "7"
       ]
+    },
+    {
+      "operatingsystem": "Alpine"
     }
   ]
 }
