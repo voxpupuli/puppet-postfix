@@ -26,7 +26,7 @@ describe 'postfix::virtual' do
 
       context 'when sending wrong type for destination' do
         let (:params) { {
-          :destination => ['bar'],
+          :destination => true,
         } }
 
         it 'should fail' do
@@ -98,8 +98,9 @@ describe 'postfix::virtual' do
           :incl    => '/etc/postfix/virtual',
           :lens    => 'Postfix_Virtual.lns',
           :changes => [
-            "set pattern[. = 'foo'] 'foo'",
-            "set pattern[. = 'foo']/destination 'bar'",
+            "defnode entry pattern[. = 'foo'] 'foo'",
+            "rm $entry/destination",
+            "set $entry/destination[1] 'bar'",
           ])
         }
       end
@@ -116,8 +117,29 @@ describe 'postfix::virtual' do
           :incl    => '/tmp/virtual',
           :lens    => 'Postfix_Virtual.lns',
           :changes => [
-            "set pattern[. = 'foo'] 'foo'",
-            "set pattern[. = 'foo']/destination 'bar'",
+            "defnode entry pattern[. = 'foo'] 'foo'",
+            "rm $entry/destination",
+            "set $entry/destination[1] 'bar'",
+          ])
+        }
+      end
+
+      context 'when passing destination as array' do
+        let (:params) { {
+          :destination => ['bar', 'baz'],
+          :file        => '/tmp/virtual',
+          :ensure      => 'present',
+        } }
+
+        it { is_expected.to contain_class('postfix::augeas') }
+        it { is_expected.to contain_augeas('Postfix virtual - foo').with(
+          :incl    => '/tmp/virtual',
+          :lens    => 'Postfix_Virtual.lns',
+          :changes => [
+            "defnode entry pattern[. = 'foo'] 'foo'",
+            "rm $entry/destination",
+            "set $entry/destination[1] 'bar'",
+            "set $entry/destination[2] 'baz'",
           ])
         }
       end
