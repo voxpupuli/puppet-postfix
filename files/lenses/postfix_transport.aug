@@ -37,7 +37,7 @@ let transport = [ label "transport" . (store Rx.word)? ]
 let nexthop = [ label "nexthop" . (store Rx.space_in)? ]
 
 (* View: record *)
-let record = [ label "pattern" . store /[A-Za-z0-9@\*.-]+/
+let record = [ label "pattern" . store /[^# \t\r\n]+/
              . space_or_eol . transport
              . colon . nexthop
              . Util.eol ]
