@@ -27,7 +27,6 @@ class postfix::files {
   assert_type(Optional[String], $master_smtps)
 
   $jail = $chroot ? {
-    undef   => '-',
     true    => 'y',
     default => 'n',
   }
