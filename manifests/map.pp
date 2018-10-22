@@ -75,7 +75,8 @@ define postfix::map (
       owner   => 'root',
       group   => 'postfix',
       mode    => $mode,
-      require => [File["postfix map ${name}"], Exec["generate ${name}.db"]],
+      require => File["postfix map ${name}"],
+      notify  => $manage_notify,
     }
   }
 
