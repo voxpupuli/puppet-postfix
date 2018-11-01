@@ -16,20 +16,7 @@ postfix::config { 'relay_domains':
   value   => 'localhost host.foo.com',
 }
 ```
-## Exec paths
 
-In order to not have any path problem, you should add the following line in some globally included .pp file:
-```puppet
-Exec {
-  path => '/some/relevant/path:/some/other:...',
-}
-```
-For example:
-```puppet
-Exec {
-  path => '/bin:/sbin:/usr/sbin:/usr/bin',
-}
-```
 ## Classes
 
 ### postfix
