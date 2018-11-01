@@ -8,16 +8,24 @@
   # idempotent
   - rvm: default
     sudo: required
-    dist: trusty
     services: docker
-    env: BEAKER_set="debian-6"
+    env:
+      - PUPPET_INSTALL_TYPE=agent
+      - BEAKER_IS_PE=no
+      - BEAKER_PUPPET_COLLECTION=puppet5
+      - BEAKER_debug=true
+      - BEAKER_setfile=debian6-64{hypervisor=docker}
     bundler_args:
-    script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
+    script: bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
     sudo: required
-    dist: trusty
     services: docker
-    env: BEAKER_set="debian-7"
+    env:
+      - PUPPET_INSTALL_TYPE=agent
+      - BEAKER_IS_PE=no
+      - BEAKER_PUPPET_COLLECTION=puppet5
+      - BEAKER_debug=true
+      - BEAKER_setfile=debian7-64{hypervisor=docker}
     bundler_args:
-    script: sudo service docker restart ; sleep 10 && bundle exec rspec spec/acceptance/*_spec.rb
+    script: bundle exec rspec spec/acceptance/*_spec.rb
 
