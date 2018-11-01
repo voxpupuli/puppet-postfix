@@ -9,7 +9,7 @@
   "issues_url": "https://github.com/camptocamp/puppet-postfix/issues",
   "description": "Postfix Module for Puppet",
   "requirements": [
-    {"name":"puppet","version_requirement":">= 3.0.0 < 6.0.0" }
+    {"name":"puppet","version_requirement":">= 3.0.0 < 7.0.0" }
   ],
   "dependencies": [
     {
