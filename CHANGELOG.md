@@ -1,3 +1,23 @@
+## 2018-11-01 - Release 1.7.0
+
+- Add chroot parameter (GH #170, #224)
+- Fix resource dependencies (GH #185)
+- Add postfix::service_ensure and postfix::service_enabled parameters (GH #184)
+- Fix email address matching for postfix::virtual augeas lens (GH #177)
+- Add master_entries parameter (GH #171)
+- Add templates for SLES12 SP2 and SP3 (GH #198)
+- Install sendmail alternative on RedHat (GH #199)
+- Move Exec['newaliases'] to services to it could be run after service restart (GH #205)
+- Unbreak sendmail (GH #201)
+- Add retry to RedHat master.cf (GH #215)
+- Support '+' in canonical maps (GH #222, fix #220)
+- Add support for Alpine Linux (GH #213)
+- Support multiple destinations in postfix::virtual (#223, fix #164)
+- Make transport pattern accept regexp (GH #225, fix #92)
+- Ensure that map files are regenerated if removed (GH #228, fix #161)
+- Allow puppetlabs-stdlib < 6.0.0 (GH #229)
+- Modulesync: update testing harness and add Puppet 6
+
 ## 2017-08-25 - Release 1.6.0
 
 - Fix package name resolution for Debian stretch (GH #179)
