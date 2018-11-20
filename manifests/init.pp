@@ -71,6 +71,10 @@
 #
 # [*mailx_ensure*]        - (string) The ensure value of the mailx package
 #
+# [*configs*]             - (hash) Hiera cannot instanciate Puppet defines. Use this hash which will be sent to `postfix::config`. See `postfix::config` for attributes
+#
+# [*configs_hiera_merge*] - (boolean) Whether merge Hiera configs hashes. Defaults to true
+#
 # === Examples
 #
 #   class { 'postfix':
@@ -113,6 +117,8 @@ class postfix (
   String                          $mailx_ensure        = 'present',
   String                          $service_ensure      = 'running',
   Boolean                         $service_enabled     =  true,
+  Hash                            $configs             = {},  # Useful for Hiera
+  Boolean                         $configs_hiera_merge = true,
 ) inherits postfix::params {
 
   $_smtp_listen = $mailman ? {
@@ -152,4 +158,15 @@ class postfix (
   if $mailman {
     include ::postfix::mailman
   }
+
+  if $postfix::configs_hiera_merge == true {
+    $_configs = lookup({ 'name' => 'postfix::configs', 'merge' => 'hash', 'default_value' => $configs })
+  } else {
+    $_configs = $configs
+  }
+
+  if $_configs {
+    create_resources('::postfix::config', $_configs)
+  }
+
 }
