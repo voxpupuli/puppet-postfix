@@ -11,4 +11,12 @@ class postfix::packages {
       name   => $postfix::params::mailx_package,
     }
   }
+
+  if ($postfix::manage_cyrus_sasl_plain) {
+    package { 'cyrus-sasl-plain':
+      ensure => $postfix::cyrus_sasl_plain_ensure,
+      name   => $postfix::params::cyrus_sasl_plain_package,
+    }
+  }
+
 }

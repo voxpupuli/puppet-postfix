@@ -21,6 +21,8 @@ class postfix::params {
 
       $mailx_package = 'mailx'
 
+      $cyrus_sasl_plain_package = 'cyrus-sasl-plain'
+
       $master_os_template = "${module_name}/master.cf.redhat.erb"
     }
 
@@ -35,6 +37,8 @@ class postfix::params {
         default                => 'bsd-mailx',
       }
 
+      $cyrus_sasl_plain_package = undef
+
       $master_os_template = "${module_name}/master.cf.debian.erb"
     }
 
@@ -42,6 +46,8 @@ class postfix::params {
       $seltype = undef
 
       $mailx_package = 'mailx'
+
+      $cyrus_sasl_plain_package = undef
 
       if $::operatingsystemmajrelease == '11' {
         $restart_cmd = '/etc/init.d/postfix reload'
@@ -61,6 +67,8 @@ class postfix::params {
             $restart_cmd = '/etc/init.d/postfix reload'
 
             $mailx_package = 'mailx'
+
+            $cyrus_sasl_plain_package = undef
 
             $master_os_template = "${module_name}/master.cf.debian.erb"
         }

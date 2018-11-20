@@ -30,6 +30,8 @@
 #
 # [*manage_mailx*]        - (boolean) Whether to manage mailx package.
 #
+# [*manage_cyrus_sasl_plain*] - (boolean) Whether to manage cyrus-sasl-plain package.
+#
 # [*mastercf_source*]     - (string)
 #
 # [*master_smtp*]         - (string)
@@ -71,6 +73,8 @@
 #
 # [*mailx_ensure*]        - (string) The ensure value of the mailx package
 #
+# [*cyrus_sasl_plain_ensure*] - (string) The ensure value of the cyrus-sasl-plain package
+#
 # [*configs*]             - (hash) Hiera cannot instanciate Puppet defines. Use this hash which will be sent to `postfix::config`. See `postfix::config` for attributes
 #
 # [*configs_hiera_merge*] - (boolean) Whether merge Hiera configs hashes. Defaults to true
@@ -94,6 +98,7 @@ class postfix (
   String                          $maincf_source       = "puppet:///modules/${module_name}/main.cf",
   Boolean                         $manage_conffiles    = true,
   Boolean                         $manage_mailx        = true,
+  Boolean                         $manage_cyrus_sasl_plain = false,
   Optional[String]                $mastercf_source     = undef,
   Optional[String]                $master_smtp         = undef,         # postfix_master_smtp
   Optional[String]                $master_smtps        = undef,         # postfix_master_smtps
@@ -116,6 +121,7 @@ class postfix (
   Boolean                         $use_sympa           = false,         # postfix_use_sympa
   String                          $postfix_ensure      = 'present',
   String                          $mailx_ensure        = 'present',
+  String                          $cyrus_sasl_plain_ensure = 'present',
   String                          $service_ensure      = 'running',
   Boolean                         $service_enabled     =  true,
   Hash                            $configs             = {},  # Useful for Hiera
