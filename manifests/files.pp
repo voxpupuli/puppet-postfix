@@ -13,6 +13,7 @@ class postfix::files {
   $master_submission   = $postfix::master_submission
   $master_entries      = $postfix::master_entries
   $myorigin            = $postfix::myorigin
+  $manage_aliases      = $postfix::manage_aliases
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
   $chroot              = $postfix::chroot
@@ -43,12 +44,14 @@ class postfix::files {
   }
 
   # Aliases
-  file { '/etc/aliases':
-    ensure  => 'file',
-    content => "# file managed by puppet\n",
-    notify  => Exec['newaliases'],
-    replace => false,
-    seltype => $postfix::params::aliasesseltype,
+  if $manage_aliases {
+    file { '/etc/aliases':
+      ensure  => 'file',
+      content => "# file managed by puppet\n",
+      notify  => Exec['newaliases'],
+      replace => false,
+      seltype => $postfix::params::aliasesseltype,
+    }
   }
 
   # Config files

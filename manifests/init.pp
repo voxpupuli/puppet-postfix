@@ -104,6 +104,7 @@ class postfix (
   String                          $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String                          $myorigin            = $::fqdn,
   Optional[String]                $relayhost           = undef,         # postfix_relayhost
+  Boolean                         $manage_aliases      = true,
   Boolean                         $manage_root_alias   = true,
   Variant[Array[String], String]  $root_mail_recipient = 'nobody',      # root_mail_recipient
   Optional[Boolean]               $chroot              = undef,
