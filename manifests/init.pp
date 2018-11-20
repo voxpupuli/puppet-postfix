@@ -79,6 +79,10 @@
 #
 # [*configs_hiera_merge*] - (boolean) Whether merge Hiera configs hashes. Defaults to true
 #
+# [*hashs*]             - (hash) Hiera cannot instanciate Puppet defines. Use this hash which will be sent to `postfix::config`. See `postfix::config` for attributes
+#
+# [*hashs_hiera_merge*] - (boolean) Whether merge Hiera hashs hashes. Defaults to true
+#
 # === Examples
 #
 #   class { 'postfix':
@@ -126,6 +130,8 @@ class postfix (
   Boolean                         $service_enabled     =  true,
   Hash                            $configs             = {},  # Useful for Hiera
   Boolean                         $configs_hiera_merge = true,
+  Hash                            $hashs               = {},  # Useful for Hiera
+  Boolean                         $hashs_hiera_merge   = true,
 ) inherits postfix::params {
 
   $_smtp_listen = $mailman ? {
@@ -166,6 +172,23 @@ class postfix (
     include ::postfix::mailman
   }
 
+  include postfix::configs_
+  include postfix::hashs_
+  Class['postfix::files'] -> Class['postfix::configs_']
+  Class['postfix::files'] -> Class['postfix::hashs_']
+
+}  # class postfix
+
+
+###################################################
+##
+##  Please do not include the below classes directly in the nodes
+##
+###################################################
+
+
+class postfix::configs_ {
+
   if $postfix::configs_hiera_merge == true {
     $_configs = lookup({ 'name' => 'postfix::configs', 'merge' => 'hash', 'default_value' => $configs })
   } else {
@@ -176,4 +199,22 @@ class postfix (
     create_resources('::postfix::config', $_configs)
   }
 
-}
+}  # class postfix::configs_
+
+
+###################################################
+
+
+class postfix::hashs_ {
+
+  if $postfix::hashs_hiera_merge == true {
+    $_hashs = lookup({ 'name' => 'postfix::hashs', 'merge' => 'hash', 'default_value' => $hashs })
+  } else {
+    $_hashs = $hashs
+  }
+
+  if $_hashs {
+    create_resources('::postfix::hash', $_hashs)
+  }
+
+}  # class postfix::hashs_
