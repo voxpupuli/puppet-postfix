@@ -28,8 +28,9 @@ define postfix::mailalias (
   Variant[String, Array[String]] $recipient,
   Enum['present', 'absent']      $ensure='present',
 ) {
-  mailalias { $name:
+  mailalias { $title:
     ensure    => $ensure,
+    name      => $name,
     recipient => $recipient,
     notify    => Exec['newaliases'],
   }
