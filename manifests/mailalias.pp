@@ -1,32 +1,36 @@
+# == Definition: postfix::mailalias
 #
-#== Definition: postfix::mailalias
+# Creates an email alias in the local alias database and updates the binary
+# version of said database.
 #
-#Wrapper around Puppet mailalias resource, provides newaliases executable.
+# === Parameters
 #
-#Parameters:
-#- *name*: the name of the alias.
-#- *ensure*: present/absent, defaults to present.
-#- *recipient*: recipient of the alias.
+# [*name*]      - the alias name. See aliases(5).
+# [*ensure*]    - present/absent, defaults to present.
+# [*recipient*] - where email should be sent.
 #
-#Requires:
-#- Class["postfix"]
+# === Requires
 #
-#Example usage:
+# - Class["postfix"]
 #
-#  node "toto.example.com" {
+# === Examples
 #
-#    include postfix
+#   node "toto.example.com" {
 #
-#    postfix::mailalias { "postmaster":
-#      ensure    => present,
-#      recipient => 'foo'
-#  }
+#     include postfix
 #
-#*/
-define postfix::mailalias ($recipient, $ensure = 'present') {
-    mailalias { $name:
-        ensure    => $ensure,
-        recipient => $recipient,
-        notify    => Exec['newaliases'],
-    }
+#     postfix::mailalias { 'postmaster':
+#       ensure    => present,
+#       recipient => 'foo',
+#     }
+#
+define postfix::mailalias (
+  Variant[String, Array[String]] $recipient,
+  Enum['present', 'absent']      $ensure='present',
+) {
+  mailalias { $name:
+    ensure    => $ensure,
+    recipient => $recipient,
+    notify    => Exec['newaliases'],
+  }
 }
