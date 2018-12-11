@@ -101,9 +101,8 @@ class postfix::files {
   }
 
   if $manage_root_alias {
-    mailalias {'root':
+    postfix::mailalias {'root':
       recipient => $root_mail_recipient,
-      notify    => Exec['newaliases'],
     }
   }
 
