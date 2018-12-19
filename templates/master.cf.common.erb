@@ -23,7 +23,7 @@ dovecot   unix  -       n       n       -       -       pipe
 <% end -%>
 <% if @use_schleuder %>
 schleuder  unix  -       n       n       -       -       pipe
-  flags=DRhu user=schleuder argv=/usr/bin/schleuder ${user}
+  flags=DRhu user=schleuder argv=/usr/bin/schleuder work ${recipient}
 <% end -%>
 <% if @use_sympa %>
 sympa        unix  -       n       n       -       -       pipe
