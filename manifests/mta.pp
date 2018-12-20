@@ -26,9 +26,9 @@
 #   }
 #
 class postfix::mta (
-  Pattern[/^\S+(?:,\s*\S+)*$/]               $mydestination = $postfix::mydestination,
-  Pattern[/^(?:\S+?(?:(?:,\s)|(?:\s))?)*$/]  $mynetworks    = $postfix::mynetworks,
-  Pattern[/^\S+$/]                           $relayhost     = $postfix::relayhost,
+  Pattern[/^\S+(?:,\s*\S+)*$/]                 $mydestination = $postfix::mydestination,
+  Pattern[/^(?:\S+?(?:(?:,\s+)|(?:\s+))?)*$/]  $mynetworks    = $postfix::mynetworks,
+  Pattern[/^\S+$/]                             $relayhost     = $postfix::relayhost,
 ) {
 
   # If direct is specified then relayhost should be blank
