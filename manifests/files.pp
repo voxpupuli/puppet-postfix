@@ -63,7 +63,6 @@ class postfix::files {
     }
   }
   else {
-    }
   }
 
   # Config files
