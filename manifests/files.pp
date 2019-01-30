@@ -44,7 +44,7 @@ class postfix::files {
   }
 
   # Aliases
-  if $manage_aliases {
+  if $manage_aliases == true {
     file { '/etc/aliases':
       ensure  => 'file',
       content => "# file managed by puppet\n",
