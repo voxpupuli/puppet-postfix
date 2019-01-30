@@ -44,25 +44,24 @@ class postfix::files {
   }
 
   # Aliases
-  if $manage_aliases == true {
-    file { '/etc/aliases':
-      ensure  => 'file',
-      content => "# file managed by puppet\n",
-      notify  => Exec['newaliases'],
-      replace => false,
-      seltype => $postfix::params::aliasesseltype,
+  case $manage_aliases {
+    true: {
+      file { '/etc/aliases':
+        ensure  => 'file',
+        content => "# file managed by puppet\n",
+        notify  => Exec['newaliases'],
+        replace => false,
+        seltype => $postfix::params::aliasesseltype,
+      }
     }
-  }
-  elsif $manage_aliases == undef {
-    file { '/etc/aliases':
-      ensure  => 'file',
-      content => epp('base_postfix/aliases.epp'),
-      notify  => Exec['newaliases'],
-      replace => false,
-      seltype => $postfix::params::aliasesseltype,
+    undef: {
+      ::postfix::hash { '/etc/aliasess':
+        ensure  => 'present',
+        content => epp('base_postfix/aliases.epp'),
+      }
     }
-  }
-  else {
+    default: {
+    }
   }
 
   # Config files

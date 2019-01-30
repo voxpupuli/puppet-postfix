@@ -30,7 +30,7 @@
 #
 # [*manage_conffiles*]    - (boolean) Whether config files are to be replaced
 #
-# [*manage_aliases*]      - (boolean) Whether to manage (or not) /etc/aliases file
+# [*manage_aliases*]      - (undef/boolean) Whether to manage (or not) /etc/aliases file
 #
 # [*manage_mailx*]        - (boolean) Whether to manage mailx package.
 #
@@ -103,7 +103,7 @@ class postfix (
   String                          $mydestination       = '$myorigin',   # postfix_mydestination
   String                          $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String                          $myorigin            = $::fqdn,
-  Boolean                         $manage_aliases      = true,          # /etc/aliases
+  Optional[Boolean]               $manage_aliases      = true,          # /etc/aliases
   Optional[String]                $relayhost           = undef,         # postfix_relayhost
   Boolean                         $manage_root_alias   = true,
   Variant[Array[String], String]  $root_mail_recipient = 'nobody',      # root_mail_recipient
