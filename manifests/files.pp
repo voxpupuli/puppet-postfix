@@ -54,14 +54,15 @@ class postfix::files {
     }
   }
   elsif $manage_aliases == undef {
-    postfix::hash { '/etc/aliases':
-      ensure  => 'present',
+    file { '/etc/aliases':
+      ensure  => 'file',
       content => epp('base_postfix/aliases.epp'),
+      notify  => Exec['newaliases'],
+      replace => false,
+      seltype => $postfix::params::aliasesseltype,
     }
   }
   else {
-    file { '/etc/aliases':
-      ensure => 'absent',
     }
   }
 
