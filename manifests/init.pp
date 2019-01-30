@@ -30,7 +30,7 @@
 #
 # [*manage_conffiles*]    - (boolean) Whether config files are to be replaced
 #
-# [*manage_aliases*]      - (boolean) Wheter to manage (or not) /etc/aliases file
+# [*manage_aliases*]      - (boolean) Whether to manage (or not) /etc/aliases file
 #
 # [*manage_mailx*]        - (boolean) Whether to manage mailx package.
 #
