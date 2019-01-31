@@ -39,35 +39,9 @@ describe 'postfix class' do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
-  end
 
-  context 'default parameters' do
-    it 'should work idempotently with no errors and with the default configuration of /etc/aliases ' do
-      pp = <<-EOS
-        # Make sure the default mailer is stopped in docker containers
-        if $::operatingsystem == 'Debian' {
-          service { 'exim4':
-            ensure    => stopped,
-            hasstatus => false,
-            before    => Class['postfix'],
-          }
-        }
-        if $::osfamily == 'RedHat' {
-          service { 'sendmail':
-            ensure    => stopped,
-            hasstatus => false,
-            before    => Class['postfix'],
-          }
-        }
-
-        class { 'postfix':
-          smtp_listen => 'all',
-        }
-      EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes  => true)
+    describe file('/etc/aliases') do
+      it { is_expected.to exist }
     end
   end
 
@@ -103,42 +77,6 @@ describe 'postfix class' do
 
     describe file('/etc/aliases') do
       it { is_expected.not_to exist }
-    end
-  end
-
-  context 'default parameters with manage_aliases as undef' do
-    it 'should work idempotently with no errors and with your own configuration of /etc/aliases ' do
-      pp = <<-EOS
-        # Make sure the default mailer is stopped in docker containers
-        if $::operatingsystem == 'Debian' {
-          service { 'exim4':
-            ensure    => stopped,
-            hasstatus => false,
-            before    => Class['postfix'],
-          }
-        }
-        if $::osfamily == 'RedHat' {
-          service { 'sendmail':
-            ensure    => stopped,
-            hasstatus => false,
-            before    => Class['postfix'],
-          }
-        }
-
-        class { 'postfix':
-          smtp_listen    => 'all',
-          manage_aliases => undef,
-          aliases_list   => { foo => bar },
-        }
-      EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes  => true)
-    end
-
-    describe file('/etc/aliases') do
-      its(:content) { is_expected.to match('foo') }
     end
   end
 end

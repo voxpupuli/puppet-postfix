@@ -54,12 +54,6 @@ class postfix::files {
         seltype => $postfix::params::aliasesseltype,
       }
     }
-    undef: {
-      ::postfix::hash { '/etc/aliasess':
-        ensure  => 'present',
-        content => epp('base_postfix/aliases.epp'),
-      }
-    }
     default: {
     }
   }

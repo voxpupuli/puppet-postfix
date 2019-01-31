@@ -8,8 +8,6 @@
 #
 # [*alias_maps*]          - (string)
 #
-# [*aliases_list*]        - (hash) The aliases list for /etc/aliases
-#
 # [*inet_interfaces*]     - (string)
 #
 # [*inet_protocols*]      - (string)
@@ -30,7 +28,7 @@
 #
 # [*manage_conffiles*]    - (boolean) Whether config files are to be replaced
 #
-# [*manage_aliases*]      - (undef/boolean) Whether to manage (or not) /etc/aliases file
+# [*manage_aliases*]      - (boolean) Whether to manage (or not) /etc/aliases file
 #
 # [*manage_mailx*]        - (boolean) Whether to manage mailx package.
 #
@@ -103,7 +101,7 @@ class postfix (
   String                          $mydestination       = '$myorigin',   # postfix_mydestination
   String                          $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String                          $myorigin            = $::fqdn,
-  Optional[Boolean]               $manage_aliases      = true,          # /etc/aliases
+  Boolean                         $manage_aliases      = true,          # /etc/aliases
   Optional[String]                $relayhost           = undef,         # postfix_relayhost
   Boolean                         $manage_root_alias   = true,
   Variant[Array[String], String]  $root_mail_recipient = 'nobody',      # root_mail_recipient
@@ -118,7 +116,6 @@ class postfix (
   String                          $mailx_ensure        = 'present',
   String                          $service_ensure      = 'running',
   Boolean                         $service_enabled     =  true,
-  Optional[Hash]                  $aliases_list        = {},
 ) inherits postfix::params {
 
   $_smtp_listen = $mailman ? {
