@@ -12,6 +12,8 @@ class postfix::files {
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
   $master_entries      = $postfix::master_entries
+  $master_bounce_command = $postfix::master_bounce_command
+  $master_defer_command  = $postfix::master_defer_command
   $myorigin            = $postfix::myorigin
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
