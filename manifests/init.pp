@@ -64,7 +64,7 @@
 # [*use_dovecot_lda*]     - (boolean) Whether to setup for Dovecot LDA
 #
 # [*use_schleuder*]       - (2/boolean) Whether to setup for Schleuder
-#                           (2 -> Schleuder 2, true -> Schleuder 3)
+#                           (2 -> Schleuder 2, 3 or true -> Schleuder 3)
 #
 # [*use_sympa*]           - (boolean) Whether to setup for Sympa
 #
@@ -108,7 +108,7 @@ class postfix (
   String                          $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
   Boolean                         $use_amavisd         = false,         # postfix_use_amavisd
   Boolean                         $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
-  Variant[Integer[2, 2], Boolean] $use_schleuder       = false,         # postfix_use_schleuder
+  Variant[Integer[2, 3], Boolean] $use_schleuder       = false,         # postfix_use_schleuder
   Boolean                         $use_sympa           = false,         # postfix_use_sympa
   String                          $postfix_ensure      = 'present',
   String                          $mailx_ensure        = 'present',
