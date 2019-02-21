@@ -8,6 +8,8 @@
 #
 # [*alias_maps*]          - (string)
 #
+# [*configs*]              - (hash)
+#
 # [*inet_interfaces*]     - (string)
 #
 # [*inet_protocols*]      - (string)
@@ -79,6 +81,7 @@
 #
 class postfix (
   String                          $alias_maps          = 'hash:/etc/aliases',
+  Optional[Hash]                  $configs             = undef,
   String                          $inet_interfaces     = 'all',
   String                          $inet_protocols      = 'all',
   Boolean                         $ldap                = false,
@@ -123,6 +126,10 @@ class postfix (
   $all_alias_maps = $ldap ? {
     false => $alias_maps,
     true  => "${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf",
+  }
+
+  if $configs {
+    create_resources('::postfix::config', $configs)
   }
 
   anchor { 'postfix::begin': }
