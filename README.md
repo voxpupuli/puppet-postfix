@@ -34,8 +34,8 @@ Example: 'hash:/etc/other_aliases'.
 ##### `configs`
 
 A hash containing optional configuration values for main.cf. The values are configured using postfix::config.  
-Default: Undefined.  
-Example: 'message_size_limit': {'value': '51200000'}.
+Default: An empty hash.  
+Example: '{message_size_limit': {'value': '51200000'}}.
 
 ##### `inet_interfaces`
 
