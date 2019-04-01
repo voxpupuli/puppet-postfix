@@ -33,7 +33,8 @@ define postfix::map (
   Variant[Array[String], String, Undef] $content = undef,
   String                                $type = 'hash',
   Stdlib::Absolutepath                  $path = "/etc/postfix/${name}",
-  String[4,4]                           $mode = '0640'
+  String[4,4]                           $mode = '0640',
+  Boolean                               $show_diff = true,
 ) {
   include ::postfix::params
 
@@ -57,15 +58,16 @@ define postfix::map (
   }
 
   file { "postfix map ${name}":
-    ensure  => $ensure,
-    path    => $path,
-    source  => $source,
-    content => $content,
-    owner   => 'root',
-    group   => 'postfix',
-    mode    => $mode,
-    require => Package['postfix'],
-    notify  => $manage_notify,
+    ensure    => $ensure,
+    path      => $path,
+    source    => $source,
+    content   => $content,
+    owner     => 'root',
+    group     => 'postfix',
+    mode      => $mode,
+    require   => Package['postfix'],
+    notify    => $manage_notify,
+    show_diff => $show_diff,
   }
 
   if $type !~ /^(cidr|pcre)$/ {

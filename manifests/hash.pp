@@ -29,6 +29,7 @@ define postfix::hash (
   Variant[Array[String], String, Undef] $source=undef,
   Variant[Array[String], String, Undef] $content=undef,
   Variant[String[4,4], Undef]           $mode='0640',
+  Boolean                               $show_diff=true,
 ) {
   include ::postfix::params
 
@@ -43,12 +44,13 @@ define postfix::hash (
   }
 
   postfix::map {$name:
-    ensure  => $ensure,
-    source  => $source,
-    content => $content,
-    type    => 'hash',
-    path    => $name,
-    mode    => $mode,
+    ensure    => $ensure,
+    source    => $source,
+    content   => $content,
+    type      => 'hash',
+    path      => $name,
+    mode      => $mode,
+    show_diff => $show_diff,
   }
 
   Class['postfix'] -> Postfix::Hash[$title]
