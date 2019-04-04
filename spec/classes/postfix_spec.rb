@@ -302,6 +302,16 @@ describe 'postfix' do
               is_expected.not_to contain_package('mailx')
             end
           end
+          context 'when config hash is used' do
+            let (:params) { {
+              :configs => {
+                'message_size_limit' => {
+                  'value' => '51200000'
+              } } } }
+            it 'should update master.cf with the specified contents' do
+              is_expected.to contain_postfix__config('message_size_limit').with_value('51200000')
+            end
+          end
         end
       end
     end

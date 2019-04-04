@@ -31,6 +31,12 @@ A string defining the location of the alias map file.
 Default: 'hash:/etc/aliases'.  
 Example: 'hash:/etc/other_aliases'.
 
+##### `configs`
+
+A hash containing optional configuration values for main.cf. The values are configured using postfix::config.  
+Default: An empty hash.  
+Example: '{message_size_limit': {'value': '51200000'}}.
+
 ##### `inet_interfaces`
 
 A string defining the network interfaces that Postfix will listen on.  
