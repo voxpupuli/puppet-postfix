@@ -27,17 +27,6 @@ matrix:
       - BEAKER_IS_PE=no
       - BEAKER_PUPPET_COLLECTION=puppet5
       - BEAKER_debug=true
-      - BEAKER_setfile=debian6-64{hypervisor=docker}
-    bundler_args:
-    script: bundle exec rspec spec/acceptance/*_spec.rb
-  - rvm: default
-    sudo: required
-    services: docker
-    env:
-      - PUPPET_INSTALL_TYPE=agent
-      - BEAKER_IS_PE=no
-      - BEAKER_PUPPET_COLLECTION=puppet5
-      - BEAKER_debug=true
       - BEAKER_setfile=debian7-64{hypervisor=docker}
     bundler_args:
     script: bundle exec rspec spec/acceptance/*_spec.rb
@@ -60,6 +49,17 @@ matrix:
       - BEAKER_IS_PE=no
       - BEAKER_PUPPET_COLLECTION=puppet5
       - BEAKER_debug=true
+      - BEAKER_setfile=debian9-64{hypervisor=docker}
+    bundler_args:
+    script: bundle exec rspec spec/acceptance/*_spec.rb
+  - rvm: default
+    sudo: required
+    services: docker
+    env:
+      - PUPPET_INSTALL_TYPE=agent
+      - BEAKER_IS_PE=no
+      - BEAKER_PUPPET_COLLECTION=puppet5
+      - BEAKER_debug=true
       - BEAKER_setfile=ubuntu1404-64{hypervisor=docker}
     bundler_args:
     script: bundle exec rspec spec/acceptance/*_spec.rb
@@ -72,6 +72,17 @@ matrix:
       - BEAKER_PUPPET_COLLECTION=puppet5
       - BEAKER_debug=true
       - BEAKER_setfile=ubuntu1604-64{hypervisor=docker}
+    bundler_args:
+    script: bundle exec rspec spec/acceptance/*_spec.rb
+  - rvm: default
+    sudo: required
+    services: docker
+    env:
+      - PUPPET_INSTALL_TYPE=agent
+      - BEAKER_IS_PE=no
+      - BEAKER_PUPPET_COLLECTION=puppet5
+      - BEAKER_debug=true
+      - BEAKER_setfile=ubuntu1804-64{hypervisor=docker}
     bundler_args:
     script: bundle exec rspec spec/acceptance/*_spec.rb
   - rvm: default
