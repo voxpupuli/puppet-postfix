@@ -1,3 +1,14 @@
+## 2019-04-05 - Release 1.8.0
+
+- Deprecate Puppet 3 support
+- Add new config parameter to add configuration from hiera (GH #240)
+- Allow Sensitive postfix::hash content (GH #243)
+- Add master_bounce_command and master_defer_command (GH #239)
+- Schleuder: port invocation syntax to Schleuder 3. (GH #234)
+- Allow multiple spaces in postfix::mta::mynetworks  (GH #235)
+- Add postfix::mailalias (GH #233)
+- Remove legacy instructions on exec paths
+
 ## 2018-11-01 - Release 1.7.0
 
 - Add chroot parameter (GH #170, #224)
