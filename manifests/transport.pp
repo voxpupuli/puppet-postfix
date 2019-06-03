@@ -40,50 +40,53 @@ define postfix::transport (
   Stdlib::Absolutepath      $file='/etc/postfix/transport',
   Enum['present', 'absent'] $ensure='present'
 ) {
-  include ::postfix::augeas
+  if defined(Postfix::Hash[$file]) and $ensure == 'present' {
+    concat::fragment { "postfix virtual - ${name}":
+      target  => $file,
+      content => "${name} ${destination}:${nexthop}\n",
+    }
+  } else {
+    include ::postfix::augeas
 
-  case $ensure {
-    'present': {
-      if ($destination) {
-        $change_destination = "set pattern[. = '${name}']/transport '${destination}'"
-      } else {
-        $change_destination = "clear pattern[. = '${name}']/transport"
+    case $ensure {
+      'present': {
+        if ($destination) {
+          $change_destination = "set pattern[. = '${name}']/transport '${destination}'"
+        } else {
+          $change_destination = "clear pattern[. = '${name}']/transport"
+        }
+
+        if ($nexthop) {
+          $change_nexthop = "set pattern[. = '${name}']/nexthop '${nexthop}'"
+        } else {
+          $change_nexthop = "clear pattern[. = '${name}']/nexthop"
+        }
+
+        $changes = [
+          "set pattern[. = '${name}'] '${name}'",
+          $change_destination,
+          $change_nexthop,
+        ]
       }
 
-      if ($nexthop) {
-        $change_nexthop = "set pattern[. = '${name}']/nexthop '${nexthop}'"
-      } else {
-        $change_nexthop = "clear pattern[. = '${name}']/nexthop"
+      'absent': {
+        $changes = "rm pattern[. = '${name}']"
       }
 
-      $changes = [
-        "set pattern[. = '${name}'] '${name}'",
-        $change_destination,
-        $change_nexthop,
-      ]
+      default: {
+        fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
+      }
     }
 
-    'absent': {
-      $changes = "rm pattern[. = '${name}']"
+    augeas {"Postfix transport - ${name}":
+      lens    => 'Postfix_Transport.lns',
+      incl    => $file,
+      changes => $changes,
+      require => Augeas::Lens['postfix_transport'],
     }
-
-    default: {
-      fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
-    }
-  }
-
-  augeas {"Postfix transport - ${name}":
-    lens    => 'Postfix_Transport.lns',
-    incl    => $file,
-    changes => $changes,
-    require => Augeas::Lens['postfix_transport'],
   }
 
   if defined(Package['postfix']) {
     Package['postfix'] -> Postfix::Transport[$title]
-  }
-
-  if defined(Postfix::Hash['/etc/postfix/transport']) {
-    Postfix::Transport[$title] ~> Postfix::Hash['/etc/postfix/transport']
   }
 }

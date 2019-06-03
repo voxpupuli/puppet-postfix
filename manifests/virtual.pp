@@ -38,43 +38,53 @@ define postfix::virtual (
   Stdlib::Absolutepath           $file='/etc/postfix/virtual',
   Enum['present', 'absent']      $ensure='present'
 ) {
-  include ::postfix::augeas
+  if defined(Postfix::Hash[$file]) and $ensure == 'present' {
+    # if postfix::hash is being used then we have a concat resource for this file, so use it
+    $destination_formatted = [$destination].flatten.join(', ')
 
-  $dest_sets = [$destination].flatten.map |$i, $d| {
-    $idx = $i+1
-    "set \$entry/destination[${idx}] '${d}'"
-  }
+    concat::fragment { "postfix virtual - ${name}":
+      target  => $file,
+      content => "${name} ${destination_formatted}\n",
+    }
+  } else {
+    include ::postfix::augeas
 
-  case $ensure {
-    'present': {
-      $changes = [
-        "defnode entry pattern[. = '${name}'] '${name}'",
-        'rm $entry/destination',
-        $dest_sets,
-      ].flatten
+    $dest_sets = [$destination].flatten.map |$i, $d| {
+      $idx = $i+1
+      "set \$entry/destination[${idx}] '${d}'"
     }
 
-    'absent': {
-      $changes = "rm pattern[. = '${name}']"
+    case $ensure {
+      'present': {
+        $changes = [
+          "defnode entry pattern[. = '${name}'] '${name}'",
+          'rm $entry/destination',
+          $dest_sets,
+        ].flatten
+      }
+
+      'absent': {
+        $changes = "rm pattern[. = '${name}']"
+      }
+
+      default: {
+        fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
+      }
     }
 
-    default: {
-      fail "\$ensure must be either 'present' or 'absent', got '${ensure}'"
+    augeas {"Postfix virtual - ${name}":
+      incl    => $file,
+      lens    => 'Postfix_Virtual.lns',
+      changes => $changes,
+      require => Augeas::Lens['postfix_virtual'],
     }
-  }
 
-  augeas {"Postfix virtual - ${name}":
-    incl    => $file,
-    lens    => 'Postfix_Virtual.lns',
-    changes => $changes,
-    require => Augeas::Lens['postfix_virtual'],
+    if defined(Postfix::Hash[$file]) {
+      Postfix::Virtual[$title] ~> Postfix::Hash[$file]
+    }
   }
 
   if defined(Package['postfix']) {
     Package['postfix'] -> Postfix::Virtual[$title]
-  }
-
-  if defined(Postfix::Hash[$file]) {
-    Postfix::Virtual[$title] ~> Postfix::Hash[$file]
   }
 }

@@ -19,7 +19,7 @@ describe 'postfix::hash' do
         } }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_concat('/tmp/foo')
           }.to raise_error
         end
       end
@@ -30,7 +30,7 @@ describe 'postfix::hash' do
         } }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_concat('/tmp/foo')
           }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
@@ -39,7 +39,7 @@ describe 'postfix::hash' do
         let (:title) { 'foo' }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_concat('/tmp/foo')
           }.to raise_error(Puppet::Error, /, got /)
         end
       end
@@ -52,7 +52,7 @@ describe 'postfix::hash' do
 
         it 'should fail' do
           expect {
-            is_expected.to contain_file('/tmp/foo')
+            is_expected.to contain_concat('/tmp/foo')
           }.to raise_error(Puppet::Error, /You must provide either 'source' or 'content'/)
         end
       end
@@ -62,11 +62,8 @@ describe 'postfix::hash' do
           :source  => '/tmp/bar',
         } }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo').with(
-          :ensure => 'present',
-          :source => '/tmp/bar'
-        ).without(:content)
-        }
+        it { is_expected.to contain_concat('/tmp/foo').with_ensure('present') }
+        it { is_expected.to contain_concat__fragment('/tmp/foo source').with_source('/tmp/bar') }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
 
@@ -77,20 +74,16 @@ describe 'postfix::hash' do
           :content => 'bar',
         } }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo').with(
-          :ensure  => 'present',
-          :content => 'bar'
-        ).without(:source)
-        }
+        it { is_expected.to contain_concat('/tmp/foo').with_ensure('present') }
+        it { is_expected.to contain_concat__fragment('/tmp/foo content').with_content('bar') }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end
 
       context 'when not passing source or content' do
-        it { is_expected.to contain_file('postfix map /tmp/foo').with(
-          :ensure  => 'present'
-        ).without(:source).without(:content)
-        }
+        it { is_expected.to contain_concat('/tmp/foo').with_ensure('present') }
+        it { is_expected.not_to contain_concat__fragment('/tmp/foo source') }
+        it { is_expected.not_to contain_concat__fragment('/tmp/foo content') }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end
@@ -100,7 +93,9 @@ describe 'postfix::hash' do
           :ensure => 'absent',
         } }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo').with_ensure('absent') }
+        it { is_expected.to contain_concat('/tmp/foo').with_ensure('absent') }
+        it { is_expected.not_to contain_concat__fragment('/tmp/foo source') }
+        it { is_expected.not_to contain_concat__fragment('/tmp/foo content') }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('absent') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end

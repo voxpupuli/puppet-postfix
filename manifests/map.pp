@@ -56,16 +56,27 @@ define postfix::map (
     }
   }
 
-  file { "postfix map ${name}":
+  concat { $path:
     ensure  => $ensure,
-    path    => $path,
-    source  => $source,
-    content => $content,
+    warn    => true,
     owner   => 'root',
     group   => 'postfix',
     mode    => $mode,
     require => Package['postfix'],
     notify  => $manage_notify,
+  }
+
+  if $source {
+    concat::fragment { "${name} source":
+      target => $path,
+      source => $source,
+    }
+  }
+  if $content {
+    concat::fragment { "${name} content":
+      target  => $path,
+      content => $content,
+    }
   }
 
   if $type !~ /^(cidr|pcre)$/ {
@@ -75,7 +86,7 @@ define postfix::map (
       owner   => 'root',
       group   => 'postfix',
       mode    => $mode,
-      require => File["postfix map ${name}"],
+      require => Concat[$path],
       notify  => $manage_notify,
     }
   }

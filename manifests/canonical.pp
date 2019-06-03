@@ -38,30 +38,37 @@ define postfix::canonical (
   $file='/etc/postfix/canonical',
   $ensure='present'
 ) {
-  include ::postfix::augeas
+  if defined(Postfix::Hash[$file]) and $ensure == 'present' {
+    concat::fragment { "postfix canonical - ${name}":
+      target  => $file,
+      content => "${name} ${destination}\n",
+    }
+  } else {
+    include ::postfix::augeas
 
-  case $ensure {
-    'present': {
-      $changes = [
-        "set pattern[. = '${name}'] '${name}'",
-        "set pattern[. = '${name}']/destination '${destination}'",
-      ]
+    case $ensure {
+      'present': {
+        $changes = [
+          "set pattern[. = '${name}'] '${name}'",
+          "set pattern[. = '${name}']/destination '${destination}'",
+        ]
+      }
+
+      'absent': {
+        $changes = "rm pattern[. = '${name}']"
+      }
+
+      default: {
+        fail("Wrong ensure value: ${ensure}")
+      }
     }
 
-    'absent': {
-      $changes = "rm pattern[. = '${name}']"
+    augeas {"Postfix canonical - ${name}":
+      incl    => $file,
+      lens    => 'Postfix_Canonical.lns',
+      changes => $changes,
+      require => [Package['postfix'], Augeas::Lens['postfix_canonical']],
+      notify  => Exec["generate ${file}.db"],
     }
-
-    default: {
-      fail("Wrong ensure value: ${ensure}")
-    }
-  }
-
-  augeas {"Postfix canonical - ${name}":
-    incl    => $file,
-    lens    => 'Postfix_Canonical.lns',
-    changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_canonical']],
-    notify  => Exec["generate ${file}.db"],
   }
 }

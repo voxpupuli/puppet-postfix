@@ -19,7 +19,7 @@ describe 'postfix::map' do
         } }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('postfix map foo')
+            is_expected.to contain_concat('/etc/postfix/foo')
           }.to raise_error
         end
       end
@@ -30,7 +30,7 @@ describe 'postfix::map' do
         } }
         it 'should fail' do
           expect {
-            is_expected.to contain_file('postfix map foo')
+            is_expected.to contain_concat('/etc/postfix/foo')
           }.to raise_error(Puppet::Error, /got 'running'/)
         end
       end
@@ -43,7 +43,7 @@ describe 'postfix::map' do
 
         it 'should fail' do
           expect {
-            is_expected.to contain_file('postfix map foo')
+            is_expected.to contain_concat('/etc/postfix/foo')
           }.to raise_error(Puppet::Error, /You must provide either 'source' or 'content'/)
         end
       end
@@ -53,11 +53,9 @@ describe 'postfix::map' do
           :source  => '/tmp/bar',
         } }
 
-        it { is_expected.to contain_file('postfix map foo').with(
-          :ensure => 'present',
-          :source => '/tmp/bar'
-        ).without(:content)
-        }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with_ensure('present') }
+        it { is_expected.to contain_concat__fragment('foo source').with_source('/tmp/bar') }
+        it { is_expected.not_to contain_concat__fragment('foo content') }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
@@ -67,20 +65,17 @@ describe 'postfix::map' do
           :content => 'bar',
         } }
 
-        it { is_expected.to contain_file('postfix map foo').with(
-          :ensure  => 'present',
-          :content => 'bar'
-        ).without(:source)
-        }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with_ensure('present') }
+        it { is_expected.to contain_concat__fragment('foo content').with_content('bar') }
+        it { is_expected.not_to contain_concat__fragment('foo source') }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
 
       context 'when not passing source or content' do
-        it { is_expected.to contain_file('postfix map foo').with(
-          :ensure  => 'present'
-        ).without(:source).without(:content)
-        }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with_ensure('present') }
+        it { is_expected.not_to contain_concat__fragment('foo source') }
+        it { is_expected.not_to contain_concat__fragment('foo content') }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
@@ -90,8 +85,8 @@ describe 'postfix::map' do
           :ensure => 'absent',
         } }
 
-        it { is_expected.to contain_file('postfix map foo').with_ensure('absent') }
-        it { is_expected.to contain_file('postfix map foo').without_notify }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with_ensure('absent') }
+        it { is_expected.to contain_concat('/etc/postfix/foo').without_notify }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('absent') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
@@ -101,7 +96,7 @@ describe 'postfix::map' do
           :type => 'pcre',
         } }
 
-        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with_ensure('present') }
         it { is_expected.not_to contain_file('postfix map foo.db') }
       end
 
@@ -110,7 +105,7 @@ describe 'postfix::map' do
           :type => 'cidr',
         } }
 
-        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.to contain_concat('/etc/postfix/foo').with_ensure('present') }
         it { is_expected.not_to contain_file('postfix map foo.db') }
       end
     end
