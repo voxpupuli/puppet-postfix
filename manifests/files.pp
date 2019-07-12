@@ -44,7 +44,7 @@ class postfix::files {
   }
 
   # Aliases
-  case $manage_aliases {
+  if $manage_aliases {
     true: {
       file { '/etc/aliases':
         ensure  => 'file',
