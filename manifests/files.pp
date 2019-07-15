@@ -45,17 +45,16 @@ class postfix::files {
 
   # Aliases
   if $manage_aliases {
-    true: {
-      file { '/etc/aliases':
-        ensure  => 'file',
-        content => "# file managed by puppet\n",
-        notify  => Exec['newaliases'],
-        replace => false,
-        seltype => $postfix::params::aliasesseltype,
-      }
+    file { '/etc/aliases':
+      ensure  => 'file',
+      content => "# file managed by puppet\n",
+      notify  => Exec['newaliases'],
+      replace => false,
+      seltype => $postfix::params::aliasesseltype,
     }
-    default: {
-    }
+  }
+  else {
+    #nothing to do
   }
 
   # Config files
