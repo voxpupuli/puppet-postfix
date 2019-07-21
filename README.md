@@ -43,6 +43,12 @@ A string defining the network interfaces that Postfix will listen on.
 Default: 'all'.  
 Example: '127.0.0.1, [::1]'.
 
+##### `inet_protocols`
+
+A string defining the internet protocols that Postfix will use.  
+Default: 'all'.  
+Example: 'ipv4'.
+
 ##### `ldap`
 
 A Boolean defining whether to configure Postfix for LDAP use.  
