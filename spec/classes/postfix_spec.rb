@@ -45,6 +45,15 @@ describe 'postfix' do
           it { is_expected.to contain_postfix__config('mailq_path') }
 
           case facts[:operatingsystemmajrelease]
+          when '8'
+            it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
+            it {
+              is_expected.to contain_service('postfix').with(
+                :ensure    => 'running',
+                :enable    => 'true',
+                :hasstatus => 'true',
+                :restart   => '/bin/systemctl reload postfix'
+              ) }
           when '7'
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
             it {
