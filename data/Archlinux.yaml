@@ -1,0 +1,4 @@
+---
+postfix::params::restart_cmd: '/usr/bin/systemctl reload postfix'
+postfix::params::mailx_package: 's-nail'
+...

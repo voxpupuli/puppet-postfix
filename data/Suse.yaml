@@ -1,0 +1,3 @@
+---
+postfix::params::restart_cmd: '/usr/bin/systemctl reload postfix'
+...

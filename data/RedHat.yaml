@@ -1,0 +1,5 @@
+---
+postfix::params::aliasesseltype: 'etc_aliases_t'
+postfix::params::seltype: 'postfix_etc_t'
+postfix::params::restart_cmd: '/bin/systemctl reload postfix'
+...
