@@ -56,6 +56,14 @@
     },
     {
       "operatingsystem": "Alpine"
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "28",
+        "29",
+        "30"
+      ]
     }
   ]
 }
