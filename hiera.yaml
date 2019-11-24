@@ -10,10 +10,10 @@ hierarchy:
     path: "os/%{facts.os.name}.yaml"
 
   - name: "Per-OS family dist codename"
-    path: "%{facts.os.family}/%{facts.operatingsystemmajrelease}.yaml"
+    path: "%{facts.os.family}/%{facts.lsbdistcodename}.yaml"
 
   - name: "Per-OS family release major"
-    path: "%{facts.os.family}/%{facts.lsbdistcodename}.yaml"
+    path: "%{facts.os.family}/%{facts.operatingsystemmajrelease}.yaml"
 
   - name: "Per-OS family"
     path: "%{facts.os.family}.yaml"
