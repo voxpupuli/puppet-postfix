@@ -36,11 +36,6 @@ class postfix::params (
       }
     }
 
-    'Archlinux': {
-      # I don't remember why I chose sles for arch, but it works fine
-      $master_os_template = "${module_name}/master.cf.sles.erb"
-    }
-
     default: {
       case $::operatingsystem {
         'Alpine': {
