@@ -22,13 +22,12 @@ group :development, :unit_tests do
   gem "puppet-lint-alias-check",                           :require => false
   gem "rspec-puppet-facts",                                :require => false
   gem "ruby-augeas",                                       :require => false
-  gem "puppet-blacksmith",                                 :require => false if RUBY_VERSION !~ /^1\./
   gem "json_pure", '< 2.0.2',                              :require => false
 end
 
 group :system_tests do
   gem "puppet-module-posix-system-r#{minor_version}",  :require => false
-  gem "beaker-hostgenerator",                          :require => false, :git => 'https://github.com/mcanevet/beaker-hostgenerator.git', :branch => 'fix_debian9'
+  gem "beaker-hostgenerator",                          :require => false
 end
 
 if facterversion = ENV['FACTER_GEM_VERSION']
@@ -41,6 +40,11 @@ if puppetversion = ENV['PUPPET_GEM_VERSION']
   gem 'puppet', puppetversion, :require => false
 else
   gem 'puppet', :require => false
+end
+
+group :release do
+  gem 'github_changelog_generator', '>= 1.15.0', :require => false if RUBY_VERSION >= '2.2.2'
+  gem 'puppet-blacksmith',                       :require => false
 end
 
 # vim:ft=ruby
