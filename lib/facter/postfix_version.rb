@@ -1,7 +1,7 @@
-if  FileTest.exists?("/etc/postfix/main.cf")
-	Facter.add(:postfix_version) do
-		setcode do
-			Facter::Core::Execution.execute('postconf mail_version').split[4]
-		end
-	end
+Facter.add(:postfix_version) do
+  setcode do
+    if Facter::Util::Resolution.which('postconf')
+      Facter::Util::Resolution.exec('postconf mail_version').split[2]
+    end
+  end
 end
