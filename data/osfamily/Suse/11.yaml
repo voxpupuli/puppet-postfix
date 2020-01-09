@@ -1,0 +1,4 @@
+---
+postfix::params::restart_cmd: '/etc/init.d/postfix reload'
+postfix::params::master_os_template: "postfix/master.cf.SLES%{::operatingsystemrelease}.erb"
+...
