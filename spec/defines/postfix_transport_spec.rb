@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'postfix::transport' do
-  let (:title) { 'foo' }
+  let(:title) { 'foo' }
 
   let :pre_condition do
     "class { '::augeas': }"
@@ -15,7 +15,7 @@ describe 'postfix::transport' do
       end
 
       context 'when sending wrong type for destination' do
-        let (:params) do
+        let(:params) do
           {
             destination: ['bar'],
           }
@@ -29,7 +29,7 @@ describe 'postfix::transport' do
       end
 
       context 'when sending wrong type for nexthop' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             nexthop: ['baz'],
@@ -44,7 +44,7 @@ describe 'postfix::transport' do
       end
 
       context 'when sending wrong type for file' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             file: ['baz'],
@@ -59,7 +59,7 @@ describe 'postfix::transport' do
       end
 
       context 'when sending wrong value for file' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             file: 'baz',
@@ -74,7 +74,7 @@ describe 'postfix::transport' do
       end
 
       context 'when sending wrong type for ensure' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             ensure: ['baz'],
@@ -89,7 +89,7 @@ describe 'postfix::transport' do
       end
 
       context 'when sending wrong value for ensure' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             ensure: 'running',
@@ -119,7 +119,7 @@ describe 'postfix::transport' do
       end
 
       context 'when overriding default values' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             nexthop: 'baz',
@@ -143,7 +143,7 @@ describe 'postfix::transport' do
       end
 
       context 'when ensuring absence' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             ensure: 'absent',

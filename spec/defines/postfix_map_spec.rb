@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'postfix::map' do
-  let (:title) { 'foo' }
+  let(:title) { 'foo' }
 
   let :pre_condition do
     "class { '::postfix': }"
@@ -14,7 +14,7 @@ describe 'postfix::map' do
       end
 
       context 'when passing wrong type for ensure' do
-        let (:params) do
+        let(:params) do
           {
             ensure: ['present'],
           }
@@ -28,7 +28,7 @@ describe 'postfix::map' do
       end
 
       context 'when passing wrong value for ensure' do
-        let (:params) do
+        let(:params) do
           {
             ensure: 'running',
           }
@@ -42,7 +42,7 @@ describe 'postfix::map' do
       end
 
       context 'when passing both source and content' do
-        let (:params) do
+        let(:params) do
           {
             source: '/tmp/bar',
             content: 'bar',
@@ -57,7 +57,7 @@ describe 'postfix::map' do
       end
 
       context 'when passing source' do
-        let (:params) do
+        let(:params) do
           {
             source: '/tmp/bar',
           }
@@ -74,7 +74,7 @@ describe 'postfix::map' do
       end
 
       context 'when passing content' do
-        let (:params) do
+        let(:params) do
           {
             content: 'bar',
           }
@@ -101,7 +101,7 @@ describe 'postfix::map' do
       end
 
       context 'when ensuring absence' do
-        let (:params) do
+        let(:params) do
           {
             ensure: 'absent',
           }
@@ -114,7 +114,7 @@ describe 'postfix::map' do
       end
 
       context 'when using pcre type' do
-        let (:params) do
+        let(:params) do
           {
             type: 'pcre',
           }
@@ -125,7 +125,7 @@ describe 'postfix::map' do
       end
 
       context 'when using cidr type' do
-        let (:params) do
+        let(:params) do
           {
             type: 'cidr',
           }

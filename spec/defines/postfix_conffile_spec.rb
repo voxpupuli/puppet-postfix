@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'postfix::conffile' do
-  let (:title) { 'foo' }
+  let(:title) { 'foo' }
 
   let :pre_condition do
     "class { '::postfix': }"
@@ -14,7 +14,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when passing wrong type for ensure' do
-        let (:params) do
+        let(:params) do
           {
             ensure: ['present'],
           }
@@ -28,7 +28,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when passing wrong value for ensure' do
-        let (:params) do
+        let(:params) do
           {
             ensure: 'running',
           }
@@ -42,7 +42,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when passing both source and content' do
-        let (:params) do
+        let(:params) do
           {
             source: '/tmp/bar',
             content: 'bar',
@@ -57,7 +57,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when passing source' do
-        let (:params) do
+        let(:params) do
           {
             source: 'puppet:///modules/postfix/bar',
           }
@@ -72,7 +72,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when passing content' do
-        let (:params) do
+        let(:params) do
           {
             content: 'bar',
           }
@@ -95,7 +95,7 @@ describe 'postfix::conffile' do
       end
 
       # context 'when passing options parameter' do
-      # let (:params) { {
+      # let(:params) { {
       #:options => {
       #:server_host => 'ldap.mydomain.com',
       #:bind        => 'no',
@@ -118,7 +118,7 @@ describe 'postfix::conffile' do
       # end
 
       context 'when ensuring absence' do
-        let (:params) do
+        let(:params) do
           {
             ensure: 'absent',
           }
@@ -128,7 +128,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when using mode' do
-        let (:params) do
+        let(:params) do
           {
             mode: '0644',
             content: 'bar',
@@ -144,7 +144,7 @@ describe 'postfix::conffile' do
       end
 
       context 'when using path' do
-        let (:params) do
+        let(:params) do
           {
             path: '/tmp/foo',
             content: 'bar',

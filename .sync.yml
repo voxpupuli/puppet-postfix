@@ -155,6 +155,3 @@ Gemfile:
     ':system_tests':
       - gem: beaker-hostgenerator
       - gem: "puppet-module-posix-system-r#{minor_version}"
-
-.rubocop.yml:
-  selected_profile: off

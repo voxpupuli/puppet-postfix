@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'postfix::config' do
-  let (:title) { 'foo' }
+  let(:title) { 'foo' }
 
   let :pre_condition do
     "class { 'postfix': }"
@@ -22,7 +22,7 @@ describe 'postfix::config' do
       end
 
       context 'when passing wrong type for value' do
-        let (:params) do
+        let(:params) do
           {
             value: ['bar'],
           }
@@ -36,7 +36,7 @@ describe 'postfix::config' do
       end
 
       context 'when passing wrong type for ensure' do
-        let (:params) do
+        let(:params) do
           {
             value: 'bar',
             ensure: ['present'],
@@ -51,7 +51,7 @@ describe 'postfix::config' do
       end
 
       context 'when passing wrong value for ensure' do
-        let (:params) do
+        let(:params) do
           {
             value: 'bar',
             ensure: 'running',
@@ -66,7 +66,7 @@ describe 'postfix::config' do
       end
 
       context 'when ensuring presence' do
-        let (:params) do
+        let(:params) do
           {
             value: 'bar',
             ensure: 'present',
@@ -83,7 +83,7 @@ describe 'postfix::config' do
       end
 
       context 'when ensuring absence' do
-        let (:params) do
+        let(:params) do
           {
             value: 'bar',
             ensure: 'absent',
@@ -100,7 +100,7 @@ describe 'postfix::config' do
       end
 
       context 'when ensuring blank' do
-        let (:params) do
+        let(:params) do
           {
             value: 'bar',
             ensure: 'blank',

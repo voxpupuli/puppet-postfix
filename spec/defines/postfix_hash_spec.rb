@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'postfix::hash' do
-  let (:title) { '/tmp/foo' }
+  let(:title) { '/tmp/foo' }
 
   let :pre_condition do
     "class { '::postfix': }"
@@ -14,7 +14,7 @@ describe 'postfix::hash' do
       end
 
       context 'when passing wrong type for ensure' do
-        let (:params) do
+        let(:params) do
           {
             ensure: ['present'],
           }
@@ -28,7 +28,7 @@ describe 'postfix::hash' do
       end
 
       context 'when passing wrong value for ensure' do
-        let (:params) do
+        let(:params) do
           {
             ensure: 'running',
           }
@@ -42,7 +42,7 @@ describe 'postfix::hash' do
       end
 
       context 'when passing wrong value for title' do
-        let (:title) { 'foo' }
+        let(:title) { 'foo' }
 
         it 'fails' do
           expect {
@@ -52,7 +52,7 @@ describe 'postfix::hash' do
       end
 
       context 'when passing both source and content' do
-        let (:params) do
+        let(:params) do
           {
             source: '/tmp/bar',
             content: 'bar',
@@ -67,7 +67,7 @@ describe 'postfix::hash' do
       end
 
       context 'when passing source' do
-        let (:params) do
+        let(:params) do
           {
             source: '/tmp/bar',
           }
@@ -84,7 +84,7 @@ describe 'postfix::hash' do
       end
 
       context 'when passing content' do
-        let (:params) do
+        let(:params) do
           {
             content: 'bar',
           }
@@ -111,7 +111,7 @@ describe 'postfix::hash' do
       end
 
       context 'when ensuring absence' do
-        let (:params) do
+        let(:params) do
           {
             ensure: 'absent',
           }

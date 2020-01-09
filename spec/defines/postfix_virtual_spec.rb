@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'postfix::virtual' do
-  let (:title) { 'foo' }
+  let(:title) { 'foo' }
 
   let :pre_condition do
     "class { '::augeas': }"
@@ -23,7 +23,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when sending wrong type for destination' do
-        let (:params) do
+        let(:params) do
           {
             destination: true,
           }
@@ -37,7 +37,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when sending wrong type for file' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             file: ['baz'],
@@ -52,7 +52,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when sending wrong value for file' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             file: 'baz',
@@ -67,7 +67,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when sending wrong type for ensure' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             ensure: ['baz'],
@@ -82,7 +82,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when sending wrong value for ensure' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             ensure: 'running',
@@ -97,7 +97,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when using default values' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
           }
@@ -118,7 +118,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when overriding default values' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             file: '/tmp/virtual',
@@ -141,7 +141,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when passing destination as array' do
-        let (:params) do
+        let(:params) do
           {
             destination: ['bar', 'baz'],
             file: '/tmp/virtual',
@@ -165,7 +165,7 @@ describe 'postfix::virtual' do
       end
 
       context 'when ensuring absence' do
-        let (:params) do
+        let(:params) do
           {
             destination: 'bar',
             ensure: 'absent',
