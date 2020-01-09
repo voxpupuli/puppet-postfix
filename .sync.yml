@@ -141,3 +141,8 @@
     bundler_args:
     script: bundle exec rspec spec/acceptance/*_spec.rb
     stage: acceptance
+
+Gemfile:
+  required:
+    ':development':
+      - gem: beaker-hostgenerator
