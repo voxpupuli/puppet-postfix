@@ -45,14 +45,6 @@ matrix:
       stage: deploy
     -
       bundler_args: 
-      env: ["PUPPET_INSTALL_TYPE=agent", "BEAKER_IS_PE=no", "BEAKER_PUPPET_COLLECTION=puppet5", "BEAKER_debug=true", "BEAKER_setfile=debian7-64{hypervisor=docker}"]
-      rvm: default
-      script: bundle exec rspec spec/acceptance/*_spec.rb
-      services: docker
-      stage: acceptance
-      sudo: required
-    -
-      bundler_args: 
       env: ["PUPPET_INSTALL_TYPE=agent", "BEAKER_IS_PE=no", "BEAKER_PUPPET_COLLECTION=puppet5", "BEAKER_debug=true", "BEAKER_setfile=debian8-64{hypervisor=docker}"]
       rvm: default
       script: bundle exec rspec spec/acceptance/*_spec.rb
@@ -109,23 +101,6 @@ matrix:
     -
       env: DEPLOY_TO_FORGE=yes
       stage: deploy
-  allow_failures:
-    -
-      bundler_args: 
-      env: ["PUPPET_INSTALL_TYPE=agent", "BEAKER_IS_PE=no", "BEAKER_PUPPET_COLLECTION=puppet5", "BEAKER_debug=true", "BEAKER_setfile=debian6-64{hypervisor=docker}"]
-      rvm: default
-      script: bundle exec rspec spec/acceptance/*_spec.rb
-      services: docker
-      stage: acceptance
-      sudo: required
-    -
-      bundler_args: 
-      env: ["PUPPET_INSTALL_TYPE=agent", "BEAKER_IS_PE=no", "BEAKER_PUPPET_COLLECTION=puppet5", "BEAKER_debug=true", "BEAKER_setfile=debian7-64{hypervisor=docker}"]
-      rvm: default
-      script: bundle exec rspec spec/acceptance/*_spec.rb
-      services: docker
-      stage: acceptance
-      sudo: required
 branches:
   only:
     - master
