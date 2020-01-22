@@ -1,9 +1,8 @@
 require 'spec_helper_acceptance'
 
 describe 'postfix class' do
-
   context 'default parameters' do
-    it 'should work idempotently with no errors' do
+    it 'works idempotently with no errors' do
       pp = <<-EOS
         # Make sure the default mailer is stopped in docker containers
         if $::operatingsystem == 'Debian' {
@@ -27,8 +26,8 @@ describe 'postfix class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes  => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe package('postfix') do
@@ -46,7 +45,7 @@ describe 'postfix class' do
   end
 
   context 'default parameters with manage_aliase as false' do
-    it 'should work idempotently with no errors and with your own configuration of /etc/aliases ' do
+    it 'works idempotently with no errors and with your own configuration of /etc/aliases' do
       pp = <<-EOS
         # Make sure the default mailer is stopped in docker containers
         if $::operatingsystem == 'Debian' {
@@ -70,8 +69,8 @@ describe 'postfix class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes  => true)
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe file('/etc/aliases') do

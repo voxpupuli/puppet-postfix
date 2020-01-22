@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'postfix::mailman' do
-
   let :pre_condition do
-    "include ::postfix"
+    'include ::postfix'
   end
 
   on_supported_os.each do |os, facts|
