@@ -33,18 +33,6 @@
         - BEAKER_IS_PE=no
         - BEAKER_PUPPET_COLLECTION=puppet5
         - BEAKER_debug=true
-        - BEAKER_setfile=debian7-64{hypervisor=docker}
-      bundler_args:
-      script: bundle exec rspec spec/acceptance/*_spec.rb
-      stage: acceptance
-    - rvm: default
-      sudo: required
-      services: docker
-      env:
-        - PUPPET_INSTALL_TYPE=agent
-        - BEAKER_IS_PE=no
-        - BEAKER_PUPPET_COLLECTION=puppet5
-        - BEAKER_debug=true
         - BEAKER_setfile=debian8-64{hypervisor=docker}
       bundler_args:
       script: bundle exec rspec spec/acceptance/*_spec.rb
@@ -120,33 +108,6 @@
       bundler_args:
       script: bundle exec rspec spec/acceptance/*_spec.rb
       stage: acceptance
-  allow_failures:
-  # Exim is not properly stopped on these OSes, which makes the run non
-  # idempotent
-  - rvm: default
-    sudo: required
-    services: docker
-    env:
-      - PUPPET_INSTALL_TYPE=agent
-      - BEAKER_IS_PE=no
-      - BEAKER_PUPPET_COLLECTION=puppet5
-      - BEAKER_debug=true
-      - BEAKER_setfile=debian6-64{hypervisor=docker}
-    bundler_args:
-    script: bundle exec rspec spec/acceptance/*_spec.rb
-    stage: acceptance
-  - rvm: default
-    sudo: required
-    services: docker
-    env:
-      - PUPPET_INSTALL_TYPE=agent
-      - BEAKER_IS_PE=no
-      - BEAKER_PUPPET_COLLECTION=puppet5
-      - BEAKER_debug=true
-      - BEAKER_setfile=debian7-64{hypervisor=docker}
-    bundler_args:
-    script: bundle exec rspec spec/acceptance/*_spec.rb
-    stage: acceptance
 
 Gemfile:
   required:

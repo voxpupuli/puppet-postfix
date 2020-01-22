@@ -72,9 +72,5 @@ describe 'postfix class' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
-
-    describe file('/etc/aliases') do
-      it { is_expected.not_to exist }
-    end
   end
 end
