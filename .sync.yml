@@ -116,3 +116,6 @@ Gemfile:
     ':system_tests':
       - gem: beaker-hostgenerator
       - gem: "puppet-module-posix-system-r#{minor_version}"
+  optional:
+    ':development':
+      - gem: 'github_changelog_generator'
