@@ -15,6 +15,7 @@ class postfix::files {
   $master_bounce_command = $postfix::master_bounce_command
   $master_defer_command  = $postfix::master_defer_command
   $myorigin            = $postfix::myorigin
+  $manage_aliases      = $postfix::manage_aliases
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
   $chroot              = $postfix::chroot
@@ -45,12 +46,14 @@ class postfix::files {
   }
 
   # Aliases
-  file { '/etc/aliases':
-    ensure  => 'file',
-    content => "# file managed by puppet\n",
-    notify  => Exec['newaliases'],
-    replace => false,
-    seltype => $postfix::params::aliasesseltype,
+  if $manage_aliases {
+    file { '/etc/aliases':
+      ensure  => 'file',
+      content => "# file managed by puppet\n",
+      notify  => Exec['newaliases'],
+      replace => false,
+      seltype => $postfix::params::aliasesseltype,
+    }
   }
 
   # Config files
