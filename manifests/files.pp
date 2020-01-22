@@ -105,7 +105,7 @@ class postfix::files {
     default: {}
   }
 
-  if $manage_root_alias {
+  if $manage_aliases and $manage_root_alias {
     postfix::mailalias {'root':
       recipient => $root_mail_recipient,
     }
