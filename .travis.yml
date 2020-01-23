@@ -41,9 +41,6 @@ matrix:
       rvm: 2.5.3
       stage: spec
     -
-      env: DEPLOY_TO_FORGE=yes
-      stage: deploy
-    -
       bundler_args: 
       env: ["PUPPET_INSTALL_TYPE=agent", "BEAKER_IS_PE=no", "BEAKER_PUPPET_COLLECTION=puppet5", "BEAKER_debug=true", "BEAKER_setfile=debian8-64{hypervisor=docker}"]
       rvm: default
