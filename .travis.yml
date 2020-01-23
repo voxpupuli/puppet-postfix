@@ -24,7 +24,7 @@ stages:
   - spec
   - acceptance
   -
-    if: tag =~ ^v\d
+    if: tag =~ ^\d
     name: deploy
 matrix:
   fast_finish: true
@@ -105,6 +105,7 @@ branches:
   only:
     - master
     - /^v\d/
+    - /^\d/
 notifications:
   email: false
 deploy:

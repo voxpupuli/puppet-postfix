@@ -6,6 +6,12 @@
         - augeas
       packages:
         - libaugeas-dev
+  branches:
+    - master
+    - /^\d/
+  deploy_to_forge:
+    enabled: true
+    tag_regex: "^\\d"
   acceptance:
     - '*'
   user: camptocamp
@@ -116,3 +122,8 @@ Gemfile:
     ':system_tests':
       - gem: beaker-hostgenerator
       - gem: "puppet-module-posix-system-r#{minor_version}"
+  optional:
+    ':development':
+      - gem: 'github_changelog_generator'
+Rakefile:
+  changelog_version_tag_pattern: '%s'

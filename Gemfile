@@ -29,6 +29,7 @@ group :development do
   gem "puppet-module-win-default-r#{minor_version}", '~> 0.3',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}", '~> 0.3',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "ruby-augeas",                                             require: false
+  gem "github_changelog_generator",                              require: false
 end
 group :system_tests do
   gem "beaker-hostgenerator",                         require: false
