@@ -1,30 +1,37 @@
-# Changelog
+# Change log
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [1.9.0](https://github.com/camptocamp/puppet-postfix/tree/1.9.0) (2019-11-25)
+## [1.10.0](https://github.com/camptocamp/puppet-postfix/tree/1.10.0) (2020-01-23)
+
+[Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.9.0...1.10.0)
+
+### Added
+
+- Add the possibility to manage \(or not\) aliases [\#271](https://github.com/camptocamp/puppet-postfix/pull/271) ([Bodenhaltung](https://github.com/Bodenhaltung))
+- Convert to PDK [\#270](https://github.com/camptocamp/puppet-postfix/pull/270) ([raphink](https://github.com/raphink))
+- Convert params.pp to hiera data [\#269](https://github.com/camptocamp/puppet-postfix/pull/269) ([raphink](https://github.com/raphink))
+
+### Fixed
+
+- Fix manage\_aliases [\#272](https://github.com/camptocamp/puppet-postfix/pull/272) ([raphink](https://github.com/raphink))
+
+## [1.9.0](https://github.com/camptocamp/puppet-postfix/tree/1.9.0) (2019-11-26)
 
 [Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.8.0...1.9.0)
 
-**Fixed bugs:**
-
-- Should mailalias\_core be declared as a dependency ? [\#236](https://github.com/camptocamp/puppet-postfix/issues/236)
-
-**Closed issues:**
-
-- Add Debian Stretch to metadata.json [\#259](https://github.com/camptocamp/puppet-postfix/issues/259)
-- qmgr warning: connect to transport private/retry [\#252](https://github.com/camptocamp/puppet-postfix/issues/252)
-- Clarify license [\#250](https://github.com/camptocamp/puppet-postfix/issues/250)
-
-**Merged pull requests:**
+### Added
 
 - Upping version dependency on puppet-alternatives [\#260](https://github.com/camptocamp/puppet-postfix/pull/260) ([cubiclelord](https://github.com/cubiclelord))
 - Add RedHat 8 support [\#257](https://github.com/camptocamp/puppet-postfix/pull/257) ([zeromind](https://github.com/zeromind))
 - Add missing inet\_protocols parameter to the README. [\#254](https://github.com/camptocamp/puppet-postfix/pull/254) ([catay](https://github.com/catay))
 - add retry and proxywrite for debian family OSes [\#253](https://github.com/camptocamp/puppet-postfix/pull/253) ([Dan33l](https://github.com/Dan33l))
 - Allow `puppetlabs/stdlib` 6.x [\#246](https://github.com/camptocamp/puppet-postfix/pull/246) ([alexjfisher](https://github.com/alexjfisher))
-- Add missing Variable for Suse [\#245](https://github.com/camptocamp/puppet-postfix/pull/245) ([cocker-cc](https://github.com/cocker-cc))
 - Add show\_diff parameter to postfix::conffile [\#226](https://github.com/camptocamp/puppet-postfix/pull/226) ([treydock](https://github.com/treydock))
+
+### Fixed
+
+- Add missing Variable for Suse [\#245](https://github.com/camptocamp/puppet-postfix/pull/245) ([cocker-cc](https://github.com/cocker-cc))
 
 ## 1.8.0 (2019-04-05)
 
