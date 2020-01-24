@@ -30,7 +30,7 @@
 define postfix::map (
   Enum['present', 'absent']             $ensure = 'present',
   Variant[Array[String], String, Undef] $source = undef,
-  Variant[Array[String], String, Undef] $content = undef,
+  Optional[Variant[Sensitive[String],String]] $content = undef,
   String                                $type = 'hash',
   Stdlib::Absolutepath                  $path = "/etc/postfix/${name}",
   String[4,4]                           $mode = '0640'
@@ -75,7 +75,8 @@ define postfix::map (
       owner   => 'root',
       group   => 'postfix',
       mode    => $mode,
-      require => [File["postfix map ${name}"], Exec["generate ${name}.db"]],
+      require => File["postfix map ${name}"],
+      notify  => $manage_notify,
     }
   }
 

@@ -1,20 +1,16 @@
 {
   "name": "camptocamp-postfix",
-  "version": "1.6.0",
-  "author": "Camptocamp",
+  "version": "1.10.0",
+  "author": "camptocamp",
   "summary": "Camptocamp Postfix Module",
   "license": "Apache-2.0",
   "source": "https://github.com/camptocamp/puppet-postfix",
   "project_page": "https://github.com/camptocamp/puppet-postfix",
   "issues_url": "https://github.com/camptocamp/puppet-postfix/issues",
-  "description": "Postfix Module for Puppet",
-  "requirements": [
-    {"name":"puppet","version_requirement":">= 3.0.0 < 5.0.0" }
-  ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">=3.2.0 <5.0.0"
+      "version_requirement": ">=4.13.0 <7.0.0"
     },
     {
       "name": "camptocamp/augeas",
@@ -22,12 +18,32 @@
     },
     {
       "name": "puppet/alternatives",
-      "version_requirement": ">=2.0.0 <3.0.0"
+      "version_requirement": ">=2.0.0 <4.0.0"
+    },
+    {
+      "name": "puppetlabs/mailalias_core",
+      "version_requirement": ">=1.0.5 <2.0.0"
     }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04",
+        "16.04",
+        "18.04"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "6",
         "7",
@@ -35,18 +51,25 @@
       ]
     },
     {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "14.04",
-        "16.04"
-      ]
+      "operatingsystem": "Alpine"
     },
     {
-      "operatingsystem": "RedHat",
+      "operatingsystem": "Fedora",
       "operatingsystemrelease": [
-        "6",
-        "7"
+        "28",
+        "29",
+        "30"
       ]
     }
-  ]
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.0.0 < 7.0.0"
+    }
+  ],
+  "description": "Postfix Module for Puppet",
+  "pdk-version": "1.15.0",
+  "template-url": "pdk-default#1.15.0",
+  "template-ref": "tags/1.15.0-0-g0bc522e"
 }

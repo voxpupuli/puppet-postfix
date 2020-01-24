@@ -13,18 +13,18 @@ describe 'postfix::satellite' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts.merge({
-          :augeasversion => '1.2.0',
-          :puppetversion => Puppet.version,
-        })
+        facts.merge(augeasversion: '1.2.0',
+                    puppetversion: Puppet.version)
       end
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('postfix::mta') }
-      it { is_expected.to contain_postfix__virtual('@foo.example.com').with(
-        :ensure      => 'present',
-        :destination => 'root'
-      ) }
+      it {
+        is_expected.to contain_postfix__virtual('@foo.example.com').with(
+          ensure: 'present',
+          destination: 'root',
+        )
+      }
     end
   end
 end

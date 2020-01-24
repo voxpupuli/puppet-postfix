@@ -1,0 +1,4 @@
+---
+postfix::params::restart_cmd: '/usr/bin/systemctl reload postfix'
+postfix::params::master_os_template: "postfix/master.cf.sles.erb"
+...

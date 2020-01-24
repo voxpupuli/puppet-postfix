@@ -62,8 +62,8 @@ qmgr      fifo  n       -       n       300     1       qmgr
 #qmgr     fifo  n       -       n       300     1       oqmgr
 #tlsmgr    unix  -       -       n       1000?   1       tlsmgr
 rewrite   unix  -       -       n       -       -       trivial-rewrite
-bounce    unix  -       -       n       -       0       bounce
-defer     unix  -       -       n       -       0       bounce
+bounce    unix  -       -       n       -       0       <%= @master_bounce_command %>
+defer     unix  -       -       n       -       0       <%= @master_defer_command %>
 trace     unix  -       -       n       -       0       bounce
 verify    unix  -       -       n       -       1       verify
 flush     unix  n       -       n       1000?   0       flush

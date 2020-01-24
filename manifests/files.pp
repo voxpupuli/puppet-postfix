@@ -12,7 +12,10 @@ class postfix::files {
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
   $master_entries      = $postfix::master_entries
+  $master_bounce_command = $postfix::master_bounce_command
+  $master_defer_command  = $postfix::master_defer_command
   $myorigin            = $postfix::myorigin
+  $manage_aliases      = $postfix::manage_aliases
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
   $chroot              = $postfix::chroot
@@ -27,7 +30,6 @@ class postfix::files {
   assert_type(Optional[String], $master_smtps)
 
   $jail = $chroot ? {
-    undef   => '-',
     true    => 'y',
     default => 'n',
   }
@@ -44,12 +46,14 @@ class postfix::files {
   }
 
   # Aliases
-  file { '/etc/aliases':
-    ensure  => 'file',
-    content => "# file managed by puppet\n",
-    notify  => Exec['newaliases'],
-    replace => false,
-    seltype => $postfix::params::aliasesseltype,
+  if $manage_aliases {
+    file { '/etc/aliases':
+      ensure  => 'file',
+      content => "# file managed by puppet\n",
+      notify  => Exec['newaliases'],
+      replace => false,
+      seltype => $postfix::params::aliasesseltype,
+    }
   }
 
   # Config files
@@ -101,10 +105,9 @@ class postfix::files {
     default: {}
   }
 
-  if $manage_root_alias {
-    mailalias {'root':
+  if $manage_aliases and $manage_root_alias {
+    postfix::mailalias {'root':
       recipient => $root_mail_recipient,
-      notify    => Exec['newaliases'],
     }
   }
 
