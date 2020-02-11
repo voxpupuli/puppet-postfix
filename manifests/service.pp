@@ -17,7 +17,8 @@ class postfix::service {
   # Aliases
   if $manage_aliases {
     exec { 'newaliases':
-      command     => '/usr/bin/newaliases',
+      command     => 'newaliases',
+      path        => $facts['path'],
       refreshonly => true,
       subscribe   => File['/etc/aliases'],
       require     => Service['postfix'],
