@@ -58,9 +58,7 @@ verify    unix  -       -       <%= @jail %>       -       1       verify
 flush     unix  n       -       <%= @jail %>       1000?   0       flush
 proxymap  unix  -       -       n       -       -       proxymap
 smtp      unix  -       -       <%= @jail %>       -       -       smtp
-# When relaying mail as backup MX, disable fallback_relay to avoid MX loops
 relay     unix  -       -       <%= @jail %>       -       -       smtp
-	-o fallback_relay=
 #       -o smtp_helo_timeout=5 -o smtp_connect_timeout=5
 showq     unix  n       -       <%= @jail %>       -       -       showq
 error     unix  -       -       <%= @jail %>       -       -       error
