@@ -29,7 +29,7 @@ smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 #  -o smtpd_tls_wrappermode=yes
 #  -o smtpd_sasl_auth_enable=yes
 #  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-#628      inet  n       -       n       -       -       qmqpd
+#628       inet  n       -       n       -       -       qmqpd
 pickup    fifo  n       -       <%= @jail %>       60      1       pickup
 cleanup   unix  n       -       <%= @jail %>       -       0       cleanup
 qmgr      fifo  n       -       n       300     1       qmgr
@@ -55,7 +55,7 @@ local     unix  -       n       n       -       -       local
 virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       <%= @jail %>       -       -       lmtp
 anvil     unix  -       -       <%= @jail %>       -       1       anvil
-scache	  unix	-	-	<%= @jail %>	-	1	scache
+scache    unix  -       -       <%= @jail %>       -       1       scache
 #
 # ====================================================================
 # Interfaces to non-Postfix software. Be sure to examine the manual
