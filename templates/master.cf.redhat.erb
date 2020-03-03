@@ -57,6 +57,7 @@ trace     unix  -       -       <%= @jail %>       -       0       bounce
 verify    unix  -       -       <%= @jail %>       -       1       verify
 flush     unix  n       -       <%= @jail %>       1000?   0       flush
 proxymap  unix  -       -       n       -       -       proxymap
+proxywrite unix -       -       n       -       1       proxymap
 smtp      unix  -       -       <%= @jail %>       -       -       smtp
 relay     unix  -       -       <%= @jail %>       -       -       smtp
 #       -o smtp_helo_timeout=5 -o smtp_connect_timeout=5
