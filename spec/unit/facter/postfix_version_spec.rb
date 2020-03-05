@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Facter::Util::Fact.to_s do
+describe Facter.fact(:postfix_version) do
   before(:each) do
     Facter.clear
   end
