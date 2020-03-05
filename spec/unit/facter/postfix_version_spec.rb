@@ -8,7 +8,7 @@ describe Facter::Util::Fact.to_s do
   describe 'postfix_version' do
     context 'with value' do
       before :each do
-        Facter::Core::Execution.stubs(:which).with('postconf').returns('/usr/sbin/postconf')
+        Facter::Util::Resolution.stubs(:which).with('postconf').returns('/usr/sbin/postconf')
         Facter::Util::Resolution.stubs(:exec).with('postconf mail_version').returns('mail_version = 3.4.8')
       end
       it {
