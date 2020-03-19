@@ -12,7 +12,7 @@ describe Facter.fact(:postfix_version) do
         Facter::Util::Resolution.stubs(:exec).with('postconf mail_version').returns('mail_version = 3.4.8')
       end
       it {
-        expect(subject.value).to eq('3.4.8')
+        expect(Facter.fact(:mysql_version).value).to eq('3.4.8')
       }
     end
   end
