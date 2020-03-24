@@ -4,18 +4,19 @@ class postfix::params {
       $aliasesseltype = $::operatingsystemmajrelease ? {
         '4'     => 'etc_t',
         /5/     => 'postfix_etc_t',
-        /6|7/   => 'etc_aliases_t',
+        /6|7|8/   => 'etc_aliases_t',
         default => undef,
       }
 
       $seltype = $::operatingsystemmajrelease ? {
         '4'     => 'etc_t',
-        /5|6|7/ => 'postfix_etc_t',
+        /5|6|7|8/ => 'postfix_etc_t',
         default => undef,
       }
 
       $restart_cmd = $::operatingsystemmajrelease ? {
         '7'     => '/bin/systemctl reload postfix',
+        '8'     => '/bin/systemctl reload postfix',
         default => '/etc/init.d/postfix reload',
       }
 
