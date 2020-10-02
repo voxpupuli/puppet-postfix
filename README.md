@@ -45,6 +45,7 @@ Example: '127.0.0.1, [::1]'.
 
 ##### `inet_protocols`
 
+
 A string defining the internet protocols that Postfix will use.  
 Default: 'all'.  
 Example: 'ipv4'.
@@ -194,6 +195,20 @@ A Boolean to define whether to configure master.cf to use the Sympa mailing list
 Default: False.
 
 #### Examples
+##### Include
+```puppet
+include postfix
+```
+or
+##### Class Resource
+```puppet
+class { 'postfix':
+  inet_interfaces     => 'localhost',
+  inet_protocols      => 'ipv4',
+  relayhost           => "mail.${facts['domain']}",
+  root_mail_recipient => 'dont_bother_the_sysadmins@example.com',
+}
+```
 
 ### postfix::config
 
