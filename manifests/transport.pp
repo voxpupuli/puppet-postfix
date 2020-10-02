@@ -73,11 +73,11 @@ define postfix::transport (
         ]
       }
 
-      $changes = [
+      $changes = flatten([
         "set pattern[. = '${name}'] '${name}'",
         $change_destination,
         $change_nexthop,
-      ]
+      ])
     }
 
     'absent': {
