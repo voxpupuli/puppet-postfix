@@ -1,0 +1,19 @@
+---
+version: 5
+defaults:               # Used for any hierarchy level that omits these keys.
+  datadir: data         # This path is relative to hiera.yaml's directory.
+  data_hash: yaml_data  # Use the built-in YAML backend.
+
+hierarchy:
+  - name: "Per-OS name" # example Alpine, Fedora
+    path: "os/%{facts.os.name}.yaml"
+
+  - name: "Per-OS family"
+    paths:
+      - "osfamily/%{facts.os.family}/%{facts.lsbdistcodename}.yaml"
+      - "osfamily/%{facts.os.family}/%{facts.operatingsystemmajrelease}.yaml"
+      - "osfamily/%{facts.os.family}.yaml"
+
+  - name: "Common data"
+    path: "common.yaml"
+...

@@ -1,0 +1,2 @@
+---
+postfix::params::master_os_template: "postfix/master.cf.debian.erb"

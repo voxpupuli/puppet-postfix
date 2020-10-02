@@ -1,0 +1,5 @@
+---
+postfix::params::master_os_template: "postfix/master.cf.Solaris.erb"
+postfix::params::restart_cmd: '/usr/sbin/svcadm refresh network/smtp:postfix'
+postfix::params::mailx_package: 'mailx'
+...

@@ -8,11 +8,16 @@ class postfix::files {
   $manage_conffiles    = $postfix::manage_conffiles
   $maincf_source       = $postfix::maincf_source
   $mastercf_source     = $postfix::mastercf_source
+  $mastercf_content    = $postfix::mastercf_content
+  $mastercf_template   = $postfix::mastercf_template
   $master_smtp         = $postfix::master_smtp
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
   $master_entries      = $postfix::master_entries
+  $master_bounce_command = $postfix::master_bounce_command
+  $master_defer_command  = $postfix::master_defer_command
   $myorigin            = $postfix::myorigin
+  $manage_aliases      = $postfix::manage_aliases
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
   $chroot              = $postfix::chroot
@@ -27,7 +32,6 @@ class postfix::files {
   assert_type(Optional[String], $master_smtps)
 
   $jail = $chroot ? {
-    undef   => '-',
     true    => 'y',
     default => 'n',
   }
@@ -39,31 +43,30 @@ class postfix::files {
   file { '/etc/mailname':
     ensure  => 'file',
     content => "${::fqdn}\n",
-    mode    => '0640',
+    mode    => '0644',
     seltype => $postfix::params::seltype,
   }
 
   # Aliases
-  file { '/etc/aliases':
-    ensure  => 'file',
-    content => "# file managed by puppet\n",
-    notify  => Exec['newaliases'],
-    replace => false,
-    seltype => $postfix::params::aliasesseltype,
-  }
-
-  # Aliases
-  exec { 'newaliases':
-    command     => '/usr/bin/newaliases',
-    refreshonly => true,
-    subscribe   => File['/etc/aliases'],
+  if $manage_aliases {
+    file { '/etc/aliases':
+      ensure  => 'file',
+      content => "# file managed by puppet\n",
+      notify  => Exec['newaliases'],
+      replace => false,
+      seltype => $postfix::params::aliasesseltype,
+    }
   }
 
   # Config files
   if $mastercf_source {
-    $mastercf_content = undef
+    $_mastercf_content = undef
+  } elsif $mastercf_content {
+    $_mastercf_content = $mastercf_content
+  } elsif $mastercf_template {
+    $_mastercf_content = epp($mastercf_template)
   } else {
-    $mastercf_content = template(
+    $_mastercf_content = template(
       $postfix::params::master_os_template,
       'postfix/master.cf.common.erb'
     )
@@ -71,9 +74,9 @@ class postfix::files {
 
   file { '/etc/postfix/master.cf':
     ensure  => 'file',
-    content => $mastercf_content,
+    content => $_mastercf_content,
     group   => 'root',
-    mode    => '0640',
+    mode    => '0644',
     owner   => 'root',
     seltype => $postfix::params::seltype,
     source  => $mastercf_source,
@@ -83,7 +86,7 @@ class postfix::files {
   file { '/etc/postfix/main.cf':
     ensure  => 'file',
     group   => 'root',
-    mode    => '0640',
+    mode    => '0644',
     owner   => 'root',
     replace => false,
     seltype => $postfix::params::seltype,
@@ -108,10 +111,9 @@ class postfix::files {
     default: {}
   }
 
-  if $manage_root_alias {
-    mailalias {'root':
+  if $manage_aliases and $manage_root_alias {
+    postfix::mailalias {'root':
       recipient => $root_mail_recipient,
-      notify    => Exec['newaliases'],
     }
   }
 

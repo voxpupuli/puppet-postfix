@@ -1,4 +1,7 @@
 class postfix::service {
+
+  $manage_aliases = $postfix::manage_aliases
+
   exec { 'restart postfix after packages install':
     command     => regsubst($::postfix::params::restart_cmd, 'reload', 'restart'),
     refreshonly => true,
@@ -10,6 +13,16 @@ class postfix::service {
     enable    => $::postfix::service_enabled,
     hasstatus => true,
     restart   => $::postfix::params::restart_cmd,
+  }
+  # Aliases
+  if $manage_aliases {
+    exec { 'newaliases':
+      command     => 'newaliases',
+      path        => $facts['path'],
+      refreshonly => true,
+      subscribe   => File['/etc/aliases'],
+      require     => Service['postfix'],
+    }
   }
   if $::osfamily == 'RedHat' {
     alternatives { 'mta':
