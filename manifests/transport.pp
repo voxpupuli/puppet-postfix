@@ -49,25 +49,48 @@ define postfix::transport (
 ) {
   include ::postfix::augeas
 
+  $smtp_nexthop = ("${nexthop}" =~ /\[.*\]/)
+
   case $ensure {
     'present': {
-      if ($destination) {
-        $change_destination = "set pattern[. = '${name}']/transport '${destination}'"
-      } else {
-        $change_destination = "clear pattern[. = '${name}']/transport"
+      if ($smtp_nexthop) {
+        $change_destination = "rm pattern[. = '${name}']/transport"
+      } else  {
+        if ($destination) {
+          $change_destination = "set pattern[. = '${name}']/transport '${destination}'"
+        } else {
+          $change_destination = "clear pattern[. = '${name}']/transport"
+        }
       }
 
       if ($nexthop) {
-        $change_nexthop = "set pattern[. = '${name}']/nexthop '${nexthop}'"
+        if ($smtp_nexthop) {
+          $nexthop_split = split($nexthop, ':')
+          $change_nexthop = [
+            "rm pattern[. = '${name}']/nexthop",
+            "set pattern[. = '${name}']/host '${nexthop_split[0]}'",
+            "set pattern[. = '${name}']/port '${nexthop_split[1]}'",
+          ]
+        } else {
+          $change_nexthop = [
+            "rm pattern[. = '${name}']/host",
+            "rm pattern[. = '${name}']/port",
+            "set pattern[. = '${name}']/nexthop '${nexthop}'",
+          ]
+        }
       } else {
-        $change_nexthop = "clear pattern[. = '${name}']/nexthop"
+        $change_nexthop = [
+          "clear pattern[. = '${name}']/nexthop",
+          "rm pattern[. = '${name}']/host",
+          "rm pattern[. = '${name}']/port",
+        ]
       }
 
-      $changes = [
+      $changes = flatten([
         "set pattern[. = '${name}'] '${name}'",
         $change_destination,
         $change_nexthop,
-      ]
+      ])
     }
 
     'absent': {

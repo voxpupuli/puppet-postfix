@@ -113,6 +113,8 @@ describe 'postfix::transport' do
               "set pattern[. = 'foo'] 'foo'",
               "clear pattern[. = 'foo']/transport",
               "clear pattern[. = 'foo']/nexthop",
+              "rm pattern[. = 'foo']/host",
+              "rm pattern[. = 'foo']/port",
             ],
           )
         }
@@ -136,7 +138,35 @@ describe 'postfix::transport' do
             changes: [
               "set pattern[. = 'foo'] 'foo'",
               "set pattern[. = 'foo']/transport 'bar'",
+              "rm pattern[. = 'foo']/host",
+              "rm pattern[. = 'foo']/port",
               "set pattern[. = 'foo']/nexthop 'baz'",
+            ],
+          )
+        }
+      end
+
+      context 'when overriding default values with [host]' do
+        let(:params) do
+          {
+            destination: 'bar',
+            nexthop: '[baz]:1234',
+            file: '/tmp/transport',
+            ensure: 'present',
+          }
+        end
+
+        it { is_expected.to contain_class('postfix::augeas') }
+        it {
+          is_expected.to contain_augeas('Postfix transport - foo').with(
+            incl: '/tmp/transport',
+            lens: 'Postfix_Transport.lns',
+            changes: [
+              "set pattern[. = 'foo'] 'foo'",
+              "rm pattern[. = 'foo']/transport",
+              "rm pattern[. = 'foo']/nexthop",
+              "set pattern[. = 'foo']/host '[baz]'",
+              "set pattern[. = 'foo']/port '1234'",
             ],
           )
         }
