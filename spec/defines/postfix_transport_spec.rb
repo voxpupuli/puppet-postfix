@@ -163,7 +163,7 @@ describe 'postfix::transport' do
             lens: 'Postfix_Transport.lns',
             changes: [
               "set pattern[. = 'foo'] 'foo'",
-              "set pattern[. = 'foo']/transport 'bar'",
+              "rm pattern[. = 'foo']/transport",
               "rm pattern[. = 'foo']/nexthop",
               "set pattern[. = 'foo']/host '[baz]'",
               "set pattern[. = 'foo']/port '1234'",

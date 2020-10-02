@@ -42,11 +42,9 @@ define postfix::transport (
 ) {
   include ::postfix::augeas
 
-  $smtp_nexthop = ($nexthop =~ /\[.*\]/)
-
   case $ensure {
     'present': {
-      if ($smtp_nexthop) {
+      if ($nexthop =~ /\[.*\]/) {
         $change_destination = "rm pattern[. = '${name}']/transport"
       } else  {
         if ($destination) {
@@ -57,7 +55,7 @@ define postfix::transport (
       }
 
       if ($nexthop) {
-        if ($smtp_nexthop) {
+        if ($nexthop =~ /\[.*\]/) {
           $nexthop_split = split($nexthop, ':')
           $change_nexthop = [
             "rm pattern[. = '${name}']/nexthop",
