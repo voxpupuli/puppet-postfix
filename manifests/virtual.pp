@@ -25,14 +25,19 @@
 #       ensure => present,
 #     }
 #     postfix::config { "virtual_alias_maps":
-#       value => "hash:/etc/postfix/virtual"
+#       value => "hash:/etc/postfix/virtual, regexp:/etc/postfix/virtual_regexp"
 #     }
 #     postfix::virtual { "user@example.com":
 #       ensure      => present,
 #       destination => ['root', 'postmaster'],
 #     }
+#     postfix::virtual { "/.+@.+/"
+#       ensure      => present,
+#       file        => '/etc/postfix/virtual_regexp',
+#       destination => 'root',
+#     }
 #   }
-#
+
 define postfix::virtual (
   Variant[String, Array[String]] $destination,
   Stdlib::Absolutepath           $file='/etc/postfix/virtual',

@@ -26,12 +26,19 @@
 #       ensure => present,
 #     }
 #     postfix::config { 'transport_maps':
-#       value => 'hash:/etc/postfix/transport',
+#       value => 'hash:/etc/postfix/transport, regexp:/etc/postfix/transport_regexp',
 #     }
-#     postfix::transport { 'mailman.example.com':
-#       ensure      => present,
-#       destination => 'mailman',
+#     postfix::transport {
+#       'mailman.example.com':
+#          ensure      => present,
+#          destination => 'mailman';
+#       'slow_transport':
+#          ensure      => present,
+#          nexthop     => '/^user-.*@mydomain\.com/'
+#          file        => '/etc/postfix/transport_regexp',
+#          destination => 'slow'
 #     }
+#     
 #   }
 #
 define postfix::transport (
