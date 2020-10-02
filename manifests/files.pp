@@ -8,6 +8,8 @@ class postfix::files {
   $manage_conffiles    = $postfix::manage_conffiles
   $maincf_source       = $postfix::maincf_source
   $mastercf_source     = $postfix::mastercf_source
+  $mastercf_content    = $postfix::mastercf_content
+  $mastercf_template   = $postfix::mastercf_template
   $master_smtp         = $postfix::master_smtp
   $master_smtps        = $postfix::master_smtps
   $master_submission   = $postfix::master_submission
@@ -58,9 +60,13 @@ class postfix::files {
 
   # Config files
   if $mastercf_source {
-    $mastercf_content = undef
+    $_mastercf_content = undef
+  } elsif $mastercf_content {
+    $_mastercf_content = $mastercf_content
+  } elsif $mastercf_template {
+    $_mastercf_content = epp($mastercf_template)
   } else {
-    $mastercf_content = template(
+    $_mastercf_content = template(
       $postfix::params::master_os_template,
       'postfix/master.cf.common.erb'
     )
@@ -68,7 +74,7 @@ class postfix::files {
 
   file { '/etc/postfix/master.cf':
     ensure  => 'file',
-    content => $mastercf_content,
+    content => $_mastercf_content,
     group   => 'root',
     mode    => '0644',
     owner   => 'root',
