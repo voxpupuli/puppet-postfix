@@ -51,9 +51,26 @@ define postfix::transport (
       }
 
       if ($nexthop) {
-        $change_nexthop = "set pattern[. = '${name}']/nexthop '${nexthop}'"
+        if ($nexthop =~ /\[.*\]/) {
+          $nexthop_split = split($nexthop, ':')
+          $change_nexthop = [
+            "rm pattern[. = '${name}']/nexthop",
+            "set pattern[. = '${name}']/host '${nexthop_split[0]}'",
+            "set pattern[. = '${name}']/port '${nexthop_split[1]}'",
+          ]
+        } else {
+          $change_nexthop = [
+            "rm pattern[. = '${name}']/host",
+            "rm pattern[. = '${name}']/port",
+            "set pattern[. = '${name}']/nexthop '${nexthop}'",
+          ]
+        }
       } else {
-        $change_nexthop = "clear pattern[. = '${name}']/nexthop"
+        $change_nexthop = [
+          "clear pattern[. = '${name}']/nexthop",
+          "rm pattern[. = '${name}']/host",
+          "rm pattern[. = '${name}']/port",
+        ]
       }
 
       $changes = [
