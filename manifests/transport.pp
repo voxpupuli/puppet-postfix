@@ -113,7 +113,7 @@ define postfix::transport (
     Package['postfix'] -> Postfix::Transport[$title]
   }
 
-  if defined(Postfix::Hash['/etc/postfix/transport']) {
-    Postfix::Transport[$title] ~> Postfix::Hash['/etc/postfix/transport']
+  if defined(Postfix::Hash[$file]) {
+    Postfix::Transport[$title] ~> Postfix::Hash[$file]
   }
 }
