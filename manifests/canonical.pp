@@ -35,7 +35,7 @@
 #
 define postfix::canonical (
   $destination,
-  $file='/etc/postfix/canonical',
+  $file="${postfix::confdir}/canonical",
   $ensure='present'
 ) {
   include ::postfix::augeas

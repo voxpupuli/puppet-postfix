@@ -32,7 +32,7 @@ define postfix::map (
   Variant[Array[String], String, Undef] $source = undef,
   Optional[Variant[Sensitive[String],String]] $content = undef,
   String                                $type = 'hash',
-  Stdlib::Absolutepath                  $path = "/etc/postfix/${name}",
+  Stdlib::Absolutepath                  $path = "${postfix::confdir}/${name}",
   String[4,4]                           $mode = '0640'
 ) {
   include ::postfix::params

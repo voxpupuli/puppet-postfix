@@ -44,7 +44,7 @@
 define postfix::transport (
   Optional[String]          $destination = undef,
   Optional[String]          $nexthop=undef,
-  Stdlib::Absolutepath      $file='/etc/postfix/transport',
+  Stdlib::Absolutepath      $file="${postfix::confdir}/transport",
   Enum['present', 'absent'] $ensure='present'
 ) {
   include ::postfix::augeas

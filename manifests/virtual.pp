@@ -40,7 +40,7 @@
 
 define postfix::virtual (
   Variant[String, Array[String]] $destination,
-  Stdlib::Absolutepath           $file='/etc/postfix/virtual',
+  Stdlib::Absolutepath           $file="${postfix::confdir}/virtual",
   Enum['present', 'absent']      $ensure='present'
 ) {
   include ::postfix::augeas

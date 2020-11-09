@@ -4,7 +4,10 @@ describe 'postfix::virtual' do
   let(:title) { 'foo' }
 
   let :pre_condition do
-    "class { '::augeas': }"
+    <<-EOT
+    class { '::augeas': }
+    class { '::postfix': }
+    EOT
   end
 
   on_supported_os.each do |os, facts|

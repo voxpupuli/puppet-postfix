@@ -21,7 +21,7 @@ class postfix::ldap {
 
   if $::osfamily == 'Debian' {
     package {'postfix-ldap':
-      before  => File['/etc/postfix/ldap-aliases.cf'],
+      before  => File["${postfix::confdir}/ldap-aliases.cf"],
     }
   }
 
@@ -39,7 +39,7 @@ class postfix::ldap {
     default => $postfix::ldap_options,
   }
 
-  file {'/etc/postfix/ldap-aliases.cf':
+  file {"${postfix::confdir}/ldap-aliases.cf":
     ensure  => 'file',
     owner   => 'root',
     group   => 'postfix',

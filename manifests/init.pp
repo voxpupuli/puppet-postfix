@@ -93,6 +93,8 @@
 #   }
 #
 class postfix (
+  Stdlib::Absolutepath            $confdir,
+  Boolean                         $manage_mailname,
   String                          $alias_maps          = 'hash:/etc/aliases',
   Optional[Hash]                  $configs             = {},
   Integer                         $amavis_procs        = 2,
@@ -151,7 +153,7 @@ class postfix (
 
   $all_alias_maps = $ldap ? {
     false => $alias_maps,
-    true  => "${alias_maps}, ldap:/etc/postfix/ldap-aliases.cf",
+    true  => "${alias_maps}, ldap:${confdir}/ldap-aliases.cf",
   }
 
   create_resources('::postfix::config', $configs)

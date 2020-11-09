@@ -50,7 +50,7 @@ define postfix::conffile (
   Enum['present', 'absent', 'directory'] $ensure    = 'present',
   Variant[Array[String], String, Undef]  $source    = undef,
   Optional[String]                       $content   = undef,
-  Stdlib::Absolutepath                   $path      = "/etc/postfix/${name}",
+  Stdlib::Absolutepath                   $path      = "${postfix::confdir}/${name}",
   String                                 $mode      = '0640',
   Hash                                   $options   = {},
   Boolean                                $show_diff = true,

@@ -58,10 +58,10 @@ define postfix::config (
   }
 
   augeas { "manage postfix '${title}'":
-    incl    => '/etc/postfix/main.cf',
+    incl    => "${postfix::confdir}/main.cf",
     lens    => 'Postfix_Main.lns',
     changes => $changes,
-    require => File['/etc/postfix/main.cf'],
+    require => File["${postfix::confdir}/main.cf"],
   }
 
   Postfix::Config[$title] ~> Class['postfix::service']
