@@ -12,6 +12,13 @@ describe 'postfix::transport' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
+      let(:postfix_transport_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/transport'
+        else '/etc/postfix/transport'
+        end
+      end
+
       let(:facts) do
         facts.merge(augeasversion: '1.2.0',
                     puppetversion: Puppet.version)
@@ -110,7 +117,7 @@ describe 'postfix::transport' do
         it { is_expected.to contain_class('postfix::augeas') }
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
-            incl: '/etc/postfix/transport',
+            incl: postfix_transport_path,
             lens: 'Postfix_Transport.lns',
             changes: [
               "set pattern[. = 'foo'] 'foo'",
@@ -186,7 +193,7 @@ describe 'postfix::transport' do
         it { is_expected.to contain_class('postfix::augeas') }
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
-            incl: '/etc/postfix/transport',
+            incl: postfix_transport_path,
             lens: 'Postfix_Transport.lns',
             changes: [
               "rm pattern[. = 'foo']",

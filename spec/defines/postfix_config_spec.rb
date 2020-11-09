@@ -9,6 +9,12 @@ describe 'postfix::config' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
+      let(:postfix_main_cf_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/main.cf'
+        else '/etc/postfix/main.cf'
+        end
+      end
       let(:facts) do
         facts
       end
@@ -75,7 +81,7 @@ describe 'postfix::config' do
 
         it {
           is_expected.to contain_augeas("manage postfix 'foo'").with(
-            incl: '/etc/postfix/main.cf',
+            incl: postfix_main_cf_path,
             lens: 'Postfix_Main.lns',
             changes: "set foo 'bar'",
           )
@@ -92,7 +98,7 @@ describe 'postfix::config' do
 
         it {
           is_expected.to contain_augeas("manage postfix 'foo'").with(
-            incl: '/etc/postfix/main.cf',
+            incl: postfix_main_cf_path,
             lens: 'Postfix_Main.lns',
             changes: 'rm foo',
           )
@@ -109,7 +115,7 @@ describe 'postfix::config' do
 
         it {
           is_expected.to contain_augeas("manage postfix 'foo'").with(
-            incl: '/etc/postfix/main.cf',
+            incl: postfix_main_cf_path,
             lens: 'Postfix_Main.lns',
             changes: 'clear foo',
           )

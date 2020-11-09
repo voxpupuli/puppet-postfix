@@ -3,6 +3,31 @@ require 'spec_helper'
 describe 'postfix' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
+      let(:postfix_main_cf_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/main.cf'
+        else '/etc/postfix/main.cf'
+        end
+      end
+      let(:postfix_master_cf_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/master.cf'
+        else '/etc/postfix/master.cf'
+        end
+      end
+      let(:postfix_transport_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/transport'
+        else '/etc/postfix/transport'
+        end
+      end
+      let(:postfix_virtual_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/virtual'
+        else '/etc/postfix/virtual'
+        end
+      end
+
       let(:facts) do
         facts.merge(augeasversion: '1.2.0',
                     puppetversion: Puppet.version)
@@ -10,7 +35,6 @@ describe 'postfix' do
 
       context 'when using defaults' do
         it { is_expected.to contain_package('postfix') }
-        it { is_expected.to contain_package('mailx') }
         it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
         it { is_expected.to contain_postfix__config('myorigin').with_value('foo.example.com') }
         it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
@@ -19,10 +43,11 @@ describe 'postfix' do
         it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
 
         context 'when on Debian family', excl: facts[:osfamily] != 'Debian' do
+          it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("foo.example.com\n") }
           it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
-          it { is_expected.to contain_file('/etc/postfix/master.cf').without('seltype') }
-          it { is_expected.to contain_file('/etc/postfix/main.cf').without('seltype') }
+          it { is_expected.to contain_file(postfix_master_cf_path).without('seltype') }
+          it { is_expected.to contain_file(postfix_main_cf_path).without('seltype') }
 
           it {
             is_expected.to contain_service('postfix').with(
@@ -35,9 +60,10 @@ describe 'postfix' do
         end
 
         context 'when on RedHat family', excl: facts[:osfamily] != 'RedHat' do
+          it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("foo.example.com\n") }
-          it { is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t') }
-          it { is_expected.to contain_file('/etc/postfix/main.cf').with_seltype('postfix_etc_t') }
+          it { is_expected.to contain_file(postfix_master_cf_path).with_seltype('postfix_etc_t') }
+          it { is_expected.to contain_file(postfix_main_cf_path).with_seltype('postfix_etc_t') }
 
           it { is_expected.to contain_postfix__config('sendmail_path') }
           it { is_expected.to contain_postfix__config('newaliases_path') }
@@ -91,7 +117,9 @@ describe 'postfix' do
             end
 
             context('when on other', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystem] == 'Fedora' || ['6', '7', '8'].include?(facts[:operatingsystemmajrelease]))) do
-              it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
+              context('on Linux', excl: facts[:osfamily] != 'Linux') do
+                it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
+              end
               it {
                 is_expected.to contain_service('postfix').with(
                   ensure: 'running',
@@ -134,7 +162,7 @@ describe 'postfix' do
             it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
             it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
             it {
-              is_expected.to contain_file('/etc/postfix/master.cf').without('seltype').with_content(
+              is_expected.to contain_file(postfix_master_cf_path).without('seltype').with_content(
                 %r{smtp      inet  n       -       -       -       -       smtpd},
               ).with_content(
                 %r{amavis unix},
@@ -154,7 +182,7 @@ describe 'postfix' do
                 %r{^submission inet n},
               )
             }
-            it { is_expected.to contain_file('/etc/postfix/main.cf').without('seltype') }
+            it { is_expected.to contain_file(postfix_main_cf_path).without('seltype') }
 
             it { is_expected.to contain_postfix__config('myorigin').with_value('localhost') }
             it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
@@ -196,7 +224,7 @@ describe 'postfix' do
             end
 
             it 'adjusts the content of /etc/postfix/master.cf specifying the user' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t').with_content(%r{user=bar})
+              is_expected.to contain_file(postfix_master_cf_path).with_content(%r{user=bar})
             end
           end
           context 'when mailman is true' do
@@ -301,7 +329,7 @@ describe 'postfix' do
             end
 
             it 'updates master.cf with the specified flags to smtp' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_seltype('postfix_etc_t').with_content(
+              is_expected.to contain_file(postfix_master_cf_path).with_content(
                 %r{smtp      inet  n       -       -       -       -       smtpd},
               ).with_content(
                 %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:},
@@ -316,7 +344,7 @@ describe 'postfix' do
             end
 
             it 'updates master.cf with the specified flags to smtps' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_content(%r{^smtps     inet  n})
+              is_expected.to contain_file(postfix_master_cf_path).with_content(%r{^smtps     inet  n})
             end
           end
           context 'when mta is enabled' do
@@ -326,8 +354,8 @@ describe 'postfix' do
               is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
               is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
               is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
-              is_expected.to contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
-              is_expected.to contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
+              is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+              is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
             end
             it { is_expected.to contain_class('postfix::mta') }
             context 'and satellite is also enabled' do
@@ -377,8 +405,8 @@ describe 'postfix' do
               is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
               is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
               is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
-              is_expected.to contain_postfix__config('virtual_alias_maps').with_value('hash:/etc/postfix/virtual')
-              is_expected.to contain_postfix__config('transport_maps').with_value('hash:/etc/postfix/transport')
+              is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+              is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
             end
             context 'and mta is also enabled' do
               let(:params) { { mta: true, satellite: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
@@ -399,28 +427,28 @@ describe 'postfix' do
             let(:params) { { use_amavisd: true } }
 
             it 'updates master.cf with the specified flags to amavis' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_content(%r{amavis unix})
+              is_expected.to contain_file(postfix_master_cf_path).with_content(%r{amavis unix})
             end
           end
           context 'when use_dovecot_lda is true' do
             let(:params) { { use_dovecot_lda: true } }
 
             it 'updates master.cf with the specified flags to dovecot' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_content(%r{dovecot.*\n.* user=vmail:vmail })
+              is_expected.to contain_file(postfix_master_cf_path).with_content(%r{dovecot.*\n.* user=vmail:vmail })
             end
           end
           context 'when use_schleuder is true' do
             let(:params) { { use_schleuder: true } }
 
             it 'updates master.cf with the specified flags to schleuder' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_content(%r{schleuder})
+              is_expected.to contain_file(postfix_master_cf_path).with_content(%r{schleuder})
             end
           end
           context 'when use_sympa is true' do
             let(:params) { { use_sympa: true } }
 
             it 'updates master.cf to include sympa' do
-              is_expected.to contain_file('/etc/postfix/master.cf').with_content(%r{sympa})
+              is_expected.to contain_file(postfix_master_cf_path).with_content(%r{sympa})
             end
           end
           context 'when manage_root_alias is false' do
