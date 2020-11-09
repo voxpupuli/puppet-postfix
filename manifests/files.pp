@@ -79,7 +79,7 @@ class postfix::files {
   file { "${postfix::confdir}/master.cf":
     ensure  => 'file',
     content => $_mastercf_content,
-    group   => 'root',
+    group   => $postfix::root_group,
     mode    => '0644',
     owner   => 'root',
     seltype => $postfix::params::seltype,
@@ -89,7 +89,7 @@ class postfix::files {
   # Config files
   file { "${postfix::confdir}/main.cf":
     ensure  => 'file',
-    group   => 'root',
+    group   => $postfix::root_group,
     mode    => '0644',
     owner   => 'root',
     replace => false,

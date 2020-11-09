@@ -95,6 +95,7 @@
 class postfix (
   Stdlib::Absolutepath            $confdir,
   Boolean                         $manage_mailname,
+  String                          $root_group          = 'root',
   String                          $alias_maps          = 'hash:/etc/aliases',
   Optional[Hash]                  $configs             = {},
   Integer                         $amavis_procs        = 2,
