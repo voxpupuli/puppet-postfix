@@ -2,6 +2,7 @@ class postfix::files {
   include ::postfix::params
 
   $alias_maps          = $postfix::all_alias_maps
+  $amavis_procs        = $postfix::amavis_procs
   $inet_interfaces     = $postfix::inet_interfaces
   $inet_protocols      = $postfix::inet_protocols
   $mail_user           = $postfix::mail_user
