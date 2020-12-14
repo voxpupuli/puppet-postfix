@@ -27,9 +27,15 @@
 #     ensure => 'blank',
 #   }
 #
+#   # By value type/size:
+#   postfix::config {
+#     'myorigin':      value => undef  # Rm
+#     'myhostname':    value => 'xyz'  # Set 
+#     'mydestination': value => '',    # Clear
+#   }
 define postfix::config (
-  Optional[String]                   $value  = undef,
-  Enum['present', 'absent', 'blank'] $ensure = 'present',
+  Variant[Undef, String] $value  = undef,
+  Variant[Undef, Enum['present', 'absent', 'blank']] $ensure = undef,
 ) {
 
   if ($ensure == 'present') {
@@ -52,8 +58,20 @@ define postfix::config (
     'blank': {
       $changes = "clear ${name}"
     }
-    default: {
-      fail "Unknown value for ensure '${ensure}'"
+    default: {}
+  }
+
+  if !defined('$changes') {
+    case $value {
+      /^.+$/: {
+        $changes = "set ${name} '${value}'"
+      }
+      /^$/: {
+        $changes = "clear ${name}"
+      }
+      default: {
+        $changes = "rm ${name}"
+      }
     }
   }
 
