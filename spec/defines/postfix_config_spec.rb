@@ -13,11 +13,17 @@ describe 'postfix::config' do
         facts
       end
 
-      context 'when not passing value' do
+      context 'when not passing value while ensure present' do
+        let(:params) do
+          {
+            ensure: 'present',
+          }
+        end
+
         it 'fails' do
           expect {
-            is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error
+            is_expected.to contain_augeas("manage postfix 'foo'")
+          }.to raise_error(Exception, %r{can not be empty if ensure = present})
         end
       end
 
@@ -30,8 +36,8 @@ describe 'postfix::config' do
 
         it 'fails' do
           expect {
-            is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error
+            is_expected.to contain_augeas("manage postfix 'foo'")
+          }.to raise_error(Exception, %r{got Tuple})
         end
       end
 
@@ -45,8 +51,8 @@ describe 'postfix::config' do
 
         it 'fails' do
           expect {
-            is_expected.to contain_augeas("set postfix 'foo'")
-          }.to raise_error
+            is_expected.to contain_augeas("manage postfix 'foo'")
+          }.to raise_error(Exception, %r{got Tuple})
         end
       end
 
@@ -60,7 +66,7 @@ describe 'postfix::config' do
 
         it 'fails' do
           expect {
-            is_expected.to contain_augeas("set postfix 'foo'")
+            is_expected.to contain_augeas("manage postfix 'foo'")
           }.to raise_error(Puppet::Error, %r{got 'running'})
         end
       end
@@ -112,6 +118,49 @@ describe 'postfix::config' do
             incl: '/etc/postfix/main.cf',
             lens: 'Postfix_Main.lns',
             changes: 'clear foo',
+          )
+        }
+      end
+
+      # Non ensure checks
+      context 'when not ensuring and value string' do
+        let(:params) do
+          {
+            value: 'bar',
+          }
+        end
+
+        it {
+          is_expected.to contain_augeas("manage postfix 'foo'").with(
+            incl: '/etc/postfix/main.cf',
+            lens: 'Postfix_Main.lns',
+            changes: "set foo 'bar'",
+          )
+        }
+      end
+
+      context 'when not ensuring and value empty' do
+        let(:params) do
+          {
+            value: '',
+          }
+        end
+
+        it {
+          is_expected.to contain_augeas("manage postfix 'foo'").with(
+            incl: '/etc/postfix/main.cf',
+            lens: 'Postfix_Main.lns',
+            changes: 'clear foo',
+          )
+        }
+      end
+
+      context 'when not ensuring and value undef' do
+        it {
+          is_expected.to contain_augeas("manage postfix 'foo'").with(
+            incl: '/etc/postfix/main.cf',
+            lens: 'Postfix_Main.lns',
+            changes: 'rm foo',
           )
         }
       end
