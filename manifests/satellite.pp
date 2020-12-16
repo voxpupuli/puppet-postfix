@@ -23,17 +23,22 @@
 #   }
 #
 class postfix::satellite (
-  $mydestination = $postfix::mydestination,
-  $mynetworks    = $postfix::mynetworks,
-  $relayhost     = $postfix::relayhost,
+  $mydestination = undef,
+  $mynetworks    = undef,
+  $relayhost     = undef,
 ) {
+  include postfix
 
   assert_type(Pattern[/^\S+$/], $postfix::myorigin)
 
+  $_mydestination = pick($mydestination, $postfix::mydestination)
+  $_mynetworks = pick($mynetworks, $postfix::mynetworks)
+  $_relayhost = pick($relayhost, $postfix::relayhost)
+
   class { '::postfix::mta':
-    mydestination => $mydestination,
-    mynetworks    => $mynetworks,
-    relayhost     => $relayhost,
+    mydestination => $_mydestination,
+    mynetworks    => $_mynetworks,
+    relayhost     => $_relayhost,
   }
 
   postfix::virtual { "@${postfix::myorigin}":

@@ -32,10 +32,13 @@ define postfix::map (
   Variant[Array[String], String, Undef] $source = undef,
   Optional[Variant[Sensitive[String],String]] $content = undef,
   String                                $type = 'hash',
-  Stdlib::Absolutepath                  $path = "${postfix::confdir}/${name}",
+  Optional[Stdlib::Absolutepath]        $path = undef,
   String[4,4]                           $mode = '0640'
 ) {
+  include postfix
   include ::postfix::params
+
+  $_path = pick($path, "${postfix::confdir}/${name}")
 
   if (!defined(Class['postfix'])) {
     fail 'You must define class postfix before using postfix::config!'
@@ -58,7 +61,7 @@ define postfix::map (
 
   file { "postfix map ${name}":
     ensure  => $ensure,
-    path    => $path,
+    path    => $_path,
     source  => $source,
     content => $content,
     owner   => 'root',
@@ -71,7 +74,7 @@ define postfix::map (
   if $type !~ /^(cidr|pcre)$/ {
     file {"postfix map ${name}.db":
       ensure  => $ensure,
-      path    => "${path}.db",
+      path    => "${_path}.db",
       owner   => 'root',
       group   => 'postfix',
       mode    => $mode,
@@ -81,8 +84,8 @@ define postfix::map (
   }
 
   $generate_cmd = $ensure ? {
-    'absent'  => "rm ${path}.db",
-    'present' => "postmap ${path}",
+    'absent'  => "rm ${_path}.db",
+    'present' => "postmap ${_path}",
   }
 
   exec {"generate ${name}.db":

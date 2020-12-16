@@ -1,4 +1,5 @@
 class postfix::service {
+  include postfix
 
   $manage_aliases = $postfix::manage_aliases
 

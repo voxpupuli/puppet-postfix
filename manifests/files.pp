@@ -1,4 +1,5 @@
 class postfix::files {
+  include postfix
   include ::postfix::params
 
   $alias_maps          = $postfix::all_alias_maps

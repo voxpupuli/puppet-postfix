@@ -40,10 +40,13 @@
 
 define postfix::virtual (
   Variant[String, Array[String]] $destination,
-  Stdlib::Absolutepath           $file="${postfix::confdir}/virtual",
+  Optional[Stdlib::Absolutepath] $file=undef,
   Enum['present', 'absent']      $ensure='present'
 ) {
+  include postfix
   include ::postfix::augeas
+
+  $_file = pick($file, "${postfix::confdir}/virtual")
 
   $dest_sets = [$destination].flatten.map |$i, $d| {
     $idx = $i+1
@@ -69,7 +72,7 @@ define postfix::virtual (
   }
 
   augeas {"Postfix virtual - ${name}":
-    incl    => $file,
+    incl    => $_file,
     lens    => 'Postfix_Virtual.lns',
     changes => $changes,
     require => Augeas::Lens['postfix_virtual'],
@@ -79,7 +82,7 @@ define postfix::virtual (
     Package['postfix'] -> Postfix::Virtual[$title]
   }
 
-  if defined(Postfix::Hash[$file]) {
-    Postfix::Virtual[$title] ~> Postfix::Hash[$file]
+  if defined(Postfix::Hash[$_file]) {
+    Postfix::Virtual[$title] ~> Postfix::Hash[$_file]
   }
 }

@@ -12,6 +12,7 @@
 #     mailman => true,
 #   }
 class postfix::mailman {
+  include postfix
 
   postfix::config {
     'virtual_alias_maps':

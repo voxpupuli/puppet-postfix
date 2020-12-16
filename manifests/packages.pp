@@ -1,4 +1,5 @@
 class postfix::packages {
+  include postfix
   include ::postfix::params
 
   package { 'postfix':

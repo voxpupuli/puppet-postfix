@@ -31,6 +31,7 @@ define postfix::config (
   Optional[String]                   $value  = undef,
   Enum['present', 'absent', 'blank'] $ensure = 'present',
 ) {
+  include postfix
 
   if ($ensure == 'present') {
     assert_type(Pattern[/^.+$/], $value) |$e, $a| {

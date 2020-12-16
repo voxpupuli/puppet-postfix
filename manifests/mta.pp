@@ -26,27 +26,32 @@
 #   }
 #
 class postfix::mta (
-  Pattern[/^\S+(?:,\s*\S+)*$/]                 $mydestination = $postfix::mydestination,
-  Pattern[/^(?:\S+?(?:(?:,\s+)|(?:\s+))?)*$/]  $mynetworks    = $postfix::mynetworks,
-  Pattern[/^\S+$/]                             $relayhost     = $postfix::relayhost,
+  Optional[Pattern[/^\S+(?:,\s*\S+)*$/]]                $mydestination = undef,
+  Optional[Pattern[/^(?:\S+?(?:(?:,\s+)|(?:\s+))?)*$/]] $mynetworks    = undef,
+  Optional[Pattern[/^\S+$/]]                            $relayhost     = undef,
 ) {
+  include postfix
+
+  $_mydestination = pick($mydestination, $postfix::mydestination)
+  $_mynetworks = pick($mynetworks, $postfix::mynetworks)
+  $_relayhost = pick($relayhost, $postfix::relayhost)
 
   # If direct is specified then relayhost should be blank
-  if ($relayhost == 'direct') {
+  if ($_relayhost == 'direct') {
     postfix::config { 'relayhost': ensure => 'blank' }
   }
   else {
-    postfix::config { 'relayhost': value => $relayhost }
+    postfix::config { 'relayhost': value => $_relayhost }
   }
 
-  if ($mydestination == 'blank') {
+  if ($_mydestination == 'blank') {
     postfix::config { 'mydestination': ensure => 'blank' }
   } else {
-    postfix::config { 'mydestination': value => $mydestination }
+    postfix::config { 'mydestination': value => $_mydestination }
   }
 
   postfix::config {
-    'mynetworks':          value => $mynetworks;
+    'mynetworks':          value => $_mynetworks;
     'virtual_alias_maps':  value => "hash:${postfix::confdir}/virtual";
     'transport_maps':      value => "hash:${postfix::confdir}/transport";
   }
