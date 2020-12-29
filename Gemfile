@@ -32,7 +32,14 @@ group :development do
   gem "github_changelog_generator",                              require: false
 end
 group :system_tests do
-  gem "beaker-hostgenerator",                         require: false
+  gem 'beaker',                                       require: false
+  gem 'beaker-docker',                                require: false
+  gem 'beaker-hostgenerator',                         require: false
+  gem 'beaker-module_install_helper',                 require: false
+  gem 'beaker-pe',                                    require: false
+  gem 'beaker-puppet_install_helper',                 require: false
+  gem 'beaker-rspec',                                 require: false
+  gem 'beaker-task_helper',                           require: false
   gem "puppet-module-posix-system-r#{minor_version}", require: false
 end
 
