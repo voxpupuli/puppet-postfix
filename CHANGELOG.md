@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [1.11.0](https://github.com/camptocamp/puppet-postfix/tree/1.11.0) (2021-01-20)
+
+[Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.10.0...1.11.0)
+
+### Added
+
+- Add Solaris support [\#274](https://github.com/camptocamp/puppet-postfix/pull/274) ([rstuart-indue](https://github.com/rstuart-indue))
+- Feature/allow specify master cf content & template [\#217](https://github.com/camptocamp/puppet-postfix/pull/217) ([c33s](https://github.com/c33s))
+-  Include parameter title in error output [\#209](https://github.com/camptocamp/puppet-postfix/pull/209) ([mrintegrity](https://github.com/mrintegrity))
+- more than two amavis processes [\#175](https://github.com/camptocamp/puppet-postfix/pull/175) ([farlerac](https://github.com/farlerac))
+
+### Fixed
+
+- Fix hardcoded map path [\#287](https://github.com/camptocamp/puppet-postfix/pull/287) ([towo](https://github.com/towo))
+- Transport: allow \[host\]:port smtp syntax [\#285](https://github.com/camptocamp/puppet-postfix/pull/285) ([raphink](https://github.com/raphink))
+- Fixes postmap when ensure=absent [\#202](https://github.com/camptocamp/puppet-postfix/pull/202) ([earsdown](https://github.com/earsdown))
+
 ## [1.10.0](https://github.com/camptocamp/puppet-postfix/tree/1.10.0) (2020-01-23)
 
 [Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.9.0...1.10.0)
