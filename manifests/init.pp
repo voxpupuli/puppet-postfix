@@ -93,8 +93,8 @@
 #   }
 #
 class postfix (
-  Stdlib::Absolutepath            $confdir,
-  Boolean                         $manage_mailname,
+  Stdlib::Absolutepath            $confdir             = '/etc/postfix',
+  Boolean                         $manage_mailname     = true,
   String                          $root_group          = 'root',
   String                          $alias_maps          = 'hash:/etc/aliases',
   Optional[Hash]                  $configs             = {},

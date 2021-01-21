@@ -1,6 +1,4 @@
 ---
-postfix::confdir: "/etc/postfix"
-postfix::manage_mailname: true
 postfix::params::aliasesseltype: ~
 postfix::params::seltype: ~
 postfix::params::mailx_package: 'mailx'
