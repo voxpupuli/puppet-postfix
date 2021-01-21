@@ -94,7 +94,6 @@
 #
 class postfix (
   Stdlib::Absolutepath            $confdir             = '/etc/postfix',
-  Boolean                         $manage_mailname     = true,
   String                          $root_group          = 'root',
   String                          $alias_maps          = 'hash:/etc/aliases',
   Optional[Hash]                  $configs             = {},
@@ -109,6 +108,7 @@ class postfix (
   Boolean                         $mailman             = false,
   String                          $maincf_source       = "puppet:///modules/${module_name}/main.cf",
   Boolean                         $manage_conffiles    = true,
+  Boolean                         $manage_mailname     = true,
   Boolean                         $manage_mailx        = true,
   Optional[String]                $mastercf_source     = undef,
   Optional[String]                $mastercf_content    = undef,
