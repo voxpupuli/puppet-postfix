@@ -1,6 +1,5 @@
 class postfix::packages {
-  include postfix
-  include ::postfix::params
+  assert_private()
 
   package { 'postfix':
     ensure => $postfix::postfix_ensure,

@@ -1,5 +1,5 @@
 class postfix::service {
-  include postfix
+  assert_private()
 
   $manage_aliases = $postfix::manage_aliases
 

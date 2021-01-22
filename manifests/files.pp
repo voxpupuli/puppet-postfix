@@ -1,5 +1,6 @@
 class postfix::files {
-  include postfix
+  assert_private()
+
   include ::postfix::params
 
   $alias_maps          = $postfix::all_alias_maps
