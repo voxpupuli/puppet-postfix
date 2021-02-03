@@ -4,11 +4,21 @@ describe 'postfix::virtual' do
   let(:title) { 'foo' }
 
   let :pre_condition do
-    "class { '::augeas': }"
+    <<-EOT
+    class { '::augeas': }
+    class { '::postfix': }
+    EOT
   end
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
+      let(:postfix_virutal_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/virtual'
+        else '/etc/postfix/virtual'
+        end
+      end
+
       let(:facts) do
         facts.merge(augeasversion: '1.2.0',
                     puppetversion: Puppet.version)
@@ -106,7 +116,7 @@ describe 'postfix::virtual' do
         it { is_expected.to contain_class('postfix::augeas') }
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
-            incl: '/etc/postfix/virtual',
+            incl: postfix_virutal_path,
             lens: 'Postfix_Virtual.lns',
             changes: [
               "defnode entry pattern[. = 'foo'] 'foo'",
@@ -175,7 +185,7 @@ describe 'postfix::virtual' do
         it { is_expected.to contain_class('postfix::augeas') }
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
-            incl: '/etc/postfix/virtual',
+            incl: postfix_virutal_path,
             lens: 'Postfix_Virtual.lns',
             changes: [
               "rm pattern[. = 'foo']",

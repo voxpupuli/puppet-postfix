@@ -1,0 +1,8 @@
+---
+postfix::confdir: "/usr/local/etc/postfix"
+postfix::manage_mailname: false
+postfix::manage_mailx: false
+postfix::root_group: "wheel"
+postfix::params::master_os_template: "postfix/master.cf.FreeBSD.erb"
+postfix::params::restart_cmd: "/usr/local/etc/rc.d/postfix reload"
+...

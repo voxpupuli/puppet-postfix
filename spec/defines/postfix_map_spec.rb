@@ -9,6 +9,13 @@ describe 'postfix::map' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
+      let(:postfix_foo_db_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix/foo.db'
+        else '/etc/postfix/foo.db'
+        end
+      end
+
       let(:facts) do
         facts
       end
@@ -110,7 +117,7 @@ describe 'postfix::map' do
         it { is_expected.to contain_file('postfix map foo').with_ensure('absent') }
         it { is_expected.to contain_file('postfix map foo').without_notify }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('absent') }
-        it { is_expected.to contain_exec('generate foo.db').with(command: 'rm /etc/postfix/foo.db') }
+        it { is_expected.to contain_exec('generate foo.db').with(command: "rm #{postfix_foo_db_path}") }
       end
 
       context 'when using pcre type' do

@@ -1,5 +1,6 @@
 class postfix::files {
-  include ::postfix::params
+  assert_private()
+
 
   $alias_maps          = $postfix::all_alias_maps
   $amavis_procs        = $postfix::amavis_procs
@@ -18,6 +19,7 @@ class postfix::files {
   $master_bounce_command = $postfix::master_bounce_command
   $master_defer_command  = $postfix::master_defer_command
   $myorigin            = $postfix::myorigin
+  $manage_mailname     = $postfix::manage_mailname
   $manage_aliases      = $postfix::manage_aliases
   $manage_root_alias   = $postfix::manage_root_alias
   $root_mail_recipient = $postfix::root_mail_recipient
@@ -41,11 +43,13 @@ class postfix::files {
     replace => $manage_conffiles,
   }
 
-  file { '/etc/mailname':
-    ensure  => 'file',
-    content => "${::fqdn}\n",
-    mode    => '0644',
-    seltype => $postfix::params::seltype,
+  if $manage_mailname {
+    file { '/etc/mailname':
+      ensure  => 'file',
+      content => "${::fqdn}\n",
+      mode    => '0644',
+      seltype => $postfix::params::seltype,
+    }
   }
 
   # Aliases
@@ -73,10 +77,10 @@ class postfix::files {
     )
   }
 
-  file { '/etc/postfix/master.cf':
+  file { "${postfix::confdir}/master.cf":
     ensure  => 'file',
     content => $_mastercf_content,
-    group   => 'root',
+    group   => $postfix::root_group,
     mode    => '0644',
     owner   => 'root',
     seltype => $postfix::params::seltype,
@@ -84,9 +88,9 @@ class postfix::files {
   }
 
   # Config files
-  file { '/etc/postfix/main.cf':
+  file { "${postfix::confdir}/main.cf":
     ensure  => 'file',
-    group   => 'root',
+    group   => $postfix::root_group,
     mode    => '0644',
     owner   => 'root',
     replace => false,

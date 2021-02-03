@@ -44,10 +44,13 @@
 define postfix::transport (
   Optional[String]          $destination = undef,
   Optional[String]          $nexthop=undef,
-  Stdlib::Absolutepath      $file='/etc/postfix/transport',
+  Optional[Stdlib::Absolutepath] $file=undef,
   Enum['present', 'absent'] $ensure='present'
 ) {
+  include postfix
   include ::postfix::augeas
+
+  $_file = pick($file, "${postfix::confdir}/transport")
 
   $smtp_nexthop = (String($nexthop) =~ /\[.*\]/)
 
@@ -104,7 +107,7 @@ define postfix::transport (
 
   augeas {"Postfix transport - ${name}":
     lens    => 'Postfix_Transport.lns',
-    incl    => $file,
+    incl    => $_file,
     changes => $changes,
     require => Augeas::Lens['postfix_transport'],
   }
@@ -113,7 +116,7 @@ define postfix::transport (
     Package['postfix'] -> Postfix::Transport[$title]
   }
 
-  if defined(Postfix::Hash[$file]) {
-    Postfix::Transport[$title] ~> Postfix::Hash[$file]
+  if defined(Postfix::Hash[$_file]) {
+    Postfix::Transport[$title] ~> Postfix::Hash[$_file]
   }
 }

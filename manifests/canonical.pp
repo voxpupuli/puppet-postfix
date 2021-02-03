@@ -35,10 +35,13 @@
 #
 define postfix::canonical (
   $destination,
-  $file='/etc/postfix/canonical',
+  $file=undef,
   $ensure='present'
 ) {
+  include postfix
   include ::postfix::augeas
+
+  $_file = pick($file, "${postfix::confdir}/canonical")
 
   case $ensure {
     'present': {
@@ -58,10 +61,10 @@ define postfix::canonical (
   }
 
   augeas {"Postfix canonical - ${name}":
-    incl    => $file,
+    incl    => $_file,
     lens    => 'Postfix_Canonical.lns',
     changes => $changes,
     require => [Package['postfix'], Augeas::Lens['postfix_canonical']],
-    notify  => Exec["generate ${file}.db"],
+    notify  => Exec["generate ${_file}.db"],
   }
 }

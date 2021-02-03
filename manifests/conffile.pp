@@ -50,12 +50,14 @@ define postfix::conffile (
   Enum['present', 'absent', 'directory'] $ensure    = 'present',
   Variant[Array[String], String, Undef]  $source    = undef,
   Optional[String]                       $content   = undef,
-  Stdlib::Absolutepath                   $path      = "/etc/postfix/${name}",
+  Optional[Stdlib::Absolutepath]         $path      = undef,
   String                                 $mode      = '0640',
   Hash                                   $options   = {},
   Boolean                                $show_diff = true,
 ) {
-  include ::postfix::params
+  include postfix
+
+  $_path = pick($path, "${postfix::confdir}/${name}")
 
   if (!defined(Class['postfix'])) {
     fail 'You must define class postfix before using postfix::config!'
@@ -84,7 +86,7 @@ define postfix::conffile (
 
   file { "postfix conffile ${name}":
     ensure    => $ensure,
-    path      => $path,
+    path      => $_path,
     mode      => $mode,
     owner     => 'root',
     group     => 'postfix',
