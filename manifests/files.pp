@@ -1,7 +1,6 @@
 class postfix::files {
   assert_private()
 
-  include ::postfix::params
 
   $alias_maps          = $postfix::all_alias_maps
   $amavis_procs        = $postfix::amavis_procs

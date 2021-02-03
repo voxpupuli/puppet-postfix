@@ -56,7 +56,6 @@ define postfix::conffile (
   Boolean                                $show_diff = true,
 ) {
   include postfix
-  include ::postfix::params
 
   $_path = pick($path, "${postfix::confdir}/${name}")
 
