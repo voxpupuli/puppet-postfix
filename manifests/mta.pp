@@ -29,6 +29,8 @@ class postfix::mta (
   Optional[Pattern[/^\S+(?:,\s*\S+)*$/]]                $mydestination = undef,
   Optional[Pattern[/^(?:\S+?(?:(?:,\s+)|(?:\s+))?)*$/]] $mynetworks    = undef,
   Optional[Pattern[/^\S+$/]]                            $relayhost     = undef,
+  String[1]                                             $virtual_alias_maps = "hash:${postfix::confdir}/virtual",
+  String[1]                                             $transport_maps     = "hash:${postfix::confdir}/transport"
 ) {
   include postfix
 
@@ -52,8 +54,8 @@ class postfix::mta (
 
   postfix::config {
     'mynetworks':          value => $_mynetworks;
-    'virtual_alias_maps':  value => "hash:${postfix::confdir}/virtual";
-    'transport_maps':      value => "hash:${postfix::confdir}/transport";
+    'virtual_alias_maps':  value => $virtual_alias_maps;
+    'transport_maps':      value => $transport_maps;
   }
 
   postfix::hash { "${postfix::confdir}/virtual":
