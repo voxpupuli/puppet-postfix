@@ -15,7 +15,7 @@ amavis unix - - <%= @jail %> - <%= @amavis_procs %> smtp
         -o mynetworks=127.0.0.0/8
         -o strict_rfc821_envelopes=yes
         -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks
-        -o smtpd_bind_address=127.0.0.1
+        -o smtp_bind_address=127.0.0.1
 <% end -%>
 <% if @use_dovecot_lda %>
 dovecot   unix  -       n       n       -       -       pipe
