@@ -1,9 +1,9 @@
 # Postfix Puppet Module
 
-[![Puppet Forge Version](http://img.shields.io/puppetforge/v/camptocamp/postfix.svg)](https://forge.puppetlabs.com/camptocamp/postfix)
-[![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/camptocamp/postfix.svg)](https://forge.puppetlabs.com/camptocamp/postfix)
-[![Build Status](https://img.shields.io/travis/camptocamp/puppet-postfix/master.svg)](https://travis-ci.org/camptocamp/puppet-postfix)
-[![By Camptocamp](https://img.shields.io/badge/by-camptocamp-fb7047.svg)](http://www.camptocamp.com)
+[![Puppet Forge Version](http://img.shields.io/puppetforge/v/puppet/postfix.svg)](https://forge.puppetlabs.com/puppet/postfix)
+[![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/puppet/postfix.svg)](https://forge.puppetlabs.com/puppet/postfix)
+[![Build Status](https://img.shields.io/travis/voxpupuli/puppet-postfix/master.svg)](https://travis-ci.org/voxpupuli/puppet-postfix)
+[![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 This module requires Augeas.
 
@@ -415,8 +415,17 @@ Example:
 ## Contributing
 
 Please report bugs and feature request using [GitHub issue
-tracker](https://github.com/camptocamp/puppet-postfix/issues).
+tracker](https://github.com/voxpupuli/puppet-postfix/issues).
 
 For pull requests, it is very much appreciated to check your Puppet manifest
 with [puppet-lint](http://puppet-lint.com/) to follow the recommended Puppet style guidelines from the
 [Puppet Labs style guide](http://docs.puppetlabs.com/guides/style_guide.html).
+
+
+## Transfer Notice
+
+This plugin was originally authored by [Camptocamp](http://www.camptocamp.com).
+The maintainer preferred that Puppet Community take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Camptocamp.
+
+Previously: https://github.com/camptocamp/puppet-postfix
