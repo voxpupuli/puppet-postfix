@@ -14,13 +14,12 @@
 # include postfix::ldap
 #
 class postfix::ldap {
-
   assert_type(String, $postfix::ldap_base)
   assert_type(String, $postfix::ldap_host)
   assert_type(String, $postfix::ldap_options)
 
-  if $::osfamily == 'Debian' {
-    package {'postfix-ldap':
+  if $facts['os']['family'] == 'Debian' {
+    package { 'postfix-ldap':
       before  => File["${postfix::confdir}/ldap-aliases.cf"],
     }
   }
@@ -39,7 +38,7 @@ class postfix::ldap {
     default => $postfix::ldap_options,
   }
 
-  file {"${postfix::confdir}/ldap-aliases.cf":
+  file { "${postfix::confdir}/ldap-aliases.cf":
     ensure  => 'file',
     owner   => 'root',
     group   => 'postfix',

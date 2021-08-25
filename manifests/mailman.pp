@@ -30,5 +30,4 @@ class postfix::mailman {
   postfix::hash { "${postfix::confdir}/transport":
     ensure => 'present',
   }
-
 }

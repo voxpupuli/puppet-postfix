@@ -21,9 +21,9 @@ describe 'postfix::hash' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error
+          end.to raise_error
         end
       end
 
@@ -35,9 +35,9 @@ describe 'postfix::hash' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, %r{got 'running'})
+          end.to raise_error(Puppet::Error, %r{got 'running'})
         end
       end
 
@@ -45,9 +45,9 @@ describe 'postfix::hash' do
         let(:title) { 'foo' }
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, %r{, got })
+          end.to raise_error(Puppet::Error, %r{, got })
         end
       end
 
@@ -60,9 +60,9 @@ describe 'postfix::hash' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('/tmp/foo')
-          }.to raise_error(Puppet::Error, %r{You must provide either 'source' or 'content'})
+          end.to raise_error(Puppet::Error, %r{You must provide either 'source' or 'content'})
         end
       end
 
@@ -76,7 +76,7 @@ describe 'postfix::hash' do
         it {
           is_expected.to contain_file('postfix map /tmp/foo').with(
             ensure: 'present',
-            source: '/tmp/bar',
+            source: '/tmp/bar'
           ).without(:content)
         }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
@@ -93,7 +93,7 @@ describe 'postfix::hash' do
         it {
           is_expected.to contain_file('postfix map /tmp/foo').with(
             ensure: 'present',
-            content: 'bar',
+            content: 'bar'
           ).without(:source)
         }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
@@ -103,7 +103,7 @@ describe 'postfix::hash' do
       context 'when not passing source or content' do
         it {
           is_expected.to contain_file('postfix map /tmp/foo').with(
-            ensure: 'present',
+            ensure: 'present'
           ).without(:source).without(:content)
         }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }

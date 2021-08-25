@@ -35,7 +35,7 @@ class postfix::satellite (
   $_mynetworks = pick($mynetworks, $postfix::mynetworks)
   $_relayhost = pick($relayhost, $postfix::relayhost)
 
-  class { '::postfix::mta':
+  class { 'postfix::mta':
     mydestination => $_mydestination,
     mynetworks    => $_mynetworks,
     relayhost     => $_relayhost,

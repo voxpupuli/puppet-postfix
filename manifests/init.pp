@@ -96,7 +96,7 @@ class postfix (
   Stdlib::Absolutepath            $confdir             = '/etc/postfix',
   String                          $root_group          = 'root',
   String                          $alias_maps          = 'hash:/etc/aliases',
-  Optional[Hash]                  $configs             = {},
+  Hash                            $configs             = {},
   Integer                         $amavis_procs        = 2,
   String                          $inet_interfaces     = 'all',
   String                          $inet_protocols      = 'all',
@@ -122,7 +122,7 @@ class postfix (
   Boolean                         $mta                 = false,
   String                          $mydestination       = '$myorigin',   # postfix_mydestination
   String                          $mynetworks          = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
-  String                          $myorigin            = $::fqdn,
+  String                          $myorigin            = $facts['networking']['fqdn'],
   Boolean                         $manage_aliases      = true,          # /etc/aliases
   Optional[String]                $relayhost           = undef,         # postfix_relayhost
   Boolean                         $manage_root_alias   = true,
@@ -139,11 +139,10 @@ class postfix (
   String                          $service_ensure      = 'running',
   Boolean                         $service_enabled     =  true,
 ) inherits postfix::params {
-
   if (($mastercf_source and $mastercf_content) or
     ($mastercf_source and $mastercf_template) or
     ($mastercf_content and $mastercf_template) or
-    ($mastercf_source and $mastercf_content and $mastercf_template)){
+  ($mastercf_source and $mastercf_content and $mastercf_template)) {
     fail('mastercf_source, mastercf_content and mastercf_template are mutually exclusive')
   }
 
@@ -159,31 +158,33 @@ class postfix (
 
   create_resources('::postfix::config', $configs)
 
-  anchor { 'postfix::begin': }
-  -> class { '::postfix::packages': }
-  -> class { '::postfix::files': }
-  ~> class { '::postfix::service': }
-  -> anchor { 'postfix::end': }
+  contain 'postfix::packages'
+  contain 'postfix::files'
+  contain 'postfix::service'
+
+  Class['postfix::packages']
+  -> Class['postfix::files']
+  ~> Class['postfix::service']
 
   if $ldap {
-    include ::postfix::ldap
+    include postfix::ldap
   }
 
   if $mta {
     if $satellite {
       fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
     }
-    include ::postfix::mta
+    include postfix::mta
   }
 
   if $satellite {
     if $mta {
       fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
     }
-    include ::postfix::satellite
+    include postfix::satellite
   }
 
   if $mailman {
-    include ::postfix::mailman
+    include postfix::mailman
   }
 }
