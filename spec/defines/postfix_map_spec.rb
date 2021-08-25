@@ -28,9 +28,9 @@ describe 'postfix::map' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix map foo')
-          }.to raise_error
+          end.to raise_error
         end
       end
 
@@ -42,9 +42,9 @@ describe 'postfix::map' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix map foo')
-          }.to raise_error(Puppet::Error, %r{got 'running'})
+          end.to raise_error(Puppet::Error, %r{got 'running'})
         end
       end
 
@@ -57,9 +57,9 @@ describe 'postfix::map' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix map foo')
-          }.to raise_error(Puppet::Error, %r{You must provide either 'source' or 'content'})
+          end.to raise_error(Puppet::Error, %r{You must provide either 'source' or 'content'})
         end
       end
 
@@ -73,7 +73,7 @@ describe 'postfix::map' do
         it {
           is_expected.to contain_file('postfix map foo').with(
             ensure: 'present',
-            source: '/tmp/bar',
+            source: '/tmp/bar'
           ).without(:content)
         }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
@@ -90,7 +90,7 @@ describe 'postfix::map' do
         it {
           is_expected.to contain_file('postfix map foo').with(
             ensure: 'present',
-            content: 'bar',
+            content: 'bar'
           ).without(:source)
         }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
@@ -100,7 +100,7 @@ describe 'postfix::map' do
       context 'when not passing source or content' do
         it {
           is_expected.to contain_file('postfix map foo').with(
-            ensure: 'present',
+            ensure: 'present'
           ).without(:source).without(:content)
         }
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }

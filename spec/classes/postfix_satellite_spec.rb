@@ -22,7 +22,7 @@ describe 'postfix::satellite' do
       it {
         is_expected.to contain_postfix__virtual('@foo.example.com').with(
           ensure: 'present',
-          destination: 'root',
+          destination: 'root'
         )
       }
     end

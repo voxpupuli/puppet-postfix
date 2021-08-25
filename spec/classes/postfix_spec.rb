@@ -54,7 +54,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/etc/init.d/postfix reload',
+              restart: '/etc/init.d/postfix reload'
             )
           }
         end
@@ -76,7 +76,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/bin/systemctl reload postfix',
+                restart: '/bin/systemctl reload postfix'
               )
             }
           end
@@ -88,7 +88,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/bin/systemctl reload postfix',
+                restart: '/bin/systemctl reload postfix'
               )
             }
           end
@@ -100,7 +100,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/etc/init.d/postfix reload',
+                restart: '/etc/init.d/postfix reload'
               )
             }
 
@@ -111,12 +111,12 @@ describe 'postfix' do
                   ensure: 'running',
                   enable: 'true',
                   hasstatus: 'true',
-                  restart: '/bin/systemctl reload postfix',
+                  restart: '/bin/systemctl reload postfix'
                 )
               }
             end
 
-            context('when on other', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystem] == 'Fedora' || ['6', '7', '8'].include?(facts[:operatingsystemmajrelease]))) do
+            context('when on other', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystem] == 'Fedora' || %w[6 7 8].include?(facts[:operatingsystemmajrelease]))) do
               context('on Linux', excl: facts[:osfamily] != 'Linux') do
                 it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
               end
@@ -125,7 +125,7 @@ describe 'postfix' do
                   ensure: 'running',
                   enable: 'true',
                   hasstatus: 'true',
-                  restart: '/etc/init.d/postfix reload',
+                  restart: '/etc/init.d/postfix reload'
                 )
               }
             end
@@ -163,23 +163,23 @@ describe 'postfix' do
             it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
             it {
               is_expected.to contain_file(postfix_master_cf_path).without('seltype').with_content(
-                %r{smtp      inet  n       -       -       -       -       smtpd},
+                %r{smtp      inet  n       -       -       -       -       smtpd}
               ).with_content(
-                %r{amavis unix},
+                %r{amavis unix}
               ).with_content(
-                %r{dovecot.*\n.* user=bar:bar },
+                %r{dovecot.*\n.* user=bar:bar }
               ).with_content(
-                %r{schleuder},
+                %r{schleuder}
               ).with_content(
-                %r{sympa},
+                %r{sympa}
               ).with_content(
-                %r{user=bar},
+                %r{user=bar}
               ).with_content(
-                %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:},
+                %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:}
               ).with_content(
-                %r{^smtps     inet  n},
+                %r{^smtps     inet  n}
               ).with_content(
-                %r{^submission inet n},
+                %r{^submission inet n}
               )
             }
             it { is_expected.to contain_file(postfix_main_cf_path).without('seltype') }
@@ -195,7 +195,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/etc/init.d/postfix reload',
+                restart: '/etc/init.d/postfix reload'
               )
             }
           end
@@ -330,9 +330,9 @@ describe 'postfix' do
 
             it 'updates master.cf with the specified flags to smtp' do
               is_expected.to contain_file(postfix_master_cf_path).with_content(
-                %r{smtp      inet  n       -       -       -       -       smtpd},
+                %r{smtp      inet  n       -       -       -       -       smtpd}
               ).with_content(
-                %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:},
+                %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:}
               )
             end
           end
