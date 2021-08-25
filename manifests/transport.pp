@@ -48,7 +48,7 @@ define postfix::transport (
   Enum['present', 'absent'] $ensure='present'
 ) {
   include postfix
-  include ::postfix::augeas
+  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/transport")
 
@@ -58,7 +58,7 @@ define postfix::transport (
     'present': {
       if ($smtp_nexthop) {
         $change_destination = "rm pattern[. = '${name}']/transport"
-      } else  {
+      } else {
         if ($destination) {
           $change_destination = "set pattern[. = '${name}']/transport '${destination}'"
         } else {
@@ -90,9 +90,9 @@ define postfix::transport (
       }
 
       $changes = flatten([
-        "set pattern[. = '${name}'] '${name}'",
-        $change_destination,
-        $change_nexthop,
+          "set pattern[. = '${name}'] '${name}'",
+          $change_destination,
+          $change_nexthop,
       ])
     }
 
@@ -105,7 +105,7 @@ define postfix::transport (
     }
   }
 
-  augeas {"Postfix transport - ${name}":
+  augeas { "Postfix transport - ${name}":
     lens    => 'Postfix_Transport.lns',
     incl    => $_file,
     changes => $changes,

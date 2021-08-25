@@ -30,7 +30,7 @@ define postfix::hash (
   Optional[Variant[Sensitive[String],String]] $content = undef,
   Variant[String[4,4], Undef]           $mode='0640',
 ) {
-  include ::postfix::params
+  include postfix::params
 
   assert_type(Stdlib::Absolutepath, $name)
 
@@ -42,7 +42,7 @@ define postfix::hash (
     fail 'You must provide either \'source\' or \'content\', not both'
   }
 
-  postfix::map {$name:
+  postfix::map { $name:
     ensure  => $ensure,
     source  => $source,
     content => $content,

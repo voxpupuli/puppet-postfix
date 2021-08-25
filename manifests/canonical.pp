@@ -39,7 +39,7 @@ define postfix::canonical (
   $ensure='present'
 ) {
   include postfix
-  include ::postfix::augeas
+  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/canonical")
 
@@ -60,7 +60,7 @@ define postfix::canonical (
     }
   }
 
-  augeas {"Postfix canonical - ${name}":
+  augeas { "Postfix canonical - ${name}":
     incl    => $_file,
     lens    => 'Postfix_Canonical.lns',
     changes => $changes,

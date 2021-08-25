@@ -97,5 +97,4 @@ define postfix::conffile (
     show_diff => $show_diff,
     notify    => Service['postfix'],
   }
-
 }

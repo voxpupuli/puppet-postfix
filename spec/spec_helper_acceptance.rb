@@ -1,19 +1,8 @@
-require 'beaker-pe'
-require 'beaker-puppet'
-require 'puppet'
-require 'beaker-rspec/spec_helper'
-require 'beaker-rspec/helpers/serverspec'
-require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
-require 'beaker-task_helper'
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-run_puppet_install_helper
-configure_type_defaults_on(hosts)
-install_ca_certs unless pe_install?
-# install_bolt_on(hosts) unless pe_install?
-install_module_on(hosts)
-install_module_dependencies_on(hosts)
+require 'voxpupuli/acceptance/spec_helper_acceptance'
 
-RSpec.configure do |c|
-  c.formatter = :documentation
-end
+configure_beaker
+
+Dir['./spec/support/acceptance/**/*.rb'].sort.each { |f| require f }
