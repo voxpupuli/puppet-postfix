@@ -42,7 +42,7 @@ describe 'postfix' do
         it { is_expected.to contain_postfix__config('inet_protocols').with_value('all') }
         it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
 
-        context 'when on Debian family', excl: facts[:osfamily] != 'Debian' do
+        context 'when on Debian family', if: facts[:osfamily] == 'Debian' do
           it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("foo.example.com\n") }
           it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
@@ -59,7 +59,7 @@ describe 'postfix' do
           }
         end
 
-        context 'when on RedHat family', excl: facts[:osfamily] != 'RedHat' do
+        context 'when on RedHat family', if: facts[:osfamily] == 'RedHat' do
           it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("foo.example.com\n") }
           it { is_expected.to contain_file(postfix_master_cf_path).with_seltype('postfix_etc_t') }
@@ -69,7 +69,7 @@ describe 'postfix' do
           it { is_expected.to contain_postfix__config('newaliases_path') }
           it { is_expected.to contain_postfix__config('mailq_path') }
 
-          context 'when on release 8', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystemmajrelease] != '8') do
+          context 'when on release 8', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '8') do
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
             it {
               is_expected.to contain_service('postfix').with(
@@ -81,7 +81,7 @@ describe 'postfix' do
             }
           end
 
-          context 'when on release 7', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystemmajrelease] != '7') do
+          context 'when on release 7', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '7') do
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
             it {
               is_expected.to contain_service('postfix').with(
@@ -93,7 +93,7 @@ describe 'postfix' do
             }
           end
 
-          context 'when on release 6', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystemmajrelease] != '6') do
+          context 'when on release 6', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '6') do
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
             it {
               is_expected.to contain_service('postfix').with(
@@ -103,33 +103,19 @@ describe 'postfix' do
                 restart: '/etc/init.d/postfix reload'
               )
             }
-
-            context 'when on Fedora', excl: facts[:operatingsystem] != 'Fedora' do
-              it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
-              it {
-                is_expected.to contain_service('postfix').with(
-                  ensure: 'running',
-                  enable: 'true',
-                  hasstatus: 'true',
-                  restart: '/bin/systemctl reload postfix'
-                )
-              }
-            end
-
-            context('when on other', excl: (facts[:osfamily] != 'RedHat' || facts[:operatingsystem] == 'Fedora' || %w[6 7 8].include?(facts[:operatingsystemmajrelease]))) do
-              context('on Linux', excl: facts[:osfamily] != 'Linux') do
-                it { is_expected.to contain_file('/etc/aliases').with_seltype('postfix_etc_t').with_content("# file managed by puppet\n") }
-              end
-              it {
-                is_expected.to contain_service('postfix').with(
-                  ensure: 'running',
-                  enable: 'true',
-                  hasstatus: 'true',
-                  restart: '/etc/init.d/postfix reload'
-                )
-              }
-            end
           end
+        end
+
+        context 'when on Fedora', if: facts[:operatingsystem] == 'Fedora' do
+          it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
+          it {
+            is_expected.to contain_service('postfix').with(
+              ensure: 'running',
+              enable: 'true',
+              hasstatus: 'true',
+              restart: '/bin/systemctl reload postfix'
+            )
+          }
         end
       end
 
