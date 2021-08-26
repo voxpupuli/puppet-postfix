@@ -1,92 +1,111 @@
 # Changelog
 
-## [1.12.0](https://github.com/camptocamp/puppet-postfix/tree/1.12.0) (2021-04-23)
+All notable changes to this project will be documented in this file.
+Each new release typically also includes the latest modulesync defaults.
+These should not affect the functionality of the module.
 
-[Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.11.0...1.12.0)
+## [v2.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v2.0.0) (2021-08-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/1.12.0...v2.0.0)
+
+**Breaking changes:**
+
+- Drop RedHat 6; Add CentOS 7/8 support [\#301](https://github.com/voxpupuli/puppet-postfix/pull/301) ([root-expert](https://github.com/root-expert))
+- Drop Fedora 28/29/30; Add Fedora 33/34 support [\#300](https://github.com/voxpupuli/puppet-postfix/pull/300) ([root-expert](https://github.com/root-expert))
+- Drop puppet 4/5; Add Puppet 7 [\#299](https://github.com/voxpupuli/puppet-postfix/pull/299) ([root-expert](https://github.com/root-expert))
+- Drop Debian 7/8/9; Add 10/11; Drop Ubuntu 14/16; Add 20.04 [\#298](https://github.com/voxpupuli/puppet-postfix/pull/298) ([root-expert](https://github.com/root-expert))
+
+**Merged pull requests:**
+
+- Allow stdlib 8.0.0 [\#302](https://github.com/voxpupuli/puppet-postfix/pull/302) ([smortex](https://github.com/smortex))
+
+## [1.12.0](https://github.com/voxpupuli/puppet-postfix/tree/1.12.0) (2021-04-23)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/1.11.0...1.12.0)
 
 **Implemented enhancements:**
 
-- puppetlabs/stdlib: Allow 7.x [\#294](https://github.com/camptocamp/puppet-postfix/pull/294) ([bastelfreak](https://github.com/bastelfreak))
-- Add FreeBSD support [\#288](https://github.com/camptocamp/puppet-postfix/pull/288) ([smortex](https://github.com/smortex))
+- puppetlabs/stdlib: Allow 7.x [\#294](https://github.com/voxpupuli/puppet-postfix/pull/294) ([bastelfreak](https://github.com/bastelfreak))
+- Add FreeBSD support [\#288](https://github.com/voxpupuli/puppet-postfix/pull/288) ([smortex](https://github.com/smortex))
 
 **Fixed bugs:**
 
-- master.cf.common.erb: fix smtp\_bind\_address typo [\#293](https://github.com/camptocamp/puppet-postfix/pull/293) ([farlerac](https://github.com/farlerac))
+- master.cf.common.erb: fix smtp\_bind\_address typo [\#293](https://github.com/voxpupuli/puppet-postfix/pull/293) ([farlerac](https://github.com/farlerac))
 
-## [1.11.0](https://github.com/camptocamp/puppet-postfix/tree/1.11.0) (2021-01-20)
+## [1.11.0](https://github.com/voxpupuli/puppet-postfix/tree/1.11.0) (2021-01-20)
 
-[Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.10.0...1.11.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/1.10.0...1.11.0)
 
 **Implemented enhancements:**
 
-- Add Solaris support [\#274](https://github.com/camptocamp/puppet-postfix/pull/274) ([rstuart-indue](https://github.com/rstuart-indue))
-- Feature/allow specify master cf content & template [\#217](https://github.com/camptocamp/puppet-postfix/pull/217) ([c33s](https://github.com/c33s))
-- Add a variable definition and two examples. [\#212](https://github.com/camptocamp/puppet-postfix/pull/212) ([dafydd2277](https://github.com/dafydd2277))
--  Include parameter title in error output [\#209](https://github.com/camptocamp/puppet-postfix/pull/209) ([mrintegrity](https://github.com/mrintegrity))
-- more than two amavis processes [\#175](https://github.com/camptocamp/puppet-postfix/pull/175) ([farlerac](https://github.com/farlerac))
+- Add Solaris support [\#274](https://github.com/voxpupuli/puppet-postfix/pull/274) ([rstuart-indue](https://github.com/rstuart-indue))
+- Feature/allow specify master cf content & template [\#217](https://github.com/voxpupuli/puppet-postfix/pull/217) ([c33s](https://github.com/c33s))
+- Add a variable definition and two examples. [\#212](https://github.com/voxpupuli/puppet-postfix/pull/212) ([dafydd2277](https://github.com/dafydd2277))
+-  Include parameter title in error output [\#209](https://github.com/voxpupuli/puppet-postfix/pull/209) ([mrintegrity](https://github.com/mrintegrity))
+- more than two amavis processes [\#175](https://github.com/voxpupuli/puppet-postfix/pull/175) ([farlerac](https://github.com/farlerac))
 
 **Closed issues:**
 
-- Wrong tag on release 1.10.0 [\#276](https://github.com/camptocamp/puppet-postfix/issues/276)
-- Transport augeas test failed [\#241](https://github.com/camptocamp/puppet-postfix/issues/241)
+- Wrong tag on release 1.10.0 [\#276](https://github.com/voxpupuli/puppet-postfix/issues/276)
+- Transport augeas test failed [\#241](https://github.com/voxpupuli/puppet-postfix/issues/241)
 
 **Merged pull requests:**
 
-- Fix CI [\#291](https://github.com/camptocamp/puppet-postfix/pull/291) ([towo](https://github.com/towo))
-- Fix CI [\#289](https://github.com/camptocamp/puppet-postfix/pull/289) ([smortex](https://github.com/smortex))
-- Fix hardcoded map path [\#287](https://github.com/camptocamp/puppet-postfix/pull/287) ([towo](https://github.com/towo))
-- Transport: allow \[host\]:port smtp syntax [\#285](https://github.com/camptocamp/puppet-postfix/pull/285) ([raphink](https://github.com/raphink))
-- README.md: fix link to puppet-lint [\#283](https://github.com/camptocamp/puppet-postfix/pull/283) ([kenyon](https://github.com/kenyon))
-- Fixes postmap when ensure=absent [\#202](https://github.com/camptocamp/puppet-postfix/pull/202) ([earsdown](https://github.com/earsdown))
-- Add virtual and transport regexp examples [\#116](https://github.com/camptocamp/puppet-postfix/pull/116) ([micah](https://github.com/micah))
+- Fix CI [\#291](https://github.com/voxpupuli/puppet-postfix/pull/291) ([towo](https://github.com/towo))
+- Fix CI [\#289](https://github.com/voxpupuli/puppet-postfix/pull/289) ([smortex](https://github.com/smortex))
+- Fix hardcoded map path [\#287](https://github.com/voxpupuli/puppet-postfix/pull/287) ([towo](https://github.com/towo))
+- Transport: allow \[host\]:port smtp syntax [\#285](https://github.com/voxpupuli/puppet-postfix/pull/285) ([raphink](https://github.com/raphink))
+- README.md: fix link to puppet-lint [\#283](https://github.com/voxpupuli/puppet-postfix/pull/283) ([kenyon](https://github.com/kenyon))
+- Fixes postmap when ensure=absent [\#202](https://github.com/voxpupuli/puppet-postfix/pull/202) ([earsdown](https://github.com/earsdown))
+- Add virtual and transport regexp examples [\#116](https://github.com/voxpupuli/puppet-postfix/pull/116) ([micah](https://github.com/micah))
 
-## [1.10.0](https://github.com/camptocamp/puppet-postfix/tree/1.10.0) (2020-01-23)
+## [1.10.0](https://github.com/voxpupuli/puppet-postfix/tree/1.10.0) (2020-01-23)
 
-[Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.9.0...1.10.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/1.9.0...1.10.0)
 
 **Implemented enhancements:**
 
-- Add the possibility to manage \(or not\) aliases [\#271](https://github.com/camptocamp/puppet-postfix/pull/271) ([Bodenhaltung](https://github.com/Bodenhaltung))
-- Convert to PDK [\#270](https://github.com/camptocamp/puppet-postfix/pull/270) ([raphink](https://github.com/raphink))
-- Convert params.pp to hiera data [\#269](https://github.com/camptocamp/puppet-postfix/pull/269) ([raphink](https://github.com/raphink))
+- Add the possibility to manage \(or not\) aliases [\#271](https://github.com/voxpupuli/puppet-postfix/pull/271) ([Bodenhaltung](https://github.com/Bodenhaltung))
+- Convert to PDK [\#270](https://github.com/voxpupuli/puppet-postfix/pull/270) ([raphink](https://github.com/raphink))
+- Convert params.pp to hiera data [\#269](https://github.com/voxpupuli/puppet-postfix/pull/269) ([raphink](https://github.com/raphink))
 
 **Closed issues:**
 
-- new release on forge [\#266](https://github.com/camptocamp/puppet-postfix/issues/266)
-- Add possibility to manage \(or not\) /etc/aliases [\#237](https://github.com/camptocamp/puppet-postfix/issues/237)
+- new release on forge [\#266](https://github.com/voxpupuli/puppet-postfix/issues/266)
+- Add possibility to manage \(or not\) /etc/aliases [\#237](https://github.com/voxpupuli/puppet-postfix/issues/237)
 
 **Merged pull requests:**
 
-- Release 1.10.0 [\#273](https://github.com/camptocamp/puppet-postfix/pull/273) ([raphink](https://github.com/raphink))
-- Fix manage\_aliases [\#272](https://github.com/camptocamp/puppet-postfix/pull/272) ([raphink](https://github.com/raphink))
+- Release 1.10.0 [\#273](https://github.com/voxpupuli/puppet-postfix/pull/273) ([raphink](https://github.com/raphink))
+- Fix manage\_aliases [\#272](https://github.com/voxpupuli/puppet-postfix/pull/272) ([raphink](https://github.com/raphink))
 
-## [1.9.0](https://github.com/camptocamp/puppet-postfix/tree/1.9.0) (2019-11-26)
+## [1.9.0](https://github.com/voxpupuli/puppet-postfix/tree/1.9.0) (2019-11-26)
 
-[Full Changelog](https://github.com/camptocamp/puppet-postfix/compare/1.8.0...1.9.0)
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/1.8.0...1.9.0)
 
 **Implemented enhancements:**
 
-- Upping version dependency on puppet-alternatives [\#260](https://github.com/camptocamp/puppet-postfix/pull/260) ([cubiclelord](https://github.com/cubiclelord))
-- Add RedHat 8 support [\#257](https://github.com/camptocamp/puppet-postfix/pull/257) ([zeromind](https://github.com/zeromind))
-- Add missing inet\_protocols parameter to the README. [\#254](https://github.com/camptocamp/puppet-postfix/pull/254) ([catay](https://github.com/catay))
-- add retry and proxywrite for debian family OSes [\#253](https://github.com/camptocamp/puppet-postfix/pull/253) ([Dan33l](https://github.com/Dan33l))
-- Allow `puppetlabs/stdlib` 6.x [\#246](https://github.com/camptocamp/puppet-postfix/pull/246) ([alexjfisher](https://github.com/alexjfisher))
-- Add show\_diff parameter to postfix::conffile [\#226](https://github.com/camptocamp/puppet-postfix/pull/226) ([treydock](https://github.com/treydock))
+- Upping version dependency on puppet-alternatives [\#260](https://github.com/voxpupuli/puppet-postfix/pull/260) ([cubiclelord](https://github.com/cubiclelord))
+- Add RedHat 8 support [\#257](https://github.com/voxpupuli/puppet-postfix/pull/257) ([zeromind](https://github.com/zeromind))
+- Add missing inet\_protocols parameter to the README. [\#254](https://github.com/voxpupuli/puppet-postfix/pull/254) ([catay](https://github.com/catay))
+- add retry and proxywrite for debian family OSes [\#253](https://github.com/voxpupuli/puppet-postfix/pull/253) ([Dan33l](https://github.com/Dan33l))
+- Allow `puppetlabs/stdlib` 6.x [\#246](https://github.com/voxpupuli/puppet-postfix/pull/246) ([alexjfisher](https://github.com/alexjfisher))
+- Add show\_diff parameter to postfix::conffile [\#226](https://github.com/voxpupuli/puppet-postfix/pull/226) ([treydock](https://github.com/treydock))
 
 **Fixed bugs:**
 
-- Should mailalias\_core be declared as a dependency ? [\#236](https://github.com/camptocamp/puppet-postfix/issues/236)
+- Should mailalias\_core be declared as a dependency ? [\#236](https://github.com/voxpupuli/puppet-postfix/issues/236)
 
 **Closed issues:**
 
-- Add Debian Stretch to metadata.json [\#259](https://github.com/camptocamp/puppet-postfix/issues/259)
-- qmgr warning: connect to transport private/retry [\#252](https://github.com/camptocamp/puppet-postfix/issues/252)
-- Clarify license [\#250](https://github.com/camptocamp/puppet-postfix/issues/250)
+- Add Debian Stretch to metadata.json [\#259](https://github.com/voxpupuli/puppet-postfix/issues/259)
+- qmgr warning: connect to transport private/retry [\#252](https://github.com/voxpupuli/puppet-postfix/issues/252)
+- Clarify license [\#250](https://github.com/voxpupuli/puppet-postfix/issues/250)
 
 **Merged pull requests:**
 
-- Release 1.9.0 [\#265](https://github.com/camptocamp/puppet-postfix/pull/265) ([alexjfisher](https://github.com/alexjfisher))
-- Add missing Variable for Suse [\#245](https://github.com/camptocamp/puppet-postfix/pull/245) ([cocker-cc](https://github.com/cocker-cc))
+- Release 1.9.0 [\#265](https://github.com/voxpupuli/puppet-postfix/pull/265) ([alexjfisher](https://github.com/alexjfisher))
+- Add missing Variable for Suse [\#245](https://github.com/voxpupuli/puppet-postfix/pull/245) ([cocker-cc](https://github.com/cocker-cc))
 
 ## 1.8.0 (2019-04-05)
 
