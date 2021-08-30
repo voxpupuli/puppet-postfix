@@ -90,7 +90,7 @@ define postfix::map (
 
   exec { "generate ${name}.db":
     command     => $generate_cmd,
-    path        => $::path,
+    path        => $facts['path'],
     #creates    => "${name}.db", # this prevents postmap from being run !
     refreshonly => true,
   }
