@@ -26,9 +26,9 @@ describe 'postfix::virtual' do
 
       context 'when not sending destination' do
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, %r{destination})
+          end.to raise_error(Puppet::Error, %r{destination})
         end
       end
 
@@ -40,9 +40,9 @@ describe 'postfix::virtual' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error
+          end.to raise_error
         end
       end
 
@@ -55,9 +55,9 @@ describe 'postfix::virtual' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error
+          end.to raise_error
         end
       end
 
@@ -70,9 +70,9 @@ describe 'postfix::virtual' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, %r{, got })
+          end.to raise_error(Puppet::Error, %r{, got })
         end
       end
 
@@ -85,9 +85,9 @@ describe 'postfix::virtual' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error
+          end.to raise_error
         end
       end
 
@@ -100,9 +100,9 @@ describe 'postfix::virtual' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
-          }.to raise_error(Puppet::Error, %r{got 'running'})
+          end.to raise_error(Puppet::Error, %r{got 'running'})
         end
       end
 
@@ -122,7 +122,7 @@ describe 'postfix::virtual' do
               "defnode entry pattern[. = 'foo'] 'foo'",
               'rm $entry/destination',
               "set $entry/destination[1] 'bar'",
-            ],
+            ]
           )
         }
       end
@@ -145,7 +145,7 @@ describe 'postfix::virtual' do
               "defnode entry pattern[. = 'foo'] 'foo'",
               'rm $entry/destination',
               "set $entry/destination[1] 'bar'",
-            ],
+            ]
           )
         }
       end
@@ -153,7 +153,7 @@ describe 'postfix::virtual' do
       context 'when passing destination as array' do
         let(:params) do
           {
-            destination: ['bar', 'baz'],
+            destination: %w[bar baz],
             file: '/tmp/virtual',
             ensure: 'present',
           }
@@ -169,7 +169,7 @@ describe 'postfix::virtual' do
               'rm $entry/destination',
               "set $entry/destination[1] 'bar'",
               "set $entry/destination[2] 'baz'",
-            ],
+            ]
           )
         }
       end
@@ -189,7 +189,7 @@ describe 'postfix::virtual' do
             lens: 'Postfix_Virtual.lns',
             changes: [
               "rm pattern[. = 'foo']",
-            ],
+            ]
           )
         }
       end

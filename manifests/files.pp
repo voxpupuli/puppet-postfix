@@ -1,7 +1,6 @@
 class postfix::files {
   assert_private()
 
-
   $alias_maps          = $postfix::all_alias_maps
   $amavis_procs        = $postfix::amavis_procs
   $inet_interfaces     = $postfix::inet_interfaces
@@ -46,7 +45,7 @@ class postfix::files {
   if $manage_mailname {
     file { '/etc/mailname':
       ensure  => 'file',
-      content => "${::fqdn}\n",
+      content => "${facts['networking']['fqdn']}\n",
       mode    => '0644',
       seltype => $postfix::params::seltype,
     }
@@ -117,9 +116,8 @@ class postfix::files {
   }
 
   if $manage_aliases and $manage_root_alias {
-    postfix::mailalias {'root':
+    postfix::mailalias { 'root':
       recipient => $root_mail_recipient,
     }
   }
-
 }

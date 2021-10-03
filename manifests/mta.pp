@@ -63,5 +63,4 @@ class postfix::mta (
   postfix::hash { "${postfix::confdir}/transport":
     ensure => 'present',
   }
-
 }

@@ -21,9 +21,9 @@ describe 'postfix::conffile' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error
+          end.to raise_error
         end
       end
 
@@ -35,9 +35,9 @@ describe 'postfix::conffile' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error(Puppet::Error, %r{got 'running'})
+          end.to raise_error(Puppet::Error, %r{got 'running'})
         end
       end
 
@@ -50,9 +50,9 @@ describe 'postfix::conffile' do
         end
 
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error(Puppet::Error, %r{You must provide either 'source' or 'content'})
+          end.to raise_error(Puppet::Error, %r{You must provide either 'source' or 'content'})
         end
       end
 
@@ -66,7 +66,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             ensure: 'present',
-            source: 'puppet:///modules/postfix/bar',
+            source: 'puppet:///modules/postfix/bar'
           ).without(:content)
         }
       end
@@ -81,16 +81,16 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             ensure: 'present',
-            content: 'bar',
+            content: 'bar'
           ).without(:source)
         }
       end
 
       context 'when not passing source or content' do
         it 'fails' do
-          expect {
+          expect do
             is_expected.to contain_file('postfix conffile foo')
-          }.to raise_error(Puppet::Error, %r{You must provide 'options' hash parameter if you don't provide 'source' neither 'content'})
+          end.to raise_error(Puppet::Error, %r{You must provide 'options' hash parameter if you don't provide 'source' neither 'content'})
         end
       end
 
@@ -138,7 +138,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             mode: '0644',
-            content: 'bar',
+            content: 'bar'
           )
         }
       end
@@ -154,7 +154,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             path: '/tmp/foo',
-            content: 'bar',
+            content: 'bar'
           )
         }
       end

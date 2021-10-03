@@ -27,75 +27,75 @@ The top-level class, to install and configure Postfix.
 
 ##### `alias_maps`
 
-A string defining the location of the alias map file.  
-Default: 'hash:/etc/aliases'.  
+A string defining the location of the alias map file.
+Default: 'hash:/etc/aliases'.
 Example: 'hash:/etc/other_aliases'.
 
 ##### `configs`
 
-A hash containing optional configuration values for main.cf. The values are configured using postfix::config.  
-Default: An empty hash.  
+A hash containing optional configuration values for main.cf. The values are configured using postfix::config.
+Default: An empty hash.
 Example: '{message_size_limit': {'value': '51200000'}}.
 
 ##### `inet_interfaces`
 
-A string defining the network interfaces that Postfix will listen on.  
-Default: 'all'.  
+A string defining the network interfaces that Postfix will listen on.
+Default: 'all'.
 Example: '127.0.0.1, [::1]'.
 
 ##### `inet_protocols`
 
 
-A string defining the internet protocols that Postfix will use.  
-Default: 'all'.  
+A string defining the internet protocols that Postfix will use.
+Default: 'all'.
 Example: 'ipv4'.
 
 ##### `ldap`
 
-A Boolean defining whether to configure Postfix for LDAP use.  
+A Boolean defining whether to configure Postfix for LDAP use.
 Default: false.
 
 ##### `ldap_base`
 
-A string defining the LDAP search base to use. This parameter maps to the search_base parameter (ldap_table(5)).  
-Default: Undefined.  
+A string defining the LDAP search base to use. This parameter maps to the search_base parameter (ldap_table(5)).
+Default: Undefined.
 Example 'cn=Users,dc=example,dc=com'.
 
 ##### `ldap_host`
 
-A string defining the LDAP host. This parameter maps to the server_host parameter (ldap_table(5)).  
-Default: Undefined.  
+A string defining the LDAP host. This parameter maps to the server_host parameter (ldap_table(5)).
+Default: Undefined.
 Example: 'ldaps://ldap.example.com:636 ldap://ldap2.example.com'.
 
 ##### `ldap_options`
 
-A free form string that can define any ldap options to be passed through (ldap_table(5)).  
-Default: Undefined.  
+A free form string that can define any ldap options to be passed through (ldap_table(5)).
+Default: Undefined.
 Example: 'start_tls = yes'.
 
 ##### `mail_user`
 
-A string defining the mail user, and optionally group, to execute external commands as. This parameter maps to the user parameter (pipe(8)).  
-Default: 'vmail'.  
+A string defining the mail user, and optionally group, to execute external commands as. This parameter maps to the user parameter (pipe(8)).
+Default: 'vmail'.
 Example: 'vmail:vmail'.
 
 ##### `mailman`
 
-A Boolean defining whether to configure a basic smtp server that is able to work for the mailman mailing list manager.  
+A Boolean defining whether to configure a basic smtp server that is able to work for the mailman mailing list manager.
 Default: false.
 
 ##### `maincf_source`
 
-A string defining the location of a skeleton main.cf file to be used. The default file supplied is blank. However, if the main.cf file already exists on the system the contents will **NOT** be replaced by the contents from maincf_source.  
-Default: "puppet:///modules/${module_name}/main.cf".  
+A string defining the location of a skeleton main.cf file to be used. The default file supplied is blank. However, if the main.cf file already exists on the system the contents will **NOT** be replaced by the contents from maincf_source.
+Default: "puppet:///modules/${module_name}/main.cf".
 Example: 'puppet:///modules/some/other/location/main.cf'.
 
 ##### `manage_conffiles`
 
-A Boolean defining whether the puppet module should replace the configuration files for postfix.  
+A Boolean defining whether the puppet module should replace the configuration files for postfix.
 **This setting currently effects only the following files:**
 * /etc/mailname
-* /etc/postfix/master.cf  
+* /etc/postfix/master.cf
 
 
 **This setting does NOT effect the following files:**
@@ -111,23 +111,23 @@ A Boolean defining whether the puppet module should manage the mailx package. Se
 Default: true.
 
 ##### `mastercf_source`
-A string defining the location of a skeleton master.cf file to be used.  
-Default: Undefined.  
+A string defining the location of a skeleton master.cf file to be used.
+Default: Undefined.
 Example: 'puppet:///modules/some/other/location/master.cf'.
 
 ##### `master_smtp`
-A string to define the smtp line in the /etc/postfix/master.cf file. If this is defined the smtp_listen parameter will be ignored.  
-Default: Undefined.  
+A string to define the smtp line in the /etc/postfix/master.cf file. If this is defined the smtp_listen parameter will be ignored.
+Default: Undefined.
 Example: 'smtp      inet  n       -       n       -       -       smtpd'.
 
 ##### `master smtps`
-A string to define the smtps line in the /etc/postfix/master.cf file.  
-Default: Undefined.  
+A string to define the smtps line in the /etc/postfix/master.cf file.
+Default: Undefined.
 Example: 'smtps     inet  n       -       n       -       -       smtpd'.
 
 ##### `master_submission`
-A string to define the submission line in the /etc/postfix/master.cf file.  
-Default: Undefined.  
+A string to define the submission line in the /etc/postfix/master.cf file.
+Default: Undefined.
 Example: 'submission inet n       -       n       -       -       smtpd'.
 
 ##### `master_entries`
@@ -136,32 +136,32 @@ Default: Undefined.
 Example: 'submission inet n       -       n       -       -       smtpd'.
 
 ##### `mta`
-A Boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite Boolean.  
+A Boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite Boolean.
 Default: False.
 
 ##### `mydestination`
-A string to define the mydestination parameter in main.cf (postconf(5)).  
-Default: The systems FQDN.  
+A string to define the mydestination parameter in main.cf (postconf(5)).
+Default: The systems FQDN.
 Example: 'example.com, foo.example.com'.
 
 ##### `mynetworks`
-A string to define the mynetworks parameter that holds trusted remote smtp clients (postconf(5)).  
-Default: '127.0.0.0/8'.  
-Example: '127.0.0.0/8, [::1]/128'.  
+A string to define the mynetworks parameter that holds trusted remote smtp clients (postconf(5)).
+Default: '127.0.0.0/8'.
+Example: '127.0.0.0/8, [::1]/128'.
 
 ##### `myorigin`
-A string to define the myorigin parameter that holds the domain name that mail appears to come from (postconf(5)).  
-Default: The FQDN of the host.  
+A string to define the myorigin parameter that holds the domain name that mail appears to come from (postconf(5)).
+Default: The FQDN of the host.
 Example: 'example.com'
 
 ##### `relayhost`
-A string to define the relayhost parameter (postconf(5)).  
-Default: Undefined.  
-Example: 'smtp.example.com'. 
+A string to define the relayhost parameter (postconf(5)).
+Default: Undefined.
+Example: 'smtp.example.com'.
 
 ##### `root_mail_recipient`
-A string to define the e-mail address to which all mail directed to root should go (aliases(5)).  
-Default: 'nobody'.  
+A string to define the e-mail address to which all mail directed to root should go (aliases(5)).
+Default: 'nobody'.
 Example: 'root_catch@example.com'.
 
 ##### `chroot`
@@ -170,28 +170,28 @@ Default: Undefined.
 Example: true
 
 ##### `satellite`
-A Boolean to define whether to configure postfix as a satellite relay host.  This setting is mutually exclusive with the mta Boolean.  
+A Boolean to define whether to configure postfix as a satellite relay host.  This setting is mutually exclusive with the mta Boolean.
 Default: False.
 
 ##### `smtp_listen`
-A string to define the IP on which to listen in master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.  
-Default: '127.0.0.1'.  
+A string to define the IP on which to listen in master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.
+Default: '127.0.0.1'.
 Example: '::1'.
 
 ##### `use_amavisd`
-A Boolean to define whether to configure master.cf to allow the use of the amavisd scanner.  
+A Boolean to define whether to configure master.cf to allow the use of the amavisd scanner.
 Default: False.
 
 ##### `use_dovecot_lda`
-A Boolean to define whether to configure master.cf to use dovecot as the local delivery agent.  
+A Boolean to define whether to configure master.cf to use dovecot as the local delivery agent.
 Default: False.
 
 ##### `use_schleuder`
-A Boolean to define whether to configure master.cf to use the Schleuder GPG-enabled mailing list.  
+A Boolean to define whether to configure master.cf to use the Schleuder GPG-enabled mailing list.
 Default: False.
 
 ##### `use_sympa`
-A Boolean to define whether to configure master.cf to use the Sympa mailing list management software.  
+A Boolean to define whether to configure master.cf to use the Sympa mailing list management software.
 Default: False.
 
 #### Examples
@@ -217,13 +217,13 @@ Add/alter/remove options in Postfix main configuration file (main.cf). This uses
 #### Parameters
 
 ##### `ensure`
-A string whose value can be any of 'present', 'absent', 'blank'.  
-Default: present.  
-Example: blank.  
+A string whose value can be any of 'present', 'absent', 'blank'.
+Default: present.
+Example: blank.
 
 ##### `value`
-A string that can contain any text to be used as the configuration value.  
-Default: Undefined.  
+A string that can contain any text to be used as the configuration value.
+Default: Undefined.
 Example: 'btree:${data_directory}/smtp_tls_session_cache'.
 
 #### Examples
@@ -251,18 +251,18 @@ Creates Postfix hashed "map" files, and builds the corresponding db file.
 #### Parameters
 
 ##### `ensure`
-Defines whether the hash map file is present or not. Value can either be present or absent.  
-Default: present.  
+Defines whether the hash map file is present or not. Value can either be present or absent.
+Default: present.
 Example: absent.
 
 ##### `content`
-A free form string that defines the contents of the file. This parameter is mutually exclusive with the source parameter.  
-Default: Undefined.  
-Example: '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword'. 
+A free form string that defines the contents of the file. This parameter is mutually exclusive with the source parameter.
+Default: Undefined.
+Example: '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword'.
 
 ##### `source`
-A string whose value is a location for the source file to be used. This parameter is mutually exclusive with the content parameter, one or the other must be present, but both cannot be present.  
-Default: Undefined.  
+A string whose value is a location for the source file to be used. This parameter is mutually exclusive with the content parameter, one or the other must be present, but both cannot be present.
+Default: Undefined.
 Example: 'puppet:///modules/some/location/sasl_passwd'.
 
 #### Examples
@@ -304,18 +304,18 @@ postfix::config { 'transport_maps'
 #### Parameters
 
 ##### `ensure`
-Defines whether the transport entry is present or not. Value can either be present or absent.  
-Default: present.  
+Defines whether the transport entry is present or not. Value can either be present or absent.
+Default: present.
 Example: absent.
 
 ##### `destination`
-The destination to be delivered to (transport(5)).  
-Default: Undefined.  
+The destination to be delivered to (transport(5)).
+Default: Undefined.
 Example: 'mailman'.
 
 ##### `nexthop`
-A string to define where and how to deliver the mail (transport(5)).  
-Default: Undefined.  
+A string to define where and how to deliver the mail (transport(5)).
+Default: Undefined.
 Example: '[smtp.google.com]:25'.
 
 #### Examples
@@ -342,18 +342,18 @@ postfix::config { 'virtual_alias_maps':
 ```
 #### Parameters
 ##### `ensure`
-A string whose valid values are present or absent.  
-Default: present.  
+A string whose valid values are present or absent.
+Default: present.
 Example: absent.
 
 ##### `file`
-A string defining the location of the virtual map, pre hash.  
-Default: '/etc/postfix/virtual'.  
+A string defining the location of the virtual map, pre hash.
+Default: '/etc/postfix/virtual'.
 Example: '/etc/postfix/my_virtual_map'.
 
 ##### `destination`
-A string defining where the e-mails will be delivered to, (virtual(8)).  
-Default: Undefined.  
+A string defining where the e-mails will be delivered to, (virtual(8)).
+Default: Undefined.
 Example: 'root'
 
 #### Examples
@@ -372,31 +372,31 @@ Manages postfix configuration files. With it, you could create configuration fil
 
 #### Parameters
 ##### `ensure`
-A string whose valid values are present, absent or directory.  
-Default: present.  
+A string whose valid values are present, absent or directory.
+Default: present.
 Example: absent.
 
 ##### `source`
-A string with the source of the file. This is the `source` parameter of the underlying file resource.  
-Default: `undef`  
-Example: 'puppet:///modules/postfix/configfile.cf'  
+A string with the source of the file. This is the `source` parameter of the underlying file resource.
+Default: `undef`
+Example: 'puppet:///modules/postfix/configfile.cf'
 
 ##### `content`
-The content of the postfix configuration file. This is an alternative to the `source` parameter. If you don't provide `source` neither `content` parameters a default template is used and the content is created with values in the `options` hash.  
-Default: `undef`  
+The content of the postfix configuration file. This is an alternative to the `source` parameter. If you don't provide `source` neither `content` parameters a default template is used and the content is created with values in the `options` hash.
+Default: `undef`
 
 ##### `path`
-Path where to create the configuration file.  
+Path where to create the configuration file.
 Default: '/etc/postfix/${name}'
 
 ##### `mode`
-Permissions of the configuration file. This option is useful if you want to create the file with specific permissions (for example, because you have passwords in it).  
-Default: '0644'  
+Permissions of the configuration file. This option is useful if you want to create the file with specific permissions (for example, because you have passwords in it).
+Default: '0644'
 Example: '0640'
 
 ##### `options`
-Hash with the options used in the default template that is used when neither `source` neither `content`parameters are provided.  
-Default: {}  
+Hash with the options used in the default template that is used when neither `source` neither `content`parameters are provided.
+Default: {}
 Example:
 ```
  postfix::conffile { 'ldapoptions.cf':

@@ -36,7 +36,7 @@ define postfix::map (
   String[4,4]                           $mode = '0640'
 ) {
   include postfix
-  include ::postfix::params
+  include postfix::params
 
   $_path = pick($path, "${postfix::confdir}/${name}")
 
@@ -72,7 +72,7 @@ define postfix::map (
   }
 
   if $type !~ /^(cidr|pcre)$/ {
-    file {"postfix map ${name}.db":
+    file { "postfix map ${name}.db":
       ensure  => $ensure,
       path    => "${_path}.db",
       owner   => 'root',
@@ -88,9 +88,9 @@ define postfix::map (
     'present' => "postmap ${_path}",
   }
 
-  exec {"generate ${name}.db":
+  exec { "generate ${name}.db":
     command     => $generate_cmd,
-    path        => $::path,
+    path        => $facts['path'],
     #creates    => "${name}.db", # this prevents postmap from being run !
     refreshonly => true,
   }

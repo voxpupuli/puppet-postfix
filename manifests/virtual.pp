@@ -44,7 +44,7 @@ define postfix::virtual (
   Enum['present', 'absent']      $ensure='present'
 ) {
   include postfix
-  include ::postfix::augeas
+  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/virtual")
 
@@ -71,7 +71,7 @@ define postfix::virtual (
     }
   }
 
-  augeas {"Postfix virtual - ${name}":
+  augeas { "Postfix virtual - ${name}":
     incl    => $_file,
     lens    => 'Postfix_Virtual.lns',
     changes => $changes,
