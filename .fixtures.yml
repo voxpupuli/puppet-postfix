@@ -1,14 +1,8 @@
+---
 fixtures:
-  forge_modules:
-    "augeas_core":
-      "repo": "puppetlabs/augeas_core"
-      "puppet_version": ">= 6.0.0"
-    "mailalias_core":
-      "repo": "puppetlabs/mailalias_core"
-      "puppet_version": ">= 6.0.0"
   repositories:
-    "augeas": "https://github.com/camptocamp/puppet-augeas.git"
-    "stdlib": "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    "alternatives": "https://github.com/voxpupuli/puppet-alternatives.git"
-  symlinks:
-    "postfix": "#{source_dir}"
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
+    concat: https://github.com/voxpupuli/puppet-alternatives.git
+    augeas: https://github.com/camptocamp/puppet-augeas.git
+    mailalias_core: https://github.com/puppetlabs/puppetlabs-mailalias_core.git
+    augeas_core: https://github.com/puppetlabs/puppetlabs-augeas_core.git
