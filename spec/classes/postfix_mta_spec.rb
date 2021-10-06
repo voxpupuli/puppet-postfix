@@ -12,7 +12,8 @@ describe 'postfix::mta' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
-        facts
+        facts.merge(augeasversion: '1.2.0',
+                    puppetversion: Puppet.version)
       end
 
       it { is_expected.to compile.with_all_deps }
