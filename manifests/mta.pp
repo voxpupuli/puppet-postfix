@@ -40,7 +40,7 @@ class postfix::mta (
 
   $_mydestination = pick($mydestination, $postfix::mydestination)
   $_mynetworks = pick($mynetworks, $postfix::mynetworks)
-  $_relayhost = pick($relayhost, $postfix::relayhost)
+  $_relayhost = pick($relayhost, $postfix::relayhost, 'direct')
   $_masquerade_classes    = $masquerade_classes.lest || { $postfix::masquerade_classes }
   $_masquerade_domains    = $masquerade_domains.lest || { $postfix::masquerade_domains }
   $_masquerade_exceptions = $masquerade_exceptions.lest || { $postfix::masquerade_exceptions }
