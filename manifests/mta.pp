@@ -34,7 +34,7 @@ class postfix::mta (
 
   $_mydestination = pick($mydestination, $postfix::mydestination)
   $_mynetworks = pick($mynetworks, $postfix::mynetworks)
-  $_relayhost = pick($relayhost, $postfix::relayhost)
+  $_relayhost = pick($relayhost, $postfix::relayhost, 'direct')
 
   # If direct is specified then relayhost should be blank
   if ($_relayhost == 'direct') {
