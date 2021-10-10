@@ -104,6 +104,13 @@ A Boolean defining whether the puppet module should replace the configuration fi
 
 Default: true.
 
+##### `manage_mailname`
+
+A Boolean defining whether the puppet module should manage '/etc/mailname'.
+See also $manage_conffiles
+
+Default: true.
+
 ##### `manage_mailx`
 
 A Boolean defining whether the puppet module should manage the mailx package. See also $mailx_ensure.

@@ -40,6 +40,8 @@
 #
 # [*manage_conffiles*]    - (boolean) Whether config files are to be replaced
 #
+# [*manage_mailname*]     - (boolean) Whether to manage /etc/mailname.
+#
 # [*manage_mailx*]        - (boolean) Whether to manage mailx package.
 #
 # [*mastercf_source*]     - (string)
