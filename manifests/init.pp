@@ -143,7 +143,7 @@ class postfix (
   Variant[Array[String], String]  $root_mail_recipient = 'nobody',      # root_mail_recipient
   Optional[Boolean]               $chroot              = undef,
   Boolean                         $satellite           = false,
-  String                          $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
+  Variant[Array[String], String]  $smtp_listen         = '127.0.0.1',   # postfix_smtp_listen
   Boolean                         $use_amavisd         = false,         # postfix_use_amavisd
   Boolean                         $use_dovecot_lda     = false,         # postfix_use_dovecot_lda
   Variant[Integer[2, 3], Boolean] $use_schleuder       = false,         # postfix_use_schleuder

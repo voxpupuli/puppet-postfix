@@ -12,7 +12,9 @@
 <% if @smtp_listen == 'all' -%>
 smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 <% else -%>
-<%= @smtp_listen %>:smtp      inet  n       -       <%= @jail %>       -       -       smtpd
+  <%- [@smtp_listen].flatten.each do |listen_address| %>
+<%= listen_address %>:smtp      inet  n       -       <%= @jail %>       -       -       smtpd
+  <%- end -%>
 <% end -%>
 #smtp      inet  n       -       n       -       -       smtpd
 #submission inet n      -       n       -       -       smtpd
