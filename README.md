@@ -181,7 +181,7 @@ A Boolean to define whether to configure postfix as a satellite relay host.  Thi
 Default: False.
 
 ##### `smtp_listen`
-A string or array to define the IP or IPs on which to listen in master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.
+A string or an array of strings to define the IPs on which to listen in master.cf. This can also be set to 'all' to listen on all interfaces. If master_smtp is defined smtp_listen will not be used.
 Default: '127.0.0.1'.
 Example: '::1'.
 

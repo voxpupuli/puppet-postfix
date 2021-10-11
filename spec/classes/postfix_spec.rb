@@ -411,7 +411,18 @@ describe 'postfix' do
               )
             end
           end
-          context 'when specifying multiple smtp_listen addresses' do
+          context 'when specifying multiple smtp_listen addresses as string' do
+            let(:params) { { smtp_listen: '192.168.0.123 10.0.0.123' } }
+
+            it 'updates master.cf with multiple smtp listeners' do
+              is_expected.to contain_file(postfix_master_cf_path).with_content(
+                %r{192.168.0.123:smtp      inet  n       -       n       -       -       smtpd}
+              ).with_content(
+                %r{10.0.0.123:smtp      inet  n       -       n       -       -       smtpd}
+              )
+            end
+          end
+          context 'when specifying multiple smtp_listen addresses as array' do
             let(:params) { { smtp_listen: ['192.168.0.123', '10.0.0.123'] } }
 
             it 'updates master.cf with multiple smtp listeners' do
