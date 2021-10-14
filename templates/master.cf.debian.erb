@@ -12,7 +12,9 @@
 <% elsif @smtp_listen == 'all' -%>
 smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 <% else -%>
-<%= @smtp_listen %>:smtp      inet  n       -       <%= @jail %>       -       -       smtpd
+  <%- (@smtp_listen.is_a?(Array) ? @smtp_listen : @smtp_listen.split(' ')).each do |listen_address| -%>
+<%= listen_address %>:smtp      inet  n       -       <%= @jail %>       -       -       smtpd
+  <%- end -%>
 <% end -%>
 <% if @master_submission -%>
 <%= @master_submission %>
