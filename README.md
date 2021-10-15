@@ -136,7 +136,7 @@ Default: Undefined.
 Example: 'submission inet n       -       n       -       -       smtpd'.
 
 ##### `mta`
-A Boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite Boolean.
+A Boolean to define whether to configure Postfix as a mail transfer agent. This option is mutually exclusive with the satellite Boolean and relayhost String.
 Default: False.
 
 ##### `mydestination`
@@ -155,7 +155,7 @@ Default: The FQDN of the host.
 Example: 'example.com'
 
 ##### `relayhost`
-A string to define the relayhost parameter (postconf(5)).
+A string to define the relayhost parameter (postconf(5)). This setting is mutually exclusive with the mta Boolean.
 Default: Undefined.
 Example: 'smtp.example.com'.
 
@@ -170,7 +170,7 @@ Default: Undefined.
 Example: true
 
 ##### `satellite`
-A Boolean to define whether to configure postfix as a satellite relay host.  This setting is mutually exclusive with the mta Boolean.
+A Boolean to define whether to configure postfix as a satellite relay host. This setting is mutually exclusive with the mta Boolean.
 Default: False.
 
 ##### `smtp_listen`

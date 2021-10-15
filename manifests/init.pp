@@ -195,7 +195,7 @@ class postfix (
 
   if $satellite or $relayhost {
     if $mta {
-      fail('enabling both the $mta and $satellite parameters is not supported. Please disable one.')
+      fail('enabling both the $mta and $satellite or $relayhost parameters is not supported. Please disable one.')
     }
     include postfix::satellite
   }
