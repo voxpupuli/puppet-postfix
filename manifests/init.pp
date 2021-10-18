@@ -156,7 +156,7 @@ class postfix (
   if (($mastercf_source and $mastercf_content) or
     ($mastercf_source and $mastercf_template) or
     ($mastercf_content and $mastercf_template) or
-  ($mastercf_source and $mastercf_content and $mastercf_template)) {
+    ($mastercf_source and $mastercf_content and $mastercf_template)) {
     fail('mastercf_source, mastercf_content and mastercf_template are mutually exclusive')
   }
 
