@@ -141,6 +141,17 @@ describe 'postfix::map' do
         it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
         it { is_expected.not_to contain_file('postfix map foo.db') }
       end
+
+      context 'when using regexp type' do
+        let(:params) do
+          {
+            type: 'regexp',
+          }
+        end
+
+        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.not_to contain_file('postfix map foo.db') }
+      end
     end
   end
 end
