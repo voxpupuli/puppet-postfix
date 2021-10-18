@@ -18,6 +18,8 @@
 #
 # [*conffiles*]           - (hash) A hash of postfix::conffile resources
 #
+# [*maps*]                - (hash) A hash of postfix::map resources
+#
 # [*amavis_procs*]        - (integer) Number of amavis scanners to spawn
 #
 # [*inet_interfaces*]     - (string)
@@ -111,6 +113,7 @@ class postfix (
   Hash                            $transports          = {},
   Hash                            $virtuals            = {},
   Hash                            $conffiles           = {},
+  Hash                            $maps                = {},
   Integer                         $amavis_procs        = 2,
   String                          $inet_interfaces     = 'all',
   String                          $inet_protocols      = 'all',
@@ -196,6 +199,12 @@ class postfix (
 
   $conffiles.each |$key, $value| {
     postfix::conffile { $key:
+      * => $value,
+    }
+  }
+
+  $maps.each |$key, $value| {
+    postfix::map { $key:
       * => $value,
     }
   }

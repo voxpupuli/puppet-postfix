@@ -570,6 +570,25 @@ describe 'postfix' do
               )
             end
           end
+          context 'when maps hash is used' do
+            let(:params) do
+              {
+                maps: {
+                  'a_map' => {
+                    'type' => 'regexp',
+                    'content' => 'abc xyz',
+                  },
+                },
+              }
+            end
+
+            it 'creates the map resource' do
+              is_expected.to contain_postfix__map('a_map').with(
+                'type' => 'regexp',
+                'content' => 'abc xyz'
+              )
+            end
+          end
         end
       end
     end
