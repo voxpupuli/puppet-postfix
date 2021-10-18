@@ -20,20 +20,6 @@ describe 'postfix::map' do
         facts
       end
 
-      context 'when passing wrong type for ensure' do
-        let(:params) do
-          {
-            ensure: ['present'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_file('postfix map foo')
-          end.to raise_error
-        end
-      end
-
       context 'when passing wrong value for ensure' do
         let(:params) do
           {

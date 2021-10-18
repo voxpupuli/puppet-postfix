@@ -24,50 +24,6 @@ describe 'postfix::transport' do
                     puppetversion: Puppet.version)
       end
 
-      context 'when sending wrong type for destination' do
-        let(:params) do
-          {
-            destination: ['bar'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix transport - foo')
-          end.to raise_error
-        end
-      end
-
-      context 'when sending wrong type for nexthop' do
-        let(:params) do
-          {
-            destination: 'bar',
-            nexthop: ['baz'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix transport - foo')
-          end.to raise_error
-        end
-      end
-
-      context 'when sending wrong type for file' do
-        let(:params) do
-          {
-            destination: 'bar',
-            file: ['baz'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix transport - foo')
-          end.to raise_error
-        end
-      end
-
       context 'when sending wrong value for file' do
         let(:params) do
           {
@@ -80,21 +36,6 @@ describe 'postfix::transport' do
           expect do
             is_expected.to contain_augeas('Postfix transport - foo')
           end.to raise_error(Puppet::Error, %r{, got })
-        end
-      end
-
-      context 'when sending wrong type for ensure' do
-        let(:params) do
-          {
-            destination: 'bar',
-            ensure: ['baz'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix transport - foo')
-          end.to raise_error
         end
       end
 
