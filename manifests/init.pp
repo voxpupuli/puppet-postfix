@@ -10,13 +10,13 @@
 #
 # [*configs*]             - (hash)
 #
-# [*hash*]                - (hash) A hash of postfix::hash resources
+# [*hashes*]              - (hash) A hash of postfix::hash resources
 #
-# [*transport*]           - (hash) A hash of postfix::transport resources
+# [*transports*]          - (hash) A hash of postfix::transport resources
 #
-# [*virtual*]             - (hash) A hash of postfix::virtual resources
+# [*virtuals*]            - (hash) A hash of postfix::virtual resources
 #
-# [*conffile*]             - (hash) A hash of postfix::conffile resources
+# [*conffiles*]           - (hash) A hash of postfix::conffile resources
 #
 # [*amavis_procs*]        - (integer) Number of amavis scanners to spawn
 #
@@ -106,11 +106,11 @@ class postfix (
   Stdlib::Absolutepath            $confdir             = '/etc/postfix',
   String                          $root_group          = 'root',
   String                          $alias_maps          = 'hash:/etc/aliases',
-  Optional[Hash]                  $configs             = {},
-  Optional[Hash]                  $hash                = {},
-  Optional[Hash]                  $transport           = {},
-  Optional[Hash]                  $virtual             = {},
-  Optional[Hash]                  $conffile            = {},
+  Hash                            $configs             = {},
+  Hash                            $hashes              = {},
+  Hash                            $transports          = {},
+  Hash                            $virtuals            = {},
+  Hash                            $conffiles           = {},
   Integer                         $amavis_procs        = 2,
   String                          $inet_interfaces     = 'all',
   String                          $inet_protocols      = 'all',
@@ -130,7 +130,7 @@ class postfix (
   Optional[String]                $master_smtp         = undef,         # postfix_master_smtp
   Optional[String]                $master_smtps        = undef,         # postfix_master_smtps
   Optional[String]                $master_submission   = undef,         # postfix_master_submission
-  Optional[Array[String]]         $master_entries      = undef,         # postfix_master_entries
+  Array[String]                   $master_entries      = [],            # postfix_master_entries
   String                          $master_bounce_command = 'bounce',
   String                          $master_defer_command  = 'bounce',
   Boolean                         $mta                 = false,
@@ -170,11 +170,35 @@ class postfix (
     true  => "${alias_maps}, ldap:${confdir}/ldap-aliases.cf",
   }
 
-  create_resources('::postfix::config', $configs)
-  create_resources('::postfix::transport', $transport)
-  create_resources('::postfix::virtual', $virtual)
-  create_resources('::postfix::hash', $hash)
-  create_resources('::postfix::conffile', $conffile)
+  $configs.each |$key, $value| {
+    postfix::config { $key:
+      * => $value,
+    }
+  }
+
+  $transports.each |$key, $value| {
+    postfix::transport { $key:
+      * => $value,
+    }
+  }
+
+  $virtuals.each |$key, $value| {
+    postfix::virtual { $key:
+      * => $value,
+    }
+  }
+
+  $hashes.each |$key, $value| {
+    postfix::hash { $key:
+      * => $value,
+    }
+  }
+
+  $conffiles.each |$key, $value| {
+    postfix::conffile { $key:
+      * => $value,
+    }
+  }
 
   contain 'postfix::packages'
   contain 'postfix::files'
