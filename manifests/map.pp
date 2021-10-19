@@ -28,12 +28,12 @@
 #   }
 #
 define postfix::map (
-  Enum['present', 'absent']             $ensure = 'present',
-  Variant[Array[String], String, Undef] $source = undef,
-  Optional[Variant[Sensitive[String],String]] $content = undef,
-  String                                $type = 'hash',
-  Optional[Stdlib::Absolutepath]        $path = undef,
-  String[4,4]                           $mode = '0640'
+  Enum['present', 'absent'] $ensure = 'present',
+  Optional[Variant[Array[String], String]] $source = undef,
+  Optional[Variant[Sensitive[String], String]] $content = undef,
+  String[1] $type = 'hash',
+  Optional[Stdlib::Absolutepath] $path = undef,
+  String[4,4] $mode = '0640',
 ) {
   include postfix
   include postfix::params
@@ -49,7 +49,7 @@ define postfix::map (
   }
 
   # CIDR and PCRE maps need a postfix reload, but not a postmap
-  if $type =~ /^(cidr|pcre)$/ {
+  if $type =~ /^(cidr|pcre|regexp)$/ {
     $manage_notify = Service['postfix']
   } else {
     if $ensure == 'present' {
@@ -71,7 +71,7 @@ define postfix::map (
     notify  => $manage_notify,
   }
 
-  if $type !~ /^(cidr|pcre)$/ {
+  if $type !~ /^(cidr|pcre|regexp)$/ {
     file { "postfix map ${name}.db":
       ensure  => $ensure,
       path    => "${_path}.db",
