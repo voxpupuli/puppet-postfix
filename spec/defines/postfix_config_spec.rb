@@ -23,36 +23,7 @@ describe 'postfix::config' do
         it 'fails' do
           expect do
             is_expected.to contain_augeas("set postfix 'foo'")
-          end.to raise_error
-        end
-      end
-
-      context 'when passing wrong type for value' do
-        let(:params) do
-          {
-            value: ['bar'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas("set postfix 'foo'")
-          end.to raise_error
-        end
-      end
-
-      context 'when passing wrong type for ensure' do
-        let(:params) do
-          {
-            value: 'bar',
-            ensure: ['present'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas("set postfix 'foo'")
-          end.to raise_error
+          end.to raise_error(Puppet::Error, %r{can not be empty if ensure = present})
         end
       end
 

@@ -32,35 +32,6 @@ describe 'postfix::virtual' do
         end
       end
 
-      context 'when sending wrong type for destination' do
-        let(:params) do
-          {
-            destination: true,
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix virtual - foo')
-          end.to raise_error
-        end
-      end
-
-      context 'when sending wrong type for file' do
-        let(:params) do
-          {
-            destination: 'bar',
-            file: ['baz'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix virtual - foo')
-          end.to raise_error
-        end
-      end
-
       context 'when sending wrong value for file' do
         let(:params) do
           {
@@ -73,21 +44,6 @@ describe 'postfix::virtual' do
           expect do
             is_expected.to contain_augeas('Postfix virtual - foo')
           end.to raise_error(Puppet::Error, %r{, got })
-        end
-      end
-
-      context 'when sending wrong type for ensure' do
-        let(:params) do
-          {
-            destination: 'bar',
-            ensure: ['baz'],
-          }
-        end
-
-        it 'fails' do
-          expect do
-            is_expected.to contain_augeas('Postfix virtual - foo')
-          end.to raise_error
         end
       end
 
