@@ -490,10 +490,10 @@ describe 'postfix' do
               is_expected.to contain_postfix__config('message_size_limit').with_value('51200000')
             end
           end
-          context 'when hash hash is used' do
+          context 'when hashes hash is used' do
             let(:params) do
               {
-                hash: {
+                hashes: {
                   '/etc/postfix/transport' => {
                     'ensure' => 'present',
                   },
@@ -505,10 +505,10 @@ describe 'postfix' do
               is_expected.to contain_postfix__hash('/etc/postfix/transport').with_ensure('present')
             end
           end
-          context 'when transport hash is used' do
+          context 'when transports hash is used' do
             let(:params) do
               {
-                transport: {
+                transports: {
                   'local_relay' => {
                     'nexthop' => '[10.12.0.2]:9925',
                   },
@@ -520,10 +520,10 @@ describe 'postfix' do
               is_expected.to contain_postfix__transport('local_relay').with_nexthop('[10.12.0.2]:9925')
             end
           end
-          context 'when virtual hash is used' do
+          context 'when virtuals hash is used' do
             let(:params) do
               {
-                virtual: {
+                virtuals: {
                   'someone@somedomain.tld' => {
                     'destination' => 'internal@ourdomain.tld',
                   },
@@ -535,10 +535,10 @@ describe 'postfix' do
               is_expected.to contain_postfix__virtual('someone@somedomain.tld').with_destination('internal@ourdomain.tld')
             end
           end
-          context 'when conffile hash is used' do
+          context 'when conffiles hash is used' do
             let(:params) do
               {
-                conffile: {
+                conffiles: {
                   'ldapoptions.cf' => {
                     'mode'    => '0640',
                     'options' => {
