@@ -486,7 +486,7 @@ describe 'postfix' do
               }
             end
 
-            it 'updates master.cf with the specified contents' do
+            it 'updates main.cf with the specified contents' do
               is_expected.to contain_postfix__config('message_size_limit').with_value('51200000')
             end
           end
@@ -501,7 +501,7 @@ describe 'postfix' do
               }
             end
 
-            it 'updates master.cf with the specified contents' do
+            it 'creates the hash' do
               is_expected.to contain_postfix__hash('/etc/postfix/transport').with_ensure('present')
             end
           end
@@ -516,7 +516,7 @@ describe 'postfix' do
               }
             end
 
-            it 'updates master.cf with the specified contents' do
+            it 'updates the transport map' do
               is_expected.to contain_postfix__transport('local_relay').with_nexthop('[10.12.0.2]:9925')
             end
           end
@@ -531,7 +531,7 @@ describe 'postfix' do
               }
             end
 
-            it 'updates master.cf with the specified contents' do
+            it 'updates the virtual map' do
               is_expected.to contain_postfix__virtual('someone@somedomain.tld').with_destination('internal@ourdomain.tld')
             end
           end
@@ -567,6 +567,25 @@ describe 'postfix' do
                   'query_filter'     => 'mail=%s',
                   'result_attribute' => 'uid',
                 }
+              )
+            end
+          end
+          context 'when maps hash is used' do
+            let(:params) do
+              {
+                maps: {
+                  'a_map' => {
+                    'type' => 'regexp',
+                    'content' => 'abc xyz',
+                  },
+                },
+              }
+            end
+
+            it 'creates the map resource' do
+              is_expected.to contain_postfix__map('a_map').with(
+                'type' => 'regexp',
+                'content' => 'abc xyz'
               )
             end
           end
