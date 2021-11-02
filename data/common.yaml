@@ -3,4 +3,4 @@ postfix::params::aliasesseltype: ~
 postfix::params::seltype: ~
 postfix::params::mailx_package: 'mailx'
 postfix::params::restart_cmd: '/etc/init.d/postfix reload'
-postfix::params::hash_method: 'hash'
+...

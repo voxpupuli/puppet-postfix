@@ -1,3 +1,0 @@
----
-postfix::params::hash_method: 'lmdb'
-...
