@@ -52,8 +52,8 @@ class postfix::mta (
 
   postfix::config {
     'mynetworks':          value => $_mynetworks;
-    'virtual_alias_maps':  value => "hash:${postfix::confdir}/virtual";
-    'transport_maps':      value => "hash:${postfix::confdir}/transport";
+    'virtual_alias_maps':  value => "${postfix::hash_method}:${postfix::confdir}/virtual";
+    'transport_maps':      value => "${postfix::hash_method}:${postfix::confdir}/transport";
   }
 
   postfix::hash { "${postfix::confdir}/virtual":

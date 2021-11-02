@@ -46,7 +46,7 @@ define postfix::hash (
     ensure  => $ensure,
     source  => $source,
     content => $content,
-    type    => 'hash',
+    type    => ${postfix::hash_method},
     path    => $name,
     mode    => $mode,
   }
