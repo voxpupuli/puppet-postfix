@@ -125,7 +125,7 @@ describe 'postfix' do
         end
       end
 
-      context "when setting smtp_listen to 'all'" do
+      context "when setting smtp_listen to 'all'" do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             smtp_listen: 'all',
@@ -199,7 +199,7 @@ describe 'postfix' do
         it { is_expected.to contain_mailalias('root').with_recipient('foo') }
       end
 
-      context 'when specifying inet_interfaces' do
+      context 'when specifying inet_interfaces' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             inet_interfaces: 'localhost2',
@@ -217,7 +217,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when a custom mail_user is specified' do
+      context 'when a custom mail_user is specified' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mail_user: 'bar',
@@ -229,7 +229,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when mailman is true' do
+      context 'when mailman is true' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mailman: true,
@@ -241,7 +241,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_source' do
+      context 'when specifying a custom mastercf_source' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_source: 'testy',
@@ -253,7 +253,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_content' do
+      context 'when specifying a custom mastercf_content' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_content: 'testy',
@@ -265,7 +265,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_template' do
+      context 'when specifying a custom mastercf_template' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_template: 'testy',
@@ -277,7 +277,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_source and mastercf_content' do
+      context 'when specifying a custom mastercf_source and mastercf_content' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_source: 'testy_1',
@@ -290,7 +290,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_source and mastercf_template' do
+      context 'when specifying a custom mastercf_source and mastercf_template' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_source: 'testy_1',
@@ -303,7 +303,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_content and mastercf_template' do
+      context 'when specifying a custom mastercf_content and mastercf_template' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_content: 'testy_1',
@@ -316,7 +316,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a mastercf_source and custom mastercf_content and mastercf_template' do
+      context 'when specifying a mastercf_source and custom mastercf_content and mastercf_template' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             mastercf_source: 'testy_1',
@@ -330,7 +330,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom master_smtp' do
+      context 'when specifying a custom master_smtp' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             master_smtp: "smtp      inet  n       -       -       -       -       smtpd
@@ -347,7 +347,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom master_smtps' do
+      context 'when specifying a custom master_smtps' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             master_smtps: 'smtps     inet  n       -       -       -       -       smtpd',
@@ -359,7 +359,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when mta is enabled' do
+      context 'when mta is enabled' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { mta: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
 
         it 'configures postfix as a minimal MTA, delivering mail to the mydestination param' do
@@ -372,7 +372,7 @@ describe 'postfix' do
 
         it { is_expected.to contain_class('postfix::mta') }
 
-        context 'and satellite is also enabled' do
+        context 'and satellite is also enabled' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           let(:params) { { mta: true, satellite: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
 
           it 'fails' do
@@ -393,7 +393,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying myorigin' do
+      context 'when specifying myorigin' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { myorigin: 'localhost' } }
 
         it 'creates a postfix::config defined type with myorigin specified properly' do
@@ -407,7 +407,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a root_mail_recipient' do
+      context 'when specifying a root_mail_recipient' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { root_mail_recipient: 'foo' } }
 
         it 'contains a Mailalias resource directing roots mail to the required user' do
@@ -415,7 +415,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying satellite' do
+      context 'when specifying satellite' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { satellite: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
         let :pre_condition do
           "class { 'augeas': }"
@@ -429,7 +429,7 @@ describe 'postfix' do
           is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
         end
 
-        context 'and mta is also enabled' do
+        context 'and mta is also enabled' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           let(:params) { { mta: true, satellite: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
 
           it 'fails' do
@@ -438,7 +438,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying smtp_listen' do
+      context 'when specifying smtp_listen' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { smtp_listen: 'all' } }
 
         it 'updates master.cf to listen to all addresses' do
@@ -448,7 +448,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying multiple smtp_listen addresses as string' do
+      context 'when specifying multiple smtp_listen addresses as string' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { smtp_listen: '192.168.0.123 10.0.0.123' } }
 
         it 'updates master.cf with multiple smtp listeners' do
@@ -460,7 +460,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying multiple smtp_listen addresses as array' do
+      context 'when specifying multiple smtp_listen addresses as array' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { smtp_listen: ['192.168.0.123', '10.0.0.123'] } }
 
         it 'updates master.cf with multiple smtp listeners' do
@@ -472,7 +472,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when use_amavisd is true' do
+      context 'when use_amavisd is true' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { use_amavisd: true } }
 
         it 'updates master.cf with the specified flags to amavis' do
@@ -480,7 +480,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when use_dovecot_lda is true' do
+      context 'when use_dovecot_lda is true' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { use_dovecot_lda: true } }
 
         it 'updates master.cf with the specified flags to dovecot' do
@@ -488,7 +488,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when use_schleuder is true' do
+      context 'when use_schleuder is true' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { use_schleuder: true } }
 
         it 'updates master.cf with the specified flags to schleuder' do
@@ -496,7 +496,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when use_sympa is true' do
+      context 'when use_sympa is true' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { use_sympa: true } }
 
         it 'updates master.cf to include sympa' do
@@ -504,7 +504,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when manage_root_alias is false' do
+      context 'when manage_root_alias is false' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { manage_root_alias: false } }
 
         it 'does not manage root mailalias' do
@@ -512,7 +512,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when manage_mailx is false' do
+      context 'when manage_mailx is false' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { manage_mailx: false } }
 
         it 'does not have mailx package' do
@@ -520,7 +520,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when config hash is used' do
+      context 'when config hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             configs: {
@@ -536,7 +536,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when hashes hash is used' do
+      context 'when hashes hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             hashes: {
@@ -552,7 +552,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when transports hash is used' do
+      context 'when transports hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             transports: {
@@ -568,7 +568,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when virtuals hash is used' do
+      context 'when virtuals hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             virtuals: {
@@ -584,7 +584,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when conffiles hash is used' do
+      context 'when conffiles hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             conffiles: {
@@ -620,7 +620,7 @@ describe 'postfix' do
         end
       end
 
-      context 'when maps hash is used' do
+      context 'when maps hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
             maps: {
