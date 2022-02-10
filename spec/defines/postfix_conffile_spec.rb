@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'postfix::conffile' do
@@ -82,15 +84,15 @@ describe 'postfix::conffile' do
 
       # context 'when passing options parameter' do
       # let(:params) { {
-      #:options => {
-      #:server_host => 'ldap.mydomain.com',
-      #:bind        => 'no',
+      # :options => {
+      # :server_host => 'ldap.mydomain.com',
+      # :bind        => 'no',
       # },
       # } }
 
       # it { is_expected.to contain_file('postfix conffile foo').with(
-      #:ensure => 'present',
-      #:content => '#
+      # :ensure => 'present',
+      # :content => '#
       ######################################################
       ## File managed by puppet
       ## DO NOT EDITY!!!

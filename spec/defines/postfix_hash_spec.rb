@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'postfix::hash' do
@@ -65,6 +67,7 @@ describe 'postfix::hash' do
             source: '/tmp/bar'
           ).without(:content)
         }
+
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end
@@ -82,6 +85,7 @@ describe 'postfix::hash' do
             content: 'bar'
           ).without(:source)
         }
+
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end
@@ -92,6 +96,7 @@ describe 'postfix::hash' do
             ensure: 'present'
           ).without(:source).without(:content)
         }
+
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end
