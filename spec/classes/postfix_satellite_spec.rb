@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'postfix::satellite' do
@@ -19,6 +21,7 @@ describe 'postfix::satellite' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('postfix::mta') }
+
       it {
         is_expected.to contain_postfix__virtual('@foo.example.com').with(
           ensure: 'present',

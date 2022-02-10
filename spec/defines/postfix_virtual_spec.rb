@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'postfix::virtual' do
@@ -70,6 +72,7 @@ describe 'postfix::virtual' do
         end
 
         it { is_expected.to contain_class('postfix::augeas') }
+
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
             incl: postfix_virutal_path,
@@ -93,6 +96,7 @@ describe 'postfix::virtual' do
         end
 
         it { is_expected.to contain_class('postfix::augeas') }
+
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
             incl: '/tmp/virtual',
@@ -116,6 +120,7 @@ describe 'postfix::virtual' do
         end
 
         it { is_expected.to contain_class('postfix::augeas') }
+
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
             incl: '/tmp/virtual',
@@ -139,6 +144,7 @@ describe 'postfix::virtual' do
         end
 
         it { is_expected.to contain_class('postfix::augeas') }
+
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
             incl: postfix_virutal_path,

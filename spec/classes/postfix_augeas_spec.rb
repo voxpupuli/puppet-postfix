@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'postfix::augeas' do
@@ -20,6 +22,7 @@ describe 'postfix::augeas' do
                                                                       test_content: %r{Provides unit tests and examples for the <Postfix_Transport> lens.},
                                                                       stock_since: '1.0.0')
       }
+
       it {
         is_expected.to contain_augeas__lens('postfix_virtual').with(ensure: 'present',
                                                                     lens_content: %r{Parses /etc/postfix/virtual},

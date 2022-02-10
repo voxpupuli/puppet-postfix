@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'postfix::map' do
@@ -62,6 +64,7 @@ describe 'postfix::map' do
             source: '/tmp/bar'
           ).without(:content)
         }
+
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
@@ -79,6 +82,7 @@ describe 'postfix::map' do
             content: 'bar'
           ).without(:source)
         }
+
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
@@ -89,6 +93,7 @@ describe 'postfix::map' do
             ensure: 'present'
           ).without(:source).without(:content)
         }
+
         it { is_expected.to contain_file('postfix map foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate foo.db') }
       end
