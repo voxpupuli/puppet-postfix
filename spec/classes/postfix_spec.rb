@@ -212,7 +212,7 @@ describe 'postfix' do
       end
 
       context 'when enabling ldap' do
-        it 'does stuff' do
+        it 'ldap is configured' do
           skip 'need to write this still'
         end
       end
@@ -382,13 +382,13 @@ describe 'postfix' do
       end
 
       context 'when specifying mydestination' do
-        it 'does stuff' do
+        it 'sets mydestination' do
           skip 'need to write this still'
         end
       end
 
       context 'when specifying mynetworks' do
-        it 'does stuff' do
+        it 'mynetworks is configured' do
           skip 'need to write this still'
         end
       end
@@ -402,7 +402,7 @@ describe 'postfix' do
       end
 
       context 'when specifying relayhost' do
-        it 'does stuff' do
+        it 'a relayhost is configured' do
           skip 'need to write this still'
         end
       end
