@@ -41,7 +41,7 @@ describe 'postfix class' do
       it { is_expected.to be_running }
     end
 
-    describe file('/etc/aliases') do
+    describe file('/etc/aliases', '/usr/bin/mailx') do
       it { is_expected.to exist }
     end
   end
