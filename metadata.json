@@ -18,7 +18,7 @@
     },
     {
       "name": "puppet/alternatives",
-      "version_requirement": ">=2.0.0 < 4.0.0"
+      "version_requirement": ">=2.0.0 < 5.0.0"
     },
     {
       "name": "puppetlabs/mailalias_core",
