@@ -46,6 +46,12 @@
 #
 # [*manage_mailx*]        - (boolean) Whether to manage mailx package.
 #
+# [*masquerade_classes*]  - (array)
+#
+# [*masquerade_domains*]  - (array)
+#
+# [*masquerade_exceptions*] - (array)
+#
 # [*mastercf_source*]     - (string)
 #
 # [*mastercf_content*]    - (string)
@@ -127,6 +133,9 @@ class postfix (
   Boolean                         $manage_conffiles    = true,
   Boolean                         $manage_mailname     = true,
   Boolean                         $manage_mailx        = true,
+  Optional[Array[String[1]]]      $masquerade_classes  = undef,
+  Optional[Array[String[1]]]      $masquerade_domains  = undef,
+  Optional[Array[String[1]]]      $masquerade_exceptions = undef,
   Optional[String]                $mastercf_source     = undef,
   Optional[String]                $mastercf_content    = undef,
   Optional[String]                $mastercf_template   = undef,
