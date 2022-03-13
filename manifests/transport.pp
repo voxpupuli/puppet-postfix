@@ -67,14 +67,24 @@ define postfix::transport (
       }
 
       if ($nexthop) {
-        if ($smtp_nexthop) {
-          $nexthop_split = split($nexthop, ':')
+        # This is some paranoia over splitting.  We can't do a simple split here, as there
+        # could be ipv6 addrs in a nexthop's host.  So we're definitely into neeeding a regexp.
+        # The regexp needs to be 'the same base' as used in smtp_nexthop above, while also
+        # capturing the port.
+        # From https://github.com/voxpupuli/puppet-postfix/issues/241, this exists
+        # to handle [host]:port nexthop.  Other cases are handled by simply passing nexthop
+        # straight through.
+        $nexthop_match = $nexthop.match(/(:?\[.*\]):(\d+)/)
+        # If this matched, we'll have a length of 3: [whole string, host, port].
+        if ($nexthop_match =~ Array and $nexthop_match.length == 3) {
           $change_nexthop = [
             "rm pattern[. = '${name}']/nexthop",
-            "set pattern[. = '${name}']/host '${nexthop_split[0]}'",
-            "set pattern[. = '${name}']/port '${nexthop_split[1]}'",
+            "set pattern[. = '${name}']/host '${nexthop_match[1]}'",
+            "set pattern[. = '${name}']/port '${nexthop_match[2]}'",
           ]
         } else {
+          # If it didn't match, we just report the nexthop unmodified; remove any breakout of
+          # host/port that may have existed.
           $change_nexthop = [
             "rm pattern[. = '${name}']/host",
             "rm pattern[. = '${name}']/port",
