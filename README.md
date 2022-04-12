@@ -117,6 +117,22 @@ A Boolean defining whether the puppet module should manage the mailx package. Se
 
 Default: true.
 
+##### `masquerade_classes`
+An array defining the masquerade_classes to use.
+Default: Undefined.
+Example: ['envelope_sender', 'envelope_recipient', 'header_sender', 'header_recipient']
+
+##### `masquerade_domains`
+An array defining the masquerade_domains to use.
+The order of elements matters here, so be aware of how you define the elements.
+Default: Undefined.
+Example: ['foo.example.com', 'example.com']
+
+##### `masquerade_exceptions`
+An array defining the masquerade_exceptions to use.
+Default: Undefined.
+Example: ['root']
+
 ##### `mastercf_source`
 A string defining the location of a skeleton master.cf file to be used.
 Default: Undefined.
