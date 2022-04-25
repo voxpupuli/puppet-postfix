@@ -68,6 +68,7 @@ describe 'postfix::hash' do
           ).without(:content)
         }
 
+        it { is_expected.to contain_postfix__map('/tmp/foo').with_ensure('present') }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }
       end
@@ -108,6 +109,7 @@ describe 'postfix::hash' do
           }
         end
 
+        it { is_expected.to contain_postfix__map('/tmp/foo').with_ensure('absent') }
         it { is_expected.to contain_file('postfix map /tmp/foo').with_ensure('absent') }
         it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('absent') }
         it { is_expected.to contain_exec('generate /tmp/foo.db') }

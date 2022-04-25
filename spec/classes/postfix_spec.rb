@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'postfix' do
   on_supported_os.each do |os, facts|
-    context "on #{os}" do
+    context "on #{os}" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       let(:postfix_main_cf_path) do
         case facts[:osfamily]
         when 'FreeBSD' then '/usr/local/etc/postfix/main.cf'
@@ -29,22 +29,38 @@ describe 'postfix' do
         else '/etc/postfix/virtual'
         end
       end
+      let(:postfix_path) do
+        case facts[:osfamily]
+        when 'FreeBSD' then '/usr/local/etc/postfix'
+        else '/etc/postfix'
+        end
+      end
 
       let(:facts) do
         facts.merge(augeasversion: '1.2.0',
                     puppetversion: Puppet.version)
       end
 
-      context 'when using defaults' do
+      context 'when using defaults' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         it { is_expected.to contain_package('postfix') }
         it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
         it { is_expected.to contain_postfix__config('myorigin').with_value('foo.example.com') }
         it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
         it { is_expected.to contain_postfix__config('inet_interfaces').with_value('all') }
         it { is_expected.to contain_postfix__config('inet_protocols').with_value('all') }
+        it { is_expected.to contain_postfix__mailalias('root').with_recipient('nobody') }
         it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
+        it { is_expected.to contain_class('postfix::files') }
+        it { is_expected.to contain_class('postfix::packages') }
+        it { is_expected.to contain_class('postfix::params') }
+        it { is_expected.to contain_class('postfix::service') }
+        it { is_expected.to contain_exec('restart postfix after packages install') }
+        it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
+        it { is_expected.to contain_augeas("manage postfix 'myorigin'").with_changes("set myorigin 'foo.example.com'") }
+        it { is_expected.to contain_augeas("manage postfix 'inet_interfaces'").with_changes("set inet_interfaces 'all'") }
+        it { is_expected.to contain_augeas("manage postfix 'inet_protocols'").with_changes("set inet_protocols 'all'") }
 
-        context 'when on Debian family', if: facts[:osfamily] == 'Debian' do
+        context 'when on Debian family', if: facts[:osfamily] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("foo.example.com\n") }
           it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
@@ -61,7 +77,7 @@ describe 'postfix' do
           }
         end
 
-        context 'when on RedHat family', if: facts[:osfamily] == 'RedHat' do
+        context 'when on RedHat family', if: facts[:osfamily] == 'RedHat' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("foo.example.com\n") }
           it { is_expected.to contain_file(postfix_master_cf_path).with_seltype('postfix_etc_t') }
@@ -70,8 +86,12 @@ describe 'postfix' do
           it { is_expected.to contain_postfix__config('sendmail_path') }
           it { is_expected.to contain_postfix__config('newaliases_path') }
           it { is_expected.to contain_postfix__config('mailq_path') }
+          it { is_expected.to contain_augeas("manage postfix 'sendmail_path'") }
+          it { is_expected.to contain_augeas("manage postfix 'newaliases_path'") }
+          it { is_expected.to contain_augeas("manage postfix 'mailq_path'") }
+          it { is_expected.to contain_alternatives('mta') }
 
-          context 'when on release 8', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '8') do
+          context 'when on release 8', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '8') do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -84,7 +104,7 @@ describe 'postfix' do
             }
           end
 
-          context 'when on release 7', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '7') do
+          context 'when on release 7', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '7') do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -97,7 +117,7 @@ describe 'postfix' do
             }
           end
 
-          context 'when on release 6', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '6') do
+          context 'when on release 6', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '6') do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -111,7 +131,7 @@ describe 'postfix' do
           end
         end
 
-        context 'when on Fedora', if: facts[:operatingsystem] == 'Fedora' do
+        context 'when on Fedora', if: facts[:operatingsystem] == 'Fedora' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
           it {
@@ -148,6 +168,7 @@ describe 'postfix' do
         it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
         it { is_expected.to contain_postfix__config('myorigin').with_value('localhost') }
         it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+        it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
         it { is_expected.to contain_postfix__config('inet_interfaces').with_value('localhost2') }
 
         case facts[:os]['family']
@@ -211,9 +232,23 @@ describe 'postfix' do
         end
       end
 
-      context 'when enabling ldap' do
-        it 'ldap is configured' do
-          skip 'need to write this still'
+      context 'when enabling ldap' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let(:params) do
+          {
+            ldap: true,
+            ldap_base: 'cn=Users,dc=example,dc=com',
+            ldap_host: 'ldaps://ldap.example.com:636 ldap://ldap2.example.com',
+            ldap_options: 'start_tls = yes'
+          }
+        end
+
+        it 'ldap is configured with all parameters ldap_base, ldap_host, ldap_options' do
+          is_expected.to contain_class('postfix::ldap')
+          is_expected.to contain_file("#{postfix_path}/ldap-aliases.cf")
+        end
+
+        context 'when on Debian family', if: facts[:osfamily] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          it { is_expected.to contain_package('postfix-ldap') }
         end
       end
 
@@ -236,8 +271,25 @@ describe 'postfix' do
           }
         end
 
-        it 'does stuff' do
-          skip 'need to write this still'
+        it 'compile and has required configuration' do
+          is_expected.to compile.with_all_deps
+          is_expected.to contain_class('postfix::mailman')
+          is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+          is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
+          is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
+          is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+          is_expected.to contain_postfix__config('mailman_destination_recipient_limit').with_value('1')
+          is_expected.to contain_augeas("manage postfix 'mailman_destination_recipient_limit'").with_changes("set mailman_destination_recipient_limit '1'")
+          is_expected.to contain_postfix__hash(postfix_transport_path).with_ensure('present')
+          is_expected.to contain_postfix__hash(postfix_virtual_path).with_ensure('present')
+          is_expected.to contain_postfix__map(postfix_transport_path).with_ensure('present')
+          is_expected.to contain_postfix__map(postfix_virtual_path).with_ensure('present')
+          is_expected.to contain_file("postfix map #{postfix_transport_path}").with_ensure('present')
+          is_expected.to contain_file("postfix map #{postfix_transport_path}.db").with_ensure('present')
+          is_expected.to contain_file("postfix map #{postfix_virtual_path}").with_ensure('present')
+          is_expected.to contain_file("postfix map #{postfix_virtual_path}.db").with_ensure('present')
+          is_expected.to contain_exec("generate #{postfix_transport_path}.db")
+          is_expected.to contain_exec("generate #{postfix_virtual_path}.db")
         end
       end
 
@@ -248,8 +300,8 @@ describe 'postfix' do
           }
         end
 
-        it 'does stuff' do
-          skip 'need to write this still'
+        it 'source of file is correct' do
+          is_expected.to contain_file(postfix_master_cf_path).with_source('testy')
         end
       end
 
@@ -260,8 +312,8 @@ describe 'postfix' do
           }
         end
 
-        it 'does stuff' do
-          skip 'need to write this still'
+        it 'file content is correct' do
+          is_expected.to contain_file(postfix_master_cf_path).with_content('testy')
         end
       end
 
@@ -368,9 +420,43 @@ describe 'postfix' do
           is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
           is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
           is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
+          is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
+          is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
         end
 
-        it { is_expected.to contain_class('postfix::mta') }
+        it 'compiles with all resources' do
+          is_expected.to compile.with_all_deps
+          is_expected.to contain_class('postfix::mta')
+        end
+
+        context 'with masquerade settings' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          let(:params) do
+            super().merge(
+              {
+                masquerade_classes: ['envelope_sender'],
+                masquerade_domains: ['host.example.com', 'example.com'],
+                masquerade_exceptions: ['root']
+              }
+            )
+          end
+
+          it 'contain postfix::config types and augeas' do
+            is_expected.to contain_postfix__config('masquerade_classes').with_value('envelope_sender')
+            is_expected.to contain_augeas("manage postfix 'masquerade_classes'")
+            is_expected.to contain_postfix__config('masquerade_domains').with_value('host.example.com example.com')
+            is_expected.to contain_augeas("manage postfix 'masquerade_domains'")
+            is_expected.to contain_postfix__config('masquerade_exceptions').with_value('root')
+            is_expected.to contain_augeas("manage postfix 'masquerade_exceptions'")
+          end
+        end
+
+        context "when mydestination => 'blank'" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          let(:params) do
+            super().merge({ mydestination: 'blank' })
+          end
+
+          it { is_expected.to contain_postfix__config('mydestination').with_ensure('blank').without_value }
+        end
 
         context 'and satellite is also enabled' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           let(:params) { { mta: true, satellite: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
@@ -381,15 +467,34 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying mydestination' do
+      context 'when specifying mydestination' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let(:params) do
+          {
+            mta: true,
+            mydestination: 'example.org, example.com, localhost.localdomain, localhost',
+            relayhost: '2.3.4.5'
+          }
+        end
+
         it 'sets mydestination' do
-          skip 'need to write this still'
+          is_expected.to contain_postfix__config('mydestination').with_value('example.org, example.com, localhost.localdomain, localhost')
+          is_expected.to contain_augeas("manage postfix 'mydestination'").with_changes("set mydestination 'example.org, example.com, localhost.localdomain, localhost'")
         end
       end
 
-      context 'when specifying mynetworks' do
+      context 'when specifying mynetworks' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let(:params) do
+          {
+            mta: true,
+            mydestination: '1.2.3.4',
+            relayhost: 'direct',
+            mynetworks: '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/24'
+          }
+        end
+
         it 'mynetworks is configured' do
-          skip 'need to write this still'
+          is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/24')
+          is_expected.to contain_augeas("manage postfix 'mynetworks'").with_changes("set mynetworks '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/24'")
         end
       end
 
@@ -401,9 +506,17 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying relayhost' do
+      context 'when specifying relayhost' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let(:params) do
+          {
+            mta: true,
+            relayhost: 'relay.example.org'
+          }
+        end
+
         it 'a relayhost is configured' do
-          skip 'need to write this still'
+          is_expected.to contain_postfix__config('relayhost').with_value('relay.example.org')
+          is_expected.to contain_augeas("manage postfix 'relayhost'").with_changes("set relayhost 'relay.example.org'")
         end
       end
 
@@ -421,12 +534,28 @@ describe 'postfix' do
           "class { 'augeas': }"
         end
 
+        it 'compiles with expected resources' do
+          is_expected.to compile.with_all_deps
+          is_expected.to contain_class('postfix::satellite')
+          is_expected.to contain_postfix__virtual('@foo.example.com').with(ensure: 'present', destination: 'root')
+          is_expected.to contain_augeas('Postfix virtual - @foo.example.com')
+          is_expected.to contain_class('postfix::augeas')
+          is_expected.to contain_augeas__lens('postfix_virtual').with(
+            ensure: 'present',
+            lens_content: %r{Parses /etc/postfix/virtual},
+            test_content: %r{Provides unit tests and examples for the <Postfix_Virtual> lens.},
+            stock_since: '1.7.0'
+          )
+        end
+
         it 'configures all local email to be forwarded to $root_mail_recipient delivered through $relayhost' do
           is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
           is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
           is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
           is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+          is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
           is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
+          is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
         end
 
         context 'and mta is also enabled' do # rubocop:disable RSpec/MultipleMemoizedHelpers
@@ -533,6 +662,7 @@ describe 'postfix' do
 
         it 'updates main.cf with the specified contents' do
           is_expected.to contain_postfix__config('message_size_limit').with_value('51200000')
+          is_expected.to contain_augeas("manage postfix 'message_size_limit'").with_changes("set message_size_limit '51200000'")
         end
       end
 
@@ -565,6 +695,14 @@ describe 'postfix' do
 
         it 'updates the transport map' do
           is_expected.to contain_postfix__transport('local_relay').with_nexthop('[10.12.0.2]:9925')
+          is_expected.to contain_augeas('Postfix transport - local_relay')
+          is_expected.to contain_class('postfix::augeas')
+          is_expected.to contain_augeas__lens('postfix_transport').with(
+            ensure: 'present',
+            lens_content: %r{Parses /etc/postfix/transport},
+            test_content: %r{Provides unit tests and examples for the <Postfix_Transport> lens.},
+            stock_since: '1.0.0'
+          )
         end
       end
 
@@ -581,6 +719,14 @@ describe 'postfix' do
 
         it 'updates the virtual map' do
           is_expected.to contain_postfix__virtual('someone@somedomain.tld').with_destination('internal@ourdomain.tld')
+          is_expected.to contain_augeas('Postfix virtual - someone@somedomain.tld')
+          is_expected.to contain_class('postfix::augeas')
+          is_expected.to contain_augeas__lens('postfix_virtual').with(
+            ensure: 'present',
+            lens_content: %r{Parses /etc/postfix/virtual},
+            test_content: %r{Provides unit tests and examples for the <Postfix_Virtual> lens.},
+            stock_since: '1.7.0'
+          )
         end
       end
 
@@ -617,6 +763,7 @@ describe 'postfix' do
               'result_attribute' => 'uid',
             }
           )
+          is_expected.to contain_file('postfix conffile ldapoptions.cf').with_ensure('present')
         end
       end
 
@@ -637,6 +784,8 @@ describe 'postfix' do
             'type' => 'regexp',
             'content' => 'abc xyz'
           )
+          is_expected.to contain_exec('generate a_map.db')
+          is_expected.to contain_file('postfix map a_map')
         end
       end
     end
