@@ -1,42 +1,42 @@
-#== Definition: postfix::canonical
+# @summary Manage content of the postfix canonical map
 #
-#Manages content of the /etc/postfix/canonical map.
+# This type manages content of the /etc/postfix/canonical map.
 #
-#Parameters:
-#- *name*: name of address postfix will lookup. See canonical(5).
-#- *destination*: where the emails will be delivered to. See canonical(5).
-#- *ensure*: present/absent, defaults to present.
+# @example Basic usage and required setup
+#   # This defined type requires the following resources:
+#   # - Class["postfix"]
+#   # - Postfix::Hash["/etc/postfix/canonical"]
+#   # - Postfix::Config["canonical_maps"] or Postfix::Config["sender_canonical_maps"] or Postfix::Config["recipient_canonical_maps"]
+#   include postfix
+#   postfix::hash { "/etc/postfix/recipient_canonical":
+#     ensure => present,
+#   }
+#   postfix::config { "canonical_alias_maps":
+#     value => "hash:/etc/postfix/recipient_canonical"
+#   }
+#   postfix::canonical {
+#     "user@example.com":
+#       file        => "/etc/postfix/recipient_canonical",
+#       ensure      => present,
+#       destination => "root";
+#   }
 #
-#Requires:
-#- Class["postfix"]
-#- Postfix::Hash["/etc/postfix/canonical"]
-#- Postfix::Config["canonical_maps"] or Postfix::Config["sender_canonical_maps"] or Postfix::Config["recipient_canonical_maps"]
-#- augeas
+# @param ensure
+#   Intended state of the resource
 #
-#Example usage:
+# @param destination
+#   Where the emails will be delivered to.
 #
-#  node "toto.example.com" {
+# @param file
+#   Where to create the file. If not defined "${postfix::confdir}/canonical"
+#   will be used as path.
 #
-#    include postfix
-#
-#    postfix::hash { "/etc/postfix/recipient_canonical":
-#      ensure => present,
-#    }
-#    postfix::config { "canonical_alias_maps":
-#      value => "hash:/etc/postfix/recipient_canonical"
-#    }
-#    postfix::canonical {
-#      "user@example.com":
-#        file        => "/etc/postfix/recipient_canonical",
-#        ensure      => present,
-#        destination => "root";
-#    }
-#  }
+# @see https://www.postfix.org/canonical.5.html
 #
 define postfix::canonical (
-  $destination,
-  $file=undef,
-  $ensure='present'
+  String                   $destination,
+  Enum['present','absent'] $ensure      = 'present',
+  Stdlib::Absolutepath     $file        = undef
 ) {
   include postfix
   include postfix::augeas

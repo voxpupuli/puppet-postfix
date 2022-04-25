@@ -1,31 +1,43 @@
+# @summary Set values in postfix config file
 #
-# == Definition: postfix::config
+# Add/alter/remove options in Postfix main configuration file (main.cf).
+# This uses Augeas to do the editing of the configuration file, as such any
+# configuration value can be used.
 #
-# Uses Augeas to add/alter/remove options in postfix main
-# configuation file (/etc/postfix/main.cf).
-#
-# TODO: make this a type with an Augeas and a postconf providers.
-#
-# === Parameters
-#
-# [*name*]   - name of the parameter.
-# [*ensure*] - present/absent/blank. defaults to present.
-# [*value*]  - value of the parameter.
-#
-# === Requires
-#
-# - Class["postfix"]
-#
-# === Examples
-#
+# @example Set value for smtp_use_tls
 #   postfix::config { 'smtp_use_tls':
 #     ensure => 'present',
 #     value  => 'yes',
 #   }
 #
+# @example Set a config parameter with empty value
 #   postfix::config { 'relayhost':
 #     ensure => 'blank',
 #   }
+#
+# @example Configure Postfix to use TLS as a client
+#   postfix::config {
+#     'smtp_tls_mandatory_ciphers':       value   => 'high';
+#     'smtp_tls_security_level':          value   => 'secure';
+#     'smtp_tls_CAfile':                  value   => '/etc/pki/tls/certs/ca-bundle.crt';
+#     'smtp_tls_session_cache_database':  value   => 'btree:${data_directory}/smtp_tls_session_cache';
+#   }
+#
+# @example Configure Postfix to disable the vrfy command
+#   postfix::config { 'disable_vrfy_command':
+#     ensure  => present,
+#     value   => 'yes',
+#   }
+#
+# @param ensure
+#   Defines if the config parameter is present, absent or blank.
+#   The special value 'blank', will clear the value for the parameter,
+#   but will not remove it from the config file.
+#   Example: `blank`
+#
+# @param value
+#   A string that can contain any text to be used as the configuration value.
+#   Example: `btree:${data_directory}/smtp_tls_session_cache`.
 #
 define postfix::config (
   Optional[String]                   $value  = undef,
@@ -58,6 +70,7 @@ define postfix::config (
     }
   }
 
+  # TODO: make this a type with an Augeas and a postconf providers.
   augeas { "manage postfix '${title}'":
     incl    => "${postfix::confdir}/main.cf",
     lens    => 'Postfix_Main.lns',

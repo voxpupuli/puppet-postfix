@@ -1,32 +1,6 @@
-# == Class: postfix::mta
+# @summary Configures postfix as minimal MTA
 #
-# This class configures a minimal MTA, delivering mail to
-# $mydestination.
-#
-# Either a valid relay host or the special word 'direct' is required
-# ($relayhost) for outbound email.
-#
-# transport & virtual maps get configured and can be populated with
-# postfix::transport and postfix::virtual
-#
-# === Parameters
-#
-# [*relayhost*]     - (string) the relayhost to use or 'direct' to send mail
-#                     directly without a relay.
-# [*mydestination*] - (string)
-# [*mynetworks*]    - (string)
-# [*masquerade_classes*]    - (array)
-# [*masquerade_domains*]    - (array)
-# [*masquerade_exceptions*] - (array)
-#
-# === Examples
-#
-#   class { 'postfix':
-#     relayhost     => 'mail.example.com',
-#     smtp_listen   => '0.0.0.0',
-#     mydestination => '$myorigin, myapp.example.com',
-#     mta           => true,
-#   }
+# @api private
 #
 class postfix::mta (
   Optional[Pattern[/^\S+(?:,\s*\S+)*$/]]                $mydestination = undef,
@@ -36,6 +10,7 @@ class postfix::mta (
   Optional[Array[String[1]]]                            $masquerade_domains  = undef,
   Optional[Array[String[1]]]                            $masquerade_exceptions = undef,
 ) {
+  assert_private()
   include postfix
 
   $_mydestination = pick($mydestination, $postfix::mydestination)

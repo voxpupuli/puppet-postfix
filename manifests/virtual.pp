@@ -1,47 +1,53 @@
-# == Definition: postfix::virtual
+# @summary Manages the contents of the virtual map.
 #
 # Manages content of the /etc/postfix/virtual map.
 #
-# === Parameters
-#
-# [*name*]        - name of address postfix will lookup. See virtual(8).
-# [*destination*] - a list of destinations where the emails will be delivered to. See virtual(8).
-# [*ensure*]      - present/absent, defaults to present.
-# [*file*]        - a string defining the location of the pre-hash map.
-#
-# === Requires
-#
-# - Class["postfix"]
-# - Postfix::Hash["/etc/postfix/virtual"]
-# - Postfix::Config["virtual_alias_maps"]
-# - augeas
-#
-# === Examples
-#
-#   node "toto.example.com" {
-#
-#     include postfix
-# #     postfix::hash { "/etc/postfix/virtual":
-#       ensure => present,
-#     }
-#     postfix::config { "virtual_alias_maps":
-#       value => "hash:/etc/postfix/virtual, regexp:/etc/postfix/virtual_regexp"
-#     }
-#     postfix::virtual { "user@example.com":
-#       ensure      => present,
-#       destination => ['root', 'postmaster'],
-#     }
-#     postfix::virtual { "/.+@.+/"
-#       ensure      => present,
-#       file        => '/etc/postfix/virtual_regexp',
-#       destination => 'root',
-#     }
+# @example Minimum Requirements
+#   include postfix
+#   postfix::hash { "/etc/postfix/virtual":
+#     ensure => present,
 #   }
-
+#   postfix::config { "virtual_alias_maps":
+#     value => "hash:/etc/postfix/virtual, regexp:/etc/postfix/virtual_regexp"
+#   }
+#
+# @example Route mail to local users
+#   postfix::virtual { "user@example.com":
+#     ensure      => present,
+#     destination => ['root', 'postmaster'],
+#   }
+#
+# @example Regex example
+#   postfix::virtual { "/.+@.+/"
+#     ensure      => present,
+#     file        => '/etc/postfix/virtual_regexp',
+#     destination => 'root',
+#   }
+#
+# @example Route mail bound for 'user@example.com' to root.
+#   postfix::virtual {'user@example.com':
+#       ensure      => present,
+#       destination => 'root',
+#   }
+#
+# @param ensure
+#   A string whose valid values are present or absent.
+#
+# @param destination
+#   A string defining where the e-mails will be delivered to, (virtual(8)).
+#   Example: `root`
+#
+# @param file
+#   A string defining the location of the virtual map, pre hash.
+#   If not defined "${postfix::confdir}/virtual" will be used as path.
+#   Example: `/etc/postfix/my_virtual_map`.
+#
+# @see https://www.postfix.org/virtual.8.html
+#
 define postfix::virtual (
   Variant[String, Array[String]] $destination,
-  Optional[Stdlib::Absolutepath] $file=undef,
-  Enum['present', 'absent']      $ensure='present'
+  Enum['present', 'absent']      $ensure      = 'present',
+  Optional[Stdlib::Absolutepath] $file        = undef
 ) {
   include postfix
   include postfix::augeas

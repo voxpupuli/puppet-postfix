@@ -1,22 +1,12 @@
-# == Definition: postfix::hash
+# @summary Creates Postfix hashed "map" files, and builds the corresponding db file
 #
 # Creates postfix hashed "map" files. It will create "${name}", and then build
 # "${name}.db" using the "postmap" command. The map file can then be referred to
 # using postfix::config.
 #
-# === Parameters
-#
-# [*name*]    - the name of the map file.
-# [*ensure*]  - present/absent, defaults to present.
-# [*source*]  - file source. Mutially exclusive with "content".
-# [*content*] - content of the file. Mutially exclusive with "source".
-#
-# === Requires
-#
-# - Class["postfix"]
-#
-# === Examples
-#
+# @example Creates a virtual hashmap
+#   # This example creates a virtual hashmap in the postfix config dir
+#   # and adds a value into it with the postfix::config type.
 #   postfix::hash { 'virtual':
 #     ensure => present,
 #   }
@@ -24,11 +14,37 @@
 #     value => 'hash:/etc/postfix/virtual',
 #   }
 #
+# @example Create a sasl_passwd hash from a source file
+#   postfix::hash { '/etc/postfix/sasl_passwd':
+#     ensure  => 'present',
+#     source  => 'puppet:///modules/profile/postfix/client/sasl_passwd',
+#   }
+#
+# @example Create a sasl_passwd hash with contents defined in the manifest
+#   postfix::hash { '/etc/postfix/sasl_passwd':
+#     ensure  => 'present',
+#     content => '#Destination                Credentials\nsmtp.example.com            gssapi:nopassword',
+#   }
+#
+# @param ensure
+#   Defines whether the hash map file is present or not. Value can either be present or absent.
+#   Example: `absent`.
+#
+# @param source
+#   A string whose value is a location for the source file to be used. This parameter is mutually
+#   exclusive with the content parameter, one or the other must be present, but both cannot be present.
+#   Example: `puppet:///modules/some/location/sasl_passwd`.
+#
+# @param content
+#   A free form string that defines the contents of the file. This parameter is mutually exclusive
+#   with the source parameter.
+#   Example: `#Destination                Credentials\nsmtp.example.com            gssapi:nopassword`.
+#
 define postfix::hash (
-  Enum['present', 'absent']             $ensure='present',
-  Variant[Array[String], String, Undef] $source=undef,
+  Enum['present', 'absent']                   $ensure  = 'present',
+  Variant[Array[String], String, Undef]       $source  = undef,
   Optional[Variant[Sensitive[String],String]] $content = undef,
-  Variant[String[4,4], Undef]           $mode='0640',
+  Variant[String[4,4], Undef]                 $mode    = '0640',
 ) {
   include postfix::params
 

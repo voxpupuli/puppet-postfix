@@ -1,19 +1,23 @@
-#
-# == Class: postfix::params
+# @summary Default parameters
 #
 # This class provides the appropriate values for operating system specific variables.
 #
-# === Parameters
+# @param mailx_package
+#   Name of package that provides mailx
 #
-# [*mailx_package*]      - (string) Name of package that provides mailx
+# @param restart_cmd
+#   Command to use when restarting postfix
 #
-# [*restart_cmd*]        - (hash) Command to use when restarting postfix
+# @param aliasesseltype
+#   Selinux type for /etc/aliases
 #
-# [*aliasesseltype*]     - (string) Selinux type for /etc/aliases
+# @param seltype
+#   Selinux type for /etc/postfix/* config files
 #
-# [*seltype*]            - (string) Selinux type for /etc/postfix/* config files
+# @param master_os_template
+#   Path to the master template
 #
-# [*master_os_template*] - (string) Path to the master template
+# @api private
 #
 class postfix::params (
   String $mailx_package,

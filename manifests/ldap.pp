@@ -1,19 +1,9 @@
-# == Class: postfix::ldap
+# @summary Provides the postfix ldap support
 #
-# Configures postfix for use with LDAP.
-#
-# === Parameters
-#
-# === Requires
-#
-# - Class["postfix"]
-#
-# === Examples
-#
-# include postfix
-# include postfix::ldap
+# @api private
 #
 class postfix::ldap {
+  assert_private()
   assert_type(String, $postfix::ldap_base)
   assert_type(String, $postfix::ldap_host)
   assert_type(String, $postfix::ldap_options)

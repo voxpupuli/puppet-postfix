@@ -1,7 +1,12 @@
-#class postfix::augeas
-#  This class provides the augeas lenses used by the postfix class
+# @summary Provides augeas lenses for postfix files
+#
+# This class provides the augeas lenses used by the postfix class
+#
+# @api private
 #
 class postfix::augeas {
+  assert_private()
+
   $module_path = get_module_path($module_name)
   augeas::lens { 'postfix_transport':
     ensure       => present,

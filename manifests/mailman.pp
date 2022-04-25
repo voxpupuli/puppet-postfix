@@ -1,17 +1,13 @@
-# == Class: postfix::mailman
+# @summary Configure postfix to work with mailman
 #
 # Configures a basic smtp server, able to work for the mailman mailing-list
 # manager.
 #
-# === Examples
+# @api private
 #
-# /!\ Do not include this class directly,
-# use mailman => true in the postfix top class!
-#
-#   class { 'postfix':
-#     mailman => true,
-#   }
 class postfix::mailman {
+  assert_private()
+
   include postfix
 
   postfix::config {
