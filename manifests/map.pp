@@ -1,6 +1,6 @@
-# @summary Create a postfix map file
+# @summary Create a Postfix map file
 #
-# Creates postfix "map" files. It will create "${name}", and then build
+# Creates Postfix "map" files. It will create "${name}", and then build
 # "${name}.db" using the "postmap" command. The map file can then be referred to
 # using postfix::config.
 #
@@ -23,7 +23,7 @@
 #   The content of the file. Can't be used together with param source.
 #
 # @param type
-#   Type of the postfix map (valid values are cidr, pcre, hash...)
+#   Type of the Postfix map (valid values are cidr, pcre, hash...)
 #
 # @param path
 #   Where to create the file. If not defined "${postfix::confdir}/${name}"

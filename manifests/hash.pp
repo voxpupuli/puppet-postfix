@@ -1,11 +1,11 @@
 # @summary Creates Postfix hashed "map" files, and builds the corresponding db file
 #
-# Creates postfix hashed "map" files. It will create "${name}", and then build
+# Creates Postfix hashed "map" files. It will create "${name}", and then build
 # "${name}.db" using the "postmap" command. The map file can then be referred to
 # using postfix::config.
 #
 # @example Creates a virtual hashmap
-#   # This example creates a virtual hashmap in the postfix config dir
+#   # This example creates a virtual hashmap in the Postfix config dir
 #   # and adds a value into it with the postfix::config type.
 #   postfix::hash { 'virtual':
 #     ensure => present,

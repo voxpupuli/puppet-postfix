@@ -1,4 +1,4 @@
-# @summary Provides the postfix ldap support
+# @summary Provides the Postfix LDAP support
 #
 # @api private
 #

@@ -1,4 +1,4 @@
-# @summary Configure postfix to work with mailman
+# @summary Configure Postfix to work with mailman
 #
 # Configures a basic smtp server, able to work for the mailman mailing-list
 # manager.

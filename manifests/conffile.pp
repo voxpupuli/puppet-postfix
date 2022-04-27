@@ -1,7 +1,7 @@
-# @summary Manage a postfix configuration file
+# @summary Manage a Postfix configuration file
 #
-# Manages postfix configuration files. With it, you could create configuration
-# files (other than, main.cf, master.cf, etc.) restarting postfix when necessary.
+# Manages Postfix configuration files. With it, you could create configuration
+# files (other than, main.cf, master.cf, etc.) restarting Postfix when necessary.
 #
 # @example Simple config file with module source
 #   postfix::conffile { 'ldapoptions.cf':
@@ -29,7 +29,7 @@
 #   Example: `puppet:///modules/postfix/configfile.cf`
 #
 # @param content
-#   The content of the postfix configuration file. This is an alternative to the `source` parameter.
+#   The content of the Postfix configuration file. This is an alternative to the `source` parameter.
 #   If you don't provide `source` neither `content` parameters a default template is used and the
 #   content is created with values in the `options` hash.
 #

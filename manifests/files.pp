@@ -1,4 +1,4 @@
-# @summary Manages the postfix realted files
+# @summary Manages the Postfix related files
 #
 # @api private
 #

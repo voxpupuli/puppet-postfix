@@ -1,9 +1,9 @@
 # @summary The top-level class, to install and configure Postfix
 #
-# This class provides a basic setup of postfix with local and remote
+# This class provides a basic setup of Postfix with local and remote
 # delivery and an SMTP server listening on the loopback interface.
 #
-# @example Default postfix with listen address
+# @example Default Postfix with listen address
 #   class { 'postfix':
 #     smtp_listen => '192.168.1.10',
 #   }
@@ -23,7 +23,7 @@
 #     mta           => true,
 #   }
 #
-# @example Configure postfix as satellite
+# @example Configure Postfix as satellite
 #   # This configures all local email (cron, mdadm, etc) to be forwarded
 #   # to $root_mail_recipient, using $relayhost as a relay.
 #   #
@@ -44,7 +44,7 @@
 #   Number of amavis scanner processes to spawn
 #
 # @param chroot
-#   A boolean to define if postfix should be run in a chroot jail or not.
+#   A boolean to define if Postfix should be run in a chroot jail or not.
 #   If not defined, '-' is used (OS dependant)
 #   Example: `true`
 #
@@ -83,7 +83,7 @@
 #   Example: `ldaps://ldap.example.com:636 ldap://ldap2.example.com`.
 #
 # @param ldap_options
-#   A free form string that can define any ldap options to be passed through (ldap_table(5)).
+#   A free form string that can define any LDAP options to be passed through (ldap_table(5)).
 #   Example: `start_tls = yes`.
 #
 # @param mail_user
@@ -210,7 +210,7 @@
 #   Example: `root_catch@example.com`.
 #
 # @param satellite
-#   A Boolean to define whether to configure postfix as a satellite relay host.
+#   A Boolean to define whether to configure Postfix as a satellite relay host.
 #   This setting is mutually exclusive with the mta Boolean.
 #
 # @param service_enabled

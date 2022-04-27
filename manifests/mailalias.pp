@@ -1,4 +1,4 @@
-# @summary Manage the content of the postfix alias map
+# @summary Manage the content of the Postfix alias map
 #
 # Creates an email alias in the local alias database and updates the binary
 # version of said database.

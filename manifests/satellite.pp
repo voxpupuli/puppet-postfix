@@ -1,4 +1,4 @@
-# @summary Configure postfix as satellite
+# @summary Configure Postfix as satellite
 #
 # @api private
 #

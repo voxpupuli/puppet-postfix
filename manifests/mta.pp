@@ -1,4 +1,4 @@
-# @summary Configures postfix as minimal MTA
+# @summary Configures Postfix as minimal MTA
 #
 # @api private
 #

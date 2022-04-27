@@ -1,4 +1,4 @@
-# @summary Manage content of the postfix canonical map
+# @summary Manage content of the Postfix canonical map
 #
 # This type manages content of the /etc/postfix/canonical map.
 #

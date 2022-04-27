@@ -1,4 +1,4 @@
-# @summary Set values in postfix config file
+# @summary Set values in Postfix config file
 #
 # Add/alter/remove options in Postfix main configuration file (main.cf).
 # This uses Augeas to do the editing of the configuration file, as such any
