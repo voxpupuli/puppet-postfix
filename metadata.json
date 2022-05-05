@@ -1,6 +1,6 @@
 {
   "name": "puppet-postfix",
-  "version": "3.0.0",
+  "version": "3.0.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Postfix Module",
   "license": "Apache-2.0",
