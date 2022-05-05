@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v3.0.0) (2022-05-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v2.0.0...v3.0.0)
+
+**Breaking changes:**
+
+- Drop support for FreeBSD 11 \(EOL\) [\#306](https://github.com/voxpupuli/puppet-postfix/pull/306) ([smortex](https://github.com/smortex))
+
+**Implemented enhancements:**
+
+- Declare CentOS 9 Support, Install s-nail on 9 [\#322](https://github.com/voxpupuli/puppet-postfix/pull/322) ([traylenator](https://github.com/traylenator))
+- Add support for FreeBSD 13 [\#307](https://github.com/voxpupuli/puppet-postfix/pull/307) ([smortex](https://github.com/smortex))
+- allow hiera driven transport/virtual/hash/conffile [\#296](https://github.com/voxpupuli/puppet-postfix/pull/296) ([cringdahl](https://github.com/cringdahl))
+
+**Closed issues:**
+
+- increase dependency of puppet/alternatives to next major version [\#324](https://github.com/voxpupuli/puppet-postfix/issues/324)
+- smtp\_listen to take multiple addresses [\#203](https://github.com/voxpupuli/puppet-postfix/issues/203)
+
+**Merged pull requests:**
+
+- Add switches for simple domain masquerade [\#326](https://github.com/voxpupuli/puppet-postfix/pull/326) ([jcpunk](https://github.com/jcpunk))
+- increase dependency of puppet/alternatives to next major version [\#325](https://github.com/voxpupuli/puppet-postfix/pull/325) ([KoenDierckx](https://github.com/KoenDierckx))
+- Comply to rubocop 1.22.3 [\#321](https://github.com/voxpupuli/puppet-postfix/pull/321) ([traylenator](https://github.com/traylenator))
+- remove unneeded tests; provide error message for raise\_error [\#318](https://github.com/voxpupuli/puppet-postfix/pull/318) ([kenyon](https://github.com/kenyon))
+- map: handle regexp type [\#317](https://github.com/voxpupuli/puppet-postfix/pull/317) ([kenyon](https://github.com/kenyon))
+- allow creation of postfix::map resources with hiera [\#316](https://github.com/voxpupuli/puppet-postfix/pull/316) ([kenyon](https://github.com/kenyon))
+- init.pp: correct param numbers and use of optional [\#315](https://github.com/voxpupuli/puppet-postfix/pull/315) ([kenyon](https://github.com/kenyon))
+- Allow parameter smtp\_listen to accept multiple IPs [\#313](https://github.com/voxpupuli/puppet-postfix/pull/313) ([wobblesprout](https://github.com/wobblesprout))
+- Add manage\_mailname parameter  to README \(\#186\) [\#312](https://github.com/voxpupuli/puppet-postfix/pull/312) ([wobblesprout](https://github.com/wobblesprout))
+- fixtures.yml: Migrate to git URLs [\#309](https://github.com/voxpupuli/puppet-postfix/pull/309) ([bastelfreak](https://github.com/bastelfreak))
+- puppet-lint: fix top\_scope\_facts warnings [\#304](https://github.com/voxpupuli/puppet-postfix/pull/304) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v2.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v2.0.0) (2021-08-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/1.12.0...v2.0.0)
