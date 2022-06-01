@@ -19,7 +19,7 @@ class postfix::ldap {
   assert_type(Optional[String], $postfix::ldap_bind_pw)
   assert_type(Optional[Variant[String,Array[String]]], $postfix::ldap_options)
 
-  if $facts['os']['family'] in [ 'Debian', 'RedHat' ] {
+  if $facts['os']['family'] in ['Debian','RedHat'] {
     package { 'postfix-ldap':
       before  => File["${postfix::confdir}/ldap-aliases.cf"],
     }
