@@ -3,4 +3,11 @@ server_host = <%= @ldap_host %>
 <% if @ldap_base -%>
 search_base = <%= @ldap_base %>
 <% end -%>
-<%= @ldap_options %>
+<%
+    options = [ @ldap_options ].flatten
+    if @ldap_bind_pw
+        options.append('bind_pw = ' + @ldap_bind_pw )
+    end
+    if options -%>
+<%= options.sort.join("\n") %>
+<% end -%>
