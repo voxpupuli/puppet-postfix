@@ -48,9 +48,9 @@ class postfix::satellite (
     mydestination         => $_mydestination,
     mynetworks            => $_mynetworks,
     relayhost             => $_relayhost,
-    masquerade_classes    => $masquerade_classes,
-    masquerade_domains    => $masquerade_domains,
-    masquerade_exceptions => $masquerade_exceptions,
+    masquerade_classes    => $_masquerade_classes,
+    masquerade_domains    => $_masquerade_domains,
+    masquerade_exceptions => $_masquerade_exceptions,
   }
 
   postfix::virtual { "@${postfix::myorigin}":
