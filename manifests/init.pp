@@ -32,6 +32,8 @@
 #
 # [*ldap_host*]           - (string)
 #
+# [*ldap_bind_pw*]        - (string)
+#
 # [*ldap_options*]        - (string)
 #
 # [*mail_user*]           - (string) The mail user
@@ -126,7 +128,8 @@ class postfix (
   Boolean                         $ldap                = false,
   Optional[String]                $ldap_base           = undef,
   Optional[String]                $ldap_host           = undef,
-  Optional[String]                $ldap_options        = undef,
+  Optional[String]                $ldap_bind_pw        = undef,
+  Optional[Variant[String,Array[String]]]  $ldap_options        = undef,
   String                          $mail_user           = 'vmail',       # postfix_mail_user
   Boolean                         $mailman             = false,
   String                          $maincf_source       = "puppet:///modules/${module_name}/main.cf",
