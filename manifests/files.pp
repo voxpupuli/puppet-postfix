@@ -1,3 +1,7 @@
+# @summary Manages the Postfix related files
+#
+# @api private
+#
 class postfix::files {
   assert_private()
 

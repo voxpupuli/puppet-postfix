@@ -1,3 +1,7 @@
+# @summary Manage service resources for postfix
+#
+# @api private
+#
 class postfix::service {
   assert_private()
 

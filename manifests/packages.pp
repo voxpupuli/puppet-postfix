@@ -1,3 +1,7 @@
+# @summary Install the required packages for postfix
+#
+# @api private
+#
 class postfix::packages {
   assert_private()
 

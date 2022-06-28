@@ -1,29 +1,6 @@
+# @summary Configure Postfix as satellite
 #
-# == Class: postfix::satellite
-#
-# This class configures all local email (cron, mdadm, etc) to be forwarded
-# to $root_mail_recipient, using $relayhost as a relay.
-#
-# This class will call postfix::mta and override its parameters.
-# You shouldn't call postfix::mta yourself or use mta=true in the postfix class.
-#
-# === Parameters
-#
-# [*mydestination*] - (string)
-# [*mynetworks*] - (string)
-# [*relayhost*] - (string)
-# [*masquerade_classes*]    - (array)
-# [*masquerade_domains*]    - (array)
-# [*masquerade_exceptions*] - (array)
-#
-# === Examples
-#
-#   class { 'postfix':
-#     relayhost           => 'mail.example.com',
-#     myorigin            => 'toto.example.com',
-#     root_mail_recipient => 'the.sysadmin@example.com',
-#     satellite           => true,
-#   }
+# @api private
 #
 class postfix::satellite (
   $mydestination = undef,
@@ -33,6 +10,7 @@ class postfix::satellite (
   $masquerade_domains    = undef,
   $masquerade_exceptions = undef,
 ) {
+  assert_private()
   include postfix
 
   assert_type(Pattern[/^\S+$/], $postfix::myorigin)

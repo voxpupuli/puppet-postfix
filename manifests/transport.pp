@@ -1,51 +1,48 @@
-# == Definition: postfix::transport
+# @summary Manage the transport map of postfix
 #
 # Manages content of the /etc/postfix/transport map.
 #
-# === Parameters
-#
-# [*name*]        - name of address postfix will lookup. See transport(5).
-# [*destination*] - where the emails will be delivered to. See transport(5).
-# [*ensure*]      - present/absent, defaults to present.
-# [*nexthop*]     - A string to define where and how to deliver the mail. See transport(5).
-#
-# === Requires
-#
-# - Class["postfix"]
-# - Postfix::Hash["/etc/postfix/transport"]
-# - Postfix::Config["transport_maps"]
-# - augeas
-#
-# === Examples
-#
-#   node 'toto.example.com' {
-#
-#     include postfix
-#
-#     postfix::hash { '/etc/postfix/transport':
-#       ensure => present,
-#     }
-#     postfix::config { 'transport_maps':
-#       value => 'hash:/etc/postfix/transport, regexp:/etc/postfix/transport_regexp',
-#     }
-#     postfix::transport {
-#       'mailman.example.com':
-#          ensure      => present,
-#          destination => 'mailman';
-#       'slow_transport':
-#          ensure      => present,
-#          nexthop     => '/^user-.*@mydomain\.com/'
-#          file        => '/etc/postfix/transport_regexp',
-#          destination => 'slow'
-#     }
-#     
+# @example Simple transport map config
+#   include postfix
+#   postfix::hash { '/etc/postfix/transport':
+#     ensure => present,
+#   }
+#   postfix::config { 'transport_maps':
+#     value => 'hash:/etc/postfix/transport, regexp:/etc/postfix/transport_regexp',
+#   }
+#   postfix::transport {
+#     'mailman.example.com':
+#        ensure      => present,
+#        destination => 'mailman';
+#     'slow_transport':
+#        ensure      => present,
+#        nexthop     => '/^user-.*@mydomain\.com/'
+#        file        => '/etc/postfix/transport_regexp',
+#        destination => 'slow'
 #   }
 #
+# @param ensure
+#   Defines whether the transport entry is present or not. Value can either be present or absent.
+#
+# @param destination
+#   The destination to be delivered to (transport(5)).
+#   Example: `mailman`.
+#
+# @param nexthop
+#   A string to define where and how to deliver the mail (transport(5)).
+#   Example: `[smtp.google.com]:25`.
+#
+# @param file
+#   Where to create the file. If not defined "${postfix::confdir}/transport"
+#   will be used as path.
+#
+# @see https://www.postfix.org/transport.5.html
+#
 define postfix::transport (
-  Optional[String]          $destination = undef,
-  Optional[String]          $nexthop=undef,
-  Optional[Stdlib::Absolutepath] $file=undef,
-  Enum['present', 'absent'] $ensure='present'
+  Enum['present', 'absent']      $ensure      = 'present',
+  Optional[String]               $destination = undef,
+  Optional[String]               $nexthop     = undef,
+  Optional[Stdlib::Absolutepath] $file        = undef,
 ) {
   include postfix
   include postfix::augeas
