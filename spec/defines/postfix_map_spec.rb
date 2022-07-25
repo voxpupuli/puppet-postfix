@@ -143,6 +143,18 @@ describe 'postfix::map' do
         it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
         it { is_expected.not_to contain_file('postfix map foo.db') }
       end
+
+      context 'when passing cdb type' do
+        let(:params) do
+          {
+            type: 'cdb',
+          }
+        end
+
+        it { is_expected.to contain_file('postfix map foo').with_ensure('present') }
+        it { is_expected.to contain_file('postfix map foo.cdb').with_ensure('present') }
+        it { is_expected.to contain_exec('generate foo.cdb') }
+      end
     end
   end
 end
