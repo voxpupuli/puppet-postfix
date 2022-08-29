@@ -31,12 +31,17 @@
 #   Where to create the file. If not defined "${postfix::confdir}/canonical"
 #   will be used as path.
 #
+# @param lookup_table_suffix
+#   Depends on the lookup table type, which is used on the postfix::hash and postfix::config resources.
+#   Defaults to 'db', the suffix of the "hash" type.
+#
 # @see https://www.postfix.org/canonical.5.html
 #
 define postfix::canonical (
   String                   $destination,
-  Enum['present','absent'] $ensure      = 'present',
-  Stdlib::Absolutepath     $file        = undef
+  Enum['present','absent'] $ensure              = 'present',
+  Stdlib::Absolutepath     $file                = undef,
+  String[1]                $lookup_table_suffix = 'db',
 ) {
   include postfix
   include postfix::augeas
@@ -65,6 +70,6 @@ define postfix::canonical (
     lens    => 'Postfix_Canonical.lns',
     changes => $changes,
     require => [Package['postfix'], Augeas::Lens['postfix_canonical']],
-    notify  => Exec["generate ${_file}.db"],
+    notify  => Exec["generate ${_file}.${lookup_table_suffix}"],
   }
 }

@@ -55,12 +55,20 @@ define postfix::map (
     fail 'You must provide either \'source\' or \'content\', not both'
   }
 
+  $_generated_suffix = $type ? {
+    'cdb'   => 'cdb',
+    'dbm'   => 'dir',
+    'lmdb'  => 'lmdb',
+    'sdbm'  => 'dir',
+    default => 'db',
+  }
+
   # CIDR and PCRE maps need a postfix reload, but not a postmap
   if $type =~ /^(cidr|pcre|regexp)$/ {
     $manage_notify = Service['postfix']
   } else {
     if $ensure == 'present' {
-      $manage_notify = Exec["generate ${name}.db"]
+      $manage_notify = Exec["generate ${name}.${_generated_suffix}"]
     } else {
       $manage_notify = undef
     }
@@ -79,9 +87,9 @@ define postfix::map (
   }
 
   if $type !~ /^(cidr|pcre|regexp)$/ {
-    file { "postfix map ${name}.db":
+    file { "postfix map ${name}.${_generated_suffix}":
       ensure  => $ensure,
-      path    => "${_path}.db",
+      path    => "${_path}.${_generated_suffix}",
       owner   => 'root',
       group   => 'postfix',
       mode    => $mode,
@@ -91,11 +99,11 @@ define postfix::map (
   }
 
   $generate_cmd = $ensure ? {
-    'absent'  => "rm ${_path}.db",
-    'present' => "postmap ${_path}",
+    'absent'  => "rm ${_path}.${_generated_suffix}",
+    'present' => "postmap ${type}:${_path}",
   }
 
-  exec { "generate ${name}.db":
+  exec { "generate ${name}.${_generated_suffix}":
     command     => $generate_cmd,
     path        => $facts['path'],
     #creates    => "${name}.db", # this prevents postmap from being run !

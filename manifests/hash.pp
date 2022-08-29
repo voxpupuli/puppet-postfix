@@ -1,7 +1,7 @@
 # @summary Creates Postfix hashed "map" files, and builds the corresponding db file
 #
 # Creates Postfix hashed "map" files. It will create "${name}", and then build
-# "${name}.db" using the "postmap" command. The map file can then be referred to
+# "${name}.<table type suffix>" using the "postmap" command. The map file can then be referred to
 # using postfix::config.
 #
 # @example Creates a virtual hashmap
@@ -62,7 +62,7 @@ define postfix::hash (
     ensure  => $ensure,
     source  => $source,
     content => $content,
-    type    => 'hash',
+    type    => $postfix::lookup_table_type,
     path    => $name,
     mode    => $mode,
   }

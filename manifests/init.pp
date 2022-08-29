@@ -86,6 +86,10 @@
 #   A free form string that can define any LDAP options to be passed through (ldap_table(5)).
 #   Example: `start_tls = yes`.
 #
+# @param lookup_table_type
+#   Table format type as described in http://www.postfix.org/DATABASE_README.html#types.
+#   Type has to be supported by system, see "postconf -m" for supported types.
+#
 # @param mail_user
 #   A string defining the mail user, and optionally group, to execute external commands as.
 #   This parameter maps to the user parameter (pipe(8)).
@@ -258,6 +262,7 @@ class postfix (
   Optional[String]                     $ldap_base             = undef,
   Optional[String]                     $ldap_host             = undef,
   Optional[String]                     $ldap_options          = undef,
+  String                               $lookup_table_type     = 'hash',
   String                               $mail_user             = 'vmail',       # postfix_mail_user
   Boolean                              $mailman               = false,
   String                               $mailx_ensure          = 'present',
