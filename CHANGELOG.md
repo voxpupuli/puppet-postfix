@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.1.0](https://github.com/voxpupuli/puppet-postfix/tree/v3.1.0) (2023-03-01)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Add option to select lookup table type [\#336](https://github.com/voxpupuli/puppet-postfix/pull/336) ([timdeluxe](https://github.com/timdeluxe))
+
+**Fixed bugs:**
+
+- Fix typos errors in postfix::satellite from PR 326 [\#333](https://github.com/voxpupuli/puppet-postfix/pull/333) ([cruelsmith](https://github.com/cruelsmith))
+- Handle \[host\] vs \[host\]:port nexthop [\#327](https://github.com/voxpupuli/puppet-postfix/pull/327) ([gcoxmoz](https://github.com/gcoxmoz))
+
+**Merged pull requests:**
+
+- Update documentation and expected module usage behaviour [\#328](https://github.com/voxpupuli/puppet-postfix/pull/328) ([bkuebler](https://github.com/bkuebler))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v3.0.0) (2022-05-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v2.0.0...v3.0.0)
@@ -32,8 +49,8 @@ These should not affect the functionality of the module.
 - map: handle regexp type [\#317](https://github.com/voxpupuli/puppet-postfix/pull/317) ([kenyon](https://github.com/kenyon))
 - allow creation of postfix::map resources with hiera [\#316](https://github.com/voxpupuli/puppet-postfix/pull/316) ([kenyon](https://github.com/kenyon))
 - init.pp: correct param numbers and use of optional [\#315](https://github.com/voxpupuli/puppet-postfix/pull/315) ([kenyon](https://github.com/kenyon))
-- Allow parameter smtp\_listen to accept multiple IPs [\#313](https://github.com/voxpupuli/puppet-postfix/pull/313) ([wobblesprout](https://github.com/wobblesprout))
-- Add manage\_mailname parameter  to README \(\#186\) [\#312](https://github.com/voxpupuli/puppet-postfix/pull/312) ([wobblesprout](https://github.com/wobblesprout))
+- Allow parameter smtp\_listen to accept multiple IPs [\#313](https://github.com/voxpupuli/puppet-postfix/pull/313) ([ghost](https://github.com/ghost))
+- Add manage\_mailname parameter  to README \(\#186\) [\#312](https://github.com/voxpupuli/puppet-postfix/pull/312) ([ghost](https://github.com/ghost))
 - fixtures.yml: Migrate to git URLs [\#309](https://github.com/voxpupuli/puppet-postfix/pull/309) ([bastelfreak](https://github.com/bastelfreak))
 - puppet-lint: fix top\_scope\_facts warnings [\#304](https://github.com/voxpupuli/puppet-postfix/pull/304) ([bastelfreak](https://github.com/bastelfreak))
 
