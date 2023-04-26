@@ -45,7 +45,6 @@ define postfix::transport (
   Optional[Stdlib::Absolutepath] $file        = undef,
 ) {
   include postfix
-  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/transport")
 
