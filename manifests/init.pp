@@ -286,7 +286,7 @@ class postfix (
   Optional[Array[String[1]]]           $masquerade_domains    = undef,
   Optional[Array[String[1]]]           $masquerade_exceptions = undef,
   Boolean                              $mta                   = false,
-  String                               $mydestination         = '$myorigin',   # postfix_mydestination
+  String                               $mydestination         = '$myhostname, localhost.$mydomain, localhost',  # postfix_mydestination
   String                               $mynetworks            = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String                               $myorigin              = $facts['networking']['fqdn'],
   String                               $postfix_ensure        = 'present',
