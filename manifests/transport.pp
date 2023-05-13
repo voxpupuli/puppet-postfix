@@ -45,7 +45,6 @@ define postfix::transport (
   Optional[Stdlib::Absolutepath] $file        = undef,
 ) {
   include postfix
-  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/transport")
 
@@ -116,7 +115,6 @@ define postfix::transport (
     lens    => 'Postfix_Transport.lns',
     incl    => $_file,
     changes => $changes,
-    require => Augeas::Lens['postfix_transport'],
   }
 
   if defined(Package['postfix']) {

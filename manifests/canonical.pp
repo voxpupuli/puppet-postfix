@@ -69,7 +69,7 @@ define postfix::canonical (
     incl    => $_file,
     lens    => 'Postfix_Canonical.lns',
     changes => $changes,
-    require => [Package['postfix'], Augeas::Lens['postfix_canonical']],
+    require => Package['postfix'],
     notify  => Exec["generate ${_file}.${lookup_table_suffix}"],
   }
 }
