@@ -71,8 +71,6 @@ describe 'postfix::virtual' do
           }
         end
 
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
             incl: postfix_virutal_path,
@@ -94,8 +92,6 @@ describe 'postfix::virtual' do
             ensure: 'present',
           }
         end
-
-        it { is_expected.to contain_class('postfix::augeas') }
 
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
@@ -119,8 +115,6 @@ describe 'postfix::virtual' do
           }
         end
 
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(
             incl: '/tmp/virtual',
@@ -142,8 +136,6 @@ describe 'postfix::virtual' do
             ensure: 'absent',
           }
         end
-
-        it { is_expected.to contain_class('postfix::augeas') }
 
         it {
           is_expected.to contain_augeas('Postfix virtual - foo').with(

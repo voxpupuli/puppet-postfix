@@ -57,8 +57,6 @@ describe 'postfix::transport' do
       end
 
       context 'when using default values' do
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
             incl: postfix_transport_path,
@@ -84,8 +82,6 @@ describe 'postfix::transport' do
           }
         end
 
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
             incl: '/tmp/transport',
@@ -110,8 +106,6 @@ describe 'postfix::transport' do
           }
         end
 
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
             incl: '/tmp/transport',
@@ -135,8 +129,6 @@ describe 'postfix::transport' do
             ensure: 'present',
           }
         end
-
-        it { is_expected.to contain_class('postfix::augeas') }
 
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
@@ -163,8 +155,6 @@ describe 'postfix::transport' do
           }
         end
 
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
             incl: '/tmp/transport',
@@ -190,8 +180,6 @@ describe 'postfix::transport' do
           }
         end
 
-        it { is_expected.to contain_class('postfix::augeas') }
-
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(
             incl: '/tmp/transport',
@@ -214,8 +202,6 @@ describe 'postfix::transport' do
             ensure: 'absent',
           }
         end
-
-        it { is_expected.to contain_class('postfix::augeas') }
 
         it {
           is_expected.to contain_augeas('Postfix transport - foo').with(

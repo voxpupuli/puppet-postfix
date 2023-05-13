@@ -80,7 +80,6 @@ define postfix::virtual (
     incl    => $_file,
     lens    => 'Postfix_Virtual.lns',
     changes => $changes,
-    require => Augeas::Lens['postfix_virtual'],
   }
 
   if defined(Package['postfix']) {

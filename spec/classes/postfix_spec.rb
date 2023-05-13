@@ -539,13 +539,6 @@ describe 'postfix' do
           is_expected.to contain_class('postfix::satellite')
           is_expected.to contain_postfix__virtual('@foo.example.com').with(ensure: 'present', destination: 'root')
           is_expected.to contain_augeas('Postfix virtual - @foo.example.com')
-          is_expected.to contain_class('postfix::augeas')
-          is_expected.to contain_augeas__lens('postfix_virtual').with(
-            ensure: 'present',
-            lens_content: %r{Parses /etc/postfix/virtual},
-            test_content: %r{Provides unit tests and examples for the <Postfix_Virtual> lens.},
-            stock_since: '1.7.0'
-          )
         end
 
         it 'configures all local email to be forwarded to $root_mail_recipient delivered through $relayhost' do
@@ -696,13 +689,6 @@ describe 'postfix' do
         it 'updates the transport map' do
           is_expected.to contain_postfix__transport('local_relay').with_nexthop('[10.12.0.2]:9925')
           is_expected.to contain_augeas('Postfix transport - local_relay')
-          is_expected.to contain_class('postfix::augeas')
-          is_expected.to contain_augeas__lens('postfix_transport').with(
-            ensure: 'present',
-            lens_content: %r{Parses /etc/postfix/transport},
-            test_content: %r{Provides unit tests and examples for the <Postfix_Transport> lens.},
-            stock_since: '1.0.0'
-          )
         end
       end
 
@@ -720,13 +706,6 @@ describe 'postfix' do
         it 'updates the virtual map' do
           is_expected.to contain_postfix__virtual('someone@somedomain.tld').with_destination('internal@ourdomain.tld')
           is_expected.to contain_augeas('Postfix virtual - someone@somedomain.tld')
-          is_expected.to contain_class('postfix::augeas')
-          is_expected.to contain_augeas__lens('postfix_virtual').with(
-            ensure: 'present',
-            lens_content: %r{Parses /etc/postfix/virtual},
-            test_content: %r{Provides unit tests and examples for the <Postfix_Virtual> lens.},
-            stock_since: '1.7.0'
-          )
         end
       end
 
