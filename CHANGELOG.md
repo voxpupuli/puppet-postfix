@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.0.0) (2023-05-30)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v3.1.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#351](https://github.com/voxpupuli/puppet-postfix/pull/351) ([bastelfreak](https://github.com/bastelfreak))
+- Switch to upstream default for `mydestination` [\#256](https://github.com/voxpupuli/puppet-postfix/pull/256) ([kenyon](https://github.com/kenyon))
+
+**Implemented enhancements:**
+
+- document mode param & puppet-lint: enable parameter\_documentation check [\#355](https://github.com/voxpupuli/puppet-postfix/pull/355) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Drop old augeas lenses [\#350](https://github.com/voxpupuli/puppet-postfix/pull/350) ([ekohl](https://github.com/ekohl))
+
 ## [v3.1.0](https://github.com/voxpupuli/puppet-postfix/tree/v3.1.0) (2023-03-01)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v3.0.0...v3.1.0)
