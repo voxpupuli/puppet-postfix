@@ -485,7 +485,7 @@ Data type: `String`
 A string to define the mydestination parameter in main.cf (postconf(5)).
 Example: `example.com, foo.example.com`.
 
-Default value: `'$myorigin'`
+Default value: `'$myhostname, localhost.$mydomain, localhost'`
 
 ##### <a name="-postfix--mynetworks"></a>`mynetworks`
 
@@ -956,7 +956,7 @@ Default value: `undef`
 
 Data type: `Variant[String[4,4], Undef]`
 
-
+the desired file mode
 
 Default value: `'0640'`
 
