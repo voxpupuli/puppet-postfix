@@ -3,7 +3,8 @@ Gemfile:
   optional:
     ':development':
       - gem: ruby-augeas
-Rakefile:
-  changelog_version_tag_pattern: '%s'
 spec/spec_helper_acceptance.rb:
   unmanaged: false
+.puppet-lint.rc:
+  enabled_lint_checks:
+    - parameter_documentation
