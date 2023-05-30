@@ -40,6 +40,8 @@
 #   with the source parameter.
 #   Example: `#Destination                Credentials\nsmtp.example.com            gssapi:nopassword`.
 #
+# @param mode the desired file mode
+#
 define postfix::hash (
   Enum['present', 'absent']                   $ensure  = 'present',
   Variant[Array[String], String, Undef]       $source  = undef,
