@@ -12,7 +12,7 @@ describe 'postfix::map' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:postfix_foo_db_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/foo.db'
         else '/etc/postfix/foo.db'
         end

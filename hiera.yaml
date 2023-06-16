@@ -10,8 +10,8 @@ hierarchy:
 
   - name: "Per-OS family"
     paths:
-      - "osfamily/%{facts.os.family}/%{facts.lsbdistcodename}.yaml"
-      - "osfamily/%{facts.os.family}/%{facts.operatingsystemmajrelease}.yaml"
+      - "osfamily/%{facts.os.family}/%{facts.os.distro.codename}.yaml"
+      - "osfamily/%{facts.os.family}/%{facts.os.release.major}.yaml"
       - "osfamily/%{facts.os.family}.yaml"
 
   - name: "Common data"

@@ -15,7 +15,7 @@ describe 'postfix::virtual' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:postfix_virutal_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/virtual'
         else '/etc/postfix/virtual'
         end

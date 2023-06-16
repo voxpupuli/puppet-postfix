@@ -6,31 +6,31 @@ describe 'postfix' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       let(:postfix_main_cf_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/main.cf'
         else '/etc/postfix/main.cf'
         end
       end
       let(:postfix_master_cf_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/master.cf'
         else '/etc/postfix/master.cf'
         end
       end
       let(:postfix_transport_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/transport'
         else '/etc/postfix/transport'
         end
       end
       let(:postfix_virtual_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/virtual'
         else '/etc/postfix/virtual'
         end
       end
       let(:postfix_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix'
         else '/etc/postfix'
         end
@@ -60,7 +60,7 @@ describe 'postfix' do
         it { is_expected.to contain_augeas("manage postfix 'inet_interfaces'").with_changes("set inet_interfaces 'all'") }
         it { is_expected.to contain_augeas("manage postfix 'inet_protocols'").with_changes("set inet_protocols 'all'") }
 
-        context 'when on Debian family', if: facts[:osfamily] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        context 'when on Debian family', if: facts[:os]['family'] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("foo.example.com\n") }
           it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
@@ -77,7 +77,7 @@ describe 'postfix' do
           }
         end
 
-        context 'when on RedHat family', if: facts[:osfamily] == 'RedHat' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        context 'when on RedHat family', if: facts[:os]['family'] == 'RedHat' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('mailx') }
           it { is_expected.to contain_file('/etc/mailname').with_seltype('postfix_etc_t').with_content("foo.example.com\n") }
           it { is_expected.to contain_file(postfix_master_cf_path).with_seltype('postfix_etc_t') }
@@ -91,7 +91,7 @@ describe 'postfix' do
           it { is_expected.to contain_augeas("manage postfix 'mailq_path'") }
           it { is_expected.to contain_alternatives('mta') }
 
-          context 'when on release 8', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '8') do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          context 'when on release 8', if: (facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '8') do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -104,7 +104,7 @@ describe 'postfix' do
             }
           end
 
-          context 'when on release 7', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '7') do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          context 'when on release 7', if: (facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '7') do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -117,7 +117,7 @@ describe 'postfix' do
             }
           end
 
-          context 'when on release 6', if: (facts[:osfamily] == 'RedHat' && facts[:operatingsystemmajrelease] == '6') do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          context 'when on release 6', if: (facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '6') do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -131,7 +131,7 @@ describe 'postfix' do
           end
         end
 
-        context 'when on Fedora', if: facts[:operatingsystem] == 'Fedora' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        context 'when on Fedora', if: facts[:os]['name'] == 'Fedora' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
           it {
@@ -247,7 +247,7 @@ describe 'postfix' do
           is_expected.to contain_file("#{postfix_path}/ldap-aliases.cf")
         end
 
-        context 'when on Debian family', if: facts[:osfamily] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        context 'when on Debian family', if: facts[:os]['family'] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('postfix-ldap') }
         end
       end
