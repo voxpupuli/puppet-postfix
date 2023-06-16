@@ -15,7 +15,7 @@ describe 'postfix::transport' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:postfix_transport_path) do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'FreeBSD' then '/usr/local/etc/postfix/transport'
         else '/etc/postfix/transport'
         end

@@ -7,14 +7,14 @@ describe 'postfix class' do
     it 'works idempotently with no errors' do
       pp = <<-EOS
         # Make sure the default mailer is stopped in docker containers
-        if $::operatingsystem == 'Debian' {
+        if fact('os.name') == 'Debian' {
           service { 'exim4':
             ensure    => stopped,
             hasstatus => false,
             before    => Class['postfix'],
           }
         }
-        if $::osfamily == 'RedHat' {
+        if fact('os.family') == 'RedHat' {
           service { 'sendmail':
             ensure    => stopped,
             hasstatus => false,
@@ -50,14 +50,14 @@ describe 'postfix class' do
     it 'works idempotently with no errors and with your own configuration of /etc/aliases' do
       pp = <<-EOS
         # Make sure the default mailer is stopped in docker containers
-        if $::operatingsystem == 'Debian' {
+        if fact('os.name') == 'Debian' {
           service { 'exim4':
             ensure    => stopped,
             hasstatus => false,
             before    => Class['postfix'],
           }
         }
-        if $::osfamily == 'RedHat' {
+        if fact('os.family') == 'RedHat' {
           service { 'sendmail':
             ensure    => stopped,
             hasstatus => false,
