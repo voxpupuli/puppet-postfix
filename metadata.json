@@ -10,19 +10,19 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.13.0 < 9.0.0"
+      "version_requirement": ">= 4.13.0 < 10.0.0"
     },
     {
       "name": "camptocamp/augeas",
-      "version_requirement": ">=1.0.0 < 2.0.0"
+      "version_requirement": ">= 1.0.0 < 2.0.0"
     },
     {
       "name": "puppet/alternatives",
-      "version_requirement": ">=2.0.0 < 5.0.0"
+      "version_requirement": ">= 2.0.0 < 5.0.0"
     },
     {
       "name": "puppetlabs/mailalias_core",
-      "version_requirement": ">=1.0.5 < 2.0.0"
+      "version_requirement": ">= 1.0.5 < 2.0.0"
     }
   ],
   "operatingsystem_support": [
