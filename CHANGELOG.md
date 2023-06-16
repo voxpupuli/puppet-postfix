@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.1.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.1.0) (2023-06-16)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.0.0...v4.1.0)
+
+**Implemented enhancements:**
+
+- Add support for Puppet 8 [\#358](https://github.com/voxpupuli/puppet-postfix/pull/358) ([smortex](https://github.com/smortex))
+- Relax dependencies version requirements [\#357](https://github.com/voxpupuli/puppet-postfix/pull/357) ([smortex](https://github.com/smortex))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.0.0) (2023-05-30)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v3.1.0...v4.0.0)
