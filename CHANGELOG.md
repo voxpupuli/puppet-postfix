@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v4.1.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.1.0) (2023-06-16)
+## [v4.2.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.2.0) (2023-06-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.1.0...v4.2.0)
+
+**Implemented enhancements:**
+
+- puppet/alternatives: Allow 5.x [\#361](https://github.com/voxpupuli/puppet-postfix/pull/361) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v4.1.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.1.0) (2023-06-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.0.0...v4.1.0)
 
