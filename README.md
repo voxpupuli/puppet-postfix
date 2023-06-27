@@ -27,7 +27,7 @@
 * FreeBSD
 
 ## Dependencies
-  - [puppetlabs-augeas_core-augeas 1.0.0+](https://github.com/puppetlabs/puppetlabs-augeas_core)
+  - [puppetlabs-augeas_core 1.0.0+](https://github.com/puppetlabs/puppetlabs-augeas_core)
   - [puppet-alternatives 2.0.0+](https://github.com/voxpupuli/puppet-alternatives)
   - [puppetlabs-mailalias_core 1.0.5+](https://github.com/puppetlabs/puppetlabs-mailalias_core)
   - [puppetlabs-stdlib 4.13.0+](https://github.com/puppetlabs/puppetlabs-stdlib)
