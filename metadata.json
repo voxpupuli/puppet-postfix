@@ -13,10 +13,6 @@
       "version_requirement": ">= 4.13.0 < 10.0.0"
     },
     {
-      "name": "puppetlabs/augeas_core",
-      "version_requirement": ">= 1.0.0 < 2.0.0"
-    },
-    {
       "name": "puppet/alternatives",
       "version_requirement": ">= 2.0.0 < 6.0.0"
     },
