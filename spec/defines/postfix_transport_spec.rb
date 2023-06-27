@@ -7,7 +7,6 @@ describe 'postfix::transport' do
 
   let :pre_condition do
     <<-EOT
-    class { '::augeas': }
     class { '::postfix': }
     EOT
   end
