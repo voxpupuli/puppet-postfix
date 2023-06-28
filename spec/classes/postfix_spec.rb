@@ -530,6 +530,9 @@ describe 'postfix' do
 
       context 'when specifying satellite' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) { { satellite: true, mydestination: '1.2.3.4', relayhost: '2.3.4.5' } }
+        let :pre_condition do
+          "class { 'augeas': }"
+        end
 
         it 'compiles with expected resources' do
           is_expected.to compile.with_all_deps
