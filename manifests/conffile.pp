@@ -53,7 +53,7 @@ define postfix::conffile (
   Variant[Array[String], String, Undef]  $source    = undef,
   Optional[String]                       $content   = undef,
   Optional[Stdlib::Absolutepath]         $path      = undef,
-  String                                 $mode      = '0640',
+  Stdlib::Filemode                       $mode      = '0640',
   Hash                                   $options   = {},
   Boolean                                $show_diff = true,
 ) {
