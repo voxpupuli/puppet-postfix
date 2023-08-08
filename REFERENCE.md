@@ -643,17 +643,16 @@ This type manages content of the /etc/postfix/canonical map.
 # - Postfix::Hash["/etc/postfix/canonical"]
 # - Postfix::Config["canonical_maps"] or Postfix::Config["sender_canonical_maps"] or Postfix::Config["recipient_canonical_maps"]
 include postfix
-postfix::hash { "/etc/postfix/recipient_canonical":
+postfix::hash { '/etc/postfix/recipient_canonical':
   ensure => present,
 }
-postfix::config { "canonical_alias_maps":
-  value => "hash:/etc/postfix/recipient_canonical"
+postfix::config { 'canonical_alias_maps':
+  value => 'hash:/etc/postfix/recipient_canonical',
 }
-postfix::canonical {
-  "user@example.com":
-    file        => "/etc/postfix/recipient_canonical",
-    ensure      => present,
-    destination => "root";
+postfix::canonical { 'user@example.com':
+  file        => '/etc/postfix/recipient_canonical',
+  ensure      => present,
+  destination => 'root',
 }
 ```
 
