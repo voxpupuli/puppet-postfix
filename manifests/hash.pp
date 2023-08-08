@@ -46,7 +46,7 @@ define postfix::hash (
   Enum['present', 'absent']                   $ensure  = 'present',
   Variant[Array[String], String, Undef]       $source  = undef,
   Optional[Variant[Sensitive[String],String]] $content = undef,
-  Variant[String[4,4], Undef]                 $mode    = '0640',
+  Stdlib::Filemode                            $mode    = '0640',
 ) {
   include postfix::params
 

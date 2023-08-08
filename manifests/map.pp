@@ -40,7 +40,7 @@ define postfix::map (
   Optional[Variant[Sensitive[String], String]] $content = undef,
   String[1]                                    $type    = 'hash',
   Optional[Stdlib::Absolutepath]               $path    = undef,
-  String[4,4]                                  $mode    = '0640',
+  Stdlib::Filemode                             $mode    = '0640',
 ) {
   include postfix
   include postfix::params

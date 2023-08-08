@@ -778,7 +778,7 @@ Default value: `undef`
 
 ##### <a name="-postfix--conffile--mode"></a>`mode`
 
-Data type: `String`
+Data type: `Stdlib::Filemode`
 
 Permissions of the configuration file. This option is useful if you want to create the file with
 specific permissions (for example, because you have passwords in it).
@@ -954,7 +954,7 @@ Default value: `undef`
 
 ##### <a name="-postfix--hash--mode"></a>`mode`
 
-Data type: `Variant[String[4,4], Undef]`
+Data type: `Stdlib::Filemode`
 
 the desired file mode
 
@@ -1078,7 +1078,7 @@ Default value: `undef`
 
 ##### <a name="-postfix--map--mode"></a>`mode`
 
-Data type: `String[4,4]`
+Data type: `Stdlib::Filemode`
 
 File mode of the created file.
 
