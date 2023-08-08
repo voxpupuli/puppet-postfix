@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.3.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.3.0) (2023-08-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.2.1...v4.3.0)
+
+**Implemented enhancements:**
+
+- postfix:canonical: Add unit tests [\#367](https://github.com/voxpupuli/puppet-postfix/pull/367) ([bastelfreak](https://github.com/bastelfreak))
+- use Stdlib::Filemode datatype for mode parameters [\#366](https://github.com/voxpupuli/puppet-postfix/pull/366) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Revert "Remove camptocamp/puppet-augeas dependency" [\#365](https://github.com/voxpupuli/puppet-postfix/pull/365) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.2.1](https://github.com/voxpupuli/puppet-postfix/tree/v4.2.1) (2023-06-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.2.0...v4.2.1)
