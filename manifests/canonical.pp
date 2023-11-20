@@ -43,7 +43,6 @@ define postfix::canonical (
   String[1]                $lookup_table_suffix = 'db',
 ) {
   include postfix
-  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/canonical")
 
