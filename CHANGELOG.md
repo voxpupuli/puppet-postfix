@@ -4,13 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.4.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.4.0) (2023-11-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.3.0...v4.4.0)
+
+**Implemented enhancements:**
+
+- Add Ubuntu 22.04 support [\#376](https://github.com/voxpupuli/puppet-postfix/pull/376) ([bastelfreak](https://github.com/bastelfreak))
+- Add Alma/Rocky/Oracle support [\#375](https://github.com/voxpupuli/puppet-postfix/pull/375) ([bastelfreak](https://github.com/bastelfreak))
+- Remove camptocamp/augeas dependency [\#373](https://github.com/voxpupuli/puppet-postfix/pull/373) ([ekohl](https://github.com/ekohl))
+
 ## [v4.3.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.3.0) (2023-08-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.2.1...v4.3.0)
 
 **Implemented enhancements:**
 
-- postfix:canonical: Add unit tests [\#367](https://github.com/voxpupuli/puppet-postfix/pull/367) ([bastelfreak](https://github.com/bastelfreak))
+- postfix::canonical: Add unit tests [\#367](https://github.com/voxpupuli/puppet-postfix/pull/367) ([bastelfreak](https://github.com/bastelfreak))
 - use Stdlib::Filemode datatype for mode parameters [\#366](https://github.com/voxpupuli/puppet-postfix/pull/366) ([bastelfreak](https://github.com/bastelfreak))
 
 **Merged pull requests:**
