@@ -43,7 +43,6 @@ define postfix::canonical (
   String[1]                $lookup_table_suffix = 'db',
 ) {
   include postfix
-  include postfix::augeas
 
   $_file = pick($file, "${postfix::confdir}/canonical")
 
@@ -66,7 +65,7 @@ define postfix::canonical (
 
   augeas { "Postfix canonical - ${name}":
     incl    => $_file,
-    lens    => 'Postfix_Canonical.lns',
+    lens    => 'postfix_canonical.lns',
     changes => $changes,
     require => Package['postfix'],
     notify  => Exec["generate ${_file}.${lookup_table_suffix}"],

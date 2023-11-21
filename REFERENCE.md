@@ -12,7 +12,6 @@
 
 #### Private Classes
 
-* `postfix::augeas`: Provides augeas lenses for postfix files
 * `postfix::files`: Manages the Postfix related files
 * `postfix::ldap`: Provides the Postfix LDAP support
 * `postfix::mailman`: Configure Postfix to work with mailman
