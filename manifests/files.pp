@@ -101,7 +101,7 @@ class postfix::files {
     source  => $maincf_source,
   }
 
-  ::postfix::config {
+  postfix::config {
     'alias_maps':       value => $alias_maps;
     'inet_interfaces':  value => $inet_interfaces;
     'inet_protocols':   value => $inet_protocols;
@@ -110,7 +110,7 @@ class postfix::files {
 
   case $facts['os']['family'] {
     'RedHat': {
-      ::postfix::config {
+      postfix::config {
         'mailq_path':       value => '/usr/bin/mailq.postfix';
         'newaliases_path':  value => '/usr/bin/newaliases.postfix';
         'sendmail_path':    value => '/usr/sbin/sendmail.postfix';
