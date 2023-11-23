@@ -6,7 +6,7 @@ describe 'postfix::hash' do
   let(:title) { '/tmp/foo' }
 
   let :pre_condition do
-    "class { '::postfix': }"
+    "class { 'postfix': }"
   end
 
   on_supported_os.each do |os, facts|

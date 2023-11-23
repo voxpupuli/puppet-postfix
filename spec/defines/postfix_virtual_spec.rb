@@ -8,7 +8,7 @@ describe 'postfix::virtual' do
   let :pre_condition do
     <<-EOT
     class { '::augeas': }
-    class { '::postfix': }
+    class { 'postfix': }
     EOT
   end
 
