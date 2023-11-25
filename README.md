@@ -18,19 +18,11 @@
 
 ## Supported OS
 
-* Ubuntu
-* Debian
-* CentOS
-* RedHat
-* Alpine
-* Fedora
-* FreeBSD
+See [metadata.json](metadata.json) for supported OS versions.
 
 ## Dependencies
-  - [camptocamp-augeas 1.0.0+](https://github.com/camptocamp/puppet-augeas)
-  - [puppet-alternatives 2.0.0+](https://github.com/voxpupuli/puppet-alternatives)
-  - [puppetlabs-mailalias_core 1.0.5+](https://github.com/puppetlabs/puppetlabs-mailalias_core)
-  - [puppetlabs-stdlib 4.13.0+](https://github.com/puppetlabs/puppetlabs-stdlib)
+
+See [metadata.json](metadata.json) for dependencies.
 
 ## Puppet
 
@@ -46,8 +38,8 @@ Please report bugs and feature request using [GitHub issue
 tracker](https://github.com/voxpupuli/puppet-postfix/issues).
 
 For pull requests, it is very much appreciated to check your Puppet manifest
-with [puppet-lint](http://puppet-lint.com/) to follow the recommended Puppet style guidelines from the
-[Puppet Labs style guide](http://docs.puppetlabs.com/guides/style_guide.html).
+with [puppet-lint](https://github.com/puppetlabs/puppet-lint/) to follow the recommended Puppet style guidelines from the
+[Puppet Labs style guide](https://www.puppet.com/docs/puppet/latest/style_guide.html).
 
 
 ## Transfer Notice
