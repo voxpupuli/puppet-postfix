@@ -187,6 +187,22 @@
 #   A Boolean to define whether to configure Postfix as a mail transfer agent.
 #   This option is mutually exclusive with the satellite Boolean.
 #
+# @param mta_virtual_content
+#   A free form string that defines the contents of the virtual file. Only used if mta is true.
+#   This parameter is mutually exclusive with mta_virtual_source.
+#
+# @param mta_virtual_source
+#   A String whose value is a location for the source file to be used for the virtual file.
+#   Only used if mta is true. This parameter is mutually exclusive with mta_virtual_content.
+#
+# @param mta_transport_content
+#   A free form string that defines the contents of the transport file. Only used if mta is true.
+#   This parameter is mutually exclusive with mta_transport_source.
+#
+# @param mta_transport_source
+#   A String whose value is a location for the source file to be used for the transport file.
+#   Only used if mta is true. This parameter is mutually exclusive with mta_transport_content.
+#
 # @param mydestination
 #   A string to define the mydestination parameter in main.cf (postconf(5)).
 #   Example: `example.com, foo.example.com`.
@@ -286,6 +302,10 @@ class postfix (
   Optional[Array[String[1]]]           $masquerade_domains    = undef,
   Optional[Array[String[1]]]           $masquerade_exceptions = undef,
   Boolean                              $mta                   = false,
+  Optional[String]                     $mta_virtual_content   = undef,
+  Optional[String]                     $mta_virtual_source    = undef,
+  Optional[String]                     $mta_transport_content = undef,
+  Optional[String]                     $mta_transport_source  = undef,
   String                               $mydestination         = '$myhostname, localhost.$mydomain, localhost',  # postfix_mydestination
   String                               $mynetworks            = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String                               $myorigin              = $facts['networking']['fqdn'],
@@ -369,6 +389,14 @@ class postfix (
 
   if $ldap {
     include postfix::ldap
+  }
+
+  if $mta_virtual_content and $mta_virtual_source {
+    fail('You must provide either \'mta_virtual_content\' or \'mta_virtual_source\', not both.')
+  }
+
+  if $mta_transport_content and $mta_transport_source {
+    fail('You must provide either \'mta_transport_content\' or \'mta_transport_source\', not both.')
   }
 
   if $mta {
