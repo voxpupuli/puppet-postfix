@@ -1,3 +1,4 @@
 ---
 
 postfix::params::mailx_package: 's-nail'
+postfix::ldap_packages: ['postfix-ldap']

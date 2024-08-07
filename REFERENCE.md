@@ -100,6 +100,7 @@ The following parameters are available in the `postfix` class:
 * [`ldap_base`](#-postfix--ldap_base)
 * [`ldap_host`](#-postfix--ldap_host)
 * [`ldap_options`](#-postfix--ldap_options)
+* [`ldap_packages`](#-postfix--ldap_packages)
 * [`lookup_table_type`](#-postfix--lookup_table_type)
 * [`mail_user`](#-postfix--mail_user)
 * [`mailman`](#-postfix--mailman)
@@ -256,6 +257,14 @@ A free form string that can define any LDAP options to be passed through (ldap_t
 Example: `start_tls = yes`.
 
 Default value: `undef`
+
+##### <a name="-postfix--ldap_packages"></a>`ldap_packages`
+
+Data type: `Array[String[1]]`
+
+An array of package names to install for LDAP support if $ldap is true.
+
+Default value: `[]`
 
 ##### <a name="-postfix--lookup_table_type"></a>`lookup_table_type`
 

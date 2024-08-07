@@ -1,4 +1,5 @@
 ---
 postfix::params::mailx_package: 'bsd-mailx'
 postfix::params::master_os_template: 'postfix/master.cf.debian.erb'
+postfix::ldap_packages: ['postfix-ldap']
 ...

@@ -8,10 +8,9 @@ class postfix::ldap {
   assert_type(String, $postfix::ldap_host)
   assert_type(String, $postfix::ldap_options)
 
-  if $facts['os']['family'] == 'Debian' {
-    package { 'postfix-ldap':
-      before  => File["${postfix::confdir}/ldap-aliases.cf"],
-    }
+  package { $postfix::ldap_packages:
+    ensure => installed,
+    before => File["${postfix::confdir}/ldap-aliases.cf"],
   }
 
   if ! $postfix::ldap_base {

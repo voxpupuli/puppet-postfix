@@ -86,6 +86,9 @@
 #   A free form string that can define any LDAP options to be passed through (ldap_table(5)).
 #   Example: `start_tls = yes`.
 #
+# @param ldap_packages
+#   An array of package names to install for LDAP support if $ldap is true.
+#
 # @param lookup_table_type
 #   Table format type as described in http://www.postfix.org/DATABASE_README.html#types.
 #   Type has to be supported by system, see "postconf -m" for supported types.
@@ -262,6 +265,7 @@ class postfix (
   Optional[String]                     $ldap_base             = undef,
   Optional[String]                     $ldap_host             = undef,
   Optional[String]                     $ldap_options          = undef,
+  Array[String[1]]                     $ldap_packages         = [],
   String                               $lookup_table_type     = 'hash',
   String                               $mail_user             = 'vmail',       # postfix_mail_user
   Boolean                              $mailman               = false,
