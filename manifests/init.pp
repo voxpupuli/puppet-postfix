@@ -272,7 +272,7 @@ class postfix (
   Optional[String]                     $ldap_options          = undef,
   Array[String[1]]                     $ldap_packages         = [],
   String                               $lookup_table_type     = 'hash',
-  Hash                                 $mailaliases           = {},  
+  Hash                                 $mailaliases           = {},
   String                               $mail_user             = 'vmail',       # postfix_mail_user
   Boolean                              $mailman               = false,
   String                               $mailx_ensure          = 'present',
