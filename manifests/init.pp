@@ -338,7 +338,7 @@ class postfix (
       * => $value,
     }
   }
-  
+
   $mailaliases.each |$key, $value| {
     postfix::mailalias { $key:
       * => $value,
