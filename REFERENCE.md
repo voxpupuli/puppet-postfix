@@ -102,6 +102,7 @@ The following parameters are available in the `postfix` class:
 * [`ldap_options`](#-postfix--ldap_options)
 * [`ldap_packages`](#-postfix--ldap_packages)
 * [`lookup_table_type`](#-postfix--lookup_table_type)
+* [`mailaliases`](#-postfix--mailaliases)
 * [`mail_user`](#-postfix--mail_user)
 * [`mailman`](#-postfix--mailman)
 * [`mailx_ensure`](#-postfix--mailx_ensure)
@@ -274,6 +275,16 @@ Table format type as described in http://www.postfix.org/DATABASE_README.html#ty
 Type has to be supported by system, see "postconf -m" for supported types.
 
 Default value: `'hash'`
+
+##### <a name="-postfix--mailaliases"></a>`mailaliases`
+
+Data type: `Hash`
+
+A hash of postfix::mailalias resources. The hash containing optional configuration values for main.cf.
+The values are configured using postfix::mailalias.
+Example: `{'nobody': {'ensure': 'present', 'recipient': 'root'}}`
+
+Default value: `{}`
 
 ##### <a name="-postfix--mail_user"></a>`mail_user`
 

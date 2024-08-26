@@ -93,6 +93,11 @@
 #   Table format type as described in http://www.postfix.org/DATABASE_README.html#types.
 #   Type has to be supported by system, see "postconf -m" for supported types.
 #
+# @param mailaliases
+#   A hash of postfix::mailalias resources. The hash containing optional configuration values for main.cf.
+#   The values are configured using postfix::mailalias.
+#   Example: `{'nobody': {'ensure': 'present', 'recipient': 'root'}}`
+#
 # @param mail_user
 #   A string defining the mail user, and optionally group, to execute external commands as.
 #   This parameter maps to the user parameter (pipe(8)).
@@ -267,6 +272,7 @@ class postfix (
   Optional[String]                     $ldap_options          = undef,
   Array[String[1]]                     $ldap_packages         = [],
   String                               $lookup_table_type     = 'hash',
+  Hash                                 $mailaliases           = {},
   String                               $mail_user             = 'vmail',       # postfix_mail_user
   Boolean                              $mailman               = false,
   String                               $mailx_ensure          = 'present',
@@ -329,6 +335,12 @@ class postfix (
 
   $configs.each |$key, $value| {
     postfix::config { $key:
+      * => $value,
+    }
+  }
+
+  $mailaliases.each |$key, $value| {
+    postfix::mailalias { $key:
       * => $value,
     }
   }
