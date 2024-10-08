@@ -317,18 +317,6 @@ describe 'postfix' do
         end
       end
 
-      context 'when specifying a custom mastercf_template' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-        let(:params) do
-          {
-            mastercf_template: 'testy',
-          }
-        end
-
-        it 'does stuff' do
-          skip 'need to write this still'
-        end
-      end
-
       context 'when specifying a custom mastercf_source and mastercf_content' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {
