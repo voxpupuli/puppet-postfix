@@ -79,13 +79,6 @@
       "operatingsystem": "Alpine"
     },
     {
-      "operatingsystem": "Fedora",
-      "operatingsystemrelease": [
-        "33",
-        "34"
-      ]
-    },
-    {
       "operatingsystem": "FreeBSD",
       "operatingsystemrelease": [
         "13",
