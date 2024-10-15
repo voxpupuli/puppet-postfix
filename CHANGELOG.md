@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.5.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.5.0) (2024-10-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.4.0...v4.5.0)
+
+**Breaking changes:**
+
+- drop support for SLES 11 & 12 -- EOL [\#412](https://github.com/voxpupuli/puppet-postfix/pull/412) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for ubuntu 18.04 -- EOL [\#410](https://github.com/voxpupuli/puppet-postfix/pull/410) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for centos 8 -- EOL [\#409](https://github.com/voxpupuli/puppet-postfix/pull/409) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for debian 10 -- EOL [\#408](https://github.com/voxpupuli/puppet-postfix/pull/408) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for EL7 -- EOL [\#407](https://github.com/voxpupuli/puppet-postfix/pull/407) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for fedora 33 & 34 -- EOL [\#406](https://github.com/voxpupuli/puppet-postfix/pull/406) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for freebsd 12 -- EOL [\#405](https://github.com/voxpupuli/puppet-postfix/pull/405) ([jhoblitt](https://github.com/jhoblitt))
+
+**Implemented enhancements:**
+
+- bump puppet-alternatives version constraint [\#404](https://github.com/voxpupuli/puppet-postfix/pull/404) ([badenerb](https://github.com/badenerb))
+- Allow `mailaliases` to be managed via hiera [\#400](https://github.com/voxpupuli/puppet-postfix/pull/400) ([peelman](https://github.com/peelman))
+- Add support for FreeBSD 14 [\#390](https://github.com/voxpupuli/puppet-postfix/pull/390) ([smortex](https://github.com/smortex))
+- Add Debian 12 support [\#374](https://github.com/voxpupuli/puppet-postfix/pull/374) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Extend canonical augeas lens regex [\#382](https://github.com/voxpupuli/puppet-postfix/pull/382) ([giacomd](https://github.com/giacomd))
+
+**Closed issues:**
+
+- missing postfix-ldap rpm on RHEL8+ distro [\#397](https://github.com/voxpupuli/puppet-postfix/issues/397)
+- maillog configuration? [\#386](https://github.com/voxpupuli/puppet-postfix/issues/386)
+- support smtpd\_forbid\_bare\_newline to mitigate smtp smuggling [\#383](https://github.com/voxpupuli/puppet-postfix/issues/383)
+- canonical map doesn't accept underscores in destination address [\#345](https://github.com/voxpupuli/puppet-postfix/issues/345)
+
+**Merged pull requests:**
+
+- postfix-ldap required for ldap lookup type on RHEL8+ [\#398](https://github.com/voxpupuli/puppet-postfix/pull/398) ([edrude](https://github.com/edrude))
+- Remove legacy top-scope syntax [\#378](https://github.com/voxpupuli/puppet-postfix/pull/378) ([smortex](https://github.com/smortex))
+
 ## [v4.4.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.4.0) (2023-11-21)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.3.0...v4.4.0)
