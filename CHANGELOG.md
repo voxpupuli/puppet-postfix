@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v4.5.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.5.0) (2024-10-11)
+## [v5.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v5.0.0) (2024-10-15)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.5.0...v5.0.0)
+
+The `5.0.0` release is identical to #413 other than the version string.  The `4.5.0` release contains breaking changes and that should have been released as `5.0.0`.
+
+## [v4.5.0](https://github.com/voxpupuli/puppet-postfix/tree/v4.5.0) (2024-10-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.4.0...v4.5.0)
 
