@@ -44,6 +44,7 @@ trace     unix  -       -       <%= @jail %>       -       0       bounce
 verify    unix  -       -       <%= @jail %>       -       1       verify
 flush     unix  n       -       <%= @jail %>       1000?   0       flush
 proxymap  unix  -       -       n       -       -       proxymap
+proxywrite unix -       -       n       -       1       proxymap
 smtp      unix  -       -       <%= @jail %>       -       -       smtp
 # When relaying mail as backup MX, disable fallback_relay to avoid MX loops
 relay     unix  -       -       <%= @jail %>       -       -       smtp
@@ -57,7 +58,8 @@ local     unix  -       n       n       -       -       local
 virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       <%= @jail %>       -       -       lmtp
 anvil     unix  -       -       <%= @jail %>       -       1       anvil
-scache	  unix	-	-	<%= @jail %>	-	1	scache
+scache	  unix	-       -       <%= @jail %>       -	     1	     scache
+postlog   unix-dgram n  -       <%= @jail %>       -       1       postlogd
 #
 # ====================================================================
 # Interfaces to non-Postfix software. Be sure to examine the manual
