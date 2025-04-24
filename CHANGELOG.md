@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.1.0](https://github.com/voxpupuli/puppet-postfix/tree/v5.1.0) (2025-04-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v5.0.0...v5.1.0)
+
+**Implemented enhancements:**
+
+- metadata.json: Add OpenVox [\#421](https://github.com/voxpupuli/puppet-postfix/pull/421) ([jstraw](https://github.com/jstraw))
+- Add support for Ubuntu 24.04 [\#395](https://github.com/voxpupuli/puppet-postfix/pull/395) ([sebbASF](https://github.com/sebbASF))
+
+**Closed issues:**
+
+- Can we have postlog enabled in redhat? [\#416](https://github.com/voxpupuli/puppet-postfix/issues/416)
+
+**Merged pull requests:**
+
+- update default RedHat master.cf [\#417](https://github.com/voxpupuli/puppet-postfix/pull/417) ([vchepkov](https://github.com/vchepkov))
+
 ## [v5.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v5.0.0) (2024-10-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v4.5.0...v5.0.0)
