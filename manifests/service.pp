@@ -29,9 +29,9 @@ class postfix::service {
       require     => Service['postfix'],
     }
   }
-  if $facts['os']['family'] == 'RedHat' {
+  if $postfix::mta_bin_path {
     alternatives { 'mta':
-      path    => '/usr/sbin/sendmail.postfix',
+      path    => $postfix::mta_bin_path,
       require => Service['postfix'],
     }
   }
