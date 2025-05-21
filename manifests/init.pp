@@ -191,6 +191,10 @@
 #   subjected to address masquerading, even when their addresses match $masquerade_domains.
 #   Example: `['root']`
 #
+# @param mta_bin_path
+#   An optional path for mta 'alternative'.
+#   Example: `'/usr/sbin/sendmail.postfix'`
+#
 # @param mta
 #   A Boolean to define whether to configure Postfix as a mail transfer agent.
 #   This option is mutually exclusive with the satellite Boolean.
@@ -295,6 +299,7 @@ class postfix (
   Optional[Array[String[1]]]           $masquerade_classes    = undef,
   Optional[Array[String[1]]]           $masquerade_domains    = undef,
   Optional[Array[String[1]]]           $masquerade_exceptions = undef,
+  Optional[Stdlib::Absolutepath]       $mta_bin_path          = undef,
   Boolean                              $mta                   = false,
   String                               $mydestination         = '$myhostname, localhost.$mydomain, localhost',  # postfix_mydestination
   String                               $mynetworks            = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks

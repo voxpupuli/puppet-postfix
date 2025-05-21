@@ -125,6 +125,7 @@ The following parameters are available in the `postfix` class:
 * [`masquerade_classes`](#-postfix--masquerade_classes)
 * [`masquerade_domains`](#-postfix--masquerade_domains)
 * [`masquerade_exceptions`](#-postfix--masquerade_exceptions)
+* [`mta_bin_path`](#-postfix--mta_bin_path)
 * [`mta`](#-postfix--mta)
 * [`mydestination`](#-postfix--mydestination)
 * [`mynetworks`](#-postfix--mynetworks)
@@ -485,6 +486,15 @@ Data type: `Optional[Array[String[1]]]`
 An array defining the masquerade_exceptions to use. This optional list of user names that are not
 subjected to address masquerading, even when their addresses match $masquerade_domains.
 Example: `['root']`
+
+Default value: `undef`
+
+##### <a name="-postfix--mta_bin_path"></a>`mta_bin_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+An optional path for mta 'alternative'.
+Example: `'/usr/sbin/sendmail.postfix'`
 
 Default value: `undef`
 
