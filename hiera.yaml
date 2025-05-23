@@ -13,6 +13,7 @@ hierarchy:
       - "osfamily/%{facts.os.family}/%{facts.os.distro.codename}.yaml"
       - "osfamily/%{facts.os.family}/%{facts.os.release.major}.yaml"
       - "osfamily/%{facts.os.family}.yaml"
+      - "osfamily/common.yaml"
 
   - name: "Common data"
     path: "common.yaml"
