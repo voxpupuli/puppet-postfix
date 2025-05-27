@@ -3,12 +3,12 @@
 # @api private
 #
 class postfix::satellite (
-  $mydestination = undef,
-  $mynetworks    = undef,
-  $relayhost     = undef,
-  $masquerade_classes    = undef,
-  $masquerade_domains    = undef,
-  $masquerade_exceptions = undef,
+  Optional[String]           $mydestination         = undef,
+  Optional[String]           $mynetworks            = undef,
+  Optional[String]           $relayhost             = undef,
+  Optional[Array[String[1]]] $masquerade_classes    = undef,
+  Optional[Array[String[1]]] $masquerade_domains    = undef,
+  Optional[Array[String[1]]] $masquerade_exceptions = undef,
 ) {
   assert_private()
   include postfix
