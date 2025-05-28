@@ -1,3 +1,2 @@
 ---
-postfix::params::mailx_package: 'mailx'
-...
+postfix::mailx_package: mailx

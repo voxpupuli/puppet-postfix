@@ -136,6 +136,9 @@
 # @param manage_mailx
 #   A Boolean defining whether the puppet module should manage the mailx package. See also $mailx_ensure.
 #
+# @param mailx_package
+#   Name of package that provides mailx
+#
 # @param manage_root_alias
 #   Wheter to manage the mailalias for root user
 #
@@ -147,6 +150,9 @@
 #
 # @param master_defer_command
 #   The defer command which should be used in master.cf
+#
+# @param master_os_template
+#   Path to the master template
 #
 # @param master_entries
 #   Array of strings containing additional entries for the /etc/postfix/master.cf file.
@@ -235,6 +241,9 @@
 # @param service_ensure
 #   Defines the service state of 'postfix' service
 #
+# @param restart_cmd
+#   Command to use when restarting postfix
+#
 # @param smtp_listen
 #   A string or an array of strings to define the IPs on which to listen in master.cf.
 #   This can also be set to 'all' to listen on all interfaces. If master_smtp is defined
@@ -260,39 +269,66 @@
 # @param virtuals
 #   A hash of postfix::virtual resources
 #
+# @param aliasesseltype
+#   Selinux type for /etc/aliases
+#
+# @param seltype
+#   Selinux type for /etc/postfix/* config files
+#
 class postfix (
-  String                               $alias_maps            = 'hash:/etc/aliases',
-  Integer                              $amavis_procs          = 2,
+  String                               $alias_maps,
+  Integer                              $amavis_procs,
+  Stdlib::Absolutepath                 $confdir,
+  Hash                                 $conffiles,
+  Hash                                 $configs,
+  Hash                                 $hashes,
+  String                               $inet_interfaces,
+  String                               $inet_protocols,
+  Boolean                              $ldap,
+  Array[String[1]]                     $ldap_packages,
+  String                               $lookup_table_type,
+  Hash                                 $mailaliases,
+  String                               $mail_user,             # postfix_mail_user
+  Boolean                              $mailman,
+  String                               $mailx_ensure,
+  String                               $mailx_package,
+  String                               $maincf_source,
+  Boolean                              $manage_aliases,        # /etc/aliases
+  Boolean                              $manage_conffiles,
+  Boolean                              $manage_mailname,
+  Boolean                              $manage_mailx,
+  Boolean                              $manage_root_alias,
+  Hash                                 $maps,
+  String                               $master_bounce_command,
+  String                               $master_defer_command,
+  String                               $master_os_template,
+  Array[String]                        $master_entries,        # postfix_master_entries
+  Boolean                              $mta,
+  String                               $mydestination,         # postfix_mydestination
+  String                               $mynetworks,            # postfix_mynetworks
+  String                               $myorigin,
+  String                               $postfix_ensure,
+  String                               $root_group,
+  Variant[Array[String], String]       $root_mail_recipient,   # root_mail_recipient
+  Boolean                              $satellite,
+  Boolean                              $service_enabled,
+  String                               $service_ensure,
+  String                               $restart_cmd,
+  Variant[Array[String[1]], String[1]] $smtp_listen,           # postfix_smtp_listen
+  Hash                                 $transports,
+  Boolean                              $use_amavisd,           # postfix_use_amavisd
+  Boolean                              $use_dovecot_lda,       # postfix_use_dovecot_lda
+  Variant[Integer[2, 3], Boolean]      $use_schleuder,         # postfix_use_schleuder
+  Boolean                              $use_sympa,             # postfix_use_sympa
+  Hash                                 $virtuals,
+
   Optional[Boolean]                    $chroot                = undef,
-  Stdlib::Absolutepath                 $confdir               = '/etc/postfix',
-  Hash                                 $conffiles             = {},
-  Hash                                 $configs               = {},
-  Hash                                 $hashes                = {},
-  String                               $inet_interfaces       = 'all',
-  String                               $inet_protocols        = 'all',
-  Boolean                              $ldap                  = false,
   Optional[String]                     $ldap_base             = undef,
   Optional[String]                     $ldap_host             = undef,
   Optional[String]                     $ldap_options          = undef,
-  Array[String[1]]                     $ldap_packages         = [],
-  String                               $lookup_table_type     = 'hash',
-  Hash                                 $mailaliases           = {},
-  String                               $mail_user             = 'vmail',       # postfix_mail_user
-  Boolean                              $mailman               = false,
-  String                               $mailx_ensure          = 'present',
-  String                               $maincf_source         = "puppet:///modules/${module_name}/main.cf",
-  Boolean                              $manage_aliases        = true,          # /etc/aliases
-  Boolean                              $manage_conffiles      = true,
-  Boolean                              $manage_mailname       = true,
-  Boolean                              $manage_mailx          = true,
-  Boolean                              $manage_root_alias     = true,
-  Hash                                 $maps                  = {},
-  String                               $master_bounce_command = 'bounce',
-  String                               $master_defer_command  = 'bounce',
-  Array[String]                        $master_entries        = [],            # postfix_master_entries
-  Optional[String]                     $master_smtp           = undef,         # postfix_master_smtp
-  Optional[String]                     $master_smtps          = undef,         # postfix_master_smtps
-  Optional[String]                     $master_submission     = undef,         # postfix_master_submission
+  Optional[String]                     $master_smtp           = undef, # postfix_master_smtp
+  Optional[String]                     $master_smtps          = undef, # postfix_master_smtps
+  Optional[String]                     $master_submission     = undef, # postfix_master_submission
   Optional[String]                     $mastercf_content      = undef,
   Optional[String]                     $mastercf_source       = undef,
   Optional[String]                     $mastercf_template     = undef,
@@ -300,25 +336,10 @@ class postfix (
   Optional[Array[String[1]]]           $masquerade_domains    = undef,
   Optional[Array[String[1]]]           $masquerade_exceptions = undef,
   Optional[Stdlib::Absolutepath]       $mta_bin_path          = undef,
-  Boolean                              $mta                   = false,
-  String                               $mydestination         = '$myhostname, localhost.$mydomain, localhost',  # postfix_mydestination
-  String                               $mynetworks            = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
-  String                               $myorigin              = $facts['networking']['fqdn'],
-  String                               $postfix_ensure        = 'present',
-  Optional[String]                     $relayhost             = undef,         # postfix_relayhost
-  String                               $root_group            = 'root',
-  Variant[Array[String], String]       $root_mail_recipient   = 'nobody',      # root_mail_recipient
-  Boolean                              $satellite             = false,
-  Boolean                              $service_enabled       =  true,
-  String                               $service_ensure        = 'running',
-  Variant[Array[String[1]], String[1]] $smtp_listen           = '127.0.0.1',   # postfix_smtp_listen
-  Hash                                 $transports            = {},
-  Boolean                              $use_amavisd           = false,         # postfix_use_amavisd
-  Boolean                              $use_dovecot_lda       = false,         # postfix_use_dovecot_lda
-  Variant[Integer[2, 3], Boolean]      $use_schleuder         = false,         # postfix_use_schleuder
-  Boolean                              $use_sympa             = false,         # postfix_use_sympa
-  Hash                                 $virtuals              = {},
-) inherits postfix::params {
+  Optional[String]                     $relayhost             = undef, # postfix_relayhost
+  Optional[String]                     $aliasesseltype        = undef,
+  Optional[String]                     $seltype               = undef,
+) {
   if (
     ($mastercf_source and $mastercf_content) or
     ($mastercf_source and $mastercf_template) or
