@@ -1,8 +1,8 @@
 ---
 fixtures:
   repositories:
-    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
-    concat: https://github.com/voxpupuli/puppet-alternatives.git
     augeas: https://github.com/camptocamp/puppet-augeas.git
-    mailalias_core: https://github.com/puppetlabs/puppetlabs-mailalias_core.git
     augeas_core: https://github.com/puppetlabs/puppetlabs-augeas_core.git
+    concat: https://github.com/voxpupuli/puppet-alternatives.git
+    mailalias_core: https://github.com/puppetlabs/puppetlabs-mailalias_core.git
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
