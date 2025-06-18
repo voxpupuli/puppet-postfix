@@ -8,7 +8,7 @@ class postfix::service {
   $manage_aliases = $postfix::manage_aliases
 
   exec { 'restart postfix after packages install':
-    command     => regsubst($postfix::params::restart_cmd, 'reload', 'restart'),
+    command     => regsubst($postfix::restart_cmd, 'reload', 'restart'),
     refreshonly => true,
     subscribe   => Package['postfix'],
     require     => Class['postfix::files'],
@@ -17,7 +17,7 @@ class postfix::service {
     ensure    => $postfix::service_ensure,
     enable    => $postfix::service_enabled,
     hasstatus => true,
-    restart   => $postfix::params::restart_cmd,
+    restart   => $postfix::restart_cmd,
   }
   # Aliases
   if $manage_aliases {

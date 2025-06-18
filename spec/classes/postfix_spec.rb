@@ -52,7 +52,6 @@ describe 'postfix' do
         it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
         it { is_expected.to contain_class('postfix::files') }
         it { is_expected.to contain_class('postfix::packages') }
-        it { is_expected.to contain_class('postfix::params') }
         it { is_expected.to contain_class('postfix::service') }
         it { is_expected.to contain_exec('restart postfix after packages install') }
         it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
