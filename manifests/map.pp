@@ -43,7 +43,6 @@ define postfix::map (
   Stdlib::Filemode                             $mode    = '0640',
 ) {
   include postfix
-  include postfix::params
 
   $_path = pick($path, "${postfix::confdir}/${name}")
 

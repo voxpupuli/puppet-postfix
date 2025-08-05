@@ -1,7 +1,46 @@
 ---
-postfix::params::aliasesseltype: ~
-postfix::params::seltype: ~
-postfix::params::mailx_package: 'mailx'
-postfix::params::master_os_template: "postfix/master.cf.default.erb"
-postfix::params::restart_cmd: '/etc/init.d/postfix reload'
-...
+postfix::alias_maps: hash:/etc/aliases
+postfix::amavis_procs: 2
+postfix::confdir: "/etc/postfix"
+postfix::conffiles: {}
+postfix::configs: {}
+postfix::hashes: {}
+postfix::inet_interfaces: all
+postfix::inet_protocols: all
+postfix::ldap: false
+postfix::ldap_packages: []
+postfix::lookup_table_type: hash
+postfix::mail_user: vmail
+postfix::mailaliases: {}
+postfix::mailman: false
+postfix::mailx_ensure: present
+postfix::mailx_package: mailx
+postfix::maincf_source: puppet:///modules/postfix/main.cf
+postfix::manage_aliases: true
+postfix::manage_conffiles: true
+postfix::manage_mailname: true
+postfix::manage_mailx: true
+postfix::manage_root_alias: true
+postfix::maps: {}
+postfix::master_bounce_command: bounce
+postfix::master_defer_command: bounce
+postfix::master_entries: []
+postfix::master_os_template: postfix/master.cf.default.erb
+postfix::mta: false
+postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
+postfix::mynetworks: 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+postfix::myorigin: "%{facts.networking.fqdn}"
+postfix::postfix_ensure: present
+postfix::restart_cmd: "/etc/init.d/postfix reload"
+postfix::root_group: root
+postfix::root_mail_recipient: nobody
+postfix::satellite: false
+postfix::service_enabled: true
+postfix::service_ensure: running
+postfix::smtp_listen: 127.0.0.1
+postfix::transports: {}
+postfix::use_amavisd: false
+postfix::use_dovecot_lda: false
+postfix::use_schleuder: false
+postfix::use_sympa: false
+postfix::virtuals: {}
