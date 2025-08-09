@@ -32,7 +32,7 @@
 #
 # @param lookup_table_suffix
 #   Depends on the lookup table type, which is used on the postfix::hash and postfix::config resources.
-#   Defaults to 'db', the suffix of the "hash" type.
+#   Default is based on the suffix type correct for `postfix::lookup_table_type` parameter.
 #
 # @see https://www.postfix.org/canonical.5.html
 #
@@ -40,9 +40,14 @@ define postfix::canonical (
   String                   $destination,
   Enum['present','absent'] $ensure              = 'present',
   Stdlib::Absolutepath     $file                = undef,
-  String[1]                $lookup_table_suffix = 'db',
+  Optional[String[1]]      $lookup_table_suffix = undef,
 ) {
   include postfix
+
+  $_lookup_table_suffix = $lookup_table_suffix ? {
+    Undef   => postfix::table_type_extension($postfix::lookup_table_type),
+    default => $lookup_table_suffix,
+  }
 
   $_file = pick($file, "${postfix::confdir}/canonical")
 
@@ -68,6 +73,6 @@ define postfix::canonical (
     lens    => 'postfix_canonical.lns',
     changes => $changes,
     require => Package['postfix'],
-    notify  => Exec["generate ${_file}.${lookup_table_suffix}"],
+    notify  => Exec["generate ${_file}.${_lookup_table_suffix}"],
   }
 }
