@@ -69,8 +69,15 @@ describe 'postfix::hash' do
         }
 
         it { is_expected.to contain_postfix__map('/tmp/foo').with_ensure('present') }
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_file('postfix map /tmp/foo.lmdb').with_ensure('present') }
+          it { is_expected.to contain_exec('generate /tmp/foo.lmdb') }
+        else
+          it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
+          it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        end
       end
 
       context 'when passing content' do
@@ -87,8 +94,14 @@ describe 'postfix::hash' do
           ).without(:source)
         }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_file('postfix map /tmp/foo.lmdb').with_ensure('present') }
+          it { is_expected.to contain_exec('generate /tmp/foo.lmdb') }
+        else
+          it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
+          it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        end
       end
 
       context 'when not passing source or content' do
@@ -98,8 +111,14 @@ describe 'postfix::hash' do
           ).without(:source).without(:content)
         }
 
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_file('postfix map /tmp/foo.lmdb').with_ensure('present') }
+          it { is_expected.to contain_exec('generate /tmp/foo.lmdb') }
+        else
+          it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('present') }
+          it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        end
       end
 
       context 'when ensuring absence' do
@@ -111,8 +130,15 @@ describe 'postfix::hash' do
 
         it { is_expected.to contain_postfix__map('/tmp/foo').with_ensure('absent') }
         it { is_expected.to contain_file('postfix map /tmp/foo').with_ensure('absent') }
-        it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('absent') }
-        it { is_expected.to contain_exec('generate /tmp/foo.db') }
+
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_file('postfix map /tmp/foo.lmdb').with_ensure('absent') }
+          it { is_expected.to contain_exec('generate /tmp/foo.lmdb') }
+        else
+          it { is_expected.to contain_file('postfix map /tmp/foo.db').with_ensure('absent') }
+          it { is_expected.to contain_exec('generate /tmp/foo.db') }
+        end
       end
     end
   end

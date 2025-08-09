@@ -32,6 +32,10 @@
 * [`postfix::transport`](#postfix--transport): Manage the transport map of postfix
 * [`postfix::virtual`](#postfix--virtual): Manages the contents of the virtual map.
 
+### Functions
+
+* [`postfix::table_type_extension`](#postfix--table_type_extension): Returns the file extension for a table type
+
 ## Classes
 
 ### <a name="postfix"></a>`postfix`
@@ -719,12 +723,12 @@ Default value: `undef`
 
 ##### <a name="-postfix--canonical--lookup_table_suffix"></a>`lookup_table_suffix`
 
-Data type: `String[1]`
+Data type: `Optional[String[1]]`
 
 Depends on the lookup table type, which is used on the postfix::hash and postfix::config resources.
-Defaults to 'db', the suffix of the "hash" type.
+Default is based on the suffix type correct for `postfix::lookup_table_type` parameter.
 
-Default value: `'db'`
+Default value: `undef`
 
 ### <a name="postfix--conffile"></a>`postfix::conffile`
 
@@ -1268,4 +1272,24 @@ If not defined "${postfix::confdir}/virtual" will be used as path.
 Example: `/etc/postfix/my_virtual_map`.
 
 Default value: `undef`
+
+## Functions
+
+### <a name="postfix--table_type_extension"></a>`postfix::table_type_extension`
+
+Type: Puppet Language
+
+Returns the file extension for a table type
+
+#### `postfix::table_type_extension(String[1] $type = 'hash')`
+
+The postfix::table_type_extension function.
+
+Returns: `Enum['cdb','dir','lmdb','db']` The file extension of the table type
+
+##### `type`
+
+Data type: `String[1]`
+
+The table type to report on
 

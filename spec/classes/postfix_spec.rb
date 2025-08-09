@@ -45,7 +45,13 @@ describe 'postfix' do
         it { is_expected.to contain_package('postfix') }
         it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
         it { is_expected.to contain_postfix__config('myorigin').with_value('foo.example.com') }
-        it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_postfix__config('alias_maps').with_value('lmdb:/etc/aliases') }
+        else
+          it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+        end
         it { is_expected.to contain_postfix__config('inet_interfaces').with_value('all') }
         it { is_expected.to contain_postfix__config('inet_protocols').with_value('all') }
         it { is_expected.to contain_postfix__mailalias('root').with_recipient('nobody') }
@@ -55,7 +61,13 @@ describe 'postfix' do
         it { is_expected.to contain_class('postfix::params') }
         it { is_expected.to contain_class('postfix::service') }
         it { is_expected.to contain_exec('restart postfix after packages install') }
-        it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
+
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'lmdb:/etc/aliases'") }
+        else
+          it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
+        end
         it { is_expected.to contain_augeas("manage postfix 'myorigin'").with_changes("set myorigin 'foo.example.com'") }
         it { is_expected.to contain_augeas("manage postfix 'inet_interfaces'").with_changes("set inet_interfaces 'all'") }
         it { is_expected.to contain_augeas("manage postfix 'inet_protocols'").with_changes("set inet_protocols 'all'") }
@@ -167,8 +179,19 @@ describe 'postfix' do
         it { is_expected.to contain_package('postfix') }
         it { is_expected.to contain_exec('newaliases').with_refreshonly('true') }
         it { is_expected.to contain_postfix__config('myorigin').with_value('localhost') }
-        it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
-        it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
+
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_postfix__config('alias_maps').with_value('lmdb:/etc/aliases') }
+        else
+          it { is_expected.to contain_postfix__config('alias_maps').with_value('hash:/etc/aliases') }
+        end
+        case [facts[:os]['family'], facts[:os]['release']['major']]
+        when %w[RedHat 10]
+          it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'lmdb:/etc/aliases'") }
+        else
+          it { is_expected.to contain_augeas("manage postfix 'alias_maps'").with_changes("set alias_maps 'hash:/etc/aliases'") }
+        end
         it { is_expected.to contain_postfix__config('inet_interfaces').with_value('localhost2') }
 
         case facts[:os]['family']
@@ -274,10 +297,20 @@ describe 'postfix' do
         it 'compile and has required configuration' do
           is_expected.to compile.with_all_deps
           is_expected.to contain_class('postfix::mailman')
-          is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
-          is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
-          is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
-          is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+          case [facts[:os]['family'], facts[:os]['release']['major']]
+          when %w[RedHat 10]
+            is_expected.to contain_postfix__config('virtual_alias_maps').with_value("lmdb:#{postfix_virtual_path}")
+            is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'lmdb:#{postfix_virtual_path}'")
+            is_expected.to contain_postfix__config('transport_maps').with_value("lmdb:#{postfix_transport_path}")
+            is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'lmdb:#{postfix_transport_path}'")
+
+          else
+            is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+            is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
+            is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
+            is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+
+          end
           is_expected.to contain_postfix__config('mailman_destination_recipient_limit').with_value('1')
           is_expected.to contain_augeas("manage postfix 'mailman_destination_recipient_limit'").with_changes("set mailman_destination_recipient_limit '1'")
           is_expected.to contain_postfix__hash(postfix_transport_path).with_ensure('present')
@@ -285,11 +318,19 @@ describe 'postfix' do
           is_expected.to contain_postfix__map(postfix_transport_path).with_ensure('present')
           is_expected.to contain_postfix__map(postfix_virtual_path).with_ensure('present')
           is_expected.to contain_file("postfix map #{postfix_transport_path}").with_ensure('present')
-          is_expected.to contain_file("postfix map #{postfix_transport_path}.db").with_ensure('present')
+          case [facts[:os]['family'], facts[:os]['release']['major']]
+          when %w[RedHat 10]
+            is_expected.to contain_file("postfix map #{postfix_transport_path}.lmdb").with_ensure('present')
+            is_expected.to contain_file("postfix map #{postfix_virtual_path}.lmdb").with_ensure('present')
+            is_expected.to contain_exec("generate #{postfix_transport_path}.lmdb")
+            is_expected.to contain_exec("generate #{postfix_virtual_path}.lmdb")
+          else
+            is_expected.to contain_file("postfix map #{postfix_transport_path}.db").with_ensure('present')
+            is_expected.to contain_file("postfix map #{postfix_virtual_path}.db").with_ensure('present')
+            is_expected.to contain_exec("generate #{postfix_transport_path}.db")
+            is_expected.to contain_exec("generate #{postfix_virtual_path}.db")
+          end
           is_expected.to contain_file("postfix map #{postfix_virtual_path}").with_ensure('present')
-          is_expected.to contain_file("postfix map #{postfix_virtual_path}.db").with_ensure('present')
-          is_expected.to contain_exec("generate #{postfix_transport_path}.db")
-          is_expected.to contain_exec("generate #{postfix_virtual_path}.db")
         end
       end
 
@@ -406,10 +447,19 @@ describe 'postfix' do
           is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
           is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
           is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
-          is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
-          is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
-          is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
-          is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+          case [facts[:os]['family'], facts[:os]['release']['major']]
+          when %w[RedHat 10]
+            is_expected.to contain_postfix__config('virtual_alias_maps').with_value("lmdb:#{postfix_virtual_path}")
+            is_expected.to contain_postfix__config('transport_maps').with_value("lmdb:#{postfix_transport_path}")
+            is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'lmdb:#{postfix_virtual_path}'")
+            is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'lmdb:#{postfix_transport_path}'")
+
+          else
+            is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+            is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
+            is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
+            is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+          end
         end
 
         it 'compiles with all resources' do
@@ -533,10 +583,19 @@ describe 'postfix' do
           is_expected.to contain_postfix__config('mydestination').with_value('1.2.3.4')
           is_expected.to contain_postfix__config('mynetworks').with_value('127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128')
           is_expected.to contain_postfix__config('relayhost').with_value('2.3.4.5')
-          is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
-          is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
-          is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
-          is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+          case [facts[:os]['family'], facts[:os]['release']['major']]
+          when %w[RedHat 10]
+            is_expected.to contain_postfix__config('virtual_alias_maps').with_value("lmdb:#{postfix_virtual_path}")
+            is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'lmdb:#{postfix_virtual_path}'")
+            is_expected.to contain_postfix__config('transport_maps').with_value("lmdb:#{postfix_transport_path}")
+            is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'lmdb:#{postfix_transport_path}'")
+
+          else
+            is_expected.to contain_postfix__config('virtual_alias_maps').with_value("hash:#{postfix_virtual_path}")
+            is_expected.to contain_augeas("manage postfix 'virtual_alias_maps'").with_changes("set virtual_alias_maps 'hash:#{postfix_virtual_path}'")
+            is_expected.to contain_postfix__config('transport_maps').with_value("hash:#{postfix_transport_path}")
+            is_expected.to contain_augeas("manage postfix 'transport_maps'").with_changes("set transport_maps 'hash:#{postfix_transport_path}'")
+          end
         end
 
         context 'and mta is also enabled' do # rubocop:disable RSpec/MultipleMemoizedHelpers

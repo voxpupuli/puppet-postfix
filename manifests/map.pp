@@ -55,13 +55,7 @@ define postfix::map (
     fail 'You must provide either \'source\' or \'content\', not both'
   }
 
-  $_generated_suffix = $type ? {
-    'cdb'   => 'cdb',
-    'dbm'   => 'dir',
-    'lmdb'  => 'lmdb',
-    'sdbm'  => 'dir',
-    default => 'db',
-  }
+  $_generated_suffix = postfix::table_type_extension($type)
 
   # CIDR and PCRE maps need a postfix reload, but not a postmap
   if $type =~ /^(cidr|pcre|regexp)$/ {
