@@ -11,7 +11,7 @@ describe 'postfix::table_type_extension' do
     it { is_expected.to run.with_params('lmdb').and_return('lmdb') }
   end
 
-  context 'with pcrm' do
+  context 'with pcre' do
     it { is_expected.to run.with_params('pcre').and_return('db') }
   end
 end
