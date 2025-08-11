@@ -51,10 +51,14 @@ class postfix::mta (
   }
 
   postfix::hash { "${postfix::confdir}/virtual":
-    ensure => 'present',
+    ensure  => 'present',
+    content => $postfix::mta_virtual_content,
+    source  => $postfix::mta_virtual_source,
   }
 
   postfix::hash { "${postfix::confdir}/transport":
-    ensure => 'present',
+    ensure  => 'present',
+    content => $postfix::mta_transport_content,
+    source  => $postfix::mta_transport_source,
   }
 }

@@ -131,6 +131,10 @@ The following parameters are available in the `postfix` class:
 * [`masquerade_exceptions`](#-postfix--masquerade_exceptions)
 * [`mta_bin_path`](#-postfix--mta_bin_path)
 * [`mta`](#-postfix--mta)
+* [`mta_virtual_content`](#-postfix--mta_virtual_content)
+* [`mta_virtual_source`](#-postfix--mta_virtual_source)
+* [`mta_transport_content`](#-postfix--mta_transport_content)
+* [`mta_transport_source`](#-postfix--mta_transport_source)
 * [`mydestination`](#-postfix--mydestination)
 * [`mynetworks`](#-postfix--mynetworks)
 * [`myorigin`](#-postfix--myorigin)
@@ -510,6 +514,42 @@ A Boolean to define whether to configure Postfix as a mail transfer agent.
 This option is mutually exclusive with the satellite Boolean.
 
 Default value: `false`
+
+##### <a name="-postfix--mta_virtual_content"></a>`mta_virtual_content`
+
+Data type: `Optional[String]`
+
+A free form string that defines the contents of the virtual file. Only used if mta is true.
+This parameter is mutually exclusive with mta_virtual_source.
+
+Default value: `undef`
+
+##### <a name="-postfix--mta_virtual_source"></a>`mta_virtual_source`
+
+Data type: `Optional[String]`
+
+A String whose value is a location for the source file to be used for the virtual file.
+Only used if mta is true. This parameter is mutually exclusive with mta_virtual_content.
+
+Default value: `undef`
+
+##### <a name="-postfix--mta_transport_content"></a>`mta_transport_content`
+
+Data type: `Optional[String]`
+
+A free form string that defines the contents of the transport file. Only used if mta is true.
+This parameter is mutually exclusive with mta_transport_source.
+
+Default value: `undef`
+
+##### <a name="-postfix--mta_transport_source"></a>`mta_transport_source`
+
+Data type: `Optional[String]`
+
+A String whose value is a location for the source file to be used for the transport file.
+Only used if mta is true. This parameter is mutually exclusive with mta_transport_content.
+
+Default value: `undef`
 
 ##### <a name="-postfix--mydestination"></a>`mydestination`
 
