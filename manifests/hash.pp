@@ -48,7 +48,7 @@ define postfix::hash (
   Optional[Variant[Sensitive[String],String]] $content = undef,
   Stdlib::Filemode                            $mode    = '0640',
 ) {
-  include postfix::params
+  include postfix
 
   assert_type(Stdlib::Absolutepath, $name)
 

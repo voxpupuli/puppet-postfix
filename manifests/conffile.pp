@@ -92,7 +92,7 @@ define postfix::conffile (
     mode      => $mode,
     owner     => 'root',
     group     => 'postfix',
-    seltype   => $postfix::params::seltype,
+    seltype   => $postfix::seltype,
     require   => Package['postfix'],
     source    => $source,
     content   => $manage_content,

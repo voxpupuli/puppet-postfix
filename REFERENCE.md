@@ -17,7 +17,6 @@
 * `postfix::mailman`: Configure Postfix to work with mailman
 * `postfix::mta`: Configures Postfix as minimal MTA
 * `postfix::packages`: Install the required packages for postfix
-* `postfix::params`: Default parameters
 * `postfix::satellite`: Configure Postfix as satellite
 * `postfix::service`: Manage service resources for postfix
 
@@ -115,10 +114,12 @@ The following parameters are available in the `postfix` class:
 * [`manage_conffiles`](#-postfix--manage_conffiles)
 * [`manage_mailname`](#-postfix--manage_mailname)
 * [`manage_mailx`](#-postfix--manage_mailx)
+* [`mailx_package`](#-postfix--mailx_package)
 * [`manage_root_alias`](#-postfix--manage_root_alias)
 * [`maps`](#-postfix--maps)
 * [`master_bounce_command`](#-postfix--master_bounce_command)
 * [`master_defer_command`](#-postfix--master_defer_command)
+* [`master_os_template`](#-postfix--master_os_template)
 * [`master_entries`](#-postfix--master_entries)
 * [`master_smtp`](#-postfix--master_smtp)
 * [`master_smtps`](#-postfix--master_smtps)
@@ -141,6 +142,7 @@ The following parameters are available in the `postfix` class:
 * [`satellite`](#-postfix--satellite)
 * [`service_enabled`](#-postfix--service_enabled)
 * [`service_ensure`](#-postfix--service_ensure)
+* [`restart_cmd`](#-postfix--restart_cmd)
 * [`smtp_listen`](#-postfix--smtp_listen)
 * [`transports`](#-postfix--transports)
 * [`use_amavisd`](#-postfix--use_amavisd)
@@ -148,6 +150,8 @@ The following parameters are available in the `postfix` class:
 * [`use_schleuder`](#-postfix--use_schleuder)
 * [`use_sympa`](#-postfix--use_sympa)
 * [`virtuals`](#-postfix--virtuals)
+* [`aliasesseltype`](#-postfix--aliasesseltype)
+* [`seltype`](#-postfix--seltype)
 
 ##### <a name="-postfix--alias_maps"></a>`alias_maps`
 
@@ -156,15 +160,11 @@ Data type: `String`
 A string defining the location of the alias map file.
 Example: `hash:/etc/other_aliases`
 
-Default value: `'hash:/etc/aliases'`
-
 ##### <a name="-postfix--amavis_procs"></a>`amavis_procs`
 
 Data type: `Integer`
 
 Number of amavis scanner processes to spawn
-
-Default value: `2`
 
 ##### <a name="-postfix--chroot"></a>`chroot`
 
@@ -182,15 +182,11 @@ Data type: `Stdlib::Absolutepath`
 
 The base path which should be used as confdir
 
-Default value: `'/etc/postfix'`
-
 ##### <a name="-postfix--conffiles"></a>`conffiles`
 
 Data type: `Hash`
 
 A hash of postfix::conffile resources
-
-Default value: `{}`
 
 ##### <a name="-postfix--configs"></a>`configs`
 
@@ -200,15 +196,11 @@ A hash of postfix::config resources. The hash containing optional configuration 
 The values are configured using postfix::config.
 Example: `{'message_size_limit': {'value': '51200000'}}`
 
-Default value: `{}`
-
 ##### <a name="-postfix--hashes"></a>`hashes`
 
 Data type: `Hash`
 
 A hash of postfix::hash resources
-
-Default value: `{}`
 
 ##### <a name="-postfix--inet_interfaces"></a>`inet_interfaces`
 
@@ -217,8 +209,6 @@ Data type: `String`
 A string defining the network interfaces that Postfix will listen on.
 Example: `127.0.0.1, [::1]`
 
-Default value: `'all'`
-
 ##### <a name="-postfix--inet_protocols"></a>`inet_protocols`
 
 Data type: `String`
@@ -226,15 +216,11 @@ Data type: `String`
 A string defining the internet protocols that Postfix will use.
 Example: `ipv4`
 
-Default value: `'all'`
-
 ##### <a name="-postfix--ldap"></a>`ldap`
 
 Data type: `Boolean`
 
 A Boolean defining whether to configure Postfix for LDAP use.
-
-Default value: `false`
 
 ##### <a name="-postfix--ldap_base"></a>`ldap_base`
 
@@ -270,16 +256,12 @@ Data type: `Array[String[1]]`
 
 An array of package names to install for LDAP support if $ldap is true.
 
-Default value: `[]`
-
 ##### <a name="-postfix--lookup_table_type"></a>`lookup_table_type`
 
 Data type: `String`
 
 Table format type as described in http://www.postfix.org/DATABASE_README.html#types.
 Type has to be supported by system, see "postconf -m" for supported types.
-
-Default value: `'hash'`
 
 ##### <a name="-postfix--mailaliases"></a>`mailaliases`
 
@@ -289,8 +271,6 @@ A hash of postfix::mailalias resources. The hash containing optional configurati
 The values are configured using postfix::mailalias.
 Example: `{'nobody': {'ensure': 'present', 'recipient': 'root'}}`
 
-Default value: `{}`
-
 ##### <a name="-postfix--mail_user"></a>`mail_user`
 
 Data type: `String`
@@ -299,8 +279,6 @@ A string defining the mail user, and optionally group, to execute external comma
 This parameter maps to the user parameter (pipe(8)).
 Example: `vmail:vmail`.
 
-Default value: `'vmail'`
-
 ##### <a name="-postfix--mailman"></a>`mailman`
 
 Data type: `Boolean`
@@ -308,15 +286,11 @@ Data type: `Boolean`
 A Boolean defining whether to configure a basic smtp server that is able to work for the
 mailman mailing list manager.
 
-Default value: `false`
-
 ##### <a name="-postfix--mailx_ensure"></a>`mailx_ensure`
 
 Data type: `String`
 
 Installs mailx package
-
-Default value: `'present'`
 
 ##### <a name="-postfix--maincf_source"></a>`maincf_source`
 
@@ -327,15 +301,11 @@ supplied is blank. However, if the main.cf file already exists on the system the
 will **NOT** be replaced by the contents from maincf_source.
 Example: `puppet:///modules/some/other/location/main.cf`.
 
-Default value: `"puppet:///modules/${module_name}/main.cf"`
-
 ##### <a name="-postfix--manage_aliases"></a>`manage_aliases`
 
 Data type: `Boolean`
 
 Manage /etc/aliases file
-
-Default value: `true`
 
 ##### <a name="-postfix--manage_conffiles"></a>`manage_conffiles`
 
@@ -350,8 +320,6 @@ This setting does NOT effect the following files:
 - /etc/aliases
 - /etc/postfix/main.cf
 
-Default value: `true`
-
 ##### <a name="-postfix--manage_mailname"></a>`manage_mailname`
 
 Data type: `Boolean`
@@ -359,15 +327,17 @@ Data type: `Boolean`
 A Boolean defining whether the puppet module should manage '/etc/mailname'.
 See also $manage_conffiles
 
-Default value: `true`
-
 ##### <a name="-postfix--manage_mailx"></a>`manage_mailx`
 
 Data type: `Boolean`
 
 A Boolean defining whether the puppet module should manage the mailx package. See also $mailx_ensure.
 
-Default value: `true`
+##### <a name="-postfix--mailx_package"></a>`mailx_package`
+
+Data type: `String`
+
+Name of package that provides mailx
 
 ##### <a name="-postfix--manage_root_alias"></a>`manage_root_alias`
 
@@ -375,15 +345,11 @@ Data type: `Boolean`
 
 Wheter to manage the mailalias for root user
 
-Default value: `true`
-
 ##### <a name="-postfix--maps"></a>`maps`
 
 Data type: `Hash`
 
 A hash of postfix::map resources
-
-Default value: `{}`
 
 ##### <a name="-postfix--master_bounce_command"></a>`master_bounce_command`
 
@@ -391,15 +357,17 @@ Data type: `String`
 
 The bounce command which should be used in master.cf
 
-Default value: `'bounce'`
-
 ##### <a name="-postfix--master_defer_command"></a>`master_defer_command`
 
 Data type: `String`
 
 The defer command which should be used in master.cf
 
-Default value: `'bounce'`
+##### <a name="-postfix--master_os_template"></a>`master_os_template`
+
+Data type: `String`
+
+Path to the master template
 
 ##### <a name="-postfix--master_entries"></a>`master_entries`
 
@@ -407,8 +375,6 @@ Data type: `Array[String]`
 
 Array of strings containing additional entries for the /etc/postfix/master.cf file.
 Example: `['submission inet n       -       n       -       -       smtpd']`.
-
-Default value: `[]`
 
 ##### <a name="-postfix--master_smtp"></a>`master_smtp`
 
@@ -509,16 +475,12 @@ Data type: `Boolean`
 A Boolean to define whether to configure Postfix as a mail transfer agent.
 This option is mutually exclusive with the satellite Boolean.
 
-Default value: `false`
-
 ##### <a name="-postfix--mydestination"></a>`mydestination`
 
 Data type: `String`
 
 A string to define the mydestination parameter in main.cf (postconf(5)).
 Example: `example.com, foo.example.com`.
-
-Default value: `'$myhostname, localhost.$mydomain, localhost'`
 
 ##### <a name="-postfix--mynetworks"></a>`mynetworks`
 
@@ -527,8 +489,6 @@ Data type: `String`
 A string to define the mynetworks parameter that holds trusted remote smtp clients (postconf(5)).
 Example: `127.0.0.0/8, [::1]/128`.
 
-Default value: `'127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128'`
-
 ##### <a name="-postfix--myorigin"></a>`myorigin`
 
 Data type: `String`
@@ -536,15 +496,11 @@ Data type: `String`
 A string to define the myorigin parameter that holds the domain name that mail appears to come from (postconf(5)).
 Example: `example.com`
 
-Default value: `$facts['networking']['fqdn']`
-
 ##### <a name="-postfix--postfix_ensure"></a>`postfix_ensure`
 
 Data type: `String`
 
 The ensure value of the postfix package
-
-Default value: `'present'`
 
 ##### <a name="-postfix--relayhost"></a>`relayhost`
 
@@ -561,16 +517,12 @@ Data type: `String`
 
 The group permission name for the main.cf and master.cf files.
 
-Default value: `'root'`
-
 ##### <a name="-postfix--root_mail_recipient"></a>`root_mail_recipient`
 
 Data type: `Variant[Array[String], String]`
 
 A string to define the e-mail address to which all mail directed to root should go (aliases(5)).
 Example: `root_catch@example.com`.
-
-Default value: `'nobody'`
 
 ##### <a name="-postfix--satellite"></a>`satellite`
 
@@ -579,15 +531,11 @@ Data type: `Boolean`
 A Boolean to define whether to configure Postfix as a satellite relay host.
 This setting is mutually exclusive with the mta Boolean.
 
-Default value: `false`
-
 ##### <a name="-postfix--service_enabled"></a>`service_enabled`
 
 Data type: `Boolean`
 
 Defines if the service 'postfix' is enabled on the system
-
-Default value: `true`
 
 ##### <a name="-postfix--service_ensure"></a>`service_ensure`
 
@@ -595,7 +543,11 @@ Data type: `String`
 
 Defines the service state of 'postfix' service
 
-Default value: `'running'`
+##### <a name="-postfix--restart_cmd"></a>`restart_cmd`
+
+Data type: `String`
+
+Command to use when restarting postfix
 
 ##### <a name="-postfix--smtp_listen"></a>`smtp_listen`
 
@@ -606,15 +558,11 @@ This can also be set to 'all' to listen on all interfaces. If master_smtp is def
 smtp_listen will not be used.
 Example: `::1`.
 
-Default value: `'127.0.0.1'`
-
 ##### <a name="-postfix--transports"></a>`transports`
 
 Data type: `Hash`
 
 A hash of postfix::transport resources
-
-Default value: `{}`
 
 ##### <a name="-postfix--use_amavisd"></a>`use_amavisd`
 
@@ -622,15 +570,11 @@ Data type: `Boolean`
 
 A Boolean to define whether to configure master.cf to allow the use of the amavisd scanner.
 
-Default value: `false`
-
 ##### <a name="-postfix--use_dovecot_lda"></a>`use_dovecot_lda`
 
 Data type: `Boolean`
 
 A Boolean to define whether to configure master.cf to use dovecot as the local delivery agent.
-
-Default value: `false`
 
 ##### <a name="-postfix--use_schleuder"></a>`use_schleuder`
 
@@ -639,15 +583,11 @@ Data type: `Variant[Integer[2, 3], Boolean]`
 A Boolean to define whether to configure master.cf to use the Schleuder GPG-enabled mailing list.
 Can be also set to an integer `2` to use Schleuder v2 instead of v3.
 
-Default value: `false`
-
 ##### <a name="-postfix--use_sympa"></a>`use_sympa`
 
 Data type: `Boolean`
 
 A Boolean to define whether to configure master.cf to use the Sympa mailing list management software.
-
-Default value: `false`
 
 ##### <a name="-postfix--virtuals"></a>`virtuals`
 
@@ -655,7 +595,21 @@ Data type: `Hash`
 
 A hash of postfix::virtual resources
 
-Default value: `{}`
+##### <a name="-postfix--aliasesseltype"></a>`aliasesseltype`
+
+Data type: `Optional[String]`
+
+Selinux type for /etc/aliases
+
+Default value: `undef`
+
+##### <a name="-postfix--seltype"></a>`seltype`
+
+Data type: `Optional[String]`
+
+Selinux type for /etc/postfix/* config files
+
+Default value: `undef`
 
 ## Defined types
 

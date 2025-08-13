@@ -1,5 +1,4 @@
 ---
-postfix::params::aliasesseltype: 'etc_t'
-postfix::params::seltype: 'etc_t'
-postfix::params::restart_cmd: '/etc/init.d/postfix reload'
-...
+postfix::aliasesseltype: etc_t
+postfix::restart_cmd: "/etc/init.d/postfix reload"
+postfix::seltype: etc_t

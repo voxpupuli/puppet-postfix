@@ -1,3 +1,2 @@
 ---
-postfix::params::restart_cmd: '/etc/init.d/postfix reload'
-...
+postfix::restart_cmd: "/etc/init.d/postfix reload"
