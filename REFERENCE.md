@@ -148,6 +148,7 @@ The following parameters are available in the `postfix` class:
 * [`use_schleuder`](#-postfix--use_schleuder)
 * [`use_sympa`](#-postfix--use_sympa)
 * [`virtuals`](#-postfix--virtuals)
+* [`canonicals`](#-postfix--canonicals)
 
 ##### <a name="-postfix--alias_maps"></a>`alias_maps`
 
@@ -654,6 +655,14 @@ Default value: `false`
 Data type: `Hash`
 
 A hash of postfix::virtual resources
+
+Default value: `{}`
+
+##### <a name="-postfix--canonicals"></a>`canonicals`
+
+Data type: `Hash[String[1], Hash[String[1], Any]]`
+
+A hash of postfix::canonical resources
 
 Default value: `{}`
 
