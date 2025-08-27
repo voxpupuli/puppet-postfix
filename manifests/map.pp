@@ -35,12 +35,12 @@
 # @see http://www.postfix.org/postmap.1.html
 #
 define postfix::map (
-  Enum['present', 'absent']                    $ensure  = 'present',
-  Optional[Variant[Array[String], String]]     $source  = undef,
+  Enum['present', 'absent'] $ensure = 'present',
+  Optional[Variant[Array[String], String]] $source = undef,
   Optional[Variant[Sensitive[String], String]] $content = undef,
-  String[1]                                    $type    = 'hash',
-  Optional[Stdlib::Absolutepath]               $path    = undef,
-  Stdlib::Filemode                             $mode    = '0640',
+  String[1] $type = 'hash',
+  Optional[Stdlib::Absolutepath] $path    = undef,
+  Stdlib::Filemode $mode = '0640',
 ) {
   include postfix
   include postfix::params

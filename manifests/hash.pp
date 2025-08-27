@@ -43,10 +43,10 @@
 # @param mode the desired file mode
 #
 define postfix::hash (
-  Enum['present', 'absent']                   $ensure  = 'present',
-  Variant[Array[String], String, Undef]       $source  = undef,
+  Enum['present', 'absent'] $ensure = 'present',
+  Variant[Array[String], String, Undef] $source  = undef,
   Optional[Variant[Sensitive[String],String]] $content = undef,
-  Stdlib::Filemode                            $mode    = '0640',
+  Stdlib::Filemode $mode = '0640',
 ) {
   include postfix::params
 

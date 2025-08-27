@@ -49,13 +49,13 @@
 #   Switch to set file show_diff parameter
 #
 define postfix::conffile (
-  Enum['present', 'absent', 'directory'] $ensure    = 'present',
-  Variant[Array[String], String, Undef]  $source    = undef,
-  Optional[String]                       $content   = undef,
-  Optional[Stdlib::Absolutepath]         $path      = undef,
-  Stdlib::Filemode                       $mode      = '0640',
-  Hash                                   $options   = {},
-  Boolean                                $show_diff = true,
+  Enum['present', 'absent', 'directory'] $ensure = 'present',
+  Variant[Array[String], String, Undef]  $source = undef,
+  Optional[String] $content = undef,
+  Optional[Stdlib::Absolutepath] $path = undef,
+  Stdlib::Filemode $mode = '0640',
+  Hash $options = {},
+  Boolean $show_diff = true,
 ) {
   include postfix
 
