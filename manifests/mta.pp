@@ -3,12 +3,12 @@
 # @api private
 #
 class postfix::mta (
-  Optional[Pattern[/^\S+(?:,\s*\S+)*$/]]                $mydestination = undef,
-  Optional[Pattern[/^(?:\S+?(?:(?:,\s+)|(?:\s+))?)*$/]] $mynetworks    = undef,
-  Optional[Pattern[/^\S+$/]]                            $relayhost     = undef,
-  Optional[Array[String[1]]]                            $masquerade_classes  = undef,
-  Optional[Array[String[1]]]                            $masquerade_domains  = undef,
-  Optional[Array[String[1]]]                            $masquerade_exceptions = undef,
+  Optional[Pattern[/^\S+(?:,\s*\S+)*$/]] $mydestination = undef,
+  Optional[Pattern[/^(?:\S+?(?:(?:,\s+)|(?:\s+))?)*$/]] $mynetworks = undef,
+  Optional[Pattern[/^\S+$/]] $relayhost = undef,
+  Optional[Array[String[1]]] $masquerade_classes = undef,
+  Optional[Array[String[1]]] $masquerade_domains = undef,
+  Optional[Array[String[1]]] $masquerade_exceptions = undef,
 ) {
   assert_private()
   include postfix

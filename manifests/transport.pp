@@ -39,10 +39,10 @@
 # @see https://www.postfix.org/transport.5.html
 #
 define postfix::transport (
-  Enum['present', 'absent']      $ensure      = 'present',
-  Optional[String]               $destination = undef,
-  Optional[String]               $nexthop     = undef,
-  Optional[Stdlib::Absolutepath] $file        = undef,
+  Enum['present', 'absent'] $ensure = 'present',
+  Optional[String] $destination = undef,
+  Optional[String] $nexthop = undef,
+  Optional[Stdlib::Absolutepath] $file = undef,
 ) {
   include postfix
 

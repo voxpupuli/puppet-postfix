@@ -40,7 +40,7 @@
 #   Example: `btree:${data_directory}/smtp_tls_session_cache`.
 #
 define postfix::config (
-  Optional[String]                   $value  = undef,
+  Optional[String] $value  = undef,
   Enum['present', 'absent', 'blank'] $ensure = 'present',
 ) {
   include postfix

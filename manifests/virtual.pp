@@ -46,8 +46,8 @@
 #
 define postfix::virtual (
   Variant[String, Array[String]] $destination,
-  Enum['present', 'absent']      $ensure      = 'present',
-  Optional[Stdlib::Absolutepath] $file        = undef
+  Enum['present', 'absent'] $ensure = 'present',
+  Optional[Stdlib::Absolutepath] $file = undef
 ) {
   include postfix
 

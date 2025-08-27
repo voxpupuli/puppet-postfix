@@ -37,10 +37,10 @@
 # @see https://www.postfix.org/canonical.5.html
 #
 define postfix::canonical (
-  String                   $destination,
-  Enum['present','absent'] $ensure              = 'present',
-  Stdlib::Absolutepath     $file                = undef,
-  Optional[String[1]]      $lookup_table_suffix = undef,
+  String $destination,
+  Enum['present','absent'] $ensure = 'present',
+  Stdlib::Absolutepath $file = undef,
+  Optional[String[1]] $lookup_table_suffix = undef,
 ) {
   include postfix
 

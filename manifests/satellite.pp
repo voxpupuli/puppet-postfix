@@ -4,10 +4,10 @@
 #
 class postfix::satellite (
   $mydestination = undef,
-  $mynetworks    = undef,
-  $relayhost     = undef,
-  $masquerade_classes    = undef,
-  $masquerade_domains    = undef,
+  $mynetworks = undef,
+  $relayhost = undef,
+  $masquerade_classes = undef,
+  $masquerade_domains = undef,
   $masquerade_exceptions = undef,
 ) {
   assert_private()
