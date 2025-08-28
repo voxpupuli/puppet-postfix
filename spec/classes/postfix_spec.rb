@@ -756,6 +756,31 @@ describe 'postfix' do
         end
       end
 
+      context 'when canonicals hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let :pre_condition do
+          "postfix::hash{'/etc/postfix/sender_canonical': ensure => present }"
+        end
+        let(:params) do
+          {
+            canonicals: {
+              'root' => {
+                'destination' => 'root_special@example.org',
+                'file'        => '/etc/postfix/sender_canonical',
+              },
+              'adm' => {
+                'destination' => 'adm_special@example.org',
+                'file'        => '/etc/postfix/sender_canonical',
+              },
+            },
+          }
+        end
+
+        it 'updates the cannonical map' do
+          is_expected.to contain_postfix__canonical('root').with_destination('root_special@example.org')
+          is_expected.to contain_postfix__canonical('adm').with_file('/etc/postfix/sender_canonical')
+        end
+      end
+
       context 'when conffiles hash is used' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:params) do
           {

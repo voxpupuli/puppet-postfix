@@ -260,6 +260,9 @@
 # @param virtuals
 #   A hash of postfix::virtual resources
 #
+# @param canonicals
+#   A hash of postfix::canonical resources
+#
 class postfix (
   String $alias_maps = 'hash:/etc/aliases',
   Integer $amavis_procs = 2,
@@ -318,6 +321,7 @@ class postfix (
   Variant[Integer[2, 3], Boolean] $use_schleuder = false, # postfix_use_schleuder
   Boolean $use_sympa = false, # postfix_use_sympa
   Hash $virtuals = {},
+  Hash[String[1], Hash[String[1], Any]] $canonicals = {},
 ) inherits postfix::params {
   if (
     ($mastercf_source and $mastercf_content) or
@@ -358,6 +362,12 @@ class postfix (
 
   $virtuals.each |$key, $value| {
     postfix::virtual { $key:
+      * => $value,
+    }
+  }
+
+  $canonicals.each |$key, $value| {
+    postfix::canonical { $key:
       * => $value,
     }
   }
