@@ -792,7 +792,7 @@ Default value: `'present'`
 
 ##### <a name="-postfix--conffile--source"></a>`source`
 
-Data type: `Variant[Array[String], String, Undef]`
+Data type: `Optional[Variant[Array[String], String, Undef]]`
 
 A string with the source of the file. This is the `source` parameter of the underlying file resource.
 Example: `puppet:///modules/postfix/configfile.cf`
@@ -975,7 +975,7 @@ Default value: `'present'`
 
 ##### <a name="-postfix--hash--source"></a>`source`
 
-Data type: `Variant[Array[String], String, Undef]`
+Data type: `Optional[Variant[Array[String], String, Undef]]`
 
 A string whose value is a location for the source file to be used. This parameter is mutually
 exclusive with the content parameter, one or the other must be present, but both cannot be present.
