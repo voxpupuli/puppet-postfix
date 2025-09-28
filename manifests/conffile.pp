@@ -50,7 +50,7 @@
 #
 define postfix::conffile (
   Enum['present', 'absent', 'directory'] $ensure = 'present',
-  Variant[Array[String], String, Undef]  $source = undef,
+  Optional[Variant[Array[String], String, Undef]] $source = undef,
   Optional[String] $content = undef,
   Optional[Stdlib::Absolutepath] $path = undef,
   Stdlib::Filemode $mode = '0640',
