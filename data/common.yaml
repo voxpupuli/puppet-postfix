@@ -3,5 +3,5 @@ postfix::params::aliasesseltype: ~
 postfix::params::seltype: ~
 postfix::params::mailx_package: 'mailx'
 postfix::params::master_os_template: "postfix/master.cf.default.erb"
-postfix::params::restart_cmd: '/etc/init.d/postfix reload'
+postfix::params::restart_cmd: '/usr/bin/systemctl reload postfix'
 ...
