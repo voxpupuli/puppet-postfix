@@ -54,7 +54,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             ensure: 'present',
-            source: 'puppet:///modules/postfix/bar'
+            source: 'puppet:///modules/postfix/bar',
           ).without(:content)
         }
       end
@@ -69,7 +69,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             ensure: 'present',
-            content: 'bar'
+            content: 'bar',
           ).without(:source)
         }
       end
@@ -126,7 +126,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             mode: '0644',
-            content: 'bar'
+            content: 'bar',
           )
         }
       end
@@ -142,7 +142,7 @@ describe 'postfix::conffile' do
         it {
           is_expected.to contain_file('postfix conffile foo').with(
             path: '/tmp/foo',
-            content: 'bar'
+            content: 'bar',
           )
         }
       end

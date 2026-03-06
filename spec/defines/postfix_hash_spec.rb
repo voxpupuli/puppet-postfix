@@ -64,7 +64,7 @@ describe 'postfix::hash' do
         it {
           is_expected.to contain_file('postfix map /tmp/foo').with(
             ensure: 'present',
-            source: '/tmp/bar'
+            source: '/tmp/bar',
           ).without(:content)
         }
 
@@ -90,7 +90,7 @@ describe 'postfix::hash' do
         it {
           is_expected.to contain_file('postfix map /tmp/foo').with(
             ensure: 'present',
-            content: 'bar'
+            content: 'bar',
           ).without(:source)
         }
 
@@ -107,7 +107,7 @@ describe 'postfix::hash' do
       context 'when not passing source or content' do
         it {
           is_expected.to contain_file('postfix map /tmp/foo').with(
-            ensure: 'present'
+            ensure: 'present',
           ).without(:source).without(:content)
         }
 

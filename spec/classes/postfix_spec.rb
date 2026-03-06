@@ -84,7 +84,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/etc/init.d/postfix reload'
+              restart: '/etc/init.d/postfix reload',
             )
           }
         end
@@ -103,7 +103,7 @@ describe 'postfix' do
           it { is_expected.to contain_augeas("manage postfix 'mailq_path'") }
           it { is_expected.to contain_alternatives('mta') }
 
-          context 'when on release 8', if: (facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '8') do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          context 'when on release 8', if: facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '8' do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -111,12 +111,12 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/bin/systemctl reload postfix'
+                restart: '/bin/systemctl reload postfix',
               )
             }
           end
 
-          context 'when on release 7', if: (facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '7') do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          context 'when on release 7', if: facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '7' do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -124,12 +124,12 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/bin/systemctl reload postfix'
+                restart: '/bin/systemctl reload postfix',
               )
             }
           end
 
-          context 'when on release 6', if: (facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '6') do # rubocop:disable RSpec/MultipleMemoizedHelpers
+          context 'when on release 6', if: facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '6' do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
 
             it {
@@ -137,7 +137,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/etc/init.d/postfix reload'
+                restart: '/etc/init.d/postfix reload',
               )
             }
           end
@@ -151,7 +151,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/bin/systemctl reload postfix'
+              restart: '/bin/systemctl reload postfix',
             )
           }
         end
@@ -207,23 +207,23 @@ describe 'postfix' do
 
           it {
             is_expected.to contain_file(postfix_master_cf_path).without('seltype').with_content(
-              %r{smtp      inet  n       -       -       -       -       smtpd}
+              %r{smtp      inet  n       -       -       -       -       smtpd},
             ).with_content(
-              %r{amavis unix}
+              %r{amavis unix},
             ).with_content(
-              %r{dovecot.*\n.* user=bar:bar }
+              %r{dovecot.*\n.* user=bar:bar },
             ).with_content(
-              %r{schleuder}
+              %r{schleuder},
             ).with_content(
-              %r{sympa}
+              %r{sympa},
             ).with_content(
-              %r{user=bar}
+              %r{user=bar},
             ).with_content(
-              %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:}
+              %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:},
             ).with_content(
-              %r{^smtps     inet  n}
+              %r{^smtps     inet  n},
             ).with_content(
-              %r{^submission inet n}
+              %r{^submission inet n},
             )
           }
 
@@ -234,7 +234,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/etc/init.d/postfix reload'
+              restart: '/etc/init.d/postfix reload',
             )
           }
 
@@ -261,7 +261,7 @@ describe 'postfix' do
             ldap: true,
             ldap_base: 'cn=Users,dc=example,dc=com',
             ldap_host: 'ldaps://ldap.example.com:636 ldap://ldap2.example.com',
-            ldap_options: 'start_tls = yes'
+            ldap_options: 'start_tls = yes',
           }
         end
 
@@ -421,9 +421,9 @@ describe 'postfix' do
 
         it 'updates master.cf with the specified flags to smtp' do
           is_expected.to contain_file(postfix_master_cf_path).with_content(
-            %r{smtp      inet  n       -       -       -       -       smtpd}
+            %r{smtp      inet  n       -       -       -       -       smtpd},
           ).with_content(
-            %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:}
+            %r{^smtp.*\n.*smtpd_client_restrictions=check_client_access,hash:},
           )
         end
       end
@@ -473,8 +473,8 @@ describe 'postfix' do
               {
                 masquerade_classes: ['envelope_sender'],
                 masquerade_domains: ['host.example.com', 'example.com'],
-                masquerade_exceptions: ['root']
-              }
+                masquerade_exceptions: ['root'],
+              },
             )
           end
 
@@ -510,7 +510,7 @@ describe 'postfix' do
           {
             mta: true,
             mydestination: 'example.org, example.com, localhost.localdomain, localhost',
-            relayhost: '2.3.4.5'
+            relayhost: '2.3.4.5',
           }
         end
 
@@ -526,7 +526,7 @@ describe 'postfix' do
             mta: true,
             mydestination: '1.2.3.4',
             relayhost: 'direct',
-            mynetworks: '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/24'
+            mynetworks: '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/24',
           }
         end
 
@@ -548,7 +548,7 @@ describe 'postfix' do
         let(:params) do
           {
             mta: true,
-            relayhost: 'relay.example.org'
+            relayhost: 'relay.example.org',
           }
         end
 
@@ -612,7 +612,7 @@ describe 'postfix' do
 
         it 'updates master.cf to listen to all addresses' do
           is_expected.to contain_file(postfix_master_cf_path).with_content(
-            %r{smtp      inet  n       -       n       -       -       smtpd}
+            %r{smtp      inet  n       -       n       -       -       smtpd},
           )
         end
       end
@@ -622,9 +622,9 @@ describe 'postfix' do
 
         it 'updates master.cf with multiple smtp listeners' do
           is_expected.to contain_file(postfix_master_cf_path).with_content(
-            %r{192.168.0.123:smtp      inet  n       -       n       -       -       smtpd}
+            %r{192.168.0.123:smtp      inet  n       -       n       -       -       smtpd},
           ).with_content(
-            %r{10.0.0.123:smtp      inet  n       -       n       -       -       smtpd}
+            %r{10.0.0.123:smtp      inet  n       -       n       -       -       smtpd},
           )
         end
       end
@@ -634,9 +634,9 @@ describe 'postfix' do
 
         it 'updates master.cf with multiple smtp listeners' do
           is_expected.to contain_file(postfix_master_cf_path).with_content(
-            %r{192.168.0.123:smtp      inet  n       -       n       -       -       smtpd}
+            %r{192.168.0.123:smtp      inet  n       -       n       -       -       smtpd},
           ).with_content(
-            %r{10.0.0.123:smtp      inet  n       -       n       -       -       smtpd}
+            %r{10.0.0.123:smtp      inet  n       -       n       -       -       smtpd},
           )
         end
       end
@@ -812,7 +812,7 @@ describe 'postfix' do
               'search_base' => 'dc=example, dc=com',
               'query_filter' => 'mail=%s',
               'result_attribute' => 'uid',
-            }
+            },
           )
           is_expected.to contain_file('postfix conffile ldapoptions.cf').with_ensure('present')
         end
@@ -833,7 +833,7 @@ describe 'postfix' do
         it 'creates the map resource' do
           is_expected.to contain_postfix__map('a_map').with(
             'type' => 'regexp',
-            'content' => 'abc xyz'
+            'content' => 'abc xyz',
           )
           is_expected.to contain_exec('generate a_map.db')
           is_expected.to contain_file('postfix map a_map')
