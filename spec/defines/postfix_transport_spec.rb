@@ -67,7 +67,7 @@ describe 'postfix::transport' do
               "clear pattern[. = 'foo']/nexthop",
               "rm pattern[. = 'foo']/host",
               "rm pattern[. = 'foo']/port",
-            ]
+            ],
           )
         }
       end
@@ -92,7 +92,7 @@ describe 'postfix::transport' do
               "rm pattern[. = 'foo']/host",
               "rm pattern[. = 'foo']/port",
               "set pattern[. = 'foo']/nexthop 'baz'",
-            ]
+            ],
           )
         }
       end
@@ -116,7 +116,7 @@ describe 'postfix::transport' do
               "rm pattern[. = 'foo']/host",
               "rm pattern[. = 'foo']/port",
               "set pattern[. = 'foo']/nexthop '[baz]'",
-            ]
+            ],
           )
         }
       end
@@ -140,7 +140,7 @@ describe 'postfix::transport' do
               "rm pattern[. = 'foo']/host",
               "rm pattern[. = 'foo']/port",
               "set pattern[. = 'foo']/nexthop ':[baz]'",
-            ]
+            ],
           )
         }
       end
@@ -165,7 +165,7 @@ describe 'postfix::transport' do
               "rm pattern[. = 'foo']/nexthop",
               "set pattern[. = 'foo']/host '[baz]'",
               "set pattern[. = 'foo']/port '1234'",
-            ]
+            ],
           )
         }
       end
@@ -190,7 +190,7 @@ describe 'postfix::transport' do
               "rm pattern[. = 'foo']/nexthop",
               "set pattern[. = 'foo']/host ':[baz]'",
               "set pattern[. = 'foo']/port '1234'",
-            ]
+            ],
           )
         }
       end
@@ -209,7 +209,7 @@ describe 'postfix::transport' do
             lens: 'Postfix_Transport.lns',
             changes: [
               "rm pattern[. = 'foo']",
-            ]
+            ],
           )
         }
       end

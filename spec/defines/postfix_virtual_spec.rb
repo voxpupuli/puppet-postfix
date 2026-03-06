@@ -79,7 +79,7 @@ describe 'postfix::virtual' do
               "defnode entry pattern[. = 'foo'] 'foo'",
               'rm $entry/destination',
               "set $entry/destination[1] 'bar'",
-            ]
+            ],
           )
         }
       end
@@ -101,7 +101,7 @@ describe 'postfix::virtual' do
               "defnode entry pattern[. = 'foo'] 'foo'",
               'rm $entry/destination',
               "set $entry/destination[1] 'bar'",
-            ]
+            ],
           )
         }
       end
@@ -124,7 +124,7 @@ describe 'postfix::virtual' do
               'rm $entry/destination',
               "set $entry/destination[1] 'bar'",
               "set $entry/destination[2] 'baz'",
-            ]
+            ],
           )
         }
       end
@@ -143,7 +143,7 @@ describe 'postfix::virtual' do
             lens: 'Postfix_Virtual.lns',
             changes: [
               "rm pattern[. = 'foo']",
-            ]
+            ],
           )
         }
       end

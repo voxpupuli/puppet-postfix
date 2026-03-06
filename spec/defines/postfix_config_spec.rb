@@ -56,7 +56,7 @@ describe 'postfix::config' do
           is_expected.to contain_augeas("manage postfix 'foo'").with(
             incl: postfix_main_cf_path,
             lens: 'Postfix_Main.lns',
-            changes: "set foo 'bar'"
+            changes: "set foo 'bar'",
           )
         }
       end
@@ -73,7 +73,7 @@ describe 'postfix::config' do
           is_expected.to contain_augeas("manage postfix 'foo'").with(
             incl: postfix_main_cf_path,
             lens: 'Postfix_Main.lns',
-            changes: 'rm foo'
+            changes: 'rm foo',
           )
         }
       end
@@ -90,7 +90,7 @@ describe 'postfix::config' do
           is_expected.to contain_augeas("manage postfix 'foo'").with(
             incl: postfix_main_cf_path,
             lens: 'Postfix_Main.lns',
-            changes: 'clear foo'
+            changes: 'clear foo',
           )
         }
       end
