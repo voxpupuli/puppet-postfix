@@ -2,6 +2,9 @@
 #
 # This class provides the appropriate values for operating system specific variables.
 #
+# @param postfix_package
+#   Name of package that provides postfix
+#
 # @param mailx_package
 #   Name of package that provides mailx
 #
@@ -20,6 +23,7 @@
 # @api private
 #
 class postfix::params (
+  String[1] $postfix_package,
   String $mailx_package,
   String $restart_cmd,
   String $master_os_template,
