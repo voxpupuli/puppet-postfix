@@ -56,6 +56,7 @@ describe 'postfix' do
         it { is_expected.to contain_postfix__config('inet_protocols').with_value('all') }
         it { is_expected.to contain_postfix__mailalias('root').with_recipient('nobody') }
         it { is_expected.to contain_mailalias('root').with_recipient('nobody') }
+        it { is_expected.to contain_mailalias('root').with_target('/etc/aliases') }
         it { is_expected.to contain_class('postfix::files') }
         it { is_expected.to contain_class('postfix::packages') }
         it { is_expected.to contain_class('postfix::params') }
@@ -563,6 +564,14 @@ describe 'postfix' do
 
         it 'contains a Mailalias resource directing roots mail to the required user' do
           is_expected.to contain_mailalias('root').with_recipient('foo')
+        end
+      end
+
+      context 'when specifying a custom alias_maps' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let(:params) { { alias_maps: 'hash:/etc/mail/aliases' } }
+
+        it 'contains a Mailalias resource that target the correct file' do
+          is_expected.to contain_mailalias('root').with_target('/etc/mail/aliases')
         end
       end
 

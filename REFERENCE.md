@@ -334,7 +334,7 @@ Default value: `"puppet:///modules/${module_name}/main.cf"`
 
 Data type: `Boolean`
 
-Manage /etc/aliases file
+Manage $alias_maps file
 
 Default value: `true`
 
