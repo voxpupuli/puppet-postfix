@@ -57,7 +57,7 @@ class postfix::files {
 
   # Aliases
   if $manage_aliases {
-    file { '/etc/aliases':
+    file { regsubst($postfix::alias_maps, '^.*:', ''):
       ensure  => 'file',
       content => "# file managed by puppet\n",
       notify  => Exec['newaliases'],

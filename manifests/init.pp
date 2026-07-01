@@ -117,7 +117,7 @@
 #   Example: `puppet:///modules/some/other/location/main.cf`.
 #
 # @param manage_aliases
-#   Manage /etc/aliases file
+#   Manage $alias_maps file
 #
 # @param manage_conffiles
 #   A Boolean defining whether the puppet module should replace the configuration files for postfix.
@@ -284,7 +284,7 @@ class postfix (
   Boolean $mailman = false,
   String $mailx_ensure = 'present',
   String $maincf_source = "puppet:///modules/${module_name}/main.cf",
-  Boolean $manage_aliases = true, # /etc/aliases
+  Boolean $manage_aliases = true, # $alias_maps
   Boolean $manage_conffiles = true,
   Boolean $manage_mailname = true,
   Boolean $manage_mailx = true,

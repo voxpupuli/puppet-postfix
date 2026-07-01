@@ -25,7 +25,7 @@ class postfix::service {
       command     => 'newaliases',
       path        => $facts['path'],
       refreshonly => true,
-      subscribe   => File['/etc/aliases'],
+      subscribe   => File[regsubst($postfix::alias_maps, '^.*:', '')],
       require     => Service['postfix'],
     }
   }

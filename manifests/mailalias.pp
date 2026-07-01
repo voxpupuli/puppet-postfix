@@ -26,6 +26,7 @@ define postfix::mailalias (
     ensure    => $ensure,
     name      => $name,
     recipient => $recipient,
+    target    => regsubst($postfix::alias_maps, '^.*:', ''),
     notify    => Exec['newaliases'],
   }
 }
