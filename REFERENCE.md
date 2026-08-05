@@ -9,11 +9,11 @@
 #### Public Classes
 
 * [`postfix`](#postfix): The top-level class, to install and configure Postfix
+* [`postfix::ldap`](#postfix--ldap): == Class: postfix::ldap  Configures postfix for use with LDAP.  === Parameters  === Requires  - Class["postfix"]  === Examples  include postf
 
 #### Private Classes
 
 * `postfix::files`: Manages the Postfix related files
-* `postfix::ldap`: Provides the Postfix LDAP support
 * `postfix::mailman`: Configure Postfix to work with mailman
 * `postfix::mta`: Configures Postfix as minimal MTA
 * `postfix::packages`: Install the required packages for postfix
@@ -104,6 +104,7 @@ The following parameters are available in the `postfix` class:
 * [`ldap_base`](#-postfix--ldap_base)
 * [`ldap_host`](#-postfix--ldap_host)
 * [`ldap_options`](#-postfix--ldap_options)
+* [`ldap_bind_pw`](#-postfix--ldap_bind_pw)
 * [`ldap_packages`](#-postfix--ldap_packages)
 * [`lookup_table_type`](#-postfix--lookup_table_type)
 * [`mailaliases`](#-postfix--mailaliases)
@@ -258,10 +259,18 @@ Default value: `undef`
 
 ##### <a name="-postfix--ldap_options"></a>`ldap_options`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String[1],Array[String[1]]]]`
 
-A free form string that can define any LDAP options to be passed through (ldap_table(5)).
+A free form string or array of strings that can define any LDAP options to be passed through (ldap_table(5)).
 Example: `start_tls = yes`.
+
+Default value: `undef`
+
+##### <a name="-postfix--ldap_bind_pw"></a>`ldap_bind_pw`
+
+Data type: `Optional[String[1]]`
+
+A password that is to be provided separately (eyaml) from ldap_options
 
 Default value: `undef`
 
@@ -665,6 +674,23 @@ Data type: `Hash[String[1], Hash[String[1], Any]]`
 A hash of postfix::canonical resources
 
 Default value: `{}`
+
+### <a name="postfix--ldap"></a>`postfix::ldap`
+
+== Class: postfix::ldap
+
+Configures postfix for use with LDAP.
+
+=== Parameters
+
+=== Requires
+
+- Class["postfix"]
+
+=== Examples
+
+include postfix
+include postfix::ldap
 
 ## Defined types
 
