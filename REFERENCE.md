@@ -9,11 +9,11 @@
 #### Public Classes
 
 * [`postfix`](#postfix): The top-level class, to install and configure Postfix
-* [`postfix::ldap`](#postfix--ldap): == Class: postfix::ldap  Configures postfix for use with LDAP.  === Parameters  === Requires  - Class["postfix"]  === Examples  include postf
 
 #### Private Classes
 
 * `postfix::files`: Manages the Postfix related files
+* `postfix::ldap`: Provides the Postfix LDAP support
 * `postfix::mailman`: Configure Postfix to work with mailman
 * `postfix::mta`: Configures Postfix as minimal MTA
 * `postfix::packages`: Install the required packages for postfix
@@ -674,23 +674,6 @@ Data type: `Hash[String[1], Hash[String[1], Any]]`
 A hash of postfix::canonical resources
 
 Default value: `{}`
-
-### <a name="postfix--ldap"></a>`postfix::ldap`
-
-== Class: postfix::ldap
-
-Configures postfix for use with LDAP.
-
-=== Parameters
-
-=== Requires
-
-- Class["postfix"]
-
-=== Examples
-
-include postfix
-include postfix::ldap
 
 ## Defined types
 
