@@ -83,8 +83,11 @@
 #   Example: `ldaps://ldap.example.com:636 ldap://ldap2.example.com`.
 #
 # @param ldap_options
-#   A free form string that can define any LDAP options to be passed through (ldap_table(5)).
+#   A free form string or array of strings that can define any LDAP options to be passed through (ldap_table(5)).
 #   Example: `start_tls = yes`.
+#
+# @param ldap_bind_pw
+#   A password that is to be provided separately (eyaml) from ldap_options
 #
 # @param ldap_packages
 #   An array of package names to install for LDAP support if $ldap is true.
@@ -276,7 +279,8 @@ class postfix (
   Boolean $ldap = false,
   Optional[String] $ldap_base = undef,
   Optional[String] $ldap_host = undef,
-  Optional[String] $ldap_options = undef,
+  Optional[Variant[String[1],Array[String[1]]]] $ldap_options = undef,
+  Optional[String[1]] $ldap_bind_pw = undef,
   Array[String[1]] $ldap_packages = [],
   String $lookup_table_type = 'hash',
   Hash $mailaliases = {},
