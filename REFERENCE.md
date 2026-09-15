@@ -104,6 +104,7 @@ The following parameters are available in the `postfix` class:
 * [`ldap_base`](#-postfix--ldap_base)
 * [`ldap_host`](#-postfix--ldap_host)
 * [`ldap_options`](#-postfix--ldap_options)
+* [`ldap_bind_pw`](#-postfix--ldap_bind_pw)
 * [`ldap_packages`](#-postfix--ldap_packages)
 * [`lookup_table_type`](#-postfix--lookup_table_type)
 * [`mailaliases`](#-postfix--mailaliases)
@@ -258,10 +259,18 @@ Default value: `undef`
 
 ##### <a name="-postfix--ldap_options"></a>`ldap_options`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[String[1],Array[String[1]]]]`
 
-A free form string that can define any LDAP options to be passed through (ldap_table(5)).
+A free form string or array of strings that can define any LDAP options to be passed through (ldap_table(5)).
 Example: `start_tls = yes`.
+
+Default value: `undef`
+
+##### <a name="-postfix--ldap_bind_pw"></a>`ldap_bind_pw`
+
+Data type: `Optional[String[1]]`
+
+A password that is to be provided separately (eyaml) from ldap_options
 
 Default value: `undef`
 

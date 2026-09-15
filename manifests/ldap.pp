@@ -7,6 +7,8 @@ class postfix::ldap {
   assert_type(String, $postfix::ldap_base)
   assert_type(String, $postfix::ldap_host)
   assert_type(String, $postfix::ldap_options)
+  assert_type(Optional[String], $postfix::ldap_bind_pw)
+  assert_type(Optional[Variant[String[1],Array[String[1]]]], $postfix::ldap_options)
 
   package { $postfix::ldap_packages:
     ensure => installed,
@@ -17,6 +19,7 @@ class postfix::ldap {
     fail 'Missing $postfix::ldap_base !'
   }
 
+  $ldap_bind_pw = $postfix::ldap_bind_pw
   $ldap_host = $postfix::ldap_host ? {
     undef   => 'localhost',
     default => $postfix::ldap_host,
