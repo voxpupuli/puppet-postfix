@@ -1,0 +1,5 @@
+---
+
+postfix::params::mailx_package: 's-nail'
+postfix::ldap_packages: ['postfix-ldap']
+postfix::params::restart_cmd: '/etc/init.d/postfix reload'

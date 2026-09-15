@@ -85,7 +85,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/etc/init.d/postfix reload',
+              restart: '/usr/bin/systemctl reload postfix',
             )
           }
         end
@@ -112,7 +112,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/bin/systemctl reload postfix',
+                restart: '/usr/bin/systemctl reload postfix',
               )
             }
           end
@@ -125,7 +125,7 @@ describe 'postfix' do
                 ensure: 'running',
                 enable: 'true',
                 hasstatus: 'true',
-                restart: '/bin/systemctl reload postfix',
+                restart: '/usr/bin/systemctl reload postfix',
               )
             }
           end
@@ -152,7 +152,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/bin/systemctl reload postfix',
+              restart: '/usr/bin/systemctl reload postfix',
             )
           }
         end
@@ -235,7 +235,7 @@ describe 'postfix' do
               ensure: 'running',
               enable: 'true',
               hasstatus: 'true',
-              restart: '/etc/init.d/postfix reload',
+              restart: '/usr/bin/systemctl reload postfix',
             )
           }
 
