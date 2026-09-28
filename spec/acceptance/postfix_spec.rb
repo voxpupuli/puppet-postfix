@@ -27,9 +27,11 @@ describe 'postfix class' do
         }
       EOS
 
+      # RHEL8 and RHEL9 have postfix running, therefore idempotency takes 3 OpenVox runs
+      shell('systemctl stop postfix || true')
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      apply_manifest(pp, catch_failures: true, debug: false)
+      apply_manifest(pp, catch_changes: true, debug: false)
     end
 
     describe package('postfix') do

@@ -1310,4 +1310,3 @@ Returns: `Enum['cdb','dir','lmdb','db']` The file extension of the table type
 Data type: `String[1]`
 
 The table type to report on
-
