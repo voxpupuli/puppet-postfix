@@ -61,7 +61,7 @@ describe 'postfix' do
         it { is_expected.to contain_class('postfix::packages') }
         it { is_expected.to contain_class('postfix::params') }
         it { is_expected.to contain_class('postfix::service') }
-        it { is_expected.to contain_exec('restart postfix after packages install') }
+        it { is_expected.to contain_service('postfix') }
 
         case [facts[:os]['family'], facts[:os]['release']['major']]
         when %w[RedHat 10]
