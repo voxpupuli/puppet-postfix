@@ -34,13 +34,13 @@ describe 'postfix class' do
     end
 
     describe command('journalctl --unit postfix --boot --no-pager --no-hostname') do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should contain('postfix') }
+      its(:exit_status) { is_expected.to eq 0 }
+      its(:stdout) { is_expected.to contain('postfix') }
     end
 
     describe command('systemctl cat postfix.service') do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should contain('postfix') }
+      its(:exit_status) { is_expected.to eq 0 }
+      its(:stdout) { is_expected.to contain('postfix') }
     end
 
     describe package('postfix') do
