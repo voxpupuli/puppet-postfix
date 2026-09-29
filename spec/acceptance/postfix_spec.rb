@@ -29,23 +29,6 @@ describe 'postfix class' do
 
       # Run it twice and test for idempotency
       apply_manifest(pp, catch_failures: true, debug: true)
-=begin
-require 'fileutils'
-
-dir = '/tmp'
-suffix = '.backup'
-
-Dir.glob(File.join(dir, '*.pp')).each do |file|
-  next unless File.file?(file)
-
-  backup_path = "#{file}#{suffix}"
-  FileUtils.cp(file, backup_path)
-  puts "Backed up #{file} -> #{backup_path}"
-end
-
-puts 'Done.'
-      raise "wird angehalten für interaktive Inspektion"
-=end
       Kernel.sleep(10)
       apply_manifest(pp, catch_changes: true, debug: true)
     end
