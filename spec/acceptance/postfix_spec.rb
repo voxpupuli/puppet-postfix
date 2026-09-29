@@ -28,8 +28,36 @@ describe 'postfix class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      apply_manifest(pp, catch_failures: true, debug: true)
+=begin
+require 'fileutils'
+
+dir = '/tmp'
+suffix = '.backup'
+
+Dir.glob(File.join(dir, '*.pp')).each do |file|
+  next unless File.file?(file)
+
+  backup_path = "#{file}#{suffix}"
+  FileUtils.cp(file, backup_path)
+  puts "Backed up #{file} -> #{backup_path}"
+end
+
+puts 'Done.'
+      raise "wird angehalten für interaktive Inspektion"
+=end
+      Kernel.sleep(10)
+      apply_manifest(pp, catch_changes: true, debug: true)
+    end
+
+    describe command('journalctl --unit postfix --boot --no-pager --no-hostname') do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should contain('postfix') }
+    end
+
+    describe command('systemctl cat postfix.service') do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should contain('postfix') }
     end
 
     describe package('postfix') do
