@@ -27,19 +27,16 @@ describe 'postfix class' do
         }
       EOS
 
-      shell ('systemctl stop postfix || true')
+      shell('systemctl stop postfix || true')
       # Run it twice and test for idempotency
-      puts "Marcus Debug Marker 1"
-      shell( '/usr/sbin/ss -lnp |grep 25; systemctl status postfix || true' )
+
+      shell('/usr/sbin/ss -lnp |grep 25; systemctl status postfix || true')
       apply_manifest(pp, catch_failures: true, debug: false)
       # Sep 30 13:13:22 rocky8-64-openvox8.example.com postfix/master[1400]: fatal: bind 0.0.0.0 port 25: Address already in use
-      shell( '/usr/sbin/ss -lnp |grep 25; systemctl status postfix || true' )
+      shell('/usr/sbin/ss -lnp |grep 25; systemctl status postfix || true')
       apply_manifest(pp, catch_changes: true, debug: false)
-      shell( '/usr/sbin/ss -lnp |grep 25; systemctl status postfix || true' )
+      shell('/usr/sbin/ss -lnp |grep 25; systemctl status postfix || true')
     end
-
-    # rubocop:disable RSpec/RepeatedExampleGroupBody
-    # rubocop:enable RSpec/RepeatedExampleGroupBody
 
     describe package('postfix') do
       it { is_expected.to be_installed }
