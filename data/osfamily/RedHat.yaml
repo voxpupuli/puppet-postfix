@@ -1,6 +1,7 @@
 ---
-postfix::params::aliasesseltype: 'etc_aliases_t'
-postfix::params::seltype: 'postfix_etc_t'
-postfix::params::master_os_template: 'postfix/master.cf.redhat.erb'
+postfix::aliasesseltype: 'etc_aliases_t'
+postfix::seltype: 'postfix_etc_t'
+postfix::mailx_package: 's-nail'
+postfix::master_os_template: 'postfix/master.cf.redhat.erb'
 postfix::mta_bin_path: '/usr/sbin/sendmail.postfix'
 ...

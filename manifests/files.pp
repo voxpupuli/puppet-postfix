@@ -51,7 +51,7 @@ class postfix::files {
       ensure  => 'file',
       content => "${facts['networking']['fqdn']}\n",
       mode    => '0644',
-      seltype => $postfix::params::seltype,
+      seltype => $postfix::seltype,
     }
   }
 
@@ -62,7 +62,7 @@ class postfix::files {
       content => "# file managed by puppet\n",
       notify  => Exec['newaliases'],
       replace => false,
-      seltype => $postfix::params::aliasesseltype,
+      seltype => $postfix::aliasesseltype,
     }
   }
 
@@ -75,7 +75,7 @@ class postfix::files {
     $_mastercf_content = epp($mastercf_template)
   } else {
     $_mastercf_content = template(
-      $postfix::params::master_os_template,
+      $postfix::master_os_template,
       'postfix/master.cf.common.erb'
     )
   }
@@ -86,7 +86,7 @@ class postfix::files {
     group   => $postfix::root_group,
     mode    => '0644',
     owner   => 'root',
-    seltype => $postfix::params::seltype,
+    seltype => $postfix::seltype,
     source  => $mastercf_source,
   }
 
@@ -97,7 +97,7 @@ class postfix::files {
     mode    => '0644',
     owner   => 'root',
     replace => false,
-    seltype => $postfix::params::seltype,
+    seltype => $postfix::seltype,
     source  => $maincf_source,
   }
 

@@ -17,7 +17,6 @@
 * `postfix::mailman`: Configure Postfix to work with mailman
 * `postfix::mta`: Configures Postfix as minimal MTA
 * `postfix::packages`: Install the required packages for postfix
-* `postfix::params`: Default parameters
 * `postfix::satellite`: Configure Postfix as satellite
 * `postfix::service`: Manage service resources for postfix
 
@@ -91,6 +90,7 @@ class { 'postfix':
 
 The following parameters are available in the `postfix` class:
 
+* [`aliasesseltype`](#-postfix--aliasesseltype)
 * [`alias_maps`](#-postfix--alias_maps)
 * [`amavis_procs`](#-postfix--amavis_procs)
 * [`chroot`](#-postfix--chroot)
@@ -111,6 +111,7 @@ The following parameters are available in the `postfix` class:
 * [`mail_user`](#-postfix--mail_user)
 * [`mailman`](#-postfix--mailman)
 * [`mailx_ensure`](#-postfix--mailx_ensure)
+* [`mailx_package`](#-postfix--mailx_package)
 * [`maincf_source`](#-postfix--maincf_source)
 * [`manage_aliases`](#-postfix--manage_aliases)
 * [`manage_conffiles`](#-postfix--manage_conffiles)
@@ -121,6 +122,7 @@ The following parameters are available in the `postfix` class:
 * [`master_bounce_command`](#-postfix--master_bounce_command)
 * [`master_defer_command`](#-postfix--master_defer_command)
 * [`master_entries`](#-postfix--master_entries)
+* [`master_os_template`](#-postfix--master_os_template)
 * [`master_smtp`](#-postfix--master_smtp)
 * [`master_smtps`](#-postfix--master_smtps)
 * [`master_submission`](#-postfix--master_submission)
@@ -136,10 +138,13 @@ The following parameters are available in the `postfix` class:
 * [`mynetworks`](#-postfix--mynetworks)
 * [`myorigin`](#-postfix--myorigin)
 * [`postfix_ensure`](#-postfix--postfix_ensure)
+* [`postfix_package`](#-postfix--postfix_package)
 * [`relayhost`](#-postfix--relayhost)
+* [`restart_cmd`](#-postfix--restart_cmd)
 * [`root_group`](#-postfix--root_group)
 * [`root_mail_recipient`](#-postfix--root_mail_recipient)
 * [`satellite`](#-postfix--satellite)
+* [`seltype`](#-postfix--seltype)
 * [`service_enabled`](#-postfix--service_enabled)
 * [`service_ensure`](#-postfix--service_ensure)
 * [`smtp_listen`](#-postfix--smtp_listen)
@@ -150,6 +155,14 @@ The following parameters are available in the `postfix` class:
 * [`use_sympa`](#-postfix--use_sympa)
 * [`virtuals`](#-postfix--virtuals)
 * [`canonicals`](#-postfix--canonicals)
+
+##### <a name="-postfix--aliasesseltype"></a>`aliasesseltype`
+
+Data type: `Optional[String[1]]`
+
+Selinux type for /etc/aliases
+
+Default value: `undef`
 
 ##### <a name="-postfix--alias_maps"></a>`alias_maps`
 
@@ -328,6 +341,14 @@ Installs mailx package
 
 Default value: `'present'`
 
+##### <a name="-postfix--mailx_package"></a>`mailx_package`
+
+Data type: `String[1]`
+
+Name of package that provides mailx
+
+Default value: `'mailx'`
+
 ##### <a name="-postfix--maincf_source"></a>`maincf_source`
 
 Data type: `String`
@@ -419,6 +440,14 @@ Array of strings containing additional entries for the /etc/postfix/master.cf fi
 Example: `['submission inet n       -       n       -       -       smtpd']`.
 
 Default value: `[]`
+
+##### <a name="-postfix--master_os_template"></a>`master_os_template`
+
+Data type: `String[1]`
+
+Path to the master template
+
+Default value: `"${module_name}/master.cf.default.erb"`
 
 ##### <a name="-postfix--master_smtp"></a>`master_smtp`
 
@@ -556,6 +585,14 @@ The ensure value of the postfix package
 
 Default value: `'present'`
 
+##### <a name="-postfix--postfix_package"></a>`postfix_package`
+
+Data type: `String[1]`
+
+Name of package that provides postfix
+
+Default value: `'postfix'`
+
 ##### <a name="-postfix--relayhost"></a>`relayhost`
 
 Data type: `Optional[String]`
@@ -564,6 +601,14 @@ A string to define the relayhost parameter (postconf(5)).
 Example: `smtp.example.com`.
 
 Default value: `undef`
+
+##### <a name="-postfix--restart_cmd"></a>`restart_cmd`
+
+Data type: `String[1]`
+
+Command to use when restarting postfix
+
+Default value: `'/usr/bin/systemctl reload postfix'`
 
 ##### <a name="-postfix--root_group"></a>`root_group`
 
@@ -590,6 +635,14 @@ A Boolean to define whether to configure Postfix as a satellite relay host.
 This setting is mutually exclusive with the mta Boolean.
 
 Default value: `false`
+
+##### <a name="-postfix--seltype"></a>`seltype`
+
+Data type: `Optional[String[1]]`
+
+Selinux type for /etc/postfix/* config files
+
+Default value: `undef`
 
 ##### <a name="-postfix--service_enabled"></a>`service_enabled`
 

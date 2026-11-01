@@ -11,7 +11,7 @@ class postfix::service {
     ensure    => $postfix::service_ensure,
     enable    => $postfix::service_enabled,
     hasstatus => true,
-    restart   => $postfix::params::restart_cmd,
+    restart   => $postfix::restart_cmd,
     subscribe => Package['postfix'],
     require   => Class['postfix::files'],
   }
