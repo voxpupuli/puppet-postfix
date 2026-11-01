@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v7.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v7.0.0) (2026-11-01)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v6.0.0...v7.0.0)
+
+**Breaking changes:**
+
+- Drop support for EOL Debian 11 [\#464](https://github.com/voxpupuli/puppet-postfix/pull/464) ([kenyon](https://github.com/kenyon))
+- Switch Default for Restart-Command to systemctl [\#457](https://github.com/voxpupuli/puppet-postfix/pull/457) ([marcusdots](https://github.com/marcusdots))
+
+**Implemented enhancements:**
+
+- puppetlabs/stdlib: Allow 10.x [\#462](https://github.com/voxpupuli/puppet-postfix/pull/462) ([bastelfreak](https://github.com/bastelfreak))
+- Update requirements to allow OpenVox 9 [\#459](https://github.com/voxpupuli/puppet-postfix/pull/459) ([sebastianrakel](https://github.com/sebastianrakel))
+- Add Ubuntu 26.04 support [\#456](https://github.com/voxpupuli/puppet-postfix/pull/456) ([marcusdots](https://github.com/marcusdots))
+- separate `ldap_bind_pw` so it may have an eyaml entry [\#455](https://github.com/voxpupuli/puppet-postfix/pull/455) ([marcusdots](https://github.com/marcusdots))
+- Add support for managing custom mailalias target [\#454](https://github.com/voxpupuli/puppet-postfix/pull/454) ([LeGmask](https://github.com/LeGmask))
+- Add parameter for postfix package name [\#451](https://github.com/voxpupuli/puppet-postfix/pull/451) ([anders-larsson](https://github.com/anders-larsson))
+- Add support for FreeBSD 15 [\#446](https://github.com/voxpupuli/puppet-postfix/pull/446) ([smortex](https://github.com/smortex))
+- Add support for Debian 13 [\#439](https://github.com/voxpupuli/puppet-postfix/pull/439) ([kenyon](https://github.com/kenyon))
+- New `canonicals` parameter of `postfix::canonical` types [\#435](https://github.com/voxpupuli/puppet-postfix/pull/435) ([traylenator](https://github.com/traylenator))
+
+**Merged pull requests:**
+
+- Remove redundant undef variant in Optional data type [\#442](https://github.com/voxpupuli/puppet-postfix/pull/442) ([kenyon](https://github.com/kenyon))
+- Remove hiera data for obsolete operating systems [\#440](https://github.com/voxpupuli/puppet-postfix/pull/440) ([kenyon](https://github.com/kenyon))
+- Stop aligning parameters [\#436](https://github.com/voxpupuli/puppet-postfix/pull/436) ([traylenator](https://github.com/traylenator))
+
 ## [v6.0.0](https://github.com/voxpupuli/puppet-postfix/tree/v6.0.0) (2025-08-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-postfix/compare/v5.1.0...v6.0.0)
@@ -173,7 +200,6 @@ The `5.0.0` release is identical to #413 other than the version string.  The `4.
 **Implemented enhancements:**
 
 - Declare CentOS 9 Support, Install s-nail on 9 [\#322](https://github.com/voxpupuli/puppet-postfix/pull/322) ([traylenator](https://github.com/traylenator))
-- Allow parameter smtp\_listen to accept multiple IPs [\#313](https://github.com/voxpupuli/puppet-postfix/pull/313) ([ghost](https://github.com/ghost))
 - Add support for FreeBSD 13 [\#307](https://github.com/voxpupuli/puppet-postfix/pull/307) ([smortex](https://github.com/smortex))
 - allow hiera driven transport/virtual/hash/conffile [\#296](https://github.com/voxpupuli/puppet-postfix/pull/296) ([cringdahl](https://github.com/cringdahl))
 
