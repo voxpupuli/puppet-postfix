@@ -36,6 +36,9 @@
 #     satellite           => true,
 #   }
 #
+# @param aliasesseltype
+#   Selinux type for /etc/aliases
+#
 # @param alias_maps
 #   A string defining the location of the alias map file.
 #   Example: `hash:/etc/other_aliases`
@@ -113,6 +116,9 @@
 # @param mailx_ensure
 #   Installs mailx package
 #
+# @param mailx_package
+#   Name of package that provides mailx
+#
 # @param maincf_source
 #   A string defining the location of a skeleton main.cf file to be used. The default file
 #   supplied is blank. However, if the main.cf file already exists on the system the contents
@@ -154,6 +160,9 @@
 # @param master_entries
 #   Array of strings containing additional entries for the /etc/postfix/master.cf file.
 #   Example: `['submission inet n       -       n       -       -       smtpd']`.
+#
+# @param master_os_template
+#   Path to the master template
 #
 # @param master_smtp
 #   A string to define the smtp line in the /etc/postfix/master.cf file.
@@ -217,9 +226,15 @@
 # @param postfix_ensure
 #   The ensure value of the postfix package
 #
+# @param postfix_package
+#   Name of package that provides postfix
+#
 # @param relayhost
 #   A string to define the relayhost parameter (postconf(5)).
 #   Example: `smtp.example.com`.
+#
+# @param restart_cmd
+#   Command to use when restarting postfix
 #
 # @param root_group
 #   The group permission name for the main.cf and master.cf files.
@@ -231,6 +246,9 @@
 # @param satellite
 #   A Boolean to define whether to configure Postfix as a satellite relay host.
 #   This setting is mutually exclusive with the mta Boolean.
+#
+# @param seltype
+#   Selinux type for /etc/postfix/* config files
 #
 # @param service_enabled
 #   Defines if the service 'postfix' is enabled on the system
@@ -267,6 +285,7 @@
 #   A hash of postfix::canonical resources
 #
 class postfix (
+  Optional[String[1]] $aliasesseltype = undef,
   String $alias_maps = 'hash:/etc/aliases',
   Integer $amavis_procs = 2,
   Optional[Boolean] $chroot = undef,
@@ -287,6 +306,7 @@ class postfix (
   String $mail_user = 'vmail', # postfix_mail_user
   Boolean $mailman = false,
   String $mailx_ensure = 'present',
+  String[1] $mailx_package = 'mailx',
   String $maincf_source = "puppet:///modules/${module_name}/main.cf",
   Boolean $manage_aliases = true, # $alias_maps
   Boolean $manage_conffiles = true,
@@ -297,6 +317,7 @@ class postfix (
   String $master_bounce_command = 'bounce',
   String $master_defer_command = 'bounce',
   Array[String] $master_entries = [], # postfix_master_entries
+  String[1] $master_os_template = "${module_name}/master.cf.default.erb",
   Optional[String] $master_smtp = undef, # postfix_master_smtp
   Optional[String] $master_smtps = undef, # postfix_master_smtps
   Optional[String] $master_submission = undef, # postfix_master_submission
@@ -312,10 +333,13 @@ class postfix (
   String $mynetworks = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String $myorigin = $facts['networking']['fqdn'],
   String $postfix_ensure = 'present',
+  String[1] $postfix_package = 'postfix',
   Optional[String] $relayhost = undef, # postfix_relayhost
+  String[1] $restart_cmd = '/usr/bin/systemctl reload postfix',
   String $root_group = 'root',
   Variant[Array[String], String] $root_mail_recipient = 'nobody', # root_mail_recipient
   Boolean $satellite = false,
+  Optional[String[1]] $seltype = undef,
   Boolean $service_enabled =  true,
   String $service_ensure = 'running',
   Variant[Array[String[1]], String[1]] $smtp_listen = '127.0.0.1', # postfix_smtp_listen
@@ -326,7 +350,7 @@ class postfix (
   Boolean $use_sympa = false, # postfix_use_sympa
   Hash $virtuals = {},
   Hash[String[1], Hash[String[1], Any]] $canonicals = {},
-) inherits postfix::params {
+) {
   if (
     ($mastercf_source and $mastercf_content) or
     ($mastercf_source and $mastercf_template) or

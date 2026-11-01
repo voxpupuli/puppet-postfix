@@ -59,7 +59,6 @@ describe 'postfix' do
         it { is_expected.to contain_mailalias('root').with_target('/etc/aliases') }
         it { is_expected.to contain_class('postfix::files') }
         it { is_expected.to contain_class('postfix::packages') }
-        it { is_expected.to contain_class('postfix::params') }
         it { is_expected.to contain_class('postfix::service') }
         it { is_expected.to contain_service('postfix') }
 

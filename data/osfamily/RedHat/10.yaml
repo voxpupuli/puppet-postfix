@@ -2,4 +2,3 @@
 postfix::alias_maps: 'lmdb:/etc/aliases'
 postfix::ldap_packages: ['postfix-ldap']
 postfix::lookup_table_type: 'lmdb'
-postfix::params::mailx_package: 's-nail'
