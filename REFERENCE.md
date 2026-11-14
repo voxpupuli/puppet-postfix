@@ -110,6 +110,7 @@ The following parameters are available in the `postfix` class:
 * [`mailaliases`](#-postfix--mailaliases)
 * [`mail_user`](#-postfix--mail_user)
 * [`mailman`](#-postfix--mailman)
+* [`mailq_path`](#-postfix--mailq_path)
 * [`mailx_ensure`](#-postfix--mailx_ensure)
 * [`mailx_package`](#-postfix--mailx_package)
 * [`maincf_source`](#-postfix--maincf_source)
@@ -137,6 +138,7 @@ The following parameters are available in the `postfix` class:
 * [`mydestination`](#-postfix--mydestination)
 * [`mynetworks`](#-postfix--mynetworks)
 * [`myorigin`](#-postfix--myorigin)
+* [`newaliases_path`](#-postfix--newaliases_path)
 * [`postfix_ensure`](#-postfix--postfix_ensure)
 * [`postfix_package`](#-postfix--postfix_package)
 * [`relayhost`](#-postfix--relayhost)
@@ -145,6 +147,7 @@ The following parameters are available in the `postfix` class:
 * [`root_mail_recipient`](#-postfix--root_mail_recipient)
 * [`satellite`](#-postfix--satellite)
 * [`seltype`](#-postfix--seltype)
+* [`sendmail_path`](#-postfix--sendmail_path)
 * [`service_enabled`](#-postfix--service_enabled)
 * [`service_ensure`](#-postfix--service_ensure)
 * [`smtp_listen`](#-postfix--smtp_listen)
@@ -332,6 +335,14 @@ A Boolean defining whether to configure a basic smtp server that is able to work
 mailman mailing list manager.
 
 Default value: `false`
+
+##### <a name="-postfix--mailq_path"></a>`mailq_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Optional path for the mailq_path parameter in main.cf.
+
+Default value: `undef`
 
 ##### <a name="-postfix--mailx_ensure"></a>`mailx_ensure`
 
@@ -577,6 +588,14 @@ Example: `example.com`
 
 Default value: `$facts['networking']['fqdn']`
 
+##### <a name="-postfix--newaliases_path"></a>`newaliases_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Optional path for the newaliases_path parameter in main.cf.
+
+Default value: `undef`
+
 ##### <a name="-postfix--postfix_ensure"></a>`postfix_ensure`
 
 Data type: `String`
@@ -641,6 +660,14 @@ Default value: `false`
 Data type: `Optional[String[1]]`
 
 Selinux type for /etc/postfix/* config files
+
+Default value: `undef`
+
+##### <a name="-postfix--sendmail_path"></a>`sendmail_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Optional path for the sendmail_path parameter in main.cf.
 
 Default value: `undef`
 

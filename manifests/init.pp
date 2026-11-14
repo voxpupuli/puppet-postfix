@@ -113,6 +113,9 @@
 #   A Boolean defining whether to configure a basic smtp server that is able to work for the
 #   mailman mailing list manager.
 #
+# @param mailq_path
+#   Optional path for the mailq_path parameter in main.cf.
+#
 # @param mailx_ensure
 #   Installs mailx package
 #
@@ -223,6 +226,9 @@
 #   A string to define the myorigin parameter that holds the domain name that mail appears to come from (postconf(5)).
 #   Example: `example.com`
 #
+# @param newaliases_path
+#   Optional path for the newaliases_path parameter in main.cf.
+#
 # @param postfix_ensure
 #   The ensure value of the postfix package
 #
@@ -249,6 +255,9 @@
 #
 # @param seltype
 #   Selinux type for /etc/postfix/* config files
+#
+# @param sendmail_path
+#   Optional path for the sendmail_path parameter in main.cf.
 #
 # @param service_enabled
 #   Defines if the service 'postfix' is enabled on the system
@@ -305,6 +314,7 @@ class postfix (
   Hash $mailaliases = {},
   String $mail_user = 'vmail', # postfix_mail_user
   Boolean $mailman = false,
+  Optional[Stdlib::Absolutepath] $mailq_path = undef,
   String $mailx_ensure = 'present',
   String[1] $mailx_package = 'mailx',
   String $maincf_source = "puppet:///modules/${module_name}/main.cf",
@@ -332,6 +342,7 @@ class postfix (
   String $mydestination = '$myhostname, localhost.$mydomain, localhost', # postfix_mydestination
   String $mynetworks = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128', # postfix_mynetworks
   String $myorigin = $facts['networking']['fqdn'],
+  Optional[Stdlib::Absolutepath] $newaliases_path = undef,
   String $postfix_ensure = 'present',
   String[1] $postfix_package = 'postfix',
   Optional[String] $relayhost = undef, # postfix_relayhost
@@ -340,6 +351,7 @@ class postfix (
   Variant[Array[String], String] $root_mail_recipient = 'nobody', # root_mail_recipient
   Boolean $satellite = false,
   Optional[String[1]] $seltype = undef,
+  Optional[Stdlib::Absolutepath] $sendmail_path = undef,
   Boolean $service_enabled =  true,
   String $service_ensure = 'running',
   Variant[Array[String[1]], String[1]] $smtp_listen = '127.0.0.1', # postfix_smtp_listen

@@ -75,6 +75,7 @@ describe 'postfix' do
 
         context 'when on Debian family', if: facts[:os]['family'] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('mailx') }
+          it { is_expected.not_to contain_postfix__config('sendmail_path') }
           it { is_expected.to contain_file('/etc/mailname').without('seltype').with_content("foo.example.com\n") }
           it { is_expected.to contain_file('/etc/aliases').without('seltype').with_content("# file managed by puppet\n") }
           it { is_expected.to contain_file(postfix_master_cf_path).without('seltype') }
@@ -96,13 +97,13 @@ describe 'postfix' do
           it { is_expected.to contain_file(postfix_master_cf_path).with_seltype('postfix_etc_t') }
           it { is_expected.to contain_file(postfix_main_cf_path).with_seltype('postfix_etc_t') }
 
-          it { is_expected.to contain_postfix__config('sendmail_path') }
-          it { is_expected.to contain_postfix__config('newaliases_path') }
-          it { is_expected.to contain_postfix__config('mailq_path') }
+          it { is_expected.to contain_postfix__config('sendmail_path').with_value('/usr/sbin/sendmail.postfix') }
+          it { is_expected.to contain_postfix__config('newaliases_path').with_value('/usr/bin/newaliases.postfix') }
+          it { is_expected.to contain_postfix__config('mailq_path').with_value('/usr/bin/mailq.postfix') }
           it { is_expected.to contain_augeas("manage postfix 'sendmail_path'") }
           it { is_expected.to contain_augeas("manage postfix 'newaliases_path'") }
           it { is_expected.to contain_augeas("manage postfix 'mailq_path'") }
-          it { is_expected.to contain_alternatives('mta') }
+          it { is_expected.to contain_alternatives('mta').with_path('/usr/sbin/sendmail.postfix') }
 
           context 'when on release 8', if: facts[:os]['family'] == 'RedHat' && facts[:operatingsystemmajrelease] == '8' do # rubocop:disable RSpec/MultipleMemoizedHelpers
             it { is_expected.to contain_file('/etc/aliases').with_seltype('etc_aliases_t').with_content("# file managed by puppet\n") }
