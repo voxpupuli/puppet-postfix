@@ -1,0 +1,4 @@
+---
+postfix::ldap_packages: ['postfix-ldap']
+postfix::mta_bin_path: '/usr/bin/sendmail.postfix'
+postfix::sendmail_path: '/usr/bin/sendmail.postfix'

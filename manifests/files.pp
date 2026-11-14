@@ -22,6 +22,9 @@ class postfix::files {
   $master_bounce_command = $postfix::master_bounce_command
   $master_defer_command  = $postfix::master_defer_command
   $myorigin            = $postfix::myorigin
+  $mailq_path          = $postfix::mailq_path
+  $newaliases_path     = $postfix::newaliases_path
+  $sendmail_path       = $postfix::sendmail_path
   $manage_mailname     = $postfix::manage_mailname
   $manage_aliases      = $postfix::manage_aliases
   $manage_root_alias   = $postfix::manage_root_alias
@@ -108,15 +111,16 @@ class postfix::files {
     'myorigin':         value => $myorigin;
   }
 
-  case $facts['os']['family'] {
-    'RedHat': {
-      postfix::config {
-        'mailq_path':       value => '/usr/bin/mailq.postfix';
-        'newaliases_path':  value => '/usr/bin/newaliases.postfix';
-        'sendmail_path':    value => '/usr/sbin/sendmail.postfix';
-      }
-    }
-    default: {}
+  if $mailq_path {
+    postfix::config { 'mailq_path': value => $mailq_path }
+  }
+
+  if $newaliases_path {
+    postfix::config { 'newaliases_path': value => $newaliases_path }
+  }
+
+  if $sendmail_path {
+    postfix::config { 'sendmail_path': value => $sendmail_path }
   }
 
   if $manage_aliases and $manage_root_alias {

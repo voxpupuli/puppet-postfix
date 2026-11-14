@@ -4,4 +4,7 @@ postfix::seltype: 'postfix_etc_t'
 postfix::mailx_package: 's-nail'
 postfix::master_os_template: 'postfix/master.cf.redhat.erb'
 postfix::mta_bin_path: '/usr/sbin/sendmail.postfix'
+postfix::mailq_path: '/usr/bin/mailq.postfix'
+postfix::newaliases_path: '/usr/bin/newaliases.postfix'
+postfix::sendmail_path: '/usr/sbin/sendmail.postfix'
 ...
