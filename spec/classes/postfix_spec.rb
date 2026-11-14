@@ -71,6 +71,7 @@ describe 'postfix' do
         it { is_expected.to contain_augeas("manage postfix 'myorigin'").with_changes("set myorigin 'foo.example.com'") }
         it { is_expected.to contain_augeas("manage postfix 'inet_interfaces'").with_changes("set inet_interfaces 'all'") }
         it { is_expected.to contain_augeas("manage postfix 'inet_protocols'").with_changes("set inet_protocols 'all'") }
+        it { is_expected.to contain_file(postfix_master_cf_path).without_content(%r{-o fallback_relay=}) }
 
         context 'when on Debian family', if: facts[:os]['family'] == 'Debian' do # rubocop:disable RSpec/MultipleMemoizedHelpers
           it { is_expected.to contain_package('mailx') }
